@@ -1,0 +1,20 @@
+language: php
+
+php:
+    - 5.4
+    - 5.5
+    - 5.6
+    - hhvm
+    - 7.0
+
+matrix:
+    fast_finish: true
+
+install:
+    - composer update --no-interaction --prefer-source
+
+script:
+    - bin/phpunit
+
+notifications:
+    email: false

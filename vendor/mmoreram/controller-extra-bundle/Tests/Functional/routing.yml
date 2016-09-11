@@ -1,0 +1,2 @@
+fake_bundle:
+    resource: "@FakeBundle/Resources/config/routing.yml"

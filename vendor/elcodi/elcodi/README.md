@@ -1,0 +1,64 @@
+Elcodi for Symfony
+===================
+[![Build Status](https://travis-ci.org/elcodi/elcodi.svg?branch=master)](https://travis-ci.org/elcodi/elcodi)
+[![Build Status](https://ci.appveyor.com/api/projects/status/mx697959y072u2jx/branch/master?svg=true)](https://ci.appveyor.com/project/mmoreram/elcodi/branch/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elcodi/elcodi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elcodi/elcodi/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/elcodi/elcodi/v/stable.png)](https://packagist.org/packages/elcodi/elcodi)
+[![Total Downloads](https://poser.pugx.org/elcodi/elcodi/downloads.png)](https://packagist.org/packages/elcodi/elcodi)
+[![License](https://poser.pugx.org/elcodi/elcodi/license.png)](https://packagist.org/packages/elcodi/elcodi)
+
+Elcodi is a suite of e-commerce Components and Bundles built on top of Symfony 
+and under [MIT](http://opensource.org/licenses/MIT) license.
+It aims to promote SOLID principles, efficient code reuse, separation of 
+concerns as effective building blocks for the development of e-commerce 
+applications.
+
+Elcodi provides a reference implementation for the basic core components found 
+in e-commerce web projects.
+
+See the [front-end store](http://bamboo.elcodi.com) and the 
+[back-office](http://bamboo.elcodi.com/admin) demo application in action, and 
+check out the source code for [Bamboo](https://github.com/elcodi/bamboo).
+
+Elcodi was awarded as the **Best Open Source** project of 2015 by the Symfony
+Community awards.
+
+![Best Open Source](http://awards.symfony.com/images/badges/business/open_source.png)
+
+Requirements
+------------
+
+Elcodi is supported on PHP 5.4.* and up.
+
+
+Documentation
+-------------
+
+Check the documentation in [Elcodi Docs](http://elcodi.io/docs).
+
+Tags
+----
+
+* Use last unstable version ( alias of `dev-master` ) to stay always in last commit.
+* Use last stable version tag to stay in a stable release.
+* [![Latest Unstable Version](https://poser.pugx.org/elcodi/elcodi/v/unstable.png)](https://packagist.org/packages/elcodi/elcodi)  [![Latest Stable Version](https://poser.pugx.org/elcodi/elcodi/v/stable.png)](https://packagist.org/packages/elcodi/elcodi)
+
+Contributing
+------------
+
+This project follows some standards. If you want to collaborate, please ensure
+that your code fulfills these standards before any Pull Request.
+
+``` bash
+composer update
+composer check-style
+```
+
+There is also a policy for contributing to this project. Pull requests must
+be explained step by step to make the review process easy in order to
+accept and merge them. New features must come paired with Unit and/or Functional
+tests, check them using:
+
+``` bash
+composer test
+```

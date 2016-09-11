@@ -1,0 +1,73 @@
+{
+    "name": "paymentsuite/paymentsuite",
+    "description": "PaymentSuite is an easy implementation for lot of Payment Methods for Symfony projects",
+    "type": "library",
+    "keywords": ["paymentsuite", "payment", "ecommerce", "symfony"],
+    "license": "MIT",
+    "support": {
+        "email": "yuhu@mmoreram.com",
+        "forum": "https://gitter.im/paymentsuite/paymentsuite",
+        "source": "https://github.com/paymentsuite/paymentsuite",
+        "issues": "https://github.com/paymentsuite/paymentsuite/issues"
+    },
+    "authors": [
+        {
+            "name": "Marc Morera",
+            "email": "yuhu@mmoreram.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://github.com/PaymentSuite/paymentsuite/contributors"
+        }
+    ],
+    "require": {
+        "php": "^5.4|^7.0",
+        "symfony/finder": "^2.7|^3.0",
+        "symfony/config": "^2.7|^3.0",
+        "symfony/framework-bundle": "^2.7|^3.0",
+        "symfony/form": "^2.7|^3.0",
+        "symfony/config": "^2.7|^3.0",
+        "symfony/http-kernel": "^2.7|^3.0",
+        "symfony/dependency-injection": "^2.7|^3.0",
+        "mmoreram/symfony-bundle-dependencies": "^1.0",
+
+        "psr/log": "^1.0",
+        "twig/twig": "^1.23.1",
+        "stripe/stripe-php": "3.4.0",
+        "monolog/monolog": "^1.17"
+    },
+    "require-dev": {
+        "elcodi/test-common-bundle": "^2.0",
+        "elcodi/fixtures-booster-bundle": "^2.0",
+
+        "mmoreram/php-formatter": "1.1.0",
+        "fabpot/php-cs-fixer": "1.11",
+        "phpunit/phpunit": "^4.8.19"
+    },
+    "replace": {
+        "paymentsuite/bankwire-bundle": "self.version",
+        "paymentsuite/free-payment-bundle": "self.version",
+        "paymentsuite/payment-core-bundle": "self.version",
+        "paymentsuite/paypal-web-checkout-bundle": "self.version",
+        "paymentsuite/redsys-bundle": "self.version",
+        "paymentsuite/stripe-bundle": "self.version"
+    },
+    "autoload": {
+        "psr-4": {
+            "PaymentSuite\\": "src/PaymentSuite"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    },
+    "scripts": {
+        "check-style": [
+            "vendor/bin/php-cs-fixer fix --config-file=.php_cs",
+            "vendor/bin/php-formatter f:h:f src",
+            "vendor/bin/php-formatter f:u:s src"
+        ],
+        "test": "vendor/bin/phpunit"
+    }
+}

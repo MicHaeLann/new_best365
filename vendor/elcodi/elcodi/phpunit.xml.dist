@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+         bootstrap="vendor/autoload.php"
+>
+    <php>
+        <ini name="intl.error_level" value="0"/>
+        <ini name="memory_limit" value="-1"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Elcodi Test Suite">
+            <directory>./src/Elcodi/*/*/Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./src/Elcodi/</directory>
+            <exclude>
+                <directory>./src/Elcodi/*/*/Tests</directory>
+                <directory>./src/Elcodi/*/*/Resources</directory>
+                <directory>./src/Elcodi/*/*/vendor</directory>
+                <directory>./src/Elcodi/*/*/DependencyInjection</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

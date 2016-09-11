@@ -1,0 +1,48 @@
+{
+    "name": "paymentsuite/payment-core-bundle",
+    "type": "symfony-bundle",
+    "description": "PaymentCore PaymentSuite Component",
+    "keywords": ["payment", "ecommerce", "paymentsuite"],
+    "license": "MIT",
+    "support": {
+        "email": "yuhu@mmoreram.com",
+        "forum": "https://gitter.im/paymentsuite/paymentsuite",
+        "source": "https://github.com/paymentsuite/paymentsuite",
+        "issues": "https://github.com/paymentsuite/paymentsuite/issues"
+    },
+    "authors": [
+        {
+            "name": "Marc Morera",
+            "email": "yuhu@mmoreram.com"
+        },
+        {
+            "name": "Symfony Community",
+            "homepage": "https://github.com/PaymentSuite/paymentsuite/contributors"
+        }
+    ],
+    "require": {
+        "php": "^5.4|^7.0",
+
+        "symfony/event-dispatcher": "^2.7|^3.0",
+        "symfony/config": "^2.7|^3.0",
+        "symfony/http-kernel": "^2.7|^3.0",
+        "symfony/dependency-injection": "^2.7|^3.0",
+
+        "psr/log": "~1.0"
+    },
+    "require-dev": {
+        "elcodi/test-common-bundle": "^2.0",
+        "elcodi/fixtures-booster-bundle": "^2.0",
+        "phpunit/phpunit": "^4.8.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "PaymentSuite\\PaymentCoreBundle\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        }
+    }
+}

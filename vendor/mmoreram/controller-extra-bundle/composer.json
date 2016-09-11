@@ -1,0 +1,68 @@
+{
+    "name": "mmoreram/controller-extra-bundle",
+    "description": "Some specific controller features",
+    "keywords": [
+        "symfony2",
+        "controller",
+        "annotations",
+        "controller-extra-bundle"
+    ],
+    "homepage": "https://github.com/mmoreram/ControllerExtraBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "support": {
+        "email": "yuhu@mmoreram.com",
+        "forum": "https://gitter.im/mmoreram/ControllerExtraBundle",
+        "source": "https://github.com/mmoreram/ControllerExtraBundle",
+        "issues": "https://github.com/mmoreram/ControllerExtraBundle/issues"
+    },
+    "authors": [
+        {
+            "name": "Marc Morera",
+            "email": "yuhu@mmoreram.com"
+        }
+    ],
+    "require": {
+        "php": "^5.3.3|^7.0",
+        "doctrine/common": "^2.3|^3.0",
+        "symfony/config": "^2.3|^3.0",
+        "symfony/http-kernel": "^2.3|^3.0",
+        "symfony/http-foundation": "^2.4|^3.0",
+        "symfony/dependency-injection": "^2.3|^3.0"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/annotations": "~1.0, >=1.2",
+        "symfony/framework-bundle": "^2.4|^3.0",
+        "symfony/finder": "^2.3|^3.0",
+        "symfony/validator": "^2.3|^3.0",
+        "symfony/browser-kit": "^2.3|^3.0",
+        "phpunit/phpunit": ">=3.7",
+        "mmoreram/php-formatter": "1.1.0",
+        "symfony/monolog-bundle": "^2.3|^3.0",
+        "doctrine/orm": "^2.5",
+        "symfony/form": "^2.5|^3.0",
+        "pagerfanta/pagerfanta": "~1.0",
+        "knplabs/knp-components": "~1.2"
+    },
+    "suggest": {
+        "symfony/monolog-bundle": "To use the @Log annotation",
+        "symfony/form": "To use the @Form annotation",
+        "doctrine/orm": "To use the @Paginator annotation",
+        "white-october/pagerfanta-bundle": "To use the @Paginator annotation with Pagerfanta support",
+        "knplabs/knp-paginator-bundle": "To use the @Paginator annotation with KNPPaginator support"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mmoreram\\ControllerExtraBundle\\": ""
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

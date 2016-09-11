@@ -1,0 +1,14 @@
+services:
+
+    #
+    # Services
+    #
+    paymentsuite.freepayment.method_factory:
+        class: PaymentSuite\FreePaymentBundle\Services\FreePaymentMethodFactory
+
+    paymentsuite.freepayment.manager:
+        class: PaymentSuite\FreePaymentBundle\Services\FreePaymentManager
+        arguments:
+            - "@paymentsuite.freepayment.method_factory"
+            - "@paymentsuite.bridge"
+            - "@paymentsuite.event_dispatcher"

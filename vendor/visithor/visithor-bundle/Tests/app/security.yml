@@ -1,0 +1,19 @@
+security:
+
+    providers:
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: 1234
+                        roles: 'ROLE_ADMIN'
+
+    firewalls:
+        default:
+            provider: in_memory
+            http_basic: ~
+            anonymous: ~
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/superadmin, roles: ROLE_SUPERADMIN }

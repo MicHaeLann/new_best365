@@ -1,0 +1,14 @@
+services:
+
+    #
+    # Services
+    #
+    paymentsuite.bankwire.method_factory:
+        class: PaymentSuite\BankwireBundle\Services\BankwireMethodFactory
+
+    paymentsuite.bankwire.manager:
+        class: PaymentSuite\BankwireBundle\Services\BankwireManager
+        arguments:
+            - "@paymentsuite.bankwire.method_factory"
+            - "@paymentsuite.bridge"
+            - "@paymentsuite.event_dispatcher"

@@ -1,0 +1,10 @@
+services:
+
+    #
+    # Executors
+    #
+    visithor.executor:
+        class: Visithor\Executor\Executor
+        lazy: true
+        arguments:
+            - @visithor.client

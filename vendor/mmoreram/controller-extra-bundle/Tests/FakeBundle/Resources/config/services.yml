@@ -1,0 +1,7 @@
+services:
+
+    #
+    # Factories
+    #
+    controller_extra_bundle.factory.fake:
+        class: %controller_extra_bundle.factory.fake.class%

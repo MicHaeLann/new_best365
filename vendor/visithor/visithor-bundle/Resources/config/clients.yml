@@ -1,0 +1,18 @@
+services:
+
+    #
+    # Clients
+    #
+    visithor.client:
+        class: Visithor\Bundle\Client\SymfonyClient
+        arguments:
+            - @session
+            - @visitor.environment_builder
+            - @visithor.client.app_kernel
+
+    visithor.client.app_kernel:
+        public: false
+        class: AppKernel
+        arguments:
+            - "%kernel.environment%"
+            - "%kernel.debug%"
