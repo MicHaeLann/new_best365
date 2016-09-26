@@ -1,0 +1,25 @@
+<ul class="nav navbar-nav navbar-right">
+    {% if customer.id %}
+        <li>
+            <a href="{{ url("best365_store_user") }}">
+                <strong data-test="logged-username">{{ customer.firstname }}</strong>
+            </a>
+        </li>
+        <li>
+            <a href="{{ url("store_logout") }}">
+                {{ "template.store_template_bundle.user.nav.logout"|trans }}
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ url("best365_store_login") }}">
+                {{ "template.store_template_bundle.user.nav.login"|trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ url("best365_store_register") }}">
+                {{ "template.store_template_bundle.user.nav.create_new_account"|trans }}
+            </a>
+        </li>
+    {% endif %}
+</ul>
