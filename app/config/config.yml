@@ -17,7 +17,10 @@ imports:
     # Project-specific configuration
     - { resource: config_local.yml }
     - { resource: config_ignored.yml, ignore_errors: true }
-    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@Best365StoreUserBundle/Resources/config/services.yml" }
+    - { resource: "@Best365LayoutStoreTemplateBundle/Resources/config/services.yml" }
+    - { resource: "@Best365StoreCommonBundle/Resources/config/services.yml" }
+    - { resource: "@Best365StoreCurrencyBundle/Resources/config/services.yml" }
 
 
 #
@@ -58,6 +61,9 @@ twig:
         store_tracker: "@elcodi.store_tracker"
         elcodi_languages: "@elcodi.languages_with_master_promoted"
 
+    form:
+        resources: ['bootstrap_3_layout.html.twig']
+
 #
 # Doctrine Configuration
 #
@@ -93,6 +99,8 @@ assetic:
         - StoreTemplateBundle
         - AdminGeoBundle
         - AdminStoreBundle
+        # include best365 bundle
+        - Best365LayoutStoreTemplateBundle
     debug:          "%kernel.debug%"
     use_controller: false
     filters:

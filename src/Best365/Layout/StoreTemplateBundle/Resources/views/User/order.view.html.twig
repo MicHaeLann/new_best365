@@ -1,0 +1,47 @@
+{% extends "@Best365LayoutStoreTemplate/User/user.layout.html.twig" %}
+
+{% block userbody %}
+<div class="col-xs-9">
+    <div>
+        {% if thanks %}
+            <div class="message message-ok">
+                <p><i class="fa fa-check"></i> <strong>{{ 'template.store_template_bundle.order.view.congratulations'|trans }}</strong></p>
+                <p>{{ 'template.store_template_bundle.order.view.thanks'|trans }}</p>
+            </div>
+            {{ elcodi_hook("store.order_thanks") }}
+        {% else %}
+            <h2>{{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }}</h2>
+        {% endif %}
+        <table class="table">
+            <thead>
+                <td colspan="2">
+                    {{ 'template.store_template_bundle.order.item.item'|trans }}
+                </td>
+                <td>
+                    {{ 'template.store_template_bundle.order.item.units'|trans }}
+                </td>
+                <td>
+                    {{ 'template.store_template_bundle.order.item.price'|trans }}
+                </td>
+                <td>
+                    {{ 'template.store_template_bundle.order.item.total'|trans }}
+                </td>
+            </thead>
+            <tbody>
+                {% for line in order.orderLines %}
+                    {% include "@Best365LayoutStoreTemplate/User/order.item.html.twig" with {
+                    "line": line
+                } %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="coupon-list">
+            {% for orderCoupon in orderCoupons %}
+                {% include "@StoreTemplate/Modules/_order-coupon-item.html.twig" with {"orderCoupon": orderCoupon} %}
+            {% endfor %}
+        </div>
+    </div>
+    <p class="float-right"><span>{{ 'template.store_template_bundle.order.view.shipping'|trans }}</span> {{ order.shippingAmount|print_convert_money() }}</p>
+    <p class="float-right"><span>{{ 'template.store_template_bundle.order.view.total'|trans }} </span>{{ order.amount|print_convert_money() }}</p>
+</div>
+{% endblock %}

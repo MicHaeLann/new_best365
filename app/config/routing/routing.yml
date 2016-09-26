@@ -56,3 +56,9 @@ elcodi_custom_routes:
     resource: "routing_local.yml"
     options:
         i18n: false
+
+#
+# best365 routes
+#
+best365_store_user:
+    resource: "best365_routing.yml"

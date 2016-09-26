@@ -1,0 +1,18 @@
+{% extends "@Best365LayoutStoreTemplate/User/user.layout.html.twig" %}
+
+{% block userbody %}
+<div class="col-xs-8">
+	<h3>
+		{% if app.request.attributes.get('_route') == "best365_store_address_new" %}
+	        {{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}
+	    {% else %}
+	        {{ 'template.store_template_bundle.address.edit.edit_address'|trans }}
+	    {% endif %}
+	</h3>
+	{% include '@Best365LayoutStoreTemplate/User/address.item.html.twig' with {'form' : form} %}
+</div>	
+
+{% javascripts '@StoreGeoBundle/Resources/public/js/LocationSelectors.js' %}
+	<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}

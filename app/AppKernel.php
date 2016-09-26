@@ -175,7 +175,10 @@ class AppKernel extends Kernel
              * Bundle Generator
              */
             new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle(),
-            new Best365\Store\UserBundle\UserBundle(),
+            new Best365\Store\UserBundle\Best365StoreUserBundle(),
+            new Best365\Layout\StoreTemplateBundle\Best365LayoutStoreTemplateBundle(),
+            new Best365\Store\CommonBundle\Best365StoreCommonBundle(),
+            new Best365\Store\CurrencyBundle\Best365StoreCurrencyBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

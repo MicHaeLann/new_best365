@@ -1,0 +1,17 @@
+{% extends "@Best365LayoutStoreTemplate/User/user.layout.html.twig" %}
+
+{% block userbody %}
+<div class="col-xs-4">
+	<h3>
+		{{ "template.store_template_bundle.user.edit.profile"|trans }}
+	</h3>
+	{{ form_start(form) }}
+    {{ form_row(form.email, { "attr": { "class": "form-control", "readonly": true } }) }}
+    {{ form_row(form.firstname, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.lastname, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
+    {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

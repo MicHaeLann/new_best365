@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+    {% if form_errors(form) %}
+    {{ form_errors(form) }}
+    {% endif %}
+    {{ form_row(form.name, { "attr": { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.name.example"|trans }} ) }}
+    {{ form_row(form.recipientName, { "attr": { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.recipient.example_name"|trans }}) }}
+    {{ form_row(form.recipientSurname, { "attr": { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.recipient.example_surname"|trans }}) }}
+    {{ form_row(form.address, { "attr" : { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.address.example"|trans }}) }}
+    {{ form_row(form.addressMore, { "attr" : { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.address_more.example"|trans }} ) }}
+    {{ form_row(form.postalcode, { "attr" : { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.postalcode.example"|trans }} ) }}
+    {{ render(url("location_selectors",{locationId:address.city})) }}
+    {{ form_row(form.city, { "attr" : { "class": "form-control" }}) }}
+    {{ form_row(form.phone, { "attr": { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.phone.example"|trans }}) }}
+    {{ form_row(form.mobile, { "attr": { "class": "form-control", "placeholder":"template.store_template_bundle.address.new.mobile.example"|trans }}) }}
+    {{ form_row(form.comments, { "attr" : { "class": "form-control", "placeholder": "template.store_template_bundle.address.new.comments.example"|trans }}) }}
+    {{ form_widget(form.send, { "attr": { "class": "btn btn-success" } }) }}
+    <a href="{{ url("best365_store_address_list") }}" class="btn btn-default">{{ "template.store_template_bundle.address.new.cancel"|trans }}</a>
+{{ form_end(form) }}

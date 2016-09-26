@@ -1,0 +1,40 @@
+<div>
+	<div class="list-item-image">
+		{% set purchasable = item.orderLines.first.purchasable %}
+	    {% set purchasableName = purchasable|purchasable_name %}
+	    {% set validImage = purchasable|valid_image %}
+	    <img src="{{ validImage ? validImage|resize({
+	       'width': 80,
+	       'height': 80,
+	       'type': 5
+	   }) : '//placehold.it/80x80' }}" alt="{{ purchasableName }}" class="product-thumbnail" />
+	</div>
+	<div class="list-item-name">
+		{{ purchasableName }}
+	</div>
+	<div class="list-item-price">
+		{{ order.amount|print_convert_money() }}
+	</div>
+	<div class="list-item-order-info">
+		{{ 'template.store_template_bundle.order.list.order_number'|trans }}{{ item.id }}<br />
+		{{ item.createdAt|date('d.m.Y') }}<br />
+		{{ "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans }}
+	</div>
+	<div class="list-item-action">
+		<a href="" class="btn btn-warning">
+			<span class="glyphicon glyphicon-star glyphicon glyphicon-star-empty"></span>
+		</a>
+		{% if 1 %}
+		<a href="{{ url('best365_store_order_view', { id: order.id }) }}" class="btn btn-info">
+			<span class="glyphicon glyphicon-eye-open"></span>
+		</a>
+		{% else %}
+		<a href="btn">
+			<span class="glyphicon glyphicon-shopping-cart"></span>
+		</a>
+		<a href="btn">
+			<span class="glyphicon glyphicon-usd"></span>
+		</a>
+		{% endif %}
+	</div>
+</div>

@@ -1,0 +1,103 @@
+.float-right
+{
+	text-align: right;
+}
+
+.margin-top-10
+{
+	margin-top: 10px;
+}
+
+.margin-left-10
+{
+	margin-left: 10px;
+}
+
+.full-width
+{
+	width: 100%
+}
+
+.list-style-none
+{
+	list-style: none;
+}
+
+.list-item
+{
+	height: 100px;
+	padding-top: 10px;
+	margin-top: 10px;
+	border-bottom: #e5e5e5 1px solid;
+	position: relative;
+	display: list-item;
+}
+
+.list-item-image
+{
+	padding: 8px;
+	width: 20%;
+	position: relative;
+	float: left;
+}
+
+.list-item-name
+{
+	padding: 8px;
+	width: 30%;
+	position: relative;
+	float: left;
+}
+
+.list-item-price
+{
+	padding: 8px;
+	width: 10%;
+	position: relative;
+	float: left;
+}
+
+.list-item-order-info
+{
+	padding: 8px;
+	width: 20%;
+	position: relative;
+	float: left;
+}
+
+.list-item-action
+{
+	padding: 8px;
+	position: relative;
+	float: left;
+}
+
+/*.login-button
+{
+	color: #fff;
+	background-color: #41af4b;
+	width: 100%;
+}
+
+.login-button-backup
+{
+	color: #fff;
+	background-color: #83c900;
+	width: 100%;
+}
+
+.login-button:hover
+{
+	color: #fff;
+	background-color: #3da446;
+}*/
+
+.align-right
+{
+	text-align: right;
+}
+
+.margin-left-10
+{
+	margin-left: 10px;
+}

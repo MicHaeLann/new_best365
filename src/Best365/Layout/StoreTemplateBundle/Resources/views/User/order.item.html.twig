@@ -1,0 +1,20 @@
+{% set purchasable = line.purchasable %}
+{% set purchasable = purchasable.product ?: purchasable %}
+{% set purchasableRouteName = purchasable.products ? 'store_purchasable_pack_view' : 'store_product_view' %}
+{% set purchasableRoute = url(purchasableRouteName, { slug: purchasable.slug, id: purchasable.id }) %}
+{% set productName = purchasable|purchasable_name %}
+{% set validImage = purchasable|valid_image %}
+
+<tr>
+    <td>
+        <img src="{{ validImage ? validImage|resize({
+            width: 150,
+            height: 150,
+            type: 5 }) : '//placehold.it/150x150'
+        }}" alt="{{ product.name }}" class="product-thumbnail" />
+    </td>
+    <td><a href="{{ purchasableRoute }}" class="product-title">{{ productName }}</a></td>
+    <td>{{ line.quantity }}</td>
+    <td>{{ line.purchasableAmount|print_convert_money() }}</td>
+    <td>{{ line.amount|print_convert_money() }}</td>
+</tr>

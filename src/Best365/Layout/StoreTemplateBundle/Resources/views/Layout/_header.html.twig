@@ -1,0 +1,51 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						地区选择
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">
+								<img src="{{ asset('assets/img/china.png') }}" />
+								<span class="margin-left-10">中国</span>
+							</a>
+						</li>
+						<li role="seperator" class="divider"></li>
+						<li>
+							<a href="#">
+								<img src="{{ asset('assets/img/new-zealand.png') }}" />
+								<span class="margin-left-10">New Zealand</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+						货币选择
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="#">
+								<img src="{{ asset('assets/img/china.png') }}" />
+								<span class="margin-left-10">人民币</span>
+							</a>
+						</li>
+						<li role="seperator" class="divider"></li>
+						<li>
+							<a href="#">
+								<img src="{{ asset('assets/img/new-zealand.png') }}" />
+								<span class="margin-left-10">NZD</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			{{ render(url('best365_store_user_nav')) }}
+		</div>
+	</div>
+</nav>

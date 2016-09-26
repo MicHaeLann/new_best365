@@ -1,9 +1,25 @@
-user:
-    resource: "@UserBundle/Controller/"
+best365_store_currency:
+    resource: "@Best365StoreCurrencyBundle/Controller/"
     type:     annotation
     prefix:   /
 
+best365_store_common:
+    resource: "@Best365StoreCommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
+best365_layout_store_template:
+    resource: "@Best365LayoutStoreTemplateBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
+best365_layout_store_temlate:
+    resource: "@Best365LayoutStoreTemlateBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
+best365_store_user:
+    resource: "@Best365StoreUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
 
