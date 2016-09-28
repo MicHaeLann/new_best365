@@ -1,3 +1,11 @@
 best365_store_user:
     resource: "@Best365StoreUserBundle/Controller/"
     type:     annotation
+
+best365_store_language:
+    resource: "@Best365StoreLanguageBundle/Controller/"
+    type:     annotation
+
+best365_store_currency:
+    resource: "@Best365StoreCurrencyBundle/Controller/"
+    type:     annotation
