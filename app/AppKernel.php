@@ -179,6 +179,7 @@ class AppKernel extends Kernel
             new Best365\Layout\StoreTemplateBundle\Best365LayoutStoreTemplateBundle(),
             new Best365\Store\CommonBundle\Best365StoreCommonBundle(),
             new Best365\Store\CurrencyBundle\Best365StoreCurrencyBundle(),
+            new Best365\Store\LanguageBundle\Best365StoreLanguageBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

@@ -21,6 +21,7 @@ imports:
     - { resource: "@Best365LayoutStoreTemplateBundle/Resources/config/services.yml" }
     - { resource: "@Best365StoreCommonBundle/Resources/config/services.yml" }
     - { resource: "@Best365StoreCurrencyBundle/Resources/config/services.yml" }
+    - { resource: "@Best365StoreLanguageBundle/Resources/config/services.yml" }
 
 
 #

@@ -33,7 +33,7 @@ class Best365CurrencyController extends CurrencyController
      *
      * @Route(
      *      path = "/nav",
-     *      name = "store_currency_nav",
+     *      name = "best365_store_currency_nav",
      *      methods = {"GET"}
      * )
      */
@@ -55,8 +55,8 @@ class Best365CurrencyController extends CurrencyController
             ->get('elcodi.wrapper.currency')
             ->get();
 
-        return $this->renderTemplate(
-            'Subpages:currency-nav.html.twig',
+        return $this->render(
+            'Best365LayoutStoreTemplateBundle:Layout:_currency.nav.html.twig',
             [
                 'currencies'     => $currencies,
                 'activeCurrency' => $activeCurrency,
@@ -74,7 +74,7 @@ class Best365CurrencyController extends CurrencyController
      *
      * @Route(
      *      path = "/switch/{iso}",
-     *      name = "store_currency_switch",
+     *      name = "best365_store_currency_switch",
      *      methods = {"GET"}
      * )
      */
