@@ -180,6 +180,8 @@ class AppKernel extends Kernel
             new Best365\Store\CommonBundle\Best365StoreCommonBundle(),
             new Best365\Store\CurrencyBundle\Best365StoreCurrencyBundle(),
             new Best365\Store\LanguageBundle\Best365StoreLanguageBundle(),
+
+            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

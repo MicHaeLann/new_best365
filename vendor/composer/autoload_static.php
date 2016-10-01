@@ -13,6 +13,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '3fad0ebbff9928a94a9d8941fb314bd8' => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/functions.php',
         'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
+        '08f60432e002f914fc1b5cc2586c0d2c' => __DIR__ . '/..' . '/raulfraile/ladybug-themes/Ladybug/Plugin/Extra/Resources/php/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -28,6 +29,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'S' => 
         array (
+            'Symfony\\Component\\Asset\\' => 24,
             'Symfony\\Component\\' => 18,
             'Symfony\\CS\\' => 11,
             'Symfony\\Bundle\\SwiftmailerBundle\\' => 33,
@@ -89,6 +91,8 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'GuzzleHttp\\Stream\\' => 18,
             'GuzzleHttp\\Ring\\' => 16,
             'GuzzleHttp\\' => 11,
+            'Gregwar\\Captcha\\' => 16,
+            'Gregwar\\CaptchaBundle\\' => 22,
         ),
         'E' => 
         array (
@@ -128,6 +132,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'Visithor\\' => 
         array (
             0 => __DIR__ . '/..' . '/visithor/visithor/src/Visithor',
+        ),
+        'Symfony\\Component\\Asset\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/asset',
         ),
         'Symfony\\Component\\' => 
         array (
@@ -265,6 +273,14 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Gregwar\\Captcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gregwar/captcha',
+        ),
+        'Gregwar\\CaptchaBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gregwar/captcha-bundle',
+        ),
         'Elcodi\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Elcodi',
@@ -362,6 +378,13 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
                 0 => __DIR__ . '/..' . '/sensiolabs/security-checker',
             ),
         ),
+        'R' => 
+        array (
+            'RaulFraile\\Bundle\\LadybugBundle' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-bundle',
+            ),
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 
@@ -401,6 +424,32 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'Metadata\\' => 
             array (
                 0 => __DIR__ . '/..' . '/jms/metadata/src',
+            ),
+        ),
+        'L' => 
+        array (
+            'Ladybug\\Theme' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-themes',
+                1 => __DIR__ . '/..' . '/raulfraile/ladybug/data/themes',
+            ),
+            'Ladybug\\Plugin\\Symfony2\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-themes',
+            ),
+            'Ladybug\\Plugin\\Extra\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-themes',
+            ),
+            'Ladybug\\Plugin' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-plugins',
+                1 => __DIR__ . '/..' . '/raulfraile/ladybug/data/plugins',
+            ),
+            'Ladybug' => 
+            array (
+                0 => __DIR__ . '/..' . '/raulfraile/ladybug-installer/src',
+                1 => __DIR__ . '/..' . '/raulfraile/ladybug/src',
             ),
         ),
         'J' => 
@@ -477,6 +526,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'C' => 
         array (
+            'CssEmbed' => 
+            array (
+                0 => __DIR__ . '/..' . '/ptachoire/cssembed/src',
+            ),
             'CG\\' => 
             array (
                 0 => __DIR__ . '/..' . '/jms/cg/src',
