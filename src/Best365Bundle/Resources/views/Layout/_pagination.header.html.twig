@@ -1,0 +1,16 @@
+{% set perPage = 10 %}
+{% if app.request.get('page') %}
+	{% set page = app.request.get('page') %}
+{% else %}
+	{% set page = 1 %}
+{% endif %}
+{% set totalElements = line|length %}
+{% set firstElement = perPage * (page - 1) + 1 %}
+{% set lastElement = min(firstElement + perPage - 1, totalElements) %}
+{{
+    'ui.paginator.elements'|trans({
+        '%first%': firstElement,
+        '%last%': lastElement,
+        '%total%': totalElements,
+    })
+}}

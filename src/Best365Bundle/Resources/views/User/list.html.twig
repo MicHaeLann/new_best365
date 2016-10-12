@@ -1,0 +1,26 @@
+{% extends "@Best365/User/user.layout.html.twig" %}
+
+{% block userbody %}
+<div class="col-xs-10">
+	<h3>
+		{% if app.request.attributes.get('_route') == "best365_store_order_list" %}
+			{{ 'template.store_template_bundle.order.list.orders'|trans }}
+		{% else %}
+			Watchlist
+		{% endif %}
+	</h3>
+	<div id="pagination-header">
+	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders } %}
+	</div>
+	<ul class="list-style-none">
+		<li class="list-item">
+			{% for order in orders %}
+				{% include "@Best365/User/list.item.html.twig" with {"item": order} %}
+			{% endfor %}
+		</li>
+	</ul>
+	<div id="pagination-footer">
+		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders } %}
+	</div>
+</div>
+{% endblock %}

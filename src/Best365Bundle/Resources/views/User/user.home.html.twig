@@ -1,0 +1,44 @@
+{% extends "@Best365/User/user.layout.html.twig" %}
+
+{% block userbody %}
+    <div class="col-xs-4">
+        <h3>
+            {{ "template.store_template_bundle.user.home.profile"|trans }}
+        </h3>
+        <div class="margin-top-30">
+            <div class="form-group row">
+                <label for="email" class="col-sm-4 col-form-label">{{ 'store.user.form.fields.email.label'|trans }}</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{ customer.email }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="firstName" class="col-sm-4 col-form-label">{{ 'store.user.form.fields.firstname.label'|trans }}</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{ customer.firstName }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="lastName" class="col-sm-4 col-form-label">{{ 'store.user.form.fields.lastname.label'|trans }}</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{ customer.lastName }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Membership" class="col-sm-4 col-form-label">Membership</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{ customer.membership }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="currentPoint" class="col-sm-4 col-form-label">Current Point</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label">{{ customer.currentPoint }}</label>
+                </div>
+            </div>
+            <button class="btn btn-success full-width">
+                Edit
+            </button>
+        </div>
+        </div>
+{% endblock %}

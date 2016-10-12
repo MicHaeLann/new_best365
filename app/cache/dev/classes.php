@@ -6959,7 +6959,7 @@ if (null === $name) {
 $name = $this->defaultManager;
 }
 if (!isset($this->managers[$name])) {
-throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
+throw new \InvalidArgumentException(sprintf('Doctrine %s Managers named "%s" does not exist.', $this->name, $name));
 }
 return $this->getService($this->managers[$name]);
 }
@@ -7005,7 +7005,7 @@ if (null === $name) {
 $name = $this->defaultManager;
 }
 if (!isset($this->managers[$name])) {
-throw new \InvalidArgumentException(sprintf('Doctrine %s Manager named "%s" does not exist.', $this->name, $name));
+throw new \InvalidArgumentException(sprintf('Doctrine %s Managers named "%s" does not exist.', $this->name, $name));
 }
 $this->resetService($this->managers[$name]);
 }

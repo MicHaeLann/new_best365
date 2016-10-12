@@ -1,0 +1,63 @@
+{% set perPage = 10 %}
+{% set url = app.request.get('_route') %}
+{% set totalElements = line|length %}
+{% if app.request.get('page') %}
+	{% set offset = app.request.get('page') %}
+{% else %}
+	app.request.get('page')
+{% endif %}
+{% if app.request.get('page') %}
+	{% set page = app.request.get('page') %}
+{% else %}
+	{% set page = 1 %}
+{% endif %}
+{% if totalElements % perPage == 0 %}
+	{% set totalPages = totalElement / perPage %}
+{% else %}
+	{% set totalPages = totalElement / perPage + 1 %}
+{% endif %}
+
+{% set isFirstPage = page == 1 %}
+{% set isLastPage = page == totalPages %}
+{% set prevPage = page - 1 %}
+{% set nextPage = page + 1 %}
+
+<nav>
+  <ul class="pagination">
+    <li class="page-item {% if isFirstPage %}disabled{% endif %}">
+      <a class="page-link" href="#" tabindex="-1" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item {% if isFirstPage %}active{% endif %}">
+      <a class="page-link" href="{{ url(url, { page: 1}) }}">1</a>
+    </li>
+    {% if prevPage >= 3 %}
+    <li disabled><a>...</a></li>
+    {% endif %}
+    {% if prevPage > 1%}
+    <li class="page-item"><a class="page-link" href="{{ url(url, { page: prevPage}) }}">{{ prevPage }}</a></li>
+    {% endif %}
+    {% if not isFirstPage and not isLastPage %}
+    <li class="page-item active"><a class="page-link" href="{{ url(url, { page: page}) }}">{{ page }}</a></li>
+    {% endif %}
+    {% if nextPage < totalPages %}
+    <li class="page-item"><a class="page-link" href="{{ url(url, { page: nextPage}) }}">{{ nextPage }}</a></li>
+    {% endif %}
+    {% if nextPage <= total -2 %}
+    <li class="disabled"><a>...</a></li>
+    {% endif %}
+    {% if totalPages > 1%}
+    <li class="page-item {% if isLastPage %}active{% endif %}">
+      <a class="page-link" href="{{ url(url, { page: totalPages }) }}">{{ totalPages }}</a>
+    </li>
+    {% endif %}
+    <li class="page-item {% if isLastPage %}disabled{% endif %}">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>

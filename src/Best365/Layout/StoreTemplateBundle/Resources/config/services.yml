@@ -1,4 +1,0 @@
-services:
-#    best365_layout_store_template.example:
-#        class: Best365\Layout\StoreTemplateBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]

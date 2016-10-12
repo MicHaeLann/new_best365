@@ -17,11 +17,7 @@ imports:
     # Project-specific configuration
     - { resource: config_local.yml }
     - { resource: config_ignored.yml, ignore_errors: true }
-    - { resource: "@Best365StoreUserBundle/Resources/config/services.yml" }
-    - { resource: "@Best365LayoutStoreTemplateBundle/Resources/config/services.yml" }
-    - { resource: "@Best365StoreCommonBundle/Resources/config/services.yml" }
-    - { resource: "@Best365StoreCurrencyBundle/Resources/config/services.yml" }
-    - { resource: "@Best365StoreLanguageBundle/Resources/config/services.yml" }
+    - { resource: "@Best365Bundle/Resources/config/services.yml" }
 
 
 #
@@ -89,6 +85,13 @@ doctrine:
                 metadata_cache_driver: array
                 query_cache_driver: array
                 result_cache_driver: array
+#                mappings:
+#                  Best365Bundle:
+#                    type: annotation
+#                    dir: '%kernel.root_dir%/../src/Best365Bundle/Entity'
+#                    is_bundle: false
+#                    prefix: Best365Bundle\Entity
+#                    alias: ~
 
 #
 # Assetic Configuration
@@ -101,7 +104,8 @@ assetic:
         - AdminGeoBundle
         - AdminStoreBundle
         # include best365 bundle
-        - Best365LayoutStoreTemplateBundle
+#        - Best365LayoutStoreTemplateBundle
+        - Best365Bundle
     debug:          "%kernel.debug%"
     use_controller: false
     filters:

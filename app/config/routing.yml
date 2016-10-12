@@ -1,25 +1,4 @@
-best365_store_language:
-    resource: "@Best365StoreLanguageBundle/Controller/"
+best365:
+    resource: "@Best365Bundle/Controller/"
     type:     annotation
     prefix:   /
-
-best365_store_currency:
-    resource: "@Best365StoreCurrencyBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-best365_store_common:
-    resource: "@Best365StoreCommonBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-best365_layout_store_template:
-    resource: "@Best365LayoutStoreTemplateBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-best365_store_user:
-    resource: "@Best365StoreUserBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
