@@ -1,0 +1,23 @@
+Best365Bundle\Entity\CustomerMembership:
+    type: entity
+    table: customer_membership
+    repositoryClass: Best365Bundle\Repository\CustomerMembershipRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        customerId:
+            type: integer
+            column: customer_id
+        currentPoint:
+            type: integer
+            column: current_point
+        totalPoint:
+            type: integer
+            column: total_point
+        membership:
+            type: integer
+    lifecycleCallbacks: {  }

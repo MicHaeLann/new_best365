@@ -1,0 +1,14 @@
+services:
+#    best365.example:
+#        class: Best365Bundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+
+    best365.manager.membership:
+      class: Best365Bundle\Manager\MembershipManager
+      arguments:
+        - '@doctrine.orm.entity_manager'
+
+    best365.manager.customer:
+      class: Best365Bundle\Manager\Best365CustomerManager
+      arguments:
+        - '@doctrine.orm.entity_manager'

@@ -1,0 +1,19 @@
+Best365Bundle\Entity\Membership:
+    type: entity
+    table: null
+    repositoryClass: Best365Bundle\Repository\MembershipRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        point:
+            type: integer
+        strategy:
+            type: integer
+    lifecycleCallbacks: {  }
