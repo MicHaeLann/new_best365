@@ -116,7 +116,7 @@ class Best365SecurityController extends SecurityController
                 ->register($customer);
 
 			// initialize customer membership
-			$this->get('best365.manager.customer');
+			$this->get('best365.manager.customer')->initializeMembership($customer);
 
             return $this->redirectToRoute('store_homepage');
         }
