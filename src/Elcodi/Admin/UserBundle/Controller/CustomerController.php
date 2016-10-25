@@ -157,6 +157,7 @@ class CustomerController extends AbstractAdminController
     ) {
         if ($isValid) {
             $this->flush($customer);
+			$this->get('best365.manager.customer')->updateMembership($customer, $this->get('request'));
 
             $this->addFlash(
                 'success',
@@ -171,6 +172,7 @@ class CustomerController extends AbstractAdminController
         return [
             'customer' => $customer,
             'form'     => $form->createView(),
+			'membership' => 1
         ];
     }
 

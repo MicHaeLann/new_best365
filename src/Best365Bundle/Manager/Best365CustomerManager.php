@@ -11,14 +11,21 @@ namespace Best365Bundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Best365Bundle\Entity\CustomerMembership;
 use Elcodi\Component\User\Entity\Customer;
+use Symfony\Component\HttpFoundation\Request;
 
 class Best365CustomerManager
 {
 	private $em;
 
+	private $membership;
+
 	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
+
+		$this->membership = $this->em
+			->getRepository('Best365Bundle\Entity\Membership')
+			->findby(array(), array('point' => 'ASC'));
 	}
 
 	/**
@@ -57,13 +64,8 @@ class Best365CustomerManager
 	{
 		$customer_id = $customer->getId();
 
-		// find membership configuration
-		$membership = $this->em
-							->getRepository('Best365Bundle\Entity\Membership')
-							->findby(array(), array('point' => 'ASC'));
-
 		// get initialize info
-		$initialize_membership = $membership[0];
+		$initialize_membership = $this->membership[0];
 		$initialize_current_point = $initialize_total_point = $initialize_membership->getPoint();
 
 		// construct customer membership
@@ -74,6 +76,40 @@ class Best365CustomerManager
 							->setMembership($initialize_membership->getId());
 
 		// add customer membership
+		$this->em->persist($customer_membership);
+		$this->em->flush();
+	}
+
+	/**
+	 * get membership selector for admin customer page
+	 * @param Customer $customer
+	 * @return array
+	 */
+	public function buildAdminSelector(Customer $customer)
+	{
+		// get customer membership
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+
+		return array(
+			'membership' => $this->membership,
+			'customer_membership' => $customer_membership->getMembership()
+		);
+	}
+
+	/**
+	 * update customer membership
+	 * @param Customer $customer
+	 * @param Request $request
+	 */
+	public function updateMembership(Customer $customer, Request $request)
+	{
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+		$customer_membership->setMembership($request->get('membership'));
+
 		$this->em->persist($customer_membership);
 		$this->em->flush();
 	}
