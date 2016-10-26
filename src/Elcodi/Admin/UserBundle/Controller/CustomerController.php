@@ -171,8 +171,7 @@ class CustomerController extends AbstractAdminController
 
         return [
             'customer' => $customer,
-            'form'     => $form->createView(),
-			'membership' => 1
+            'form'     => $form->createView()
         ];
     }
 

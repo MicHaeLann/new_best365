@@ -153,10 +153,14 @@ class ProductComponentController extends AbstractAdminController
             ->get('elcodi.store')
             ->getUseStock();
 
+		// get tag
+		$tag = $this->get('best365.manager.purchasable')->getTag($product);
+
         return [
             'product'  => $product,
             'form'     => $formView,
             'useStock' => $useStock,
+			'tag' => $tag
         ];
     }
 }

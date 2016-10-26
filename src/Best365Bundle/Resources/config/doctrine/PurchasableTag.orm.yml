@@ -1,0 +1,18 @@
+Best365Bundle\Entity\PurchasableTag:
+    type: entity
+    table: purchasable_tag
+    repositoryClass: Best365Bundle\Repository\PurchasableTagRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        purchasableId:
+            type: integer
+            column: purchasable_id
+        tag:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

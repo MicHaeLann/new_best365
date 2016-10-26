@@ -39,6 +39,13 @@ class MappingCompilerPass extends AbstractMappingCompilerPass
 				'@Best365Bundle/Resources/config/doctrine/CustomerMembership.orm.yml',
 				true
 			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\PurchasableTag',
+				'@Best365Bundle/Resources/config/doctrine/PurchasableTag.orm.yml',
+				true
+			)
 //			->addEntityMapping(
 //				$container,
 //				'default',
