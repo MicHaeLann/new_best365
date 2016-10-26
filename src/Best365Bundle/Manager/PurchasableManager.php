@@ -67,6 +67,7 @@ class PurchasableManager
 		$purchasable_tag = $this->em
 			->getRepository('Best365Bundle\Entity\PurchasableTag')
 			->findOneByPurchasableId($product->getId());
+		
 		// insert tag data if empty
 		if (empty($purchasable_tag)) {
 			$purchasable_tag = new PurchasableTag();
@@ -77,8 +78,5 @@ class PurchasableManager
 		$purchasable_tag->setTag($request->get('tag'));
 		$this->em->persist($purchasable_tag);
 		$this->em->flush();
-
-
-
 	}
 }
