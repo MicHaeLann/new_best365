@@ -1,0 +1,25 @@
+{% set productRoute = url('store_product_view', { 'slug': item.slug, 'id': item.id }) %}
+{% set productName = item|purchasable_name %}
+<div class="col-sm-3 product-item padding-0">
+    {% block pin_image %}
+        <div class="full-width product-img-min-height">
+            <a href="{{ productRoute }}">
+                {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                {% set validImage = item|valid_image %}
+                <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                    'width': 372,
+                    'height': 291,
+                    'type': 5
+                }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+            </a>
+        </div>
+    {% endblock %}
+    {% block pin_title %}
+        <div class="product-title">
+            <a href="{{ productRoute }}" class="product-title-link">{{ productName }}</a>
+        </div>
+    {% endblock %}
+    <div class="product-price">
+        {{ item.price|print_convert_money() }}
+    </div>
+</div>

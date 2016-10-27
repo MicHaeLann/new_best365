@@ -29,15 +29,21 @@ class PurchasableManager
 	 */
 	public function getResult(Request $request)
 	{
+		$ids = array();
+		$field = $request->get('field');
 		$collection = $this->em
 			->getRepository('Best365Bundle\Entity\PurchasableTag')
 			->createQueryBuilder('p')
 			->where('p.tag LIKE :tag')
-			->setParameter('tag', '%' . $request->get('field') . '%')
+			->setParameter('tag', '%' . $field . '%')
 			->getQuery()
 			->getResult();
 
-		return $collection;
+		foreach ($collection as $tag) {
+			$ids[] = $tag->getPurchasableId();
+		}
+
+		return $ids;
 	}
 
 	/**
@@ -67,8 +73,8 @@ class PurchasableManager
 		$purchasable_tag = $this->em
 			->getRepository('Best365Bundle\Entity\PurchasableTag')
 			->findOneByPurchasableId($product->getId());
-		
-		// insert tag data if empty
+
+		// init tag data if empty
 		if (empty($purchasable_tag)) {
 			$purchasable_tag = new PurchasableTag();
 			$purchasable_tag->setPurchasableId($product->getId());

@@ -1,10 +1,9 @@
-{% set perPage = 10 %}
 {% set url = app.request.get('_route') %}
 {% set totalElements = line|length %}
 {% if app.request.get('page') %}
 	{% set offset = app.request.get('page') %}
 {% else %}
-	app.request.get('page')
+  {% set offset = 1 %}
 {% endif %}
 {% if app.request.get('page') %}
 	{% set page = app.request.get('page') %}

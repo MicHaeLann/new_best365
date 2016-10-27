@@ -10,7 +10,7 @@
 		{% endif %}
 	</h3>
 	<div id="pagination-header">
-	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders } %}
+	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders, "perPage": 10 } %}
 	</div>
 	<ul class="list-style-none">
 		<li class="list-item">
@@ -20,7 +20,7 @@
 		</li>
 	</ul>
 	<div id="pagination-footer">
-		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders } %}
+		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders, "perPage": 10 } %}
 	</div>
 </div>
 {% endblock %}

@@ -40,23 +40,80 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function searchAction()
 	{
-		$tags = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
+		// find by key word
+		$tag_ids = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
 
-		// call function to find purchasable collection
+
+		// find by name(if Chinese, split by word;if English, split by space)
+		$name = $this->get('request')->get('field');
+		$name_ids = $this->getPurchasableByName($name);
+
+		// merge ids
+		$ids = array_unique(array_merge($name_ids, $tag_ids));
+
+		// get collection by ids
 		$collection = array();
-		foreach ($tags as $tag) {
+		foreach ($ids as $id) {
 			$collection[] = $this
 			->get('elcodi.repository.purchasable')
-			->find($tag->getId());
+			->find($id);
 		}
 
-		var_dump($collection);exit;
-
 		return $this->render(
-			'Best365Bundle:User:user.edit.html.twig',
+			'Best365Bundle:Product:product.list.html.twig',
 			[
-				'form' => $formView,
+				'purchasables' => $collection,
 			]
 		);
+	}
+
+	/**
+	 * get product by name
+	 * @param $name
+	 * @return array
+	 */
+	public function getPurchasableByName($name)
+	{
+		// check lan
+		if (strlen($name) != mb_strlen($name, 'utf-8')) {
+			// Chinese
+			$field_chars = str_split($name);
+		} else {
+			// English
+			$field_chars = explode(' ', $name);
+		}
+		$chars = array();
+		foreach ($field_chars as $char) {
+			if ($char !== ' ' && !in_array($char, $chars)) {
+				$chars[] = $char;
+			}
+		}
+
+		$length = count($chars);
+
+		$query = $this->get('elcodi.repository.purchasable')
+			->createQueryBuilder('p');
+		$where = 'p.name LIKE ';
+		for ($i = 0; $i < $length; $i++) {
+			if ($i > 0) {
+				$where .= ' AND p.name LIKE ';
+			}
+			$where .= ':letter'.$i;
+		}
+		$query->where($where);
+
+		for($i = 0; $i < $length; $i++) {
+			$letter = 'letter' . $i;
+			$query->setParameter($letter, '%' . $chars[$i] . '%');
+		}
+		$result = $query->getQuery()
+			->getResult();
+
+		$ids = array();
+		foreach ($result as $purchasable) {
+			$ids[] = $purchasable->getId();
+		}
+
+		return $ids;
 	}
 }

@@ -14,42 +14,25 @@
     {% endblock header %}
 
     {% block container %}
-
+    <div class="container">
         {% block messages %}
             {% include "@StoreTemplate/Modules/_message-list.html.twig" %}
         {% endblock messages %}
 
-        <div class="grid grid-pad">
-            <div class="col-1-1">
-                {% block breadcrumb_container %}
-                    <nav class="breadcrumb desktop">
-                        <ul>
-                            <li>
-                                <a href="{{ url('store_homepage') }}" class="logo">
-                                    <i class="fa fa-home"></i> {{ store.name }}
-                                </a>
-                                <i class="fa fa-angle-right"></i>
-                            </li>
-                            {% block breadcrumb %}{% endblock breadcrumb %}
-                        </ul>
-                    </nav>
-
-                {% endblock breadcrumb_container %}
-
-                {% block content %}{% endblock content %}
-            </div>
-        </div>
+        {% block topbar %}
+            {% include '@Best365/Layout/_top.html.twig' %}
+        {% endblock topbar %}
+        {% block content %}{% endblock content %}
         {% block prefooter %}{% endblock prefooter %}
         {%  block footer %}
-
-        {% include '@StoreTemplate/Modules/_footer.html.twig' %}
-
+            {% include '@StoreTemplate/Modules/_footer.html.twig' %}
         {%  endblock footer %}
-
+    </div>
     {% endblock container %}
 {% endblock body %}
 
 {% block foot_script %}
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ asset('bundles/storetemplate/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock foot_script %}
