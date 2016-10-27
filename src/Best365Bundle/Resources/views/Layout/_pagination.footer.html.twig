@@ -11,11 +11,10 @@
 	{% set page = 1 %}
 {% endif %}
 {% if totalElements % perPage == 0 %}
-	{% set totalPages = totalElement / perPage %}
+	{% set totalPages = totalElements / perPage %}
 {% else %}
-	{% set totalPages = totalElement / perPage + 1 %}
+	{% set totalPages = (totalElements / perPage + 1)|round(0, 'floor') %}
 {% endif %}
-
 {% set isFirstPage = page == 1 %}
 {% set isLastPage = page == totalPages %}
 {% set prevPage = page - 1 %}
@@ -24,36 +23,36 @@
 <nav>
   <ul class="pagination">
     <li class="page-item {% if isFirstPage %}disabled{% endif %}">
-      <a class="page-link" href="#" tabindex="-1" aria-label="Previous">
+      <a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: 1, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: 1}) }}{% endif %}" tabindex="-1" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
         <span class="sr-only">Previous</span>
       </a>
     </li>
     <li class="page-item {% if isFirstPage %}active{% endif %}">
-      <a class="page-link" href="{{ url(url, { page: 1}) }}">1</a>
+      <a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: 1, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: 1}) }}{% endif %}">1</a>
     </li>
     {% if prevPage >= 3 %}
     <li disabled><a>...</a></li>
     {% endif %}
     {% if prevPage > 1%}
-    <li class="page-item"><a class="page-link" href="{{ url(url, { page: prevPage}) }}">{{ prevPage }}</a></li>
+    <li class="page-item"><a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: prevPage, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: prevPage}) }}{% endif %}">{{ prevPage }}</a></li>
     {% endif %}
     {% if not isFirstPage and not isLastPage %}
-    <li class="page-item active"><a class="page-link" href="{{ url(url, { page: page}) }}">{{ page }}</a></li>
+    <li class="page-item active"><a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: page, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: page}) }}{% endif %}">{{ page }}</a></li>
     {% endif %}
     {% if nextPage < totalPages %}
-    <li class="page-item"><a class="page-link" href="{{ url(url, { page: nextPage}) }}">{{ nextPage }}</a></li>
+    <li class="page-item"><a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: nextPage, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: nextPage}) }}{% endif %}">{{ nextPage }}</a></li>
     {% endif %}
-    {% if nextPage <= total -2 %}
+    {% if nextPage <= totalPages -2 %}
     <li class="disabled"><a>...</a></li>
     {% endif %}
     {% if totalPages > 1%}
     <li class="page-item {% if isLastPage %}active{% endif %}">
-      <a class="page-link" href="{{ url(url, { page: totalPages }) }}">{{ totalPages }}</a>
+      <a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: totalPages, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: totalPages }) }}{% endif %}">{{ totalPages }}</a>
     </li>
     {% endif %}
     <li class="page-item {% if isLastPage %}disabled{% endif %}">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" href="{% if app.request.get("field") %}{{ url(url, { page: totalPages, field: app.request.get("field") }) }}{% else %}{{ url(url, { page: totalPages }) }}{% endif %}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
         <span class="sr-only">Next</span>
       </a>

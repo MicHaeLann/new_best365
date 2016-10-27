@@ -2,6 +2,14 @@
 {% set perLine = 3 %}
 {% set line = 5 %}
 {% set perPage = perLine * line %}
+{% if app.request.get('page') %}
+    {% set page = app.request.get('page') %}
+{% else %}
+    {% set page = 1 %}
+{% endif %}
+
+{% set start = perPage * (page - 1) %}
+{% set end = perPage * page - 1 %}
 
 {% block prefooter %}
     <div class="row product-container">
@@ -9,20 +17,21 @@
             {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}
         </div>
         <div id="list" class="margin-top-10">
-            {% set currentLine = 1 %}
             {% set currentColumn = 1 %}
+            {% set i = 0 %}
             {% for purchasable in purchasables %}
-                {% if currentColumn == 1 %}
-                    <div class="row">
-                {% endif %}
-                {% if currentColumn <= perLine %}
+                {% if i >= start and i <= end %}
+                    {% if currentColumn == 1 %}
+                        <div class="row">
+                    {% endif %}
                     {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable, "perLine": perLine, "line": line } %}
+                    {% set currentColumn = currentColumn + 1 %}
+                    {% if currentColumn > perLine %}
+                        </div>
+                        {% set currentColumn = 1 %}
+                    {% endif %}
                 {% endif %}
-                {% set currentColumn = currentColumn + 1 %}
-                {% if currentColumn > perLine %}
-                    </div>
-                    {% set currentColumn = 1 %}
-                {% endif %}
+                {% set i = i + 1 %}
             {% endfor %}
         </div>
         <div id="pagination-footer">

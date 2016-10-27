@@ -1,4 +1,4 @@
-{% extends "@Best365LayoutStoreTemplate/User/user.layout.html.twig" %}
+{% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
 <div class="col-xs-9">
@@ -29,8 +29,8 @@
             </thead>
             <tbody>
                 {% for line in order.orderLines %}
-                    {% include "@Best365LayoutStoreTemplate/User/order.item.html.twig" with { "line": line } %}
-            {% endfor %}
+                    {% include "@Best365/User/order.item.html.twig" with { "line": line } %}
+                {% endfor %}
             </tbody>
         </table>
         <div class="coupon-list">

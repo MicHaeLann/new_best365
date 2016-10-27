@@ -1,6 +1,14 @@
 {% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
+{% set perPage = 10 %}
+{% if app.request.get('page') %}
+	{% set page = app.request.get('page') %}
+{% else %}
+	{% set page = 1 %}
+{% endif %}
+{% set start = perPage * (page - 1) %}
+{% set end = perPage * page - 1 %}
 <div class="col-xs-10">
 	<h3>
 		{% if app.request.attributes.get('_route') == "best365_store_order_list" %}
@@ -10,17 +18,21 @@
 		{% endif %}
 	</h3>
 	<div id="pagination-header">
-	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders, "perPage": 10 } %}
+	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>
+	{% set i = 0 %}
 	<ul class="list-style-none">
 		<li class="list-item">
 			{% for order in orders %}
-				{% include "@Best365/User/list.item.html.twig" with {"item": order} %}
+				{% if i >= start and i <= end %}
+					{% include "@Best365/User/list.item.html.twig" with {"item": order} %}
+				{% endif %}
+				{% set i = i + 1 %}
 			{% endfor %}
 		</li>
 	</ul>
 	<div id="pagination-footer">
-		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders, "perPage": 10 } %}
+		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>
 </div>
 {% endblock %}
