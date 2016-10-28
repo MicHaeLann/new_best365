@@ -8,6 +8,7 @@
 
 namespace Best365Bundle\Controller;
 
+use Elcodi\Component\Product\Entity\Purchasable;
 use Elcodi\Store\ProductBundle\Controller\PurchasableController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -26,7 +27,6 @@ class Best365ProductController extends PurchasableController
 {
 	/**
 	 * get result by search field
-	 *
 	 *
 	 * @return Response Response
 	 *
@@ -63,6 +63,45 @@ class Best365ProductController extends PurchasableController
 			'Best365Bundle:Product:product.list.html.twig',
 			[
 				'purchasables' => $collection,
+			]
+		);
+	}
+
+	/**
+	 * Purchasable view
+	 *
+	 * @param integer $id   Purchasable id
+	 * @return array
+	 *
+	 * @Route(
+	 *      path = "/product/{id}",
+	 *      name = "best365_store_product_view",
+	 *      requirements = {
+	 *          "id": "\d+",
+	 *      },
+	 *      methods = {"GET"}
+	 * )
+	 */
+	public function detailAction($id)
+	{
+		// get product
+		$purchasable = $this
+			->get('elcodi.repository.purchasable')
+			->find($id);
+
+		$useStock = $this
+			->get('elcodi.store')
+			->getUseStock();
+
+		// build category tree
+		$categories = $this->getCategoryTree($purchasable);
+
+		return $this->render(
+			'Best365Bundle:Product:product.detail.html.twig',
+			[
+			'purchasable' => $purchasable,
+			'categories' => $categories,
+			'useStock'    => $useStock
 			]
 		);
 	}
@@ -115,5 +154,34 @@ class Best365ProductController extends PurchasableController
 		}
 
 		return $ids;
+	}
+
+	/**
+	 * get category tree
+	 * @param Purchasable $purchasable
+	 * @return Object $tree
+	 */
+	public function getCategoryTree(Purchasable $purchasable)
+	{
+		// product category
+		$category = $purchasable->getPrincipalCategory();
+		$parent_category = $category->getParent();
+
+		if (empty($parent_category)) {
+			$parent_category = $category;
+			$children_categories = $this
+				->get('elcodi.repository.category')
+				->getChildrenCategories($category);
+		} else {
+			$children_categories = $this
+				->get('elcodi.repository.category')
+				->getChildrenCategories($parent_category);
+		}
+
+		$tree = new \StdClass();
+		$tree->parent = $parent_category;
+		$tree->child = $children_categories;
+
+		return $tree;
 	}
 }

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michael
- * Date: 25/10/16
- * Time: 5:16 PM
- */
 
 namespace Best365Bundle\Manager;
 

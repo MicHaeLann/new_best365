@@ -117,7 +117,6 @@
 
 .product-container
 {
-
 	margin: 0 auto;
 	max-width: 1140px;
 	min-width: 755px;
@@ -165,6 +164,50 @@
 .product-title-link:hover
 {
 	color: #83c900;
+}
+
+.product-font
+{
+	color: #3c763d;
+}
+
+.product-font:hover
+{
+	color: #3c763d;
+}
+
+.product-label
+{
+	margin: 15px 0;
+}
+
+.product-price
+{
+	font-size: 30px;
+}
+
+.product-price-label
+{
+	margin-top: 20px
+}
+
+.product-unit
+{
+	margin-top: 10px;
+}
+
+.product-description-label
+{
+	/*color: #3c763d;*/
+	font-size: 18px;
+	margin-top: 30px;
+	margin-bottom: 0;
+	font-weight: bold;
+}
+
+.product-description-hr
+{
+	margin: 10px 0;
 }
 
 /*.login-button

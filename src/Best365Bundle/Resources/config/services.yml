@@ -14,6 +14,6 @@ services:
         - '@doctrine.orm.entity_manager'
 
     best365.manager.purchasable:
-          class: Best365Bundle\Manager\PurchasableManager
-          arguments:
-            - '@doctrine.orm.entity_manager'
+      class: Best365Bundle\Manager\PurchasableManager
+      arguments:
+        - '@doctrine.orm.entity_manager'
