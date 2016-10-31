@@ -2,9 +2,9 @@
 
 {% block userbody %}
     <div class="col-xs-4">
-        <h3>
+        <p class="page-title">
             {{ "template.store_template_bundle.user.home.profile"|trans }}
-        </h3>
+        </p>
         <div class="margin-top-30">
             <div class="form-group row">
                 <label for="email" class="col-sm-4 col-form-label">{{ 'store.user.form.fields.email.label'|trans }}</label>
@@ -36,9 +36,9 @@
                     <label class="col-form-label">{{ customer.currentPoint }}</label>
                 </div>
             </div>
-            <button class="btn btn-success full-width">
+            <a href="{{ url('best365_store_user_edit') }}" class="btn btn-success full-width">
                 Edit
-            </button>
+            </a>
         </div>
         </div>
 {% endblock %}

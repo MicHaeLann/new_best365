@@ -2,9 +2,9 @@
 
 {% block userbody %}
 <div class="col-xs-6">
-	<h3>
+	<p class="page-title">
 		{{ "template.store_template_bundle.user.edit.profile"|trans }}
-	</h3>
+	</p>
     <div class="margin-top-30">
         {{ form_start(form) }}
         {{ form_row(form.email, { "attr": { "class": "form-control", "readonly": true } }) }}

@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 /**
- * Address controllers
+ * Product controllers
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(

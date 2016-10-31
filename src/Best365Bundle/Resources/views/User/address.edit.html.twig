@@ -1,14 +1,14 @@
 {% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
-<div class="col-xs-8">
-	<h3>
+<div class="col-sm-10">
+	<p class="page-title">
 		{% if app.request.attributes.get('_route') == "best365_store_address_new" %}
 	        {{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}
 	    {% else %}
 	        {{ 'template.store_template_bundle.address.edit.edit_address'|trans }}
 	    {% endif %}
-	</h3>
+	</p>
 	{% include '@Best365/User/address.item.html.twig' with {'form' : form} %}
 </div>	
 

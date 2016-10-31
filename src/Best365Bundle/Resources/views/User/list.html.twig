@@ -10,13 +10,13 @@
 {% set start = perPage * (page - 1) %}
 {% set end = perPage * page - 1 %}
 <div class="col-xs-10">
-	<h3>
+	<p class="page-title">
 		{% if app.request.attributes.get('_route') == "best365_store_order_list" %}
 			{{ 'template.store_template_bundle.order.list.orders'|trans }}
 		{% else %}
 			Watchlist
 		{% endif %}
-	</h3>
+	</p>
 	<div id="pagination-header">
 	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>
