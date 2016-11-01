@@ -18,3 +18,6 @@ services:
       arguments:
         - '@doctrine.orm.entity_manager'
 
+    best365.manager.address:
+      class: Best365Bundle\Manager\Best365AddressManager
+

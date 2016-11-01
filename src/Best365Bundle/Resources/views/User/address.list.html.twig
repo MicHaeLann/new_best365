@@ -13,9 +13,6 @@
 		<table class="table table-striped margin-top-10">
 			<thead>
 			<td>
-				{{ 'template.store_template_bundle.address.item.address_name'|trans }}
-			</td>
-			<td>
 				{{ 'template.store_template_bundle.address.item.fullname'|trans }}
 			</td>
 			<td>
@@ -25,7 +22,7 @@
 				{{ 'template.store_template_bundle.address.item.postal_code'|trans }}
 			</td>
 			<td>
-				{{ 'template.store_template_bundle.address.item.phone_and_mobile'|trans }}
+				{{ 'store.address.form.fields.phone.label'|trans }}
 			</td>
 			<td>
 				{{ 'template.store_template_bundle.address.item.actions'|trans }}
@@ -34,9 +31,6 @@
 			<tbody>
 			{% for address in addresses %}
 				<tr>
-					<td>
-						{{ address.name }}
-					</td>
 					<td>
 						{{ address.recipientName }} {{ address.recipientSurname }}
 					</td>
@@ -47,7 +41,7 @@
 						{{ address.postalCode }}
 					</td>
 					<td>
-						{{ address.phone }} / {{ address.mobile }}
+						{{ address.phone }}
 					</td>
 					<td>
 						<a href="{{ url('best365_store_address_edit', { id:address.id, source:source }) }}" class="btn btn-info btn-xs" data-test="address-{{ address.id }}-edit">

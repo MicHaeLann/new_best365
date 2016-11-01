@@ -111,9 +111,13 @@ class Best365AddressController extends AddressController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+			$best365_address = $this
+				->get('best365.manager.address')
+				->generateAddress($address);
+
             $addressToSave = $this
                 ->get('elcodi.manager.address')
-                ->saveAddress($address);
+                ->saveAddress($best365_address);
 
             $customer = $this->getUser();
             $customer->removeAddress($address);
@@ -190,15 +194,18 @@ class Best365AddressController extends AddressController
     {
         if ($isValid) {
             $translator = $this->get('translator');
+			$best365_address = $this->get('best365.manager.address')
+				->generateAddress($address);
 
             $addressManager = $this->get('elcodi.object_manager.address');
-            $addressManager->persist($address);
+            $addressManager->persist($best365_address);
             $addressManager->flush();
+
 
             $this
                 ->get('elcodi.wrapper.customer')
                 ->get()
-                ->addAddress($address);
+                ->addAddress($best365_address);
 
             $this
                 ->get('elcodi.object_manager.customer')
