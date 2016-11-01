@@ -101,10 +101,8 @@ class Best365CartController extends CartController
 	 *      }
 	 * )
 	 */
-	public function removeCartLineAction(
-		CartInterface $cart,
-		CartLineInterface $cartLine
-	) {
+	public function removeCartLineAction(CartInterface $cart, CartLineInterface $cartLine)
+	{
 		$this
 			->get('elcodi.manager.cart')
 			->removeLine(
@@ -189,6 +187,62 @@ class Best365CartController extends CartController
 
 		return $this->redirect(
 			$this->generateUrl('store_homepage')
+		);
+	}
+
+	/**
+	 * Adds product into cart
+	 *
+	 * @param Request       $request Request object
+	 * @param CartInterface $cart    Cart
+	 * @param integer       $id      Purchasable Id
+	 *
+	 * @return Response Redirect response
+	 *
+	 * @throws EntityNotFoundException Purchasable not found
+	 *
+	 * @Route(
+	 *      path = "/purchasable/{id}/add",
+	 *      name = "best365_store_cart_add_purchasable",
+	 *      requirements = {
+	 *          "id": "\d+"
+	 *      },
+	 *      methods = {"GET", "POST"}
+	 * )
+	 *
+	 * @AnnotationEntity(
+	 *      class = {
+	 *          "factory" = "elcodi.wrapper.cart",
+	 *          "method" = "get",
+	 *          "static" = false,
+	 *      },
+	 *      name = "cart"
+	 * )
+	 */
+	public function addPurchasableAction(Request $request, CartInterface $cart, $id)
+	{
+		$purchasable = $this
+			->get('elcodi.repository.purchasable')
+			->find($id);
+
+		if (!$purchasable instanceof PurchasableInterface) {
+			throw new EntityNotFoundException('Purchasable not found');
+		}
+
+		$cartQuantity = (int) $request
+			->request
+			->get('add-cart-quantity', 1);
+
+		$this
+			->get('elcodi.manager.cart')
+			->addPurchasable(
+				$cart,
+				$purchasable,
+				$cartQuantity
+			);
+
+		return $this->redirect(
+			$this->generateUrl('best365_store_cart_view')
 		);
 	}
 }
