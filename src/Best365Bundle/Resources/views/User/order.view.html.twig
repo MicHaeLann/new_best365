@@ -4,13 +4,21 @@
 <div class="col-sm-10">
     <div>
         {% if thanks %}
-            <div class="message message-ok">
-                <p><i class="fa fa-check"></i> <strong>{{ 'template.store_template_bundle.order.view.congratulations'|trans }}</strong></p>
+            <div class="alert alert-success">
+                <p><strong>{{ 'template.store_template_bundle.order.view.congratulations'|trans }}</strong></p>
                 <p>{{ 'template.store_template_bundle.order.view.thanks'|trans }}</p>
+                {% if transfer %}
+                <p>{{ 'template.store_template_bundle.order.view.reference'|trans }} <strong>{{ order.ref }}</strong></p>
+                {% endif %}
             </div>
             {{ elcodi_hook("store.order_thanks") }}
         {% else %}
-            <p class="page-title">{{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }}</p>
+            <p class="page-title">
+                {{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }}
+                {% if not thanks %}
+                ({{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }})
+                {% endif %}
+            </p>
         {% endif %}
         <table class="table">
             <thead>
@@ -33,11 +41,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="coupon-list">
-            {% for orderCoupon in orderCoupons %}
-                {% include "@StoreTemplate/Modules/_order-coupon-item.html.twig" with {"orderCoupon": orderCoupon} %}
-            {% endfor %}
-        </div>
     </div>
     <p class="align-right"><span>{{ 'template.store_template_bundle.order.view.shipping'|trans }}</span> {{ order.shippingAmount|print_convert_money() }}</p>
     <p class="align-right"><span>{{ 'template.store_template_bundle.order.view.total'|trans }} </span>{{ order.amount|print_convert_money() }}</p>

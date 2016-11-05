@@ -1,29 +1,36 @@
-<div>
-	<div class="list-item-image">
-		{% set purchasable = item.orderLines.first.purchasable %}
-	    {% set purchasableName = purchasable|purchasable_name %}
-	    {% set validImage = purchasable|valid_image %}
-	    <img src="{{ validImage ? validImage|resize({
-	       'width': 80,
-	       'height': 80,
-	       'type': 5
-	   }) : '//placehold.it/80x80' }}" alt="{{ purchasableName }}" class="product-thumbnail" />
-	</div>
-	<div class="list-item-name">
-		<a href="{{ url('best365_store_order_view', { id: order.id }) }}" class="product-title-link">
-			{{ purchasableName }}
+<tr>
+	<td>
+		<a href="{{ url('best365_store_order_view', { id: item.id }) }}" class="product-title-link">
+			{{ 'template.store_template_bundle.order.list.order_number'|trans }}{{ item.id }}
 		</a>
-	</div>
-	<div class="list-item-price">
-		{{ order.amount|print_convert_money() }}
-	</div>
-	<div class="list-item-order-info">
-		{{ 'template.store_template_bundle.order.list.order_number'|trans }}{{ item.id }}
-	</div>
-	<div class="list-item-order-date">
-		{{ item.createdAt|date('d.m.Y') }}
-	</div>
-	<div class="list-item-order-status">
-		{{ "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans }}
-	</div>
-</div>
+	</td>
+	<td>
+		{% for line in item.orderLines %}
+			{% set purchasable = line.purchasable %}
+			{% set purchasable = purchasable.product ?: purchasable %}
+			{% set productName = purchasable|purchasable_name %}
+			<p>{{ productName }} * {{ line.quantity }}</p>
+		{% endfor %}
+	</td>
+	<td>
+		{{ item.amount|print_convert_money() }}
+	</td>
+	<td>
+		{{ item.createdAt|date('Y.m.d') }}
+	</td>
+	<td>
+		{% if "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans == "Paid"  %}
+			{{ "common.order.states.#{item.shippingStateLineStack.lastStateLine.name}"|trans }}
+		{% else %}
+			{{ "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans }}
+		{% endif %}
+	</td>
+	<td>
+		{% if "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans == "Paid"  %}
+			{{ item.trackingNum }}
+		{% else %}
+			{{ item.ref }}
+		{% endif %}
+
+	</td>
+</tr>

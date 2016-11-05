@@ -21,7 +21,7 @@ class Best365AddressManager
 	public function generateAddress(AddressInterface $address)
 	{
 		$address->setName('DEFAULT NAME')
-			->setMobile('935555555');
+			->setMobile('000000000');
 
 		return $address;
 	}

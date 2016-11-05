@@ -1,0 +1,60 @@
+{% extends "@Best365/Layout/_layout.html.twig" %}
+
+
+{% block prefooter %}
+<div class="row content-container">
+    <p class="page-title">
+        {{ 'template.store_template_bundle.checkout.address.select_address'|trans }}
+    </p>
+    <form method="post" action="{{ url('best365_store_save_shipping') }}">
+        <div class="form-group row">
+            <label class="col-sm-1 margin-top-5">
+                {{ 'template.store_template_bundle.shipping.carrier'|trans }}
+            </label>
+            <div class="col-sm-8">
+                <select id="shipping_method" name="shipping_method" class="form-control carrier-max-width">
+                    {% for shipping_method in shipping_methods %}
+                        <option value="{{ shipping_method.id }}">
+                            {{ shipping_method.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-1 margin-top-5">
+                {{ 'template.store_template_bundle.address.item.address'|trans }}
+            </label>
+            <div class="col-sm-8">
+                <select name="address" class="form-control">
+                    {% for address in addresses %}
+                        <option value="{{ address.id }}">
+                            {{ address.recipientName }} {{ address.recipientSurname }}, {{ address.address }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <div class="align-right margin-top-10">
+                    <a id="add_new" href="">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                        {{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a class="btn btn-success float-left" href="{{ url('best365_store_cart_view') }}">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            {{ 'template.store_template_bundle.checkout.back'|trans }}
+        </a>
+        <button type="submit" name="payment" class="btn btn-success float-right" data-test="payment-button">
+            {{ 'template.store_template_bundle.checkout.address.payment'|trans }}
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </button>
+    </form>
+</div>
+<div id="new_address" class="margin-top-30 row collapse content-container">
+    <p class="page-title">
+        {{ "template.store_template_bundle.checkout.address.add_new_address"|trans }}
+    </p>
+    {% include '@Best365/User/address.item.html.twig' with { form: form } %}
+</div>
+{% endblock %}

@@ -110,47 +110,35 @@ hr
 {
 	padding: 8px;
 	width: 15%;
-	position: relative;
-	float: left;
 }
 
 .list-item-name
 {
 	padding: 8px;
 	width: 30%;
-	position: relative;
-	float: left;
 }
 
 .list-item-price
 {
 	padding: 8px;
 	width: 10%;
-	position: relative;
-	float: left;
 }
 
 .list-item-order-info
 {
 	padding: 8px;
 	width: 20%;
-	position: relative;
-	float: left;
 }
 
 .list-item-order-date
 {
 	padding: 8px;
 	width: 15%;
-	position: relative;
-	float: left;
 }
 
 .list-item-order-status
 {
 	padding: 8px;
-	position: relative;
-	float: left;
 }
 
 .search-text-border, .search-text-border:focus

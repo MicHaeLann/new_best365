@@ -28,6 +28,7 @@ class Best365OrderController extends OrderController
      *
      * @param integer $id     Order id
      * @param boolean $thanks Thanks
+	 * @param boolean $transfer Transfer
      *
      * @return Response Response
      *
@@ -38,23 +39,37 @@ class Best365OrderController extends OrderController
      *          "orderId": "\d+"
      *      },
      *      defaults = {
-     *          "thanks": false
+     *          "thanks": false,
+	 *     		"transfer": false
      *      },
      *      methods = {"GET"}
      * )
      * @Route(
-     *      path = "/{id}/thanks",
-     *      name = "store_order_thanks",
-     *      requirements = {
-     *          "orderId": "\d+"
-     *      },
-     *      defaults = {
-     *          "thanks": true
-     *      },
-     *      methods = {"GET"}
+	 *      path = "/{id}/thanks",
+	 *      name = "best365_store_order_thanks",
+	 *      requirements = {
+	 *          "orderId": "\d+"
+	 *      },
+	 *      defaults = {
+	 *          "thanks": true,
+	 *     		"transfer": false
+	 *      },
+	 *      methods = {"GET"}
      * )
+	 * @Route(
+	 *      path = "/{id}/thanks/transfer",
+	 *      name = "best365_store_order_thanks_transfer",
+	 *      requirements = {
+	 *          "orderId": "\d+"
+	 *      },
+	 *      defaults = {
+	 *          "thanks": true,
+	 *     		"transfer": true
+	 *      },
+	 *      methods = {"GET"}
+	 * )
      */
-    public function viewAction($id, $thanks)
+    public function viewOrderAction($id, $thanks, $transfer)
     {
         $order = $this
             ->get('elcodi.repository.order')
@@ -67,16 +82,16 @@ class Best365OrderController extends OrderController
             throw $this->createNotFoundException('Order not found');
         }
 
-        $orderCoupons = $this
-            ->get('elcodi.repository.order_coupon')
-            ->findOrderCouponsByOrder($order);
+        // reference and tracking number
+		$this->get('best365.manager.order')
+			->getRecord($order);
 
         return $this->render(
             'Best365Bundle:User:order.view.html.twig',
             [
                 'order'        => $order,
-                'orderCoupons' => $orderCoupons,
                 'thanks'       => $thanks,
+				'transfer'	   => $transfer
             ]
         );
     }
@@ -99,6 +114,10 @@ class Best365OrderController extends OrderController
             ->get()
             ->getOrders();
 
+		foreach ($orders as &$order) {
+			$this->get('best365.manager.order')
+				->getRecord($order);
+		}
         return $this->render(
             'Best365Bundle:User:list.html.twig',
             [

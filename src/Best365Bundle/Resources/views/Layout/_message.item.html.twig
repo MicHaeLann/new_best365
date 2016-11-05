@@ -1,0 +1,5 @@
+{% if flashMessage %}
+    <div class="alert {{ class }}">
+        {{ flashMessage | raw }}
+    </div>
+{% endif %}

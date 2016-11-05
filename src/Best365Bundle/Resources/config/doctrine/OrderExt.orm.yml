@@ -1,0 +1,22 @@
+Best365Bundle\Entity\OrderExt:
+    type: entity
+    table: order_ext
+    repositoryClass: Best365Bundle\Repository\OrderExtRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        orderId:
+            type: integer
+            column: order_id
+        ref:
+            type: string
+            length: 255
+        trackingNum:
+            type: string
+            length: 255
+            column: tracking_num
+    lifecycleCallbacks: {  }

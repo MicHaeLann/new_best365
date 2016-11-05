@@ -145,7 +145,8 @@ class Best365CartController extends CartController
 	 *      validate = "isValid",
 	 * )
 	 */
-	public function updateCartAction(FormInterface $form, CartInterface $cart, $isValid) {
+	public function updateCartAction(FormInterface $form, CartInterface $cart, $isValid)
+	{
 		if ($isValid) {
 			$this
 				->get('elcodi.object_manager.cart')

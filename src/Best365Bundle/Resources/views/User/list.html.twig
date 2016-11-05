@@ -13,24 +13,45 @@
 	<p class="page-title">
 		{% if app.request.attributes.get('_route') == "best365_store_order_list" %}
 			{{ 'template.store_template_bundle.order.list.orders'|trans }}
-		{% else %}
-			Watchlist
 		{% endif %}
 	</p>
 	<div id="pagination-header">
 	    {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>
 	{% set i = 0 %}
-	<ul class="list-style-none">
-		<li class="list-item">
+	<table class="table margin-top-10">
+		<thead>
+			<tr>
+				<th>
+					{{ "template.store_template_bundle.order.list.orders"|trans }}
+				</th>
+				<th>
+					{{ "template.store_template_bundle.order.list.item"|trans }}
+				</th>
+				<th>
+					{{ "template.store_template_bundle.order.list.total"|trans }}
+				</th>
+				<th>
+					{{ "template.store_template_bundle.order.list.date"|trans }}
+				</th>
+				<th>
+					{{ "template.store_template_bundle.order.list.status"|trans }}
+				</th>
+				<th>
+					{{ "template.store_template_bundle.order.list.tracking_num"|trans }}/
+					{{ "template.store_template_bundle.order.list.reference"|trans }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
 			{% for order in orders %}
 				{% if i >= start and i <= end %}
 					{% include "@Best365/User/list.item.html.twig" with {"item": order} %}
 				{% endif %}
 				{% set i = i + 1 %}
 			{% endfor %}
-		</li>
-	</ul>
+		</tbody>
+	</table>
 	<div id="pagination-footer">
 		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>

@@ -131,22 +131,28 @@ template:
                 price: Price
                 total: Total
                 units: Units
+                reference: Ref
             list:
+                item: Item
                 date: Date
                 image: Image
                 no_orders: 'There are no orders'
                 number_of_order: 'Number of order'
-                order_number: 'Order #'
+                order_number: '#'
                 orders: Orders
                 payment_state: 'Payment state'
                 shipping_state: 'Shipping state'
                 total: Total
+                status: Status
+                tracking_num: Tracking Number
+                reference: Ref
             view:
                 congratulations: CONGRATULATIONS!
                 continue_shopping: 'Continue shopping'
                 order: Order
                 shipping: 'Shipping:'
                 status: 'Status:'
+                reference: 'Please include your reference when transfer funds to us. Your reference is '
                 thanks: ' Thank you for your order! We are going to work to send you as fast as possible.'
                 total: Total
         payment:

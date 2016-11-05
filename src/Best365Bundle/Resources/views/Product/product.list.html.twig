@@ -12,7 +12,6 @@
 {% set end = perPage * page - 1 %}
 
 {% block prefooter %}
-    <hr>
     <div class="row content-container">
         <div id="pagination-header">
             {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}

@@ -15,15 +15,17 @@
 
     {% block container %}
     <div class="container">
-        {% block messages %}
-            {% include "@StoreTemplate/Modules/_message-list.html.twig" %}
-        {% endblock messages %}
-
         {% block topbar %}
             {% include '@Best365/Layout/_top.html.twig' %}
         {% endblock topbar %}
-        {% block content %}{% endblock content %}
-        {% block prefooter %}{% endblock prefooter %}
+        <hr>
+        <div class="content-container">
+            {% block messages %}
+                {% include "@Best365/Layout/_message.list.html.twig" %}
+            {% endblock messages %}
+            {% block content %}{% endblock content %}
+            {% block prefooter %}{% endblock prefooter %}
+        </div>
         {%  block footer %}
             {% include '@StoreTemplate/Modules/_footer.html.twig' %}
         {%  endblock footer %}
@@ -35,4 +37,5 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ asset('bundles/storetemplate/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/search.js') }}"></script>
+<script src="{{ asset('assets/js/new.js') }}"></script>
 {% endblock foot_script %}
