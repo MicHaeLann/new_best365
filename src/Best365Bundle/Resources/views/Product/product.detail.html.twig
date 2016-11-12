@@ -70,14 +70,14 @@
                             {{ 'template.store_template_bundle.order.item.units'|trans }}
                         </div>
                         <div class="col-sm-7">
-                            <input type="number" class="form-control product-unit unit-max-width" min="1" value="1" />
+                            <input type="number" id="quantity" name="quantity" class="form-control product-unit unit-max-width" min="1" value="1" />
                         </div>
                     </div>
                     {% if not useStock or purchasable.stock > 0 %}
-                        <a title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
+                        <a id="add-cart" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
                            class="btn btn-success full-width product-label"
                            data-test="add-product-{{ purchasable.id }}-to-cart"
-                           href="{{ url('best365_store_cart_add_purchasable', { id: purchasable.id }) }}">
+                           href="{{ url('best365_store_cart_add_purchasable', { id: purchasable.id, quantity: 1}) }}">
                             {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
                         </a>
                     {% else %}
