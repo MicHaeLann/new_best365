@@ -9,16 +9,18 @@
 {% endblock head_style %}
 
 {% block body %}
-    {% block header %}
-        {% include '@Best365/Layout/_header.html.twig' %}
-    {% endblock header %}
+    {% if app.request.attributes.get('_route') != "best365_store_login" and
+        app.request.attributes.get('_route') != "best365_store_register" %}
+        {% block header %}
+            {% include '@Best365/Layout/_header.html.twig' %}
+        {% endblock header %}
+    {% endif %}
 
     {% block container %}
     <div class="container">
         {% block topbar %}
             {% include '@Best365/Layout/_top.html.twig' %}
         {% endblock topbar %}
-        <hr>
         <div class="content-container">
             {% block messages %}
                 {% include "@Best365/Layout/_message.list.html.twig" %}
@@ -37,5 +39,6 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="{{ asset('bundles/storetemplate/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/search.js') }}"></script>
-<script src="{{ asset('assets/js/new.js') }}"></script>
+<script src="{{ asset('assets/js/checkout.js') }}"></script>
+<script src="{{ asset('assets/js/product.js') }}"></script>
 {% endblock foot_script %}

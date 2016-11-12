@@ -1,19 +1,24 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
 
 {% block prefooter %}
-<div class="row">
-    <div class="col-md-3">
-        <h3>
-            {{ "template.store_template_bundle.user.password.register"|trans }}
-        </h3>
-        {{ form_start(form) }}
-            {{ form_row(form.email, { "attr": { "class": "form-control"} }) }}
-            {{ form_row(form.firstname, { "attr": { "class": "form-control"} }) }}
-            {{ form_row(form.lastName, { "attr": { "class": "form-control"} }) }}
-            {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
-            {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
-            {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
-        {{ form_end(form) }}
-    </div>
+<div class="row login-content-container">
+    <p class="login-title">
+        {{ "template.store_template_bundle.user.login.create_new_account"|trans }}
+    </p>
+    {{ form_start(form) }}
+    {{ form_row(form.email, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.firstname, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.lastName, { "attr": { "class": "form-control"} }) }}
+    {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
+    {{ form_end(form) }}
+    <hr>
+    <p>
+        {{ 'template.store_template_bundle.user.login.registered'|trans }}
+        <a class="bold" href="{{ url('best365_store_login') }}">
+            {{ 'template.store_template_bundle.user.login.login_with_account'|trans }}
+        </a>
+    </p>
 </div>
 {% endblock %}
