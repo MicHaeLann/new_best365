@@ -1,7 +1,7 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
 
 
-{% block prefooter %}
+{% block content %}
 <div class="row content-container">
     <p class="page-title">
         {{ 'template.store_template_bundle.checkout.address.select_address'|trans }}
@@ -19,6 +19,20 @@
                         </option>
                     {% endfor %}
                 </select>
+                {% for shipping_method in shipping_methods  %}
+                    <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}_price" />
+                {% endfor %}
+                <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-sm-1 margin-top-5">
+                {{ 'template.store_template_bundle.checkout.price'|trans }}
+            </label>
+            <div class="col-sm-8">
+                <p id="shipping-price" class="margin-top-5">
+                </p>
             </div>
         </div>
         <div class="form-group row">

@@ -573,7 +573,10 @@ admin:
             subtotal: Subtotal
             title: Details
             units: Units
+            ref: Reference
+            tracking_num: Tracking Number
         edit: 'Edit #%id%'
+        saved: 'Order saved'
         field:
             billing_address: 'Billing address'
             both_addresses: 'Delivery & Billing address'
@@ -584,6 +587,7 @@ admin:
             id: 'Order #%id%'
             status: Status
             total: Total
+            reference: Ref
         from_user: '%name%''s orders'
         list: 'Order list'
         new: 'New order'

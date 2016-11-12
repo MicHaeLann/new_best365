@@ -34,7 +34,7 @@ security:
             pattern: ^/
             anonymous: true
             form_login:
-                login_path: store_login
+                login_path: best365_store_login
                 check_path: store_login_check
                 username_parameter: store_user_form_type_login[email]
                 password_parameter: store_user_form_type_login[password]
@@ -43,9 +43,9 @@ security:
                 target: store_homepage
                 invalidate_session: false
             oauth:
-                login_path: store_login
+                login_path: best365_store_login
                 use_forward: false
-                failure_path: store_login
+                failure_path: best365_store_login
                 oauth_user_provider:
                     service: elcodi_store.provider.oauth
                 resource_owners:

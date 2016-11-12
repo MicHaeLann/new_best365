@@ -117,6 +117,7 @@ class Best365CheckoutController extends CheckoutController
 		return $this->render(
 			'Best365Bundle:Checkout:checkout.shipping.html.twig',
 			[
+				'cart' => $cart,
 				'shipping_methods'      => $shippingMethods,
 				'addresses' => $addressesFormatted,
 				'form'      => $formView,
@@ -143,7 +144,6 @@ class Best365CheckoutController extends CheckoutController
 		$shipping_method = $request
 			->request
 			->get('shipping_method', false);
-
 
 		$address = $request
 			->request
@@ -203,13 +203,18 @@ class Best365CheckoutController extends CheckoutController
 			->get();
 		$cart->setShippingMethod($shipping_method);
 
+		$cartObjectManager = $this
+			->get('elcodi.object_manager.cart');
+		$cartObjectManager->persist($cart);
+		$cartObjectManager->flush();
+
 		// temporarily transfer payment only, may change later
-		$redirectionUrl = ($address)
+		$redirection_url = ($address)
 			? 'best365_store_checkout_finish'
 			: 'best365_store_checkout_shipping';
 
 		return $this->redirect(
-			$this->generateUrl($redirectionUrl)
+			$this->generateUrl($redirection_url)
 		);
 	}
 
@@ -231,12 +236,29 @@ class Best365CheckoutController extends CheckoutController
 		$this->get('best365.manager.payment')
 			->generateOrder();
 
-		// generate reference and bend reference to order
-		$order_id = $this
+		// update order shipping amount(not persisted in cart)
+		$cart = $this
 			->get('elcodi.wrapper.cart')
-			->get()
-			->getOrder()
-			->getId();
+			->get();
+
+		$cart_weight = $cart->getWeight() < 1000 ? 1000 : $cart->getWeight();
+
+		$shipping_method = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->getOneById($cart, $cart->getShippingMethod());
+
+		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight/1000);
+
+		$order = $cart->getOrder();
+		$order->setShippingAmount($shipping_amount);
+
+		$orderObjectManager = $this
+			->get('elcodi.object_manager.order');
+		$orderObjectManager->persist($order);
+		$orderObjectManager->flush();
+
+		// generate reference and bend reference to order
+		$order_id = $order->getId();
 		$reference = uniqid();
 
 		$this->get('best365.manager.order')

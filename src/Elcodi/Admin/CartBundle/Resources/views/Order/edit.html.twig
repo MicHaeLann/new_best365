@@ -59,7 +59,7 @@
 
 
 {% block content %}
-
+<form class="form" method="post">
     <div class="grid">
         <div class="col-8-12">
             <div class="pr-l">
@@ -158,13 +158,22 @@
                 {% endif %}
                 <hr class="mb-n"/>
                 <div class="box-none pb-n">
-                    <h3 class="fw-n">{{ 'admin.order.field.carrier'|trans }}</h3>
-                    <i class="icon-truck"></i>
+                    <h3 class="fw-n"><i class="icon-truck"></i> {{ 'admin.order.field.carrier'|trans }}{{ order.shippingMethod.carrierName }} ( {{ order.shippingAmount|print_convert_money() }} )</h3>
                     {# TODO: Extract carrier_name from the shown order #}
-                    {{ order.shippingMethod.carrierName }} ( {{ order.shippingAmount|print_money }} )
+                    <label class="form-control">{{ "admin.order.details.tracking_num"|trans }}</label>
+                    <input class="form-control" type="text" maxlength="255" name="tracking_num" value="{{ order.trackingNum }}" {% if order.trackingNum|length > 0 %} disabled {% endif %} />
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="grid fixed-bottom animated fade-in-up">
+        <div class="col-1-3">
+            &nbsp;
+        </div>
+        <div class="col-2-3">
+            <button id="submit-save" type="submit" class="button-primary button-fat pv-s mr-l">{{ 'ui.forms.save'|trans }}</button>
+            <a href="{{ path('admin_order_list') }}">{{ 'ui.forms.cancel'|trans }}</a>
+        </div>
+    </div>
+</form>
 {% endblock content %}

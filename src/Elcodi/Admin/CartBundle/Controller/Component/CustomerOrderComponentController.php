@@ -90,6 +90,11 @@ class CustomerOrderComponentController extends AbstractAdminController
         $orderByField,
         $orderByDirection
     ) {
+		foreach ($paginator as &$order) {
+			$this->get('best365.manager.order')
+				->getRecord($order);
+		}
+
         return [
             'paginator'        => $paginator,
             'page'             => $page,

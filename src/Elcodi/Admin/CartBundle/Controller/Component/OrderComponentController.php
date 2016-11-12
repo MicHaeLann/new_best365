@@ -86,6 +86,11 @@ class OrderComponentController extends AbstractAdminController
         $orderByField,
         $orderByDirection
     ) {
+    	foreach ($paginator as &$order) {
+			$this->get('best365.manager.order')
+				->getRecord($order);
+		}
+
         return [
             'paginator'        => $paginator,
             'page'             => $page,
@@ -127,6 +132,9 @@ class OrderComponentController extends AbstractAdminController
      */
     public function editComponentAction(OrderInterface $order)
     {
+    	$this->get('best365.manager.order')
+			->getRecord($order);
+
         return [
             'order' => $order,
         ];

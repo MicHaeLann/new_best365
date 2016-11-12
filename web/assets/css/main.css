@@ -8,6 +8,11 @@
 	text-align: left;
 }
 
+.align-center
+{
+	text-align: center;
+}
+
 .float-right
 {
 	float: right;
@@ -84,6 +89,16 @@ hr
 	max-width: 600px;
 }
 
+.login-title
+{
+	font-size: 24px;
+}
+
+.bold
+{
+	font-weight: bold;
+}
+
 .page-title
 {
 	font-size: 24px;
@@ -144,6 +159,14 @@ hr
 .search-text-border, .search-text-border:focus
 {
 	border: 1px solid #5cb85c;
+}
+
+.login-content-container
+{
+	margin: 0 auto;
+	width: 350px;
+	border: 1px solid #eee;
+	padding: 20px 40px;
 }
 
 .content-container

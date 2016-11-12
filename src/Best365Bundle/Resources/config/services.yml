@@ -27,7 +27,7 @@ services:
             - '@doctrine.orm.entity_manager'
 
     best365.manager.payment:
-      class: Best365Bundle\Manager
+      class: Best365Bundle\Manager\Best365PaymentManager
       arguments:
           - "@paymentsuite.freepayment.method_factory"
           - "@paymentsuite.bridge"

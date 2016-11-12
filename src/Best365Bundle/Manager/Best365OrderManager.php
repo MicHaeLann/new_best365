@@ -41,8 +41,24 @@ class Best365OrderManager
 			$tracking_num = $order_ext->getTrackingNum();
 		}
 
+		if (!empty($tracking_num)) {
+			$tracking_num = explode(',', $tracking_num);
+		}
+
 		$order->ref = $ref;
 		$order->trackingNum = $tracking_num;
+	}
+
+	public function updateExtRecord(OrderInterface $order, $tracking_num)
+	{
+		$order_ext = $this->em
+			->getRepository('Best365Bundle\Entity\OrderExt')
+			->findOneBy(array('orderId' => $order->getId()));
+
+		$order_ext->setTrackingNum($tracking_num);
+
+		$this->em->persist($order_ext);
+		$this->em->flush();
 	}
 
 }

@@ -90,6 +90,7 @@ template:
                 payment: Payment
                 select_address: 'Select delivery and billing address'
             back: Back
+            price: Price
             layout:
                 total: Total
                 your_cart: 'Your cart'
@@ -144,7 +145,7 @@ template:
                 shipping_state: 'Shipping state'
                 total: Total
                 status: Status
-                tracking_num: Tracking Number
+                tracking_num: Tracking
                 reference: Ref
             view:
                 congratulations: CONGRATULATIONS!
@@ -196,11 +197,12 @@ template:
                 my_orders: 'My orders'
                 profile: Profile
             login:
-                create_new_account: 'Create new account'
-                forgot_your_password: 'Have you lost your password?'
-                login_with_account: 'Login with your account'
+                create_new_account: 'Sign Up'
+                forgot_your_password: 'Forgot your password?'
+                login_with_account: 'Sign in'
                 login_with_social: 'Login with your social accounts'
-                unregistered: 'Unregistered?'
+                unregistered: 'New to Best365?'
+                registered: 'Already have an account?'
             nav:
                 create_new_account: 'Create new account'
                 login: Login

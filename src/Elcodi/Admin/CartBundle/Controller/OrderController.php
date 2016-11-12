@@ -93,7 +93,7 @@ class OrderController extends AbstractAdminController
      *      requirements = {
      *          "id" = "\d+",
      *      },
-     *      methods = {"GET"}
+     *      methods = {"GET", "POST"}
      * )
      * @Template
      *
@@ -107,6 +107,22 @@ class OrderController extends AbstractAdminController
      */
     public function editAction(OrderInterface $order)
     {
+    	if ($this->getRequest()->isMethod("POST")) {
+			if ($this->getRequest()->get('tracking_num') && !empty($this->getRequest()->get('tracking_num')) ) {
+				$this->get('best365.manager.order')
+					->updateExtRecord($order, $this->get('request')->get('tracking_num'));
+
+				$this->addFlash(
+					'success',
+					$this
+						->get('translator')
+						->trans('admin.order.saved')
+				);
+			}
+
+			return $this->redirect($this->generateUrl('admin_order_list'));
+		}
+
         $nextPaymentTransitions = $this
             ->get('elcodi.order.payment_states_machine')
             ->getAvailableStates(
@@ -148,6 +164,9 @@ class OrderController extends AbstractAdminController
 
         $billingAddress   = $order->getBillingAddress();
         $billingInfo      = $addressFormatter->toArray($billingAddress);
+
+		$this->get('best365.manager.order')
+			->getRecord($order);
 
         return [
             'order'                   => $order,

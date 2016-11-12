@@ -57,15 +57,15 @@ class Best365CartController extends CartController
 	 */
 	public function viewAction(FormView $formView, CartInterface $cart)
 	{
-		$cartCoupons = $this
-			->get('elcodi.manager.cart_coupon')
-			->getCartCoupons($cart);
+		// subtract shipping amount
+		$shipping_price = $this->get('elcodi.converter.currency')
+			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
+		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
 
 		return $this->render(
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
 				'cart'        => $cart,
-				'cartCoupons' => $cartCoupons,
 				'form'        => $formView,
 			]
 		);
@@ -194,19 +194,20 @@ class Best365CartController extends CartController
 	/**
 	 * Adds product into cart
 	 *
-	 * @param Request       $request Request object
-	 * @param CartInterface $cart    Cart
-	 * @param integer       $id      Purchasable Id
+	 * @param CartInterface $cart    	Cart
+	 * @param integer       $id      	Purchasable Id
+	 * @param integer		$quantity	Purchasable Quantity
 	 *
 	 * @return Response Redirect response
 	 *
 	 * @throws EntityNotFoundException Purchasable not found
 	 *
 	 * @Route(
-	 *      path = "/purchasable/{id}/add",
+	 *      path = "/purchasable/{id}/add/{quantity}",
 	 *      name = "best365_store_cart_add_purchasable",
 	 *      requirements = {
-	 *          "id": "\d+"
+	 *          "id": "\d+",
+	 *     		"quantity": "\d+"
 	 *      },
 	 *      methods = {"GET", "POST"}
 	 * )
@@ -220,7 +221,7 @@ class Best365CartController extends CartController
 	 *      name = "cart"
 	 * )
 	 */
-	public function addPurchasableAction(Request $request, CartInterface $cart, $id)
+	public function addAction(CartInterface $cart, $id, $quantity)
 	{
 		$purchasable = $this
 			->get('elcodi.repository.purchasable')
@@ -230,16 +231,12 @@ class Best365CartController extends CartController
 			throw new EntityNotFoundException('Purchasable not found');
 		}
 
-		$cartQuantity = (int) $request
-			->request
-			->get('add-cart-quantity', 1);
-
 		$this
 			->get('elcodi.manager.cart')
 			->addPurchasable(
 				$cart,
 				$purchasable,
-				$cartQuantity
+				(int) $quantity
 			);
 
 		return $this->redirect(
