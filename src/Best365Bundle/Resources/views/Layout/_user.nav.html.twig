@@ -2,17 +2,26 @@
     {% if customer.id %}
         <li>
             <a href="{{ url("best365_store_user") }}">
-                <strong data-test="logged-username">{{ customer.firstname }}</strong>
+                <span class="glyphicon glyphicon-user"></span>
+                {{ customer.firstname }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ url("best365_store_cart_view") }}">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                {{ "template.store_template_bundle.user.nav.cart"|trans }} ({{ cart.totalItemNumber }})
             </a>
         </li>
         <li>
             <a href="{{ url("store_logout") }}">
+                <span class="glyphicon glyphicon-log-out"></span>
                 {{ "template.store_template_bundle.user.nav.logout"|trans }}
             </a>
         </li>
     {% else %}
         <li>
             <a href="{{ url("best365_store_login") }}">
+                <span class="glyphicon glyphicon-log-in"></span>
                 {{ "template.store_template_bundle.user.nav.login"|trans }}
             </a>
         </li>

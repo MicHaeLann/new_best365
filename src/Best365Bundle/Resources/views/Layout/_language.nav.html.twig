@@ -1,6 +1,6 @@
 <li class="dropdown">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-		地区选择
+        {{ "template.store_template_bundle.nav.lang.selector"|trans }}
 		<span class="caret"></span>
 	</a>
 	<ul class="dropdown-menu">
@@ -15,11 +15,10 @@
             <a href="{{ url(routeName, routeParameters|merge({'_locale': language.iso })) }}">
                 {% if language.iso == 'zh-CN' %}
                 <img src="{{ asset('assets/img/china.png') }}" />
-                <span class="margin-left-10">中国</span>
                 {% else %}
                 <img src="{{ asset('assets/img/new_zealand.png') }}" />
-                <span class="margin-left-10">New Zealand</span>
                 {% endif %}
+                <span class="margin-left-10 {% if language.iso == activeLocale %} bold {% endif %}">{{ ("template.store_template_bundle.nav.lang." ~  language.iso)|trans }}</span>
                 <!-- <img src="{{ asset('assets/img/' ~ language.iso ~ '.png') }}" /> -->
                 <!-- <span class="margin-left-10">{{ language.iso }}</span> -->
             </a>

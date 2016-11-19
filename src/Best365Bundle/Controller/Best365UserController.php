@@ -39,10 +39,15 @@ class Best365UserController extends UserController
             ->get('elcodi.wrapper.customer')
             ->get();
 
+		$cart = $this
+			->get('elcodi.wrapper.cart')
+			->get();
+
         return $this->render(
             'Best365Bundle:Layout:_user.nav.html.twig',
             [
                 'customer' => $customer,
+				'cart' => $cart
             ]
         );
     }

@@ -6,6 +6,16 @@ store:
         previous: Previous
 template:
     store_template_bundle:
+        nav:
+            lang:
+                selector: Language
+                zh-CN: China
+                en: English
+            currency:
+                selector: Currency
+                CNY: RMB
+                NZD: NZD
+
         address:
             edit:
                 add_new_address: 'Add new address'
@@ -206,6 +216,7 @@ template:
             nav:
                 create_new_account: 'Create new account'
                 login: Login
+                cart: Shopping Cart
                 logout: Logout
             password:
                 password_sent: 'Password sent'
