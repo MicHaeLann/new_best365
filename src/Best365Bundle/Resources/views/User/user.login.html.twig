@@ -15,12 +15,11 @@
             {{ 'template.store_template_bundle.user.login.forgot_your_password'|trans }}
         </a>
     </div>
-    <hr>
-    <p>
+    <h6 class="unregistered-title">
         {{ 'template.store_template_bundle.user.login.unregistered'|trans }}
-        <a class="bold" href="{{ url('best365_store_register') }}">
-            {{ 'template.store_template_bundle.user.login.create_new_account'|trans }}
-        </a>
-    </p>
+    </h6>
+    <a class="btn btn-default full-width" href="{{ url('best365_store_register') }}">
+        {{ 'template.store_template_bundle.user.login.create_new_account'|trans }}
+    </a>
 </div>
 {% endblock %}
