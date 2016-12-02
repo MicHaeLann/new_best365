@@ -13,12 +13,11 @@
     {{ form_row(form.lastName, { "attr": { "class": "form-control"} }) }}
     {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
     {{ form_end(form) }}
-    <hr>
-    <p>
+    <h6 class="unregistered-title">
         {{ 'template.store_template_bundle.user.login.registered'|trans }}
-        <a class="bold" href="{{ url('best365_store_login') }}">
-            {{ 'template.store_template_bundle.user.login.login_with_account'|trans }}
-        </a>
-    </p>
+    </h6>
+    <a class="btn btn-default full-width" href="{{ url('best365_store_login') }}">
+        {{ 'template.store_template_bundle.user.login.login_with_account'|trans }}
+    </a>
 </div>
 {% endblock %}
