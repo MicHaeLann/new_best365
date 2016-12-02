@@ -6,6 +6,7 @@ store:
         previous: Previous
 template:
     store_template_bundle:
+        copy_right: '© 2002-2016, Best365.co.nz, Inc. or its affiliates'
         nav:
             lang:
                 selector: Language
@@ -15,7 +16,12 @@ template:
                 selector: Currency
                 CNY: RMB
                 NZD: NZD
-
+        greeting:
+            greeting: 'Hi, '
+            guest: 'Guest'
+        profile:
+            profile: 'Profile'
+            customer_service: 'Customer Service'
         address:
             edit:
                 add_new_address: 'Add new address'
@@ -123,10 +129,18 @@ template:
                 units: Units
                 value: Value
         footer:
-            follow_us: 'Follow us'
+            information: 'INFORMATION'
+            follow_us: 'FOLLOW US'
+            contact: 'CONTACT'
             latest_news: 'Latests news'
             more: More
             quick_links: 'Quick links'
+            time_saving: 'Time Saving'
+            time_saving_description: 'We save your time from every detail.'
+            secure_store: 'Secure Store'
+            secure_store_description: 'Safe as houses.'
+            customer_service: 'Customer Friendly'
+            customer_service_description: '7*24 thoughtful customer service.'
         header:
             menu: Menu
         order:
@@ -189,6 +203,8 @@ template:
                 product: Product
                 stock: Stock
                 usually_dispatched_24_hours: 'Usually dispatched within 24 hours'
+            trending: 'Hot Searches'
+            more: 'More'
         purchasable_pack:
             view_item:
                 purchasable_pack: Pack

@@ -53,6 +53,27 @@ class MappingCompilerPass extends AbstractMappingCompilerPass
 				'@Best365Bundle/Resources/config/doctrine/OrderExt.orm.yml',
 				true
 			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\Event',
+				'@Best365Bundle/Resources/config/doctrine/Event.orm.yml',
+				true
+			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\Promotion',
+				'@Best365Bundle/Resources/config/doctrine/Promotion.orm.yml',
+				true
+			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\Trends',
+				'@Best365Bundle/Resources/config/doctrine/Trends.orm.yml',
+				true
+			)
 //			->addEntityMapping(
 //				$container,
 //				'default',

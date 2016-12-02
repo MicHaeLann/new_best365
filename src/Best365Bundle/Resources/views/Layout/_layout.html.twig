@@ -3,6 +3,7 @@
 {% block head_style %}
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}" />
 
     <!-- External Font assets -->
     <link href="//fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css" />
@@ -15,29 +16,26 @@
             {% include '@Best365/Layout/_header.html.twig' %}
         {% endblock header %}
     {% endif %}
-
+    {% block top %}
+        {% include '@Best365/Layout/_top.html.twig' %}
+    {% endblock top %}
     {% block container %}
     <div class="container">
-        {% block topbar %}
-            {% include '@Best365/Layout/_top.html.twig' %}
-        {% endblock topbar %}
-        <div class="content-container">
-            {% block messages %}
-                {% include "@Best365/Layout/_message.list.html.twig" %}
-            {% endblock messages %}
-            {% block content %}{% endblock content %}
-            {% block prefooter %}{% endblock prefooter %}
-        </div>
-        {%  block footer %}
-            {% include '@Best365/Layout/_footer.html.twig' %}
-        {%  endblock footer %}
+        {% block messages %}
+            {% include "@Best365/Layout/_message.list.html.twig" %}
+        {% endblock messages %}
+        {% block content %}{% endblock content %}
+        {% block prefooter %}{% endblock prefooter %}
     </div>
     {% endblock container %}
+    {%  block footer %}
+        {% include '@Best365/Layout/_footer.html.twig' %}
+    {%  endblock footer %}
 {% endblock body %}
 
 {% block foot_script %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="{{ asset('bundles/storetemplate/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.0.0.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/search.js') }}"></script>
 <script src="{{ asset('assets/js/checkout.js') }}"></script>
 <script src="{{ asset('assets/js/product.js') }}"></script>

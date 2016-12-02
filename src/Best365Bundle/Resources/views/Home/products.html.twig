@@ -1,0 +1,193 @@
+<div class="row margin-top-30">
+    <div class="promotion-title float-left">
+        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}"  class="category-font">
+            <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+            {{ products.category.name }}
+        </a>
+    </div>
+    <div class="float-right">
+        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}"  class="category-font">
+            {{ 'template.store_template_bundle.product.more'|trans }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+<div class="row promotion-cell">
+    <div class="col-sm-2 padding-0">
+        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}">
+            <img src="{{ asset('assets/img/promotion_' ~ products.category.id ~ '.png') }}" height="400" />
+        </a>
+    </div>
+    <div class="col-sm-8  padding-0">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6 promotion-item-top promotion-padding">
+                    {% set item = products.products[0] %}
+                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                    {% set productName = item|purchasable_name %}
+                    {% set productName =  productName|length > 20 ? productName|slice(0, 20) ~ '...' : productName %}
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                    <div class="promotion-product-title margin-top-10">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+                <div class="col-sm-6  promotion-item-top promotion-padding">
+                    {% set item = products.products[1] %}
+                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                    {% set productName = item|purchasable_name %}
+                    {% set productName =  productName|length > 20 ? productName|slice(0, 20) ~ '...' : productName %}
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                    <div class="promotion-product-title margin-top-10">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+            </div>
+            <div class="row promotion-item-bottom">
+                {% set item = products.products[2] %}
+                {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                {% set productName = item|purchasable_name %}
+                <div class="col-sm-6 promotion-bottom-title-padding">
+                    <div class="promotion-product-title">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+                <div class="col-sm-6 promotion-bottom-image-padding">
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-6 promotion-item-top promotion-padding">
+                    {% set item = products.products[3] %}
+                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                    {% set productName = item|purchasable_name %}
+                    {% set productName =  productName|length > 20 ? productName|slice(0, 20) ~ '...' : productName %}
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                    <div class="promotion-product-title margin-top-10">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+                <div class="col-sm-6  promotion-item-top promotion-padding">
+                    {% set item = products.products[4] %}
+                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                    {% set productName = item|purchasable_name %}
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                    <div class="promotion-product-title margin-top-10">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+            </div>
+            <div class="row promotion-item-bottom">
+                {% set item = products.products[5] %}
+                {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+                {% set productName = item|purchasable_name %}
+                <div class="col-sm-6 promotion-bottom-title-padding">
+                    <div class="promotion-product-title">
+                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+                    </div>
+                    <div class="main-theme-font margin-top-10 align-center">
+                        {{ item.price|print_convert_money() }}
+                    </div>
+                </div>
+                <div class="col-sm-6 promotion-bottom-image-padding">
+                    <a href="{{ productRoute }}" target="_blank">
+                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                        {% set validImage = item|valid_image %}
+                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                            'width': 120,
+                            'height': 120,
+                            'type': 5
+                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2  padding-0">
+        <div class="promotion-padding promotion-item-top promotion-item-right">
+            {% set item = products.products[6] %}
+            {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+            {% set productName = item|purchasable_name %}
+            {% set productName =  productName|length > 20 ? productName|slice(0, 20) ~ '...' : productName %}
+            <a href="{{ productRoute }}" target="_blank">
+                {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                {% set validImage = item|valid_image %}
+                <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                    'width': 120,
+                    'height': 120,
+                    'type': 5
+                }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+            </a>
+            <div class="promotion-product-title margin-top-10">
+                <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+            </div>
+            <div class="main-theme-font margin-top-10 align-center">
+                {{ item.price|print_convert_money() }}
+            </div>
+        </div>
+        <div class="promotion-item-bottom promotion-item-right padding-top-15 padding-left-30">
+            <h4 class="theme-font">{{ 'template.store_template_bundle.product.trending'|trans }}</h4>
+            {% for trending in products.trends %}
+                <a href="{{ url('best365_store_product_search', { field: trending.trends }) }}" class="trends-item">
+                    {{ trending.trends }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>

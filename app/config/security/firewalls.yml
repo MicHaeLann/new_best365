@@ -38,9 +38,10 @@ security:
                 check_path: store_login_check
                 username_parameter: store_user_form_type_login[email]
                 password_parameter: store_user_form_type_login[password]
+                default_target_path: best365_store_homepage
             logout:
                 path:   store_logout
-                target: store_homepage
+                target: best365_store_homepage
                 invalidate_session: false
             oauth:
                 login_path: best365_store_login

@@ -1,0 +1,21 @@
+Best365Bundle\Entity\Trends:
+    type: entity
+    table: null
+    repositoryClass: Best365Bundle\Repository\TrendsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        categoryId:
+            type: integer
+            column: category_id
+        trends:
+            type: string
+            length: 255
+        iso:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

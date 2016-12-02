@@ -4,32 +4,46 @@ services:
 #        arguments: ["@service_id", "plain_value", %parameter%]
 
     best365.manager.membership:
-      class: Best365Bundle\Manager\MembershipManager
-      arguments:
-        - '@doctrine.orm.entity_manager'
+        class: Best365Bundle\Manager\MembershipManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
     best365.manager.customer:
-      class: Best365Bundle\Manager\Best365CustomerManager
-      arguments:
-        - '@doctrine.orm.entity_manager'
+        class: Best365Bundle\Manager\Best365CustomerManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
     best365.manager.purchasable:
-      class: Best365Bundle\Manager\PurchasableManager
-      arguments:
-        - '@doctrine.orm.entity_manager'
+        class: Best365Bundle\Manager\PurchasableManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
 
     best365.manager.address:
-      class: Best365Bundle\Manager\Best365AddressManager
+        class: Best365Bundle\Manager\Best365AddressManager
 
     best365.manager.order:
-          class: Best365Bundle\Manager\Best365OrderManager
-          arguments:
+        class: Best365Bundle\Manager\Best365OrderManager
+        arguments:
             - '@doctrine.orm.entity_manager'
 
     best365.manager.payment:
-      class: Best365Bundle\Manager\Best365PaymentManager
-      arguments:
-          - "@paymentsuite.freepayment.method_factory"
-          - "@paymentsuite.bridge"
-          - "@paymentsuite.event_dispatcher"
+        class: Best365Bundle\Manager\Best365PaymentManager
+        arguments:
+            - "@paymentsuite.freepayment.method_factory"
+            - "@paymentsuite.bridge"
+            - "@paymentsuite.event_dispatcher"
 
+    best365.manager.event:
+        class: Best365Bundle\Manager\EventManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    best365.manager.promotion:
+        class: Best365Bundle\Manager\PromotionManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    best365.manager.trends:
+        class: Best365Bundle\Manager\TrendsManager
+        arguments:
+            - '@doctrine.orm.entity_manager'

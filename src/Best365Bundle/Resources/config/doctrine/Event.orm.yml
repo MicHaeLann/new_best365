@@ -1,0 +1,18 @@
+Best365Bundle\Entity\Event:
+    type: entity
+    table: null
+    repositoryClass: Best365Bundle\Repository\EventRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        link:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

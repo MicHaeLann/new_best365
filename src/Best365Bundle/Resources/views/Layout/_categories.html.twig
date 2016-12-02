@@ -1,0 +1,44 @@
+{% if categories.entity %}
+    <div>
+        <a href="{{ url('best365_store_category_purchasables_list', { id: categories.entity.id }) }}" class="main-theme-font" >
+            {{ categories.entity.name }}
+            <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
+    </div>
+    {% set j = 0 %}
+    {% for child in categories.children %}
+        {% if j % 2 == 0 %}
+            <div>
+        {% endif %}
+        <a href="{{ url('best365_store_category_purchasables_list', { id: child.entity.id }) }}" class="font-11 sub-theme-font {% if j % 2 == 1 %}margin-left-10{% endif %}" >{{ child.entity.name }}</a>
+        {% if j % 2 == 1 or j == categories.children|length - 1 %}
+            </div>
+        {% endif %}
+        {% set j = j + 1 %}
+    {% endfor %}
+{% else %}
+    {% set i = 0 %}
+    {% for category in categories %}
+        {% if i > 0 %}
+            <hr class="category-hr">
+        {% endif %}
+        <div>
+            <a href="{{ url('best365_store_category_purchasables_list', { id: category.entity.id }) }}" class="main-theme-font" >
+                {{ category.entity.name }}
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+        </div>
+        {% set j = 0 %}
+        {% for child in category.children %}
+            {% if j % 2 == 0 %}
+            <div>
+            {% endif %}
+            <a href="{{ url('best365_store_category_purchasables_list', { id: child.entity.id }) }}" class="font-11 sub-theme-font {% if j % 2 == 1 %}margin-left-10{% endif %}" >{{ child.entity.name }}</a>
+            {% if j % 2 == 1 or j == category.children|length - 1 %}
+            </div>
+            {% endif %}
+            {% set j = j + 1 %}
+        {% endfor %}
+        {% set i = i + 1 %}
+    {% endfor %}
+{% endif %}

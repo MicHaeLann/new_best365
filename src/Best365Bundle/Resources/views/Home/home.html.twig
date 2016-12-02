@@ -1,0 +1,20 @@
+{% extends "@Best365/Layout/_layout.html.twig" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
+            </div>
+            <div class="col-sm-8">
+                {% include "@Best365/Home/events.html.twig" with {"events": events} %}
+            </div>
+            <div class="col-sm-2">
+                {% include "@Best365/Home/profile.html.twig" with {"events": events} %}
+            </div>
+        </div>
+        {% for product in products %}
+            {% include "@Best365/Home/products.html.twig" with {"products": product} %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -46,7 +46,7 @@ class Best365SecurityController extends SecurityController
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
         if ($authorizationChecker->isGranted('ROLE_CUSTOMER')) {
-            return $this->redirectToRoute('store_homepage');
+            return $this->redirectToRoute('best365_store_homepage');
         }
 
         // Checking for authentication errors in session
@@ -102,7 +102,7 @@ class Best365SecurityController extends SecurityController
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
         if ($authorizationChecker->isGranted('ROLE_CUSTOMER')) {
-            return $this->redirectToRoute('store_homepage');
+            return $this->redirectToRoute('best365_store_homepage');
         }
         
         // register user if form validation match
@@ -118,7 +118,7 @@ class Best365SecurityController extends SecurityController
 			// initialize customer membership
 			$this->get('best365.manager.customer')->initializeMembership($customer);
 
-            return $this->redirectToRoute('store_homepage');
+            return $this->redirectToRoute('best365_store_homepage');
         }
 
         return $this->render(

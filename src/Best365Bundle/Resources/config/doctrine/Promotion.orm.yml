@@ -1,0 +1,18 @@
+Best365Bundle\Entity\Promotion:
+    type: entity
+    table: null
+    repositoryClass: Best365Bundle\Repository\PromotionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        categoryId:
+            type: integer
+            column: category_id
+        purchasableId:
+            type: integer
+            column: purchasable_id
+    lifecycleCallbacks: {  }

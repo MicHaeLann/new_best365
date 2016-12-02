@@ -1,0 +1,33 @@
+<div id="slide-bar" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        {% set i = 0 %}
+        {% for event in events %}
+            <li data-target="#slide-bar" data-slide-to="{{ i }}" {% if i == 0 %} class="active"{% endif %}></li>
+            {% set i = i + 1 %}
+        {% endfor %}
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        {% set i = 0 %}
+        {% for event in events %}
+        <div class="item{% if i == 0 %} active{% endif %}">
+            <a target="_blank" href="{{ event.link }}">
+                <img src="{{ asset('assets/img/event_' ~ event.id ~ '.png') }}" alt="...">
+            </a>
+        </div>
+        {% set i = i + 1 %}
+        {% endfor %}
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control event-chevron-background" href="#slide-bar" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control event-chevron-background" href="#slide-bar" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
