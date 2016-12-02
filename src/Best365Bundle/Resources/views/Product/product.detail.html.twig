@@ -1,98 +1,86 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
 {% block prefooter %}
-    <div class="row content-container">
-        <div class="list-group col-sm-2">
-            <div class="list-group-item list-group-item-action list-group-item-success">
-                <h4 class="list-group-item-heading list-group-item-success">
-                    {{ "template.store_template_bundle.category.view.category"|trans }}
-                </h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
             </div>
-            <div class="list-group-item list-group-item-action list-group-item-success">
-                <h5 class="list-group-item-heading">
-                    <a class="list-group-item-success" href="{{ url('store_category_purchasables_list', { slug: categories.parent.slug, id: categories.parent.id }) }}">{{ categories.parent.name }}</a>
-                </h5>
-                {% for child in categories.child %}
-                <p class="list-group-item-text">
-                    <a class="list-group-item-success" href="{{ url('store_category_purchasables_list', { slug: child.slug, id: child.id }) }}">{{ child.name }}</a>
-                </p>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="col-sm-10">
-            <div id="nav">
-                <a href="{{ url('store_homepage') }}" class="product-font">
-                    <span class="glyphicon glyphicon-home"></span> <span>Best365</span>
-                </a>
-                <span class="product-font"> > </span>
-                <a class="product-font" href="{{ url('store_category_purchasables_list', { slug: purchasable.principalCategory.slug, id: purchasable.principalCategory.id }) }}">{{ purchasable.principalCategory }}</a>
-                <span class="product-font"> > </span>
-                <strong class="product-font">{{ purchasable.name }}</strong>
-            </div>
-            <div class="row margin-top-10">
-                {% set productName = purchasable|purchasable_name %}
-                {% set validImage = purchasable|valid_image %}
-                <div class="col-sm-5">
-                    {% block product_image %}
-                        <a href="{{ purchasable.images|length > 0 ? purchasable.images.first|resize({
-                            'width': 1024,
-                            'height': 1024,
-                            'type': 5
-                        }) : '//placehold.it/772x604' }}" alt="{{ purchasable.name }}" class="product-thumbnail">
-                            {% if purchasable.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.view_item.offer'|trans }}</span> {% endif %}
-                            <img src="{{ purchasable.images|length > 0 ? purchasable.images.first|resize({
-                                'width': 300,
-                                'height': 300,
+            <div class="col-sm-10">
+                <div id="nav">
+                    <a href="{{ url('best365_store_homepage') }}" class="product-font">
+                        <span class="glyphicon glyphicon-home"></span> <span>Best365</span>
+                    </a>
+                    <span class="product-font"> > </span>
+                    <a class="product-font" href="{{ url('best365_store_category_purchasables_list', { id: purchasable.principalCategory.id }) }}">{{ purchasable.principalCategory }}</a>
+                    <span class="product-font"> > </span>
+                    <strong class="product-font">{{ purchasable.name }}</strong>
+                </div>
+                <div class="row margin-top-10">
+                    {% set productName = purchasable|purchasable_name %}
+                    {% set validImage = purchasable|valid_image %}
+                    <div class="col-sm-5">
+                        {% block product_image %}
+                            <a href="{{ purchasable.images|length > 0 ? purchasable.images.first|resize({
+                                'width': 1024,
+                                'height': 1024,
                                 'type': 5
-                            }) : '//placehold.it/772x604' }}" alt="{{ purchasable.name }}"/>
-                        </a>
-                    {% endblock %}
+                            }) : '//placehold.it/772x604' }}" alt="{{ purchasable.name }}" class="product-thumbnail">
+                                {% if purchasable.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.view_item.offer'|trans }}</span> {% endif %}
+                                <img src="{{ purchasable.images|length > 0 ? purchasable.images.first|resize({
+                                    'width': 300,
+                                    'height': 300,
+                                    'type': 5
+                                }) : '//placehold.it/772x604' }}" alt="{{ purchasable.name }}"/>
+                            </a>
+                        {% endblock %}
+                    </div>
+                    <div class="col-sm-5 padding-0-30">
+                        <h3 class="margin-top-10">{{ purchasable.name }}</h3>
+                        <div class="row">
+                            <div class="col-sm-2 product-price-label">
+                                {{ 'template.store_template_bundle.order.item.price'|trans }}
+                            </div>
+                            <div class="col-sm-7">
+                                <h3 class="product-label product-font">{{ purchasable.price|print_convert_money() }}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 product-label">
+                                {{ 'admin.product.section.stock.title'|trans }}
+                            </div>
+                            <div class="col-sm-7 product-label">
+                                <span>{{ purchasable.stock }}</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2 product-label">
+                                {{ 'template.store_template_bundle.order.item.units'|trans }}
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="number" id="quantity" name="quantity" class="form-control product-unit unit-max-width" min="1" value="1" />
+                            </div>
+                        </div>
+                        {% if not useStock or purchasable.stock > 0 %}
+                            <a id="add-cart" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
+                               class="btn btn-success full-width product-label"
+                               data-test="add-product-{{ purchasable.id }}-to-cart"
+                               href="{{ url('best365_store_cart_add_purchasable', { id: purchasable.id, quantity: 1}) }}">
+                                {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+                            </a>
+                        {% else %}
+                            <a title="{{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}"
+                               class="btn btn-warning full-width product-label"
+                               href="#">
+                                {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
+                            </a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="col-sm-5 padding-0-30">
-                    <h3 class="margin-top-10">{{ purchasable.name }}</h3>
-                    <div class="row">
-                        <div class="col-sm-2 product-price-label">
-                            {{ 'template.store_template_bundle.order.item.price'|trans }}
-                        </div>
-                        <div class="col-sm-7">
-                            <h3 class="product-label product-font">{{ purchasable.price|print_convert_money() }}</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2 product-label">
-                            {{ 'admin.product.section.stock.title'|trans }}
-                        </div>
-                        <div class="col-sm-7 product-label">
-                            <span>{{ purchasable.stock }}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2 product-label">
-                            {{ 'template.store_template_bundle.order.item.units'|trans }}
-                        </div>
-                        <div class="col-sm-7">
-                            <input type="number" id="quantity" name="quantity" class="form-control product-unit unit-max-width" min="1" value="1" />
-                        </div>
-                    </div>
-                    {% if not useStock or purchasable.stock > 0 %}
-                        <a id="add-cart" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
-                           class="btn btn-success full-width product-label"
-                           data-test="add-product-{{ purchasable.id }}-to-cart"
-                           href="{{ url('best365_store_cart_add_purchasable', { id: purchasable.id, quantity: 1}) }}">
-                            {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                        </a>
-                    {% else %}
-                        <a title="{{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}"
-                           class="btn btn-warning full-width product-label"
-                           href="#">
-                            {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                        </a>
-                    {% endif %}
+                <h4 class="product-description-label">{{ 'admin.product.field.description.title'|trans }}</h4>
+                <hr class="product-description-hr">
+                <div>
+                    {{ purchasable.description }}
                 </div>
-            </div>
-            <h4 class="product-description-label">{{ 'admin.product.field.description.title'|trans }}</h4>
-            <hr class="product-description-hr">
-            <div>
-                {{ purchasable.description }}
             </div>
         </div>
     </div>

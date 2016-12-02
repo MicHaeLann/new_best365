@@ -11,31 +11,33 @@
 {% set start = perPage * (page - 1) %}
 {% set end = perPage * page - 1 %}
 
-{% block prefooter %}
-    <div class="row content-container">
-        <div id="pagination-header">
-            {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}
-        </div>
-        <div id="list" class="margin-top-10">
-            {% set currentColumn = 1 %}
-            {% set i = 0 %}
-            {% for purchasable in purchasables %}
-                {% if i >= start and i <= end %}
-                    {% if currentColumn == 1 %}
-                        <div class="row">
+{% block content %}
+    <div class="container">
+        <div class="row padding-0-30">
+            <div id="pagination-header">
+                {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+            </div>
+            <div id="list" class="margin-top-10">
+                {% set currentColumn = 1 %}
+                {% set i = 0 %}
+                {% for purchasable in purchasables %}
+                    {% if i >= start and i <= end %}
+                        {% if currentColumn == 1 %}
+                            <div class="row">
+                        {% endif %}
+                        {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable, "perLine": perLine, "line": line } %}
+                        {% set currentColumn = currentColumn + 1 %}
+                        {% if currentColumn > perLine %}
+                            </div>
+                            {% set currentColumn = 1 %}
+                        {% endif %}
                     {% endif %}
-                    {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable, "perLine": perLine, "line": line } %}
-                    {% set currentColumn = currentColumn + 1 %}
-                    {% if currentColumn > perLine %}
-                        </div>
-                        {% set currentColumn = 1 %}
-                    {% endif %}
-                {% endif %}
-                {% set i = i + 1 %}
-            {% endfor %}
-        </div>
-        <div id="pagination-footer">
-            {% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </div>
+            <div id="pagination-footer">
+                {% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+            </div>
         </div>
     </div>
 {% endblock %}

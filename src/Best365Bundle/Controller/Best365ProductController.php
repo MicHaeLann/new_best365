@@ -163,25 +163,23 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function getCategoryTree(Purchasable $purchasable)
 	{
+		// store category tree
+		$categories = $this
+			->get('elcodi_store.store_category_tree')
+			->load();
+
 		// product category
-		$category = $purchasable->getPrincipalCategory();
-		$parent_category = $category->getParent();
+		$principal_category = $purchasable->getPrincipalCategory();
+		$parent_category = $principal_category->getParent();
 
 		if (empty($parent_category)) {
-			$parent_category = $category;
-			$children_categories = $this
-				->get('elcodi.repository.category')
-				->getChildrenCategories($category);
-		} else {
-			$children_categories = $this
-				->get('elcodi.repository.category')
-				->getChildrenCategories($parent_category);
+			$parent_category = $principal_category;
 		}
 
-		$tree = new \StdClass();
-		$tree->parent = $parent_category;
-		$tree->child = $children_categories;
-
-		return $tree;
+	 	foreach ($categories as $category) {
+	 		if ($category['entity']['id'] == $parent_category->getId()) {
+				return $category;
+			}
+		}
 	}
 }
