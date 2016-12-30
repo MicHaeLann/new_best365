@@ -6,12 +6,16 @@ store:
         previous: Previous
 template:
     store_template_bundle:
+        search:
+            search_place_holder: 'Search for...'
+            searching: 'Searching'
         copy_right: '© 2002-2016, Best365.co.nz, Inc. or its affiliates'
         nav:
             lang:
                 selector: Language
-                zh-CN: China
+                zh-CN: Simplified Chinese
                 en: English
+                fr: French
             currency:
                 selector: Currency
                 CNY: RMB
@@ -22,6 +26,8 @@ template:
         profile:
             profile: 'Profile'
             customer_service: 'Customer Service'
+            membership: 'Membership'
+            current_point: 'Current Point'
         address:
             edit:
                 add_new_address: 'Add new address'
@@ -187,11 +193,14 @@ template:
             security_code: 'Security Code'
             year: Year
         product:
+            nav:
+                home: Best365
             also_like: 'You might also like...'
             item:
                 offer: Offer
             list:
                 no_products_in_category: 'Sorry, we don''t have products for this category'
+                no_products: 'Oops! No product matched your query.'
             view_item:
                 add_to_cart: 'Add to cart'
                 delivery: Delivery

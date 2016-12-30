@@ -1,0 +1,8 @@
+elcodi_plugin:
+    twitter:
+        description: '整合Twitter'
+        field:
+            twitter_account:
+                label: 'Twitter账号'
+                placeholder: '例：jondoe'
+        name: Twitter

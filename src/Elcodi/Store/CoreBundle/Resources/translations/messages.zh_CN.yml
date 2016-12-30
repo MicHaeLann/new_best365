@@ -1,0 +1,102 @@
+store:
+    address:
+        billing: 账单
+        delete:
+            response_ok: '地址已删除'
+        delivery: 邮寄
+        form:
+            fields:
+                address:
+                    label: 地址
+                addressMore:
+                    label: '附加地址（可选）'
+                city:
+                    label: 城市
+                comments:
+                    label: 备注
+                country:
+                    label: 国家
+                mobile:
+                    label: 手机
+                name:
+                    label: '地址名'
+                phone:
+                    label: 电话
+                postalcode:
+                    label: 邮编
+                province:
+                    label: 省
+                recipientName:
+                    label: '收件人名'
+                recipientSurname:
+                    label: '收件人姓氏'
+                send:
+                    label: '保存'
+                state:
+                    label: 省
+        save:
+            response_ok: '地址已保存'
+        select_address_type: '选择 %1 地址'
+    coupon:
+        applied:
+            message_ko: '无法添加购物券'
+            message_ok: '成功添加购物券'
+        form:
+            fields:
+                apply:
+                    label: '添加购物券'
+                code:
+                    label: '购物券号码'
+    error:
+        page_not_found: 'So, you''ve discovered our secret plans to take on the world.'
+        page_not_found_title: '页面未找到'
+        store_is_disabled: '网站暂时无法使用'
+        store_is_under_construction: '网站维护中'
+        store_unavailable_title: '网站暂时无法使用'
+    login:
+        form:
+            fields:
+                email:
+                    label: 邮件
+                password:
+                    label: 密码
+                send:
+                    label: 确定
+        wrong_combination: '邮件密码不匹配。'
+    pagination:
+        current: 当前页
+        first: 首页
+        last: 尾页
+        next: 下一页
+        previous: 上一页
+    recovery:
+        form:
+            fields:
+                email:
+                    label: 邮件
+                password:
+                    label: 密码
+                remember:
+                    label: 保存
+                repeat_password:
+                    label: '重复密码'
+                send:
+                    label: 发送
+    user:
+        form:
+            fields:
+                email:
+                    label: 邮件
+                firstname:
+                    label: 名
+                lastname:
+                    label: 姓
+                password:
+                    label: 密码
+                repeat_password:
+                    label: '重复密码'
+                send:
+                    label: 确定
+        profile:
+            save:
+                message_ok: '个人信息已保存'

@@ -1,0 +1,14 @@
+common:
+    order:
+        states:
+            cancelled: 已取消
+            delivered: 已送达
+            'in delivery': '寄送中'
+            initial: '新订单'
+            paid: 已付款
+            preparing: 准备中
+            processed: 进行中
+            refunded: 已退款
+            returned: 已退货
+            title: 历史
+            unpaid: 未付款

@@ -1,0 +1,32 @@
+elcodi_plugin:
+    store_wizard:
+        description: "向导用于建立并设置网站。\n设置实体店地址及法人，\n添加分类，产品，生产商信息，\n并设置快递及支付信息。\n"
+        disable_under_construction: '变更网站<strong>维护状态</strong>以运营网站'
+        done: 结束！
+        estimated_time: '预计时间%1分'
+        first_finish_wizard: '完成以下步骤以运营网站'
+        go_enable_store: '进行设置并变更网站维护状态。'
+        go_general_settings: '进行设置'
+        go_next_step: '下一步'
+        name: '网站向导'
+        ready_launch: '网站已可用！'
+        step1:
+            action: '建立商品'
+            description: '网站最重要的... '
+            title: '添加商品'
+        step2:
+            action: '添加地址'
+            description: '网站上线前需要添加实体店地址。'
+            title: '设置地址'
+        step3:
+            action: '设置支付方式'
+            description: '只需告诉我们在哪里，怎样去支付，剩下的我们来解决。'
+            title: '设置支付方式'
+        step4:
+            action_carrier: '添加快递'
+            action_range: '设置快递'
+            description: '需要设置快递费用（即便免费）'
+            title: '设置快递'
+        step_finished: '<strong>太棒了！</strong>又近了一步！'
+        time_to_sell: '还剩<strong>%1步</strong>网站即可上线'
+        welcome_title: '欢迎来到属于你的网站'

@@ -1,0 +1,9 @@
+elcodi_plugin:
+    stripe:
+        description: '<p>设置Stripe以便顾客可以使用信用卡支付。<br/>首先请创建Stripe账号并绑定公钥及私钥。</p><p>没有Stripe账号？</p> <a href=''https://dashboard.stripe.com/register'' class=''button'' target=''_blank''>创建账号</a>'
+        field:
+            private_key:
+                label: '私钥'
+            public_key:
+                label: '公钥'
+        name: Stripe

@@ -1,0 +1,8 @@
+elcodi_plugin:
+    facebook:
+        description: '整合Facebook'
+        field:
+            facebook_account:
+                label: 'Facebook账号'
+                placeholder: '例：jondoe'
+        name: Facebook

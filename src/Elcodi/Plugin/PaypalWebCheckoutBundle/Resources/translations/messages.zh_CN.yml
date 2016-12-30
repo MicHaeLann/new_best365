@@ -1,0 +1,8 @@
+elcodi_plugin:
+    paypal_web_checkout:
+        description: '<p>设置Paypal以便用户使用paypal账号进行支付。首先请创建并绑定你的Paypal账户。</p><p>没有Paypal账号？</p> <a href=''https://www.paypal.com/webapps/mpp/merchant'' class=''button'' target=''_blank''>创建账户</a>'
+        field:
+            business:
+                label: 'Paypal账户'
+                placeholder: john@doo.com
+        name: 'Paypal支付'

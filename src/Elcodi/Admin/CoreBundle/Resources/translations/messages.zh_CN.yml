@@ -1,0 +1,1096 @@
+admin:
+    UI:
+        show_code: '显示HTML代码'
+        show_visual: '隐藏HTML代码'
+    address:
+        edit:
+            billing_address: '网站账单地址'
+            description: '网站寄出账单显示地址。应为公司物理地址。'
+        field:
+            address:
+                placeholder: '例：xx街x号'
+                title: 地址
+            address_more:
+                placeholder: '例：xx公司'
+                title: '附加地址（可选）'
+            cif:
+                title: 'CIF / NIF'
+            city:
+                title: 城市
+            comments:
+                placeholder: '例：范例地址'
+                title: 备注
+            country:
+                title: 国家
+            email:
+                placeholder: '例：john.doe@mail.com'
+                title: 邮件
+            isCompany:
+                title: '是否为公司？'
+                value:
+                    company: 公司
+                    individual: 个人
+            mobile:
+                placeholder: '例：555 555 555'
+                title: 手机
+            phone:
+                placeholder: '例：935 555 555'
+                title: 电话
+            postalcode:
+                placeholder: '例：08080'
+                title: '邮编'
+            province:
+                title: 省
+            recipient_name:
+                placeholder: '例：John'
+                title: '名／公司'
+            recipient_surname:
+                placeholder: '例：Doe'
+                title: '姓（公司时可选）'
+            save: '保存地址'
+            state:
+                title: 省
+        plural: 地址
+        saved: '地址已保存'
+        select:
+            placeholder: '选择'
+        single: 地址
+    admin_user:
+        edit: '编辑 "%name%"'
+        error:
+            cant_disable_yourself: '无法注销自己的账户'
+            cant_remove_yourself: '无法删除自己的账户'
+        list: '管理员列表'
+        new: '新建管理员'
+        plural: 管理员
+        saved: '变更已保存'
+        section:
+            contact:
+                description: '管理员联系方式.'
+                title: '联系方式'
+            login:
+                description: '不可使用重复邮箱地址。'
+                title: '登录信息'
+            password:
+                description: '变更管理员密码'
+                title: 密码
+            status:
+                description: '可设置管理员状态'
+                title: '用户状态'
+        single: 管理员
+    attribute:
+        edit: '变更 "%name%"'
+        field:
+            enabled:
+                title: 状态
+            name:
+                placeholder: '例：颜色'
+                title: 名称
+                values: 价格
+        list: '属性列表'
+        new: '新属性'
+        plural: 属性
+        saved: '属性已保存'
+        section:
+            basic:
+                description: '定义属性键值（用逗号隔开）。'
+                title: '基本信息'
+            visibility:
+                description: '设置属性可见或隐藏。'
+                title: 可见
+        single: 属性
+    blog:
+        plural: 文章
+        single: 文章
+    blog_post:
+        edit: '变更 "%name%"'
+        field:
+            content:
+                placeholder: '例：示例文章。'
+                title: 内容
+            enabled:
+                title: Enabled
+            link:
+                title: 链接
+            metadescription:
+                placeholder: '例：示例文章。'
+            metakeywords:
+                placeholder: '例：文章，示例'
+            metatitle:
+                placeholder: '例：我的文章'
+            path:
+                customize: '个性化'
+                placeholder: '例：my/awesome/blog-post'
+                title: 路径
+            publication_date:
+                title: '发布日期'
+            title:
+                placeholder: '例：我的文章'
+                title: 标题
+        in_store: '网站中查找'
+        list: '文章列表'
+        new: '新建文章'
+        plural: '文章'
+        saved: '文章已发布。'
+        section:
+            basic:
+                description: '设置文章标题使其易于顾客理解。'
+                title: '基本信息'
+            visibility:
+                description: '设置文章可见或隐藏'
+                title: 可见
+        show_metrics: '显示段落'
+        single: '文章'
+    carrier:
+        action:
+            add_shipping_range: '添加'
+        edit: '变更 "%name%"'
+        error:
+            no_active_carrier: '提示：无可用快递。'
+        field:
+            description:
+                placeholder: '例：本地购物首选。'
+                title: 描述
+            name:
+                placeholder: '例：示例快递'
+                title: 名称
+            status:
+                title: 可用
+            taxes:
+                format: '%value%% 税'
+                title: 税
+        info:
+            shipping_rates_before_saving: '保存快递方式后可添加快递费用。'
+        list: '快递列表'
+        new: '新快递'
+        plural: 快递
+        saved: '变更已保存'
+        section:
+            basic:
+                description: '可设置快递名称及描述。'
+                title: '基本信息'
+            shipping_rates:
+                description: '设置快递费用'
+                title: '快递费'
+            taxes:
+                description: '快递所需税'
+                title: '快递税'
+            visibility:
+                description: '设置快递可用或隐藏。'
+                title: 可用
+        single: 快递
+    catalog:
+        plural: 目录
+        single: 目录
+    categorization:
+        plural: 分类
+        single: 分类
+    category:
+        edit: '编辑 "%name%"'
+        field:
+            contains:
+                title: '共计%count%产品'
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: Enabled
+            metadescription:
+                placeholder: '例：示例分类'
+            metakeywords:
+                placeholder: '例：分类，示例'
+            metatitle:
+                placeholder: '例：我的分类'
+            name:
+                placeholder: '例：我的分类'
+                title: '分类名'
+            parent:
+                title: 父类
+            root:
+                title: '根类'
+            slug:
+                customize: '个性化'
+                placeholder: '例：my/awesome/category'
+        in_store: '网站内搜索'
+        list: '分类列表'
+        new: '新分类'
+        plural: 分类
+        saved: '分类已保存'
+        section:
+            basic:
+                description: '设置具体分类名称以方便用户查找。'
+                title: '基本信息'
+            categorization:
+                description: '设置分类为根类或父类。'
+                title: 分类
+            edit:
+                description:
+                    - '拖动分类以排序或嵌套（最多2层）。'
+                    - '点击分类以编辑。'
+                    - '点击图标以删除。'
+                title: '编辑、排序'
+            visibility:
+                description: '设置分类可见或隐藏。'
+                title: 可见
+        single: 分类
+    communication:
+        plural: 通信
+        single: 通信
+    coupon:
+        edit: '编辑 "%code%"'
+        field:
+            code:
+                placeholder: '例：购物券号码'
+                title: 号码
+            count:
+                title: '数量限制'
+            datetime:
+                title: '时间及日期'
+            description:
+                placeholder: '例：9折券号码'
+                title: 描述
+            discount:
+                title: '% 折扣'
+            enabled:
+                title: 状态
+            enforcement:
+                options:
+                    automatic: '自动添加'
+                    manual: '手动添加'
+                title: 模式
+            minimum_purchase:
+                title: '最低消费'
+            price:
+                title: 价格
+            priority:
+                title: 优先级
+            rule:
+                placeholder: '无规则'
+                title: 规则
+            stackable:
+                title: '当前购物券可在使用其他购物券时使用。'
+            status:
+                title: 状态
+            type:
+                options:
+                    fixed: '固定价格'
+                    percent: '百分比'
+                title: 类型
+            used:
+                title: 已使用
+            valid_from:
+                title: 从
+            valid_to:
+                title: 到
+        list: '购物券列表'
+        new: '新购物券'
+        plural: 购物券
+        saved: '购物券已保存'
+        section:
+            basic:
+                description:
+                    - '设置购物券号码（用户可在购物车中输入）'
+                    - '设置购物券描述，类型，可用条件。'
+                title: '基本信息'
+            fixed_amount:
+                description: '设置抵价金额。'
+                title: '固定价格'
+            percent_amount:
+                description: '设置折扣百分比。'
+                title: '折扣百分比'
+            rules:
+                description: '设置购物券使用规则。'
+                title: 规则
+            validity:
+                description: '设置购物券有效期'
+                title: 有效期
+        single: 购物券
+    currency:
+        error:
+            disable_master_currency: '无法设置基础货币不可用'
+            setting_disabled_master_currency: '无法设置不可用货币为基础货币'
+        field:
+            iso: ISO
+            master: '基础货币'
+            name: 名称
+            status: 可用
+            symbol: 符号
+        list: '货币列表'
+        plural: 货币
+        saved:
+            disabled: '当前货币不可用'
+            enabled: '当前货币可用'
+            master: '基础货币已保存'
+        single: 货币
+    customer:
+        edit: '编辑 "%name%"'
+        error:
+            password_change: '变更密码失败'
+        field:
+            guest:
+                title: 访客
+            identity_document:
+                placeholder: '例：12345678A'
+                title: 身份
+            language:
+                title: '语言偏好'
+            newsletter:
+                title: 联系方式
+            order_count:
+                title: '订单号'
+            phone:
+                placeholder: '例：555 55 55 55'
+                title: 电话
+            username:
+                placeholder: '例：john_doe'
+                title: 用户名
+        info:
+            password_changed: '密码已保存'
+        list: '顾客列表'
+        new: '新建顾客'
+        plural: 顾客
+        saved: '变更已保存'
+        section:
+            contact:
+                description: '用户联系方式'
+                title: '联系方式'
+            login:
+                description: '用户名及邮箱不可重复。'
+                title: '登录信息'
+            status:
+                description: '设置用户状态及偏好'
+                title: '状态及偏好'
+        single: 用户
+    dashboard:
+        chart:
+            cart_conversion:
+                billing_shipping: 账单/邮寄
+                cart_view: '查看购物车'
+                ordered: 已订
+                payment: 支付
+                title: '购物车转换'
+            devices:
+                desktop: 桌面
+                mobile: 手机
+                title: 设备
+            orders: 订单
+            sales:
+                sales: 销售
+                title: 销售
+            traffic_source:
+                direct: 直邮
+                referrals: 转交
+                search_engine: '搜索引擎'
+                title: '快递资源'
+            visitors:
+                title: 访问
+                total: 总计
+                unique: 唯一
+        chart_range:
+            last30days: '过去30天'
+            last7days: '过去7天'
+            last90days: '过去90天'
+            today: 今天
+            yesterday: 昨天
+        plural: 总览
+        single: 总览
+        title: 总览
+        view_store: '查看网站'
+    identity:
+        field:
+            leitmotiv:
+                placeholder: '例：尽我所能，予人优质'
+                title: 宗旨
+            name:
+                placeholder: '例：示例网站'
+                title: '网站名'
+        less: 收起
+        more: 更多
+        section:
+            backgroundImage:
+                description: '添加大尺寸背景图片。若添加壁纸图片，请不要包含壁纸顶部。'
+                title: '背景图片'
+            headerImage:
+                description: '添加网站顶部背景图片。'
+                title: '网站顶部背景图片'
+            info:
+                description: '设置网站名及宗旨（可选）。'
+                title: '基本信息'
+            logo:
+                description: '设置网站图标。请尽量使用高品质图片。'
+                title: 图标
+            mobileLogo:
+                description: '可选项，用于手机显示。'
+                title: '手机图标'
+            secondaryLogo:
+                description: '网站底部图标（可选）'
+                title: '底部图标'
+        singular: '图标'
+    image:
+        info:
+            deleted: '图片已删除'
+            format: 'JPG，PNG或GIF格式，最大20M'
+            principal: '第一张图片为主图片。'
+            reorder: '可拖动图片以排序。'
+            upload: '上传图片'
+            upload_logo: '上传图标'
+            upload_single: '上传图片'
+        plural: 图片
+        single: 图片
+    language:
+        error:
+            disable_master_language: '不可设置基础语言不可用'
+            setting_disabled_master_language: '不可设置不可用语言为基础语言'
+        field:
+            iso: ISO
+            master: '基础语言'
+            status: 可用
+        list: '语言列表'
+        plural: 语言
+        saved:
+            disabled: '当前语言已设置为不可用'
+            enabled: '当前语言已设置为可用'
+            master: '基础语言已保存'
+        single: 语言
+    login:
+        action:
+            login: '登入'
+            logout: '登出'
+            remember: '忘记密码？'
+        field:
+            email:
+                placeholder: '输入邮箱地址'
+            password:
+                placeholder: '输入密码'
+        title: '需要登录'
+    mailing:
+        edit: '编辑 "%title%"'
+        field:
+            content:
+                placeholder: '例：示例邮件内容。'
+                title: 内容
+            title:
+                placeholder: '例：示例邮件'
+                title: 标题
+        list: '邮件列表'
+        new: '新建邮件'
+        plural: 邮件
+        saved: '邮件已保存'
+        section:
+            basic:
+                description: '设置标题及内容。'
+                title: '基本内容'
+        single: 邮件
+    manufacturer:
+        edit: '编辑"%name%"'
+        field:
+            description:
+                placeholder: '例：示例描述。'
+                title: 描述
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: 可用
+            image:
+                title: 图片
+            metadescription:
+                placeholder: '例：示例生产商。'
+            metakeywords:
+                placeholder: '例：生产商，示例'
+            metatitle:
+                placeholder: '例：示例生产商标题'
+            name:
+                placeholder: '例：示例生产商名'
+                title: '生产商名'
+            name_slug:
+                title: '名字及内容'
+            product_count:
+                title: 产品
+            slug:
+                customize: '个性化'
+                placeholder: '例：my/awesome/manufacturer'
+                title: Slug
+        list: '生产商列表'
+        new: '新建生产商'
+        plural: 生产商
+        saved: '生产商已保存'
+        section:
+            basic:
+                description: '设置生产商名以便于查找。描述将在网站生产商页面显示。'
+                title: '基本信息'
+            logo:
+                description: '请上传大尺寸生产商图标。请不要在图标上包含文字。'
+                title: '生产商图标'
+            visibility:
+                description: '设置生产商可见或隐藏'
+                title: 可见
+        single: 生产商
+    media:
+        list: '媒体列表'
+        plural: 媒体
+        single: 媒体
+    menu:
+        custom_shipping: '快递个性化'
+        design: '网站个性化'
+    metadata:
+        customize: '资料个性化'
+        disclaimer:
+            - '进阶设置。'
+            - '不进行设置可自动生成相关资料。'
+        field:
+            metadescription:
+                title: 描述
+            metakeywords:
+                title: 关键字
+            metatitle:
+                title: 标题
+        section:
+            metadata:
+                description: '关键字及描述用于显示网站内容。部分搜索引擎将使用其作为索引呈现结果。'
+                title: 资料
+    metrics:
+        action:
+            show: '显示宗旨'
+        info:
+            no_data: '没有数据'
+            visitors: 访客
+        plural: 宗旨
+        single: 宗旨
+        type:
+            line:
+                total: 总计
+                unique: 唯一
+    name: 管理员
+    order:
+        all: '全部订单'
+        details:
+            discount: '打折券'
+            item: 物品
+            price: 价格
+            shipping: 快递
+            subtotal: 小计
+            title: 详细
+            units: 数量
+            ref: 附注
+            tracking_num: 快递单号
+        edit: '编辑#%id%'
+        saved: '订单已保存'
+        field:
+            billing_address: '账单地址'
+            both_addresses: '邮寄及账单地址'
+            carrier: 快递公司
+            customer: 顾客
+            date: 日期
+            delivery_address: '邮寄地址'
+            id: '订单#%id%'
+            status: 状态
+            total: 总计
+            reference: 附注
+        from_user: '%name%的订单'
+        list: '订单列表'
+        new: '新建订单'
+        notes: 备注
+        plural: 订单
+        single: 订单
+        states:
+            title: 状态
+        to_user: '查看用户'
+        transition:
+            cancel: 取消
+            delivered: 已送达
+            'order ready': '已下单'
+            'picked up by carrier': '已取件'
+            'picked up on store': '已自取'
+            refund: 退款
+            return: 已退货
+            pay: 已付款
+    page:
+        edit: '编辑"%name%"'
+        error:
+            cant_modify_permanent: '无法编辑当前页面'
+        field:
+            content:
+                placeholder: '例：示例内容。'
+                title: 内容
+            enabled:
+                title: 可用
+            link:
+                title: 链接
+            metadescription:
+                placeholder: '例：示例描述'
+            metakeywords:
+                placeholder: '例：示例'
+            metatitle:
+                placeholder: '例：示例标题'
+            path:
+                customize: '个性化'
+                placeholder: '例：my/awesome/page'
+                title: Path
+            title:
+                placeholder: '例：示例标题'
+                title: 标题
+        in_store: '店内查看'
+        list: '页面列表'
+        new: '新页面'
+        plural: 页面
+        saved: '变更已保存'
+        section:
+            basic:
+                description: '设置标题便于顾客快速了解网站。'
+                title: '基本信息'
+            visibility:
+                description: '设置页面可见或隐藏。'
+                title: 可见
+        single: 页面
+    plugin:
+        app_store: '苹果应用商店'
+        field:
+            visibility: '可用：'
+        plural: 应用
+        saved: '插件状态已保存'
+        section:
+            settings: 设置
+        single: 应用
+    product:
+        edit: '编辑"%name%"'
+        error:
+            no_category: '警告！当前产品没有设置分类'
+            no_manufacturer: '警告！当前产品没有设置生产商'
+            price_negative: '警告！价格不可为负'
+        field:
+            depth:
+                title: '深度（厘米）'
+            description:
+                placeholder: '例：示例描述。'
+                title: 描述
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: 可见
+            height:
+                title: '高度（厘米）'
+            image:
+                title: 图片
+            in_home:
+                title: '在首页显示'
+            main_category:
+                placeholder: '例：电脑，手包...'
+                title: 类别
+            manufacturer:
+                placeholder: '例：苹果，迪斯尼...'
+                title: 生产商
+            metadescription:
+                placeholder: '例：示例描述。'
+            metakeywords:
+                placeholder: '例：产品，示例'
+            metatitle:
+                placeholder: '例：示例标题'
+            name:
+                placeholder: '例：示例名称'
+                title: 标题
+            name_details:
+                title: '名称及描述'
+            price:
+                title: 价格
+            reduced_price:
+                title: '减价'
+            sku:
+                placeholder: 'ej. SAU102'
+                title: SKU
+            slug:
+                customize: '个性化'
+                placeholder: '例：my/awesome/product'
+                title: 描述
+            stock:
+                title: 库存
+            weight:
+                title: '重量（克）'
+            width:
+                title: '宽(厘米)'
+        in_store: 查看
+        info:
+            variants_before_saving: '保存商品后可添加商品属性'
+        list: '产品列表'
+        new: '新建产品'
+        note: 备注
+        plural: 产品
+        saved: '产品已保存'
+        section:
+            basic:
+                description: '设置产品名称以便顾客查找。'
+                title: '基本信息'
+            categorization:
+                description: '产品须分配分类信息或生产商信息，以便顾客查找。'
+                title: 分类
+            dimensions:
+                description: '设置产品尺寸及重量，以便于计算快递费用。'
+                title: 尺寸
+            pricing:
+                description: '设置产品不含税及快递的价格。'
+                title: 价格
+            sku:
+                description: 'SKU用于区分产品。每个SKU只与一个产品关联'
+                title: SKU
+            stock:
+                description: '设置产品库存。订单生效后会自动扣除。'
+                title: 库存
+            variants:
+                description: '用于区分该产品不同规格（颜色，尺寸）。每种规格可设置不同价格或其他属性。'
+                title: 规格
+            visibility:
+                description: '设置产品可见或隐藏。'
+                title: 可见
+        show_metrics: '显示宗旨'
+        single: 产品
+        tag:
+            has_variants: '不同规格'
+            in_home: 首页
+            no_category: '无分类'
+            no_manufacturer: '无生产商'
+    profile:
+        plural: 信息
+        single: 信息
+    purchasable_pack:
+        edit: '编辑"%name%"'
+        error:
+            no_category: '警告！当前促销无分类信息'
+            no_manufacturer: '警告！当前促销无生产商信息、'
+            price_negative: '警告！价格不能为负'
+        field:
+            depth:
+                title: '深(厘米)'
+            description:
+                placeholder: '例：示例描述。'
+                title: 描述
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: 可见
+            height:
+                title: '高(厘米)'
+            image:
+                title: 图片
+            in_home:
+                title: '首页显示'
+            main_category:
+                placeholder: '例：计算机，手包...'
+                title: 分类
+            manufacturer:
+                placeholder: '例：苹果，迪斯尼...'
+                title: 生产商
+            metadescription:
+                placeholder: '例：示例描述。'
+            metakeywords:
+                placeholder: '例：促销，示例'
+            metatitle:
+                placeholder: '例：示例标题'
+            name:
+                placeholder: '例：示例名'
+                title: 标题
+            name_details:
+                title: '名称及信息'
+            price:
+                title: 价格
+            purchasables:
+                title: '促销商品'
+            reduced_price:
+                title: '减价'
+            sku:
+                placeholder: 'ej. SAU102'
+                title: SKU
+            slug:
+                customize: '个性化'
+                placeholder: '例：my/awesome/pack'
+                title: 描述
+            stock:
+                title: 库存
+            stock_type:
+                inherit_stock: 继承
+                specific_stock: 具化
+                title: '库存类型'
+            weight:
+                title: '重量（克）'
+            width:
+                title: '宽（厘米）'
+        in_store: 查看
+        list: '促销列表'
+        new: '新建促销'
+        note: 备注
+        plural: 促销
+        saved: '促销已保存'
+        section:
+            basic:
+                description: '设置标题以便顾客查找。'
+                title: '基本信息'
+            catalog:
+                description: '设置促销包含商品。'
+                title: 目录
+            categorization:
+                description: '促销须设置分类信息或生产商，以便顾客查找。'
+                title: 分类
+            dimensions:
+                description: '设置促销尺寸及重量用于计算快递费用。'
+                title: 尺寸
+            pricing:
+                description: '设置不含税及快递促销价格'
+                title: 价格
+            sku:
+                description: 'SKU用于区分不同促销。每个SKU只与一个促销关联。'
+                title: SKU
+            stock:
+                description: '设置促销库存。若设置为继承，每样产品会自动扣除库存，否则须单独设置库存。'
+                title: 库存
+            visibility:
+                description: '设置促销可见或隐藏。'
+                title: 可见
+        show_metrics: '显示宗旨'
+        single: 促销
+        tag:
+            in_home: 首页
+            no_category: '无分类'
+            no_manufacturer: '无生产商'
+    recover_user:
+        action:
+            email_sent:
+                description: '请查看邮箱信息，按照提示步骤恢复密码。'
+                title: '邮件已发送'
+        field:
+            email:
+                placeholder: '请输入邮箱地址'
+            password:
+                placeholder: '新密码'
+            repeat_password:
+                placeholder: '重复密码'
+        title: '新密码'
+    remember_user:
+        description: '我们会向您发送重置密码邮件。'
+        title: '忘记密码？'
+    settings:
+        field:
+            currency: '设置货币'
+            product_stock:
+                description: '设置选项可用以激活库存管理。'
+                title: 库存
+            store_email: '网站邮箱'
+            store_enabled: '网站可用'
+            store_leitmotiv: '网站宗旨'
+            store_name: '网站名称'
+            store_phone: '网站电话'
+            store_under_construction: '网站维护中'
+        plural: 设置
+        saved: '设置已保存'
+        section:
+            address:
+                title: '地址及联系方式'
+            corporate:
+                title: '图片'
+            payment:
+                title: '支付方式'
+            products:
+                description: '设置产品信息。'
+                title: '产品设置'
+            profile:
+                title: '图片'
+            store:
+                title: 总览
+        single: 设置
+    shipping_payment:
+        plural: '支付及快递'
+        single: '支付及快递'
+    shipping_range:
+        edit: '编辑"%name%"'
+        field:
+            fromPrice:
+                title: '价格从'
+            fromWeight:
+                title: '重量从'
+            name:
+                placeholder: '例：3-5天寄到'
+                title: '快递名称'
+            price:
+                title: 价格
+            toPrice:
+                title: '到'
+            toWeight:
+                title: '到'
+            to_zone:
+                title: '到'
+            type:
+                options:
+                    price: '按照订单价格'
+                    weight: '按照订单重量'
+                title: '价格计算中...'
+            value:
+                price_format: '从%from%到%to%'
+                title: Value
+                weight_format: '从%from%克到%to%克'
+        list: '快递列表'
+        new: '新建快递方式'
+        plural: '快递'
+        saved: '变更已保存'
+        section:
+            basic:
+                description: '设置快递名称及有效范围。'
+                title: '基本信息'
+            pricing:
+                description: '设置快递价格及计算方式。'
+                title: 价格
+            visibility:
+                description: '设置快递可用'
+                title: 可见
+        single: '快递'
+    store:
+        field:
+            enabled:
+                title: '网站可用'
+            routingStrategy:
+                custom: '语言不设置前缀，只设置url'
+                prefix: '所有url都设置前缀'
+                prefix_except_default: '除基础语言外，所有url都设置语言前缀。'
+                title: '多语言url设置'
+            useStock:
+                title: '设置库存管理'
+        saved: '设置已保存。'
+        section:
+            advanced:
+                description: '网站高级设置'
+                title: 高级设置
+            status:
+                description: '控制网站开启关闭。'
+                title: 状态
+            stock:
+                description: '激活当前选项以设置商品库存。'
+                title: 库存
+        settings: 设置
+    template:
+        action:
+            preview: 预览
+        label:
+            status: '可用：'
+        plural: 主题
+        single: 主题
+    user:
+        field:
+            birthday:
+                title: 生日
+            email:
+                placeholder: '例：john.doe@mail.com'
+                title: 邮件
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: 状态
+            firstname:
+                placeholder: '例：John'
+                title: '名'
+            fullname:
+                title: '全名'
+            gender:
+                options:
+                    female: 女
+                    male: 男
+                title: 性别
+            lastname:
+                placeholder: '例：Doe'
+                title: '姓'
+            new_password:
+                first:
+                    title: '新密码'
+                second:
+                    title: '重复密码'
+            password:
+                title: 密码
+            username:
+                title: 用户名
+    variant:
+        edit: '编辑属性"%name%"'
+        field:
+            enabled:
+                options:
+                    active: 可用
+                    inactive: 不可用
+                title: 状态
+            name:
+                title: '属性名'
+            options:
+                title: '选择属性：'
+            price:
+                title: 价格
+            reduced_price:
+                title: '减价'
+            stock:
+                title: 库存
+        list: '属性列表'
+        new: '新属性'
+        plural: 属性
+        saved: '属性已保存'
+        section:
+            attributes:
+                description: '设置主属性。'
+                title: 属性
+            pricing:
+                description: '设置不含税及邮费价格。'
+                title: 价格
+            visibility:
+                description: '设置属性可见或隐藏。'
+                title: 可见
+        single: 变量
+plugin:
+    paymill:
+        register:
+            call_to_action: '立即创建Paymill账号！'
+            title: '不是Paymill用户？'
+        settings:
+            private_key: 'Paymill支付私钥'
+            public_key: 'Paymill支付公钥'
+        title: 'Paymill账户设置'
+    paypal:
+        register:
+            call_to_action: '创建PayPal账户'
+            title: '不是PayPal用户？'
+        settings:
+            recipient_email: 'Paypal支付收件人邮箱'
+        title: 'Paypal账户设置'
+plugin_type:
+    app: 应用
+    payment: '支付方式'
+    shipping: '快递方式'
+    social: 社交账号
+ui:
+    address:
+        address: 地址
+        city: 城市
+        comment: 备注
+        full_name: '全名'
+        phone: 电话
+        zipcode: 邮编
+    confirm:
+        delete: '确认删除？'
+    date:
+        today_at: '今日%time%'
+        yesterday_at: '昨天%time%'
+    delete:
+        success: '成功删除'
+    editor:
+        help: '选择文本以获取格式化选项'
+    forms:
+        cancel: 取消
+        delete: 删除
+        save: 保存
+    label:
+        disabled: 不可用
+        enabled: 可用
+    language:
+        master_language: '基础语言'
+    list:
+        create_first: '设置第一个%item%.'
+        no_items: '没有%items%.'
+    paginator:
+        elements: '显示第%first%到%last%项，总计%total%项。'
+    tags:
+        placeholder:
+            comma_separated: '所有标签用逗号隔开'

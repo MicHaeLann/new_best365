@@ -1,0 +1,8 @@
+elcodi_plugin:
+    google_analytics:
+        description: '整合谷歌分析'
+        field:
+            analytics_tracker_id:
+                label: '追踪分析ID'
+                placeholder: '例：123456789'
+        name: '谷歌分析'

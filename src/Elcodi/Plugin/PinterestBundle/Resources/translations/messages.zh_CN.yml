@@ -1,0 +1,7 @@
+elcodi_plugin:
+    pinterest:
+        description: '整合Pinterest'
+        field:
+            asynchronous:
+                label: '异步通信Pinterest'
+        name: Pinterest

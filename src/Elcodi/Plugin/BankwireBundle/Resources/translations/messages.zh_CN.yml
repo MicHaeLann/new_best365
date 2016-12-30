@@ -1,0 +1,4 @@
+elcodi_plugin:
+    bankwire:
+        description: '整合转帐支付'
+        name: '转帐'

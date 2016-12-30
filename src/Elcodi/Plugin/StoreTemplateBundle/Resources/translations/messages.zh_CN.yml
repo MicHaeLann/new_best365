@@ -1,0 +1,250 @@
+store:
+    pagination:
+        first: 首页
+        last: 尾页
+        next: 下一页
+        previous: 上一页
+template:
+    store_template_bundle:
+        search:
+            search_place_holder: '搜索...'
+            searching: '搜索条件'
+        copy_right: '© 2002-2016, Best365.co.nz, Inc. or its affiliates'
+        nav:
+            lang:
+                selector: 语言
+                zh-CN: 简体中文
+                en: 英文
+                fr: 法语
+            currency:
+                selector: 货币
+                CNY: 人民币
+                NZD: 纽币
+        greeting:
+            greeting: 'Hi, '
+            guest: '你好'
+        profile:
+            profile: '个人信息'
+            customer_service: '客服'
+            membership: '会员等级'
+            current_point: '当前积分'
+        address:
+            edit:
+                add_new_address: '添加地址'
+                edit_address: '修改地址'
+            item:
+                actions: 操作
+                address: 地址
+                address_name: 地址名
+                billing: 账单地址
+                city: 城市
+                comment: 备注
+                country: 国家
+                delivery: 邮寄
+                edit: 修改
+                fullname: '姓名'
+                phone_and_mobile: '电话/手机'
+                postal_code: '邮编'
+                province: 省
+                remove: 删除
+                state: 省
+            list:
+                add_new_address: '添加地址'
+                addresses: 地址
+                no_addresses: '当前没有地址'
+            new:
+                address:
+                    example: '例：xx街x号'
+                address_more:
+                    example: '例：xx公司'
+                cancel: 取消
+                comments:
+                    example: '例：范例地址'
+                mobile:
+                    example: '例：555 555 555'
+                name:
+                    example: '例：默认地址'
+                phone:
+                    example: '例：935 555 555'
+                postalcode:
+                    example: '例：08080'
+                recipient:
+                    example_name: '例：林'
+                    example_surname: '例：张'
+        blog:
+            post:
+                list:
+                    blog_posts: '文章'
+                    next_posts: '下一篇'
+                    previous_posts: '上一篇'
+                    read_more: '更多'
+                view:
+                    last_post: '最新文章'
+                    read_more: '更多'
+        cart:
+            item:
+                image: 图片
+                item: 物品
+                price: 价格
+                remove: 删除
+                total: 总计
+                units: 数量
+            nav:
+                amount: 数量
+                items: 物品
+            view:
+                checkout: 结算
+                checkout_title: '结算当前购物车或添加购物券'
+                continue_shopping: '继续购物'
+                empty_basket: '清空购物车'
+                title: '购物车'
+                total: 总计
+                update_basket: '更新购物车'
+                your_cart_is_empty: '购物车内暂时没有商品'
+        category:
+            nav:
+                new: 新类别
+            view:
+                category: 类别
+        checkout:
+            address:
+                add_new_address: '添加地址'
+                payment: 支付
+                select_address: '选择收件地址'
+            back: 返回
+            price: 价格
+            layout:
+                total: 总计
+                your_cart: '购物车'
+            payment:
+                back: 返回
+                bankwire: 'Bank wire'
+                continue: 继续
+                credit_debit_card: 'Credit/Debit card'
+                payment_method: '支付方式'
+                paypal: Paypal
+                set_shipping_payment: '选择快递及支付方式'
+                shipping_carrier_method: '快递方式'
+                try_again: '请稍后再试。'
+        coupon:
+            item:
+                coupon: 购物券
+                description: 描述
+                remove: 删除
+                total: 总计
+                units: 数量
+                value: 价格
+        footer:
+            information: '帮助中心'
+            follow_us: '关注我们'
+            contact: '联系方式'
+            latest_news: '新闻'
+            more: 更多
+            quick_links: '快速链接'
+            time_saving: '节约时间'
+            time_saving_description: '细致入微节省您的时间。'
+            secure_store: '安全购物'
+            secure_store_description: '如在家中一样安全。'
+            customer_service: '客户服务'
+            customer_service_description: '7*24小时贴心服务。'
+        header:
+            menu: 菜单
+        order:
+            coupon:
+                coupon: 购物券
+                description: 描述
+                total: 小计
+                units: 数量
+                values: 价格
+            item:
+                image: 图片
+                item: 商品
+                price: 单价
+                total: 小计
+                units: 数量
+                reference: 附注
+            list:
+                item: 商品
+                date: 日期
+                image: 图片
+                no_orders: '暂无订单'
+                number_of_order: '订单数量'
+                order_number: '#'
+                orders: 订单
+                payment_state: '支付状态'
+                shipping_state: '快递状态'
+                total: 总计
+                status: 状态
+                tracking_num: 快递单号
+                reference: 附注
+            view:
+                congratulations: 哇喔！
+                continue_shopping: '继续购物'
+                order: 订单
+                shipping: '快递：'
+                status: '状态：'
+                reference: '转账时请在备注中添加附注。您的附注是 '
+                thanks: ' 感谢您在本网站购物！我们会尽快派送您的包裹。'
+                total: 总计
+        payment:
+            credit_card_numbers: '信用卡号'
+            credit_card_owner: '持卡人姓名'
+            month: 月
+            security_code: '安全码'
+            year: 年
+        product:
+            nav:
+                home: 首页
+            also_like: '你可能喜欢...'
+            item:
+                offer: 特价
+            list:
+                no_products_in_category: '对不起，当前类别无搜索结果。'
+                no_products: '哇喔！当前搜索条件无对应结果。'
+            view_item:
+                add_to_cart: '加入购物车'
+                delivery: 派送
+                description: 商品介绍
+                in_stock: '商品库存充足，可以邮寄!'
+                no_stock: '无库存'
+                not_available: '当前商品不可用'
+                offer: 特价
+                product: 商品
+                stock: 库存
+                usually_dispatched_24_hours: '24小时内派送'
+            trending: '热门搜索'
+            more: '更多'
+        purchasable_pack:
+            view_item:
+                purchasable_pack: 组合
+        shipping:
+            carrier: 快递
+            costs_will_be_calculated_after_address: '选择收件地址后，自动计算所需快递费用。'
+            costs_will_be_calculated_after_login: '登录或选择收件地址后计算快递费用。'
+            from: 寄件人
+            no_shipping_matching: '当前无可用快递方式。请联系我们。'
+        user:
+            edit:
+                profile: 个人信息
+            home:
+                dashboard: 总览
+                my_addresses: '我的地址'
+                my_orders: '我的订单'
+                profile: 个人信息
+            login:
+                create_new_account: '注册'
+                forgot_your_password: '忘记密码？'
+                login_with_account: '登录'
+                login_with_social: '第三方登录'
+                unregistered: '第一次光顾我们？'
+                registered: '已有账号？'
+            nav:
+                create_new_account: '注册'
+                login: 登录
+                cart: 购物车
+                logout: 登出
+            password:
+                password_sent: '密码已发送'
+                password_sent_text: '我们已向您发送重置密码邮件。'
+                recover_password: '重置密码'
+                register: 注册

@@ -1,0 +1,12 @@
+elcodi_plugin:
+    disqus:
+        description: '整合Disqus'
+        field:
+            disqus_enabled_blog_post:
+                label: '设置disqus发布消息可用'
+            disqus_enabled_product:
+                label: '设置商品页面disqus'
+            disqus_identifier:
+                label: 区分符
+                placeholder: '例：123456789'
+        name: Disqus

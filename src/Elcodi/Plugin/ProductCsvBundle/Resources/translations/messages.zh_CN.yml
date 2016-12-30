@@ -1,0 +1,5 @@
+elcodi_plugin:
+    product_csv:
+        action: 导出
+        description: '导出CSV格式产品文件'
+        name: '产品导出'

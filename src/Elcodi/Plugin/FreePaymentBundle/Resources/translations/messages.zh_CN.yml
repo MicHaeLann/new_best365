@@ -1,0 +1,4 @@
+elcodi_plugin:
+    free_payment:
+        description: '整合Free payment'
+        name: 'Free payment'
