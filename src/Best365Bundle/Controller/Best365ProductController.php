@@ -62,6 +62,7 @@ class Best365ProductController extends PurchasableController
 		return $this->render(
 			'Best365Bundle:Product:product.list.html.twig',
 			[
+				'searching' => $name,
 				'purchasables' => $collection,
 			]
 		);
