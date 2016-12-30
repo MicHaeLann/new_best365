@@ -129,7 +129,7 @@ class Best365UserController extends UserController
             $this->addFlash('success', $message);
 
             return $this->redirect(
-                $this->generateUrl('best365_store_user_edit')
+                $this->generateUrl('best365_store_user')
             );
         }
 
