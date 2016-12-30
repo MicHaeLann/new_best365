@@ -23,6 +23,11 @@
 	float: left;
 }
 
+.margin-0
+{
+	margin: 0;
+}
+
 .margin-top-5
 {
 	margin-top: 5px !important;
@@ -33,6 +38,21 @@
 	margin-top: 10px !important;
 }
 
+.margin-top-15
+{
+	margin-top: 15px !important;
+}
+
+.margin-top-20
+{
+	margin-top: 20px !important;
+}
+
+.margin-top-25
+{
+	margin-top: 25px !important;
+}
+
 .margin-top-30
 {
 	margin-top: 30px !important;
@@ -40,12 +60,28 @@
 
 .margin-left-10
 {
-	margin-left: 10px;
+	margin-left: 10px !important;
+}
+
+.margin-left-15
+{
+	margin-left: 15px !important;
+}
+
+
+.margin-right-15
+{
+	margin-right: 15px !important;
 }
 
 .margin-bottom-5
 {
 	margin-bottom: 5px;
+}
+
+.margin-bottom-20
+{
+	margin-bottom: 20px !important;
 }
 
 .cart-btn
@@ -69,6 +105,11 @@
 	padding: 0;
 }
 
+.padding-25
+{
+	padding: 25px;
+}
+
 .padding-left-10
 {
 	padding-left: 10px;
@@ -77,6 +118,11 @@
 .padding-left-30
 {
 	padding-left: 30px;
+}
+
+.padding-right-30
+{
+	padding-right: 30px;
 }
 
 .padding-0-30
@@ -224,7 +270,7 @@
 
 .product-item
 {
-	margin: 0 1% 2%;
+	margin: 0 5% 5%;
 	border: 1px solid #ededed;
 	min-height: 300px;
 }
@@ -313,11 +359,11 @@
 	width: 80px;
 }
 
-.cart-empty-page
+.empty-page
 {
 	text-align: center;
-	padding: 3.2em;
-	margin: 1.6em 0 3.2em;
+	padding: 50px;
+	margin: 25px 0 50px;
 }
 
 .cart-empty-font
@@ -591,7 +637,7 @@ a
 	color: #888;
 }
 
-.main-theme-link, .main-theme-link:hover, .sub-theme-link:hover
+.main-theme-link, .main-theme-link:hover, .sub-theme-link:hover, .main-theme-link:visited, .sub-theme-link:visited
 {
 	color: #3c763d;
 }
@@ -606,6 +652,11 @@ a
 	font-size: 12px;
 }
 
+.font-18
+{
+	font-size: 18px;
+}
+
 .font-30
 {
 	font-size: 30px;
@@ -616,9 +667,15 @@ a
 	border-top: 2px solid #3c763d;
 }
 
+
+.sub-theme-border-top
+{
+	border-top: 1px solid #e7e7e7;
+}
+
 .sub-theme-border-bottom
 {
-	border-bottom: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e7e7e7;
 }
 
 .hr-fade-out
@@ -626,5 +683,21 @@ a
 	border: 0;
 	height: 1px;
 	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.profile-box
+{
+	border: 1px solid #e7e7e7;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+}
+
+.font-weight-500
+{
+	font-weight: 500;
+}
+
+.color-black, .color-black:hover
+{
+	color: black;
 }
 
