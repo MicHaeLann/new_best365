@@ -6,7 +6,7 @@
             <p class="page-title">
                 {{ 'template.store_template_bundle.checkout.address.select_address'|trans }}
             </p>
-            <form method="post" action="{{ url('best365_store_save_shipping') }}">
+            <form method="post" action="{{ url('best365_store_save_shipping') }}" class="margin-top-30">
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.shipping.carrier'|trans }}
@@ -48,7 +48,7 @@
                             {% endfor %}
                         </select>
                         <div class="align-right margin-top-10">
-                            <a id="add_new" href="">
+                            <a id="add_new" href="" class="main-theme-link">
                                 <span class="glyphicon glyphicon-plus-sign"></span>
                                 {{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}
                             </a>
@@ -65,11 +65,14 @@
                 </button>
             </form>
         </div>
-        <div id="new_address" class="margin-top-30 row collapse content-container">
-            <p class="page-title">
-                {{ "template.store_template_bundle.checkout.address.add_new_address"|trans }}
-            </p>
-            {% include '@Best365/User/address.item.html.twig' with { form: form } %}
+        <div id="new_address" class="margin-top-30 row collapse padding-right-30">
+            <hr>
+            <div class="padding-0-30">
+                <p class="page-title">
+                    {{ "template.store_template_bundle.checkout.address.add_new_address"|trans }}
+                </p>
+                {% include '@Best365/User/address.item.html.twig' with { form: form } %}
+            </div>
         </div>
     </div>
 {% endblock %}

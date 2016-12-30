@@ -10,7 +10,7 @@
     {% set index = 1 %}
     {% for language in languages %}
         {% if index > 1 %}
-        <li role="seperator" class="divider"></li>  
+        <li role="seperator" class="divider"></li>
         {% endif %}
         <li>
             <a href="{{ url(routeName, routeParameters|merge({'_locale': language.iso })) }}">

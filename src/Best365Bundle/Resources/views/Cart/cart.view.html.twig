@@ -48,7 +48,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="{{ purchasableRoute }}" class="product-title product-title-link">{{ purchasableName }}</a>
+                                    <a href="{{ purchasableRoute }}" class="sub-theme-link">{{ purchasableName }}</a>
                                 </td>
                                 <td>
                                     {{ form_row(line.quantity, {'attr': {'class': 'unit-max-width'}}) }}
@@ -97,14 +97,12 @@
                 </div>
                 {{ form_end(form) }}
             {% else %}
-                <div class="cart-empty-page" data-test="empty-cart">
+                <div class="empty-page" data-test="empty-cart">
                     <h4>
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                    </h4>
-                    <h4>
                         {{ "template.store_template_bundle.cart.view.your_cart_is_empty"|trans}}
                     </h4>
-                    <a class="btn btn-success" href="{{ url('store_homepage') }}">
+                    <a class="btn btn-success" href="{{ url('best365_store_homepage') }}">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                         {{ 'template.store_template_bundle.cart.view.continue_shopping'|trans }}
                     </a>

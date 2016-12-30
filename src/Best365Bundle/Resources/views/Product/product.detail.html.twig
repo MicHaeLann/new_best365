@@ -7,13 +7,15 @@
             </div>
             <div class="col-sm-10">
                 <div id="nav">
-                    <a href="{{ url('best365_store_homepage') }}" class="product-font">
-                        <span class="glyphicon glyphicon-home"></span> <span>Best365</span>
+                    <a href="{{ url('best365_store_homepage') }}" class="main-theme-link">
+                        <span class="glyphicon glyphicon-home"></span> <span>{{ "template.store_template_bundle.product.nav.home"|trans }}</span>
                     </a>
-                    <span class="product-font"> > </span>
-                    <a class="product-font" href="{{ url('best365_store_category_purchasables_list', { id: purchasable.principalCategory.id }) }}">{{ purchasable.principalCategory }}</a>
-                    <span class="product-font"> > </span>
-                    <strong class="product-font">{{ purchasable.name }}</strong>
+                    <span class="main-theme-font"> > </span>
+                    <a class="main-theme-link" href="{{ url('best365_store_category_purchasables_list', { id: purchasable.principalCategory.id }) }}">
+                        {{ purchasable.principalCategory }}
+                    </a>
+                    <span class="main-theme-font"> > </span>
+                    <strong class="main-theme-font">{{ purchasable.name }}</strong>
                 </div>
                 <div class="row margin-top-10">
                     {% set productName = purchasable|purchasable_name %}
@@ -37,32 +39,32 @@
                     <div class="col-sm-5 padding-0-30">
                         <h3 class="margin-top-10">{{ purchasable.name }}</h3>
                         <div class="row">
-                            <div class="col-sm-2 product-price-label">
+                            <div class="col-sm-2 margin-top-25">
                                 {{ 'template.store_template_bundle.order.item.price'|trans }}
                             </div>
                             <div class="col-sm-7">
-                                <h3 class="product-label product-font">{{ purchasable.price|print_convert_money() }}</h3>
+                                <h3 class="margin-bottom-20 margin-top-20 main-theme-font">{{ purchasable.price|print_convert_money() }}</h3>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2 product-label">
+                            <div class="col-sm-2 margin-bottom-20 margin-top-20">
                                 {{ 'admin.product.section.stock.title'|trans }}
                             </div>
-                            <div class="col-sm-7 product-label">
+                            <div class="col-sm-7 margin-bottom-20 margin-top-20">
                                 <span>{{ purchasable.stock }}</span>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-2 product-label">
+                            <div class="col-sm-2 margin-bottom-20 margin-top-20">
                                 {{ 'template.store_template_bundle.order.item.units'|trans }}
                             </div>
                             <div class="col-sm-7">
-                                <input type="number" id="quantity" name="quantity" class="form-control product-unit unit-max-width" min="1" value="1" />
+                                <input type="number" id="quantity" name="quantity" class="form-control unit-max-width margin-top-15" min="1" value="1" />
                             </div>
                         </div>
                         {% if not useStock or purchasable.stock > 0 %}
                             <a id="add-cart" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
-                               class="btn btn-success full-width product-label"
+                               class="btn btn-success full-width margin-bottom-20 margin-top-20"
                                data-test="add-product-{{ purchasable.id }}-to-cart"
                                href="{{ url('best365_store_cart_add_purchasable', { id: purchasable.id, quantity: 1}) }}">
                                 {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
@@ -76,9 +78,9 @@
                         {% endif %}
                     </div>
                 </div>
-                <h4 class="product-description-label">{{ 'admin.product.field.description.title'|trans }}</h4>
+                <h4 class="product-description-label">{{ 'template.store_template_bundle.product.view_item.description'|trans }}</h4>
                 <hr class="product-description-hr">
-                <div>
+                <div class="sub-theme-font">
                     {{ purchasable.description }}
                 </div>
             </div>

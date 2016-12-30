@@ -16,7 +16,7 @@
         <div class="col-sm-6 padding-top-15">
             <form id="search-form" method="get" action="{{ url('best365_store_product_search') }}">
                 <div class="input-group">
-                    <input id="field" name="field" type="text" class="form-control search-text-border" placeholder="Search for...">
+                    <input id="field" name="field" type="text" class="form-control search-text-border" placeholder="{{ "template.store_template_bundle.search.search_place_holder"|trans }}">
                     <span class="input-group-btn">
                         <button id="search-button" class="btn btn-success" type="button"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
