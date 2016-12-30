@@ -1,5 +1,5 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
-{% set perLine = 3 %}
+{% set perLine = 4 %}
 {% set line = 5 %}
 {% set perPage = perLine * line %}
 {% if app.request.get('page') %}
@@ -13,30 +13,49 @@
 
 {% block content %}
     <div class="container">
-        <div class="row padding-0-30">
-            <div id="pagination-header">
-                {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+        <div class="row">
+            <div class="col-sm-2">
+                {% if categories %}
+                {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
+                {% else %}
+                    <div class="main-theme-font"><strong>{{ "template.store_template_bundle.search.searching"|trans }}</strong></div>
+                    <div class="sub-theme-font font-11 margin-top-5 margin-left-10">{{ searching }}</div>
+                {% endif %}
             </div>
-            <div id="list" class="margin-top-10">
-                {% set currentColumn = 1 %}
-                {% set i = 0 %}
-                {% for purchasable in purchasables %}
-                    {% if i >= start and i <= end %}
-                        {% if currentColumn == 1 %}
-                            <div class="row">
-                        {% endif %}
-                        {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable, "perLine": perLine, "line": line } %}
-                        {% set currentColumn = currentColumn + 1 %}
-                        {% if currentColumn > perLine %}
-                            </div>
-                            {% set currentColumn = 1 %}
-                        {% endif %}
-                    {% endif %}
-                    {% set i = i + 1 %}
-                {% endfor %}
-            </div>
-            <div id="pagination-footer">
-                {% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+            <div class="col-sm-10">
+                {% if purchasables|length > 0 %}
+                    <div id="pagination-header">
+                        {% include "@Best365/Layout/_pagination.header.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+                    </div>
+                    <div class="margin-top-10">
+                        {% set currentColumn = 1 %}
+                        {% set i = 0 %}
+                        {% for purchasable in purchasables %}
+                            {% if i >= start and i <= end %}
+                                {% if currentColumn == 1 %}
+                                    <div class="row">
+                                {% endif %}
+                                {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable} %}
+                                {% set currentColumn = currentColumn + 1 %}
+                                {% if currentColumn > perLine %}
+                                    </div>
+                                    {% set currentColumn = 1 %}
+                                {% endif %}
+                            {% endif %}
+                            {% set i = i + 1 %}
+                        {% endfor %}
+                    </div>
+                    <div id="pagination-footer">
+                        {% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": purchasables, "perPage": perPage } %}
+                    </div>
+                {% else %}
+                    <div class="empty-page">
+                        <h4>
+                            <i class="fa fa-meh-o" aria-hidden="true"></i>
+                            {{ "template.store_template_bundle.product.list.no_products"|trans }}
+                        </h4>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

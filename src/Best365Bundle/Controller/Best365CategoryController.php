@@ -65,9 +65,29 @@ class Best365CategoryController extends CategoryController
 		);
 		$purchasables = $purchasableRepository->getAllFromCategories($categories);
 
+		// store category tree
+		$categories = $this
+			->get('elcodi_store.store_category_tree')
+			->load();
+
+		// product category
+		$parent_category = $category->getParent();
+
+		if (empty($parent_category)) {
+			$parent_category = $category;
+		}
+
+		foreach ($categories as $category_node) {
+			if ($category_node['entity']['id'] == $parent_category->getId()) {
+				$category_tree = $category_node;
+				break;
+			}
+		}
+
 		return $this->render(
 			'Best365Bundle:Product:product.list.html.twig',
 			[
+				'categories' => $category_tree,
 				'purchasables' => $purchasables
 			]
 		);
