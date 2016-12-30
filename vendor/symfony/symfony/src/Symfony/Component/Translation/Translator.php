@@ -159,7 +159,7 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
      *
      * @throws \InvalidArgumentException If a locale contains invalid characters
      *
-     * @deprecated since version 2.3, to be removed in 3.0. Use setFallbackLocales() instead.
+     * @deprecated since version 2.3, to be removed in 3.0. Use setFallbackLocales() instead
      */
     public function setFallbackLocale($locales)
     {
@@ -205,7 +205,6 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
         if (null === $domain) {
             $domain = 'messages';
         }
-
         return strtr($this->getCatalogue($locale)->get((string) $id, $domain), $parameters);
     }
 
@@ -240,6 +239,12 @@ class Translator implements TranslatorInterface, TranslatorBagInterface
     {
         if (null === $locale) {
             $locale = $this->getLocale();
+
+			// change locale to zh_CN to fix include file bug
+			if ($locale == 'zh-CN') {
+				$locale = 'zh_CN';
+			}
+
         } else {
             $this->assertValidLocale($locale);
         }
@@ -376,9 +381,9 @@ EOF
             $fallbackSuffix = ucfirst(preg_replace($replacementPattern, '_', $fallback));
             $currentSuffix = ucfirst(preg_replace($replacementPattern, '_', $current));
 
-            $fallbackContent .= sprintf(<<<EOF
-\$catalogue%s = new MessageCatalogue('%s', %s);
-\$catalogue%s->addFallbackCatalogue(\$catalogue%s);
+            $fallbackContent .= sprintf(<<<'EOF'
+$catalogue%s = new MessageCatalogue('%s', %s);
+$catalogue%s->addFallbackCatalogue($catalogue%s);
 
 EOF
                 ,
@@ -420,10 +425,13 @@ EOF
 
         foreach ($this->computeFallbackLocales($locale) as $fallback) {
             if (!isset($this->catalogues[$fallback])) {
-                $this->doLoadCatalogue($fallback);
+                $this->loadCatalogue($fallback);
             }
 
             $fallbackCatalogue = new MessageCatalogue($fallback, $this->catalogues[$fallback]->all());
+            foreach ($this->catalogues[$fallback]->getResources() as $resource) {
+                $fallbackCatalogue->addResource($resource);
+            }
             $current->addFallbackCatalogue($fallbackCatalogue);
             $current = $fallbackCatalogue;
         }
