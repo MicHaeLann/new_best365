@@ -46,3 +46,9 @@
 
 # Backup entities generated with doctrine:generate:entities command
 */Entity/*~
+.idea/codeStyleSettings.xml
+.idea/modules.xml
+.idea/new_best365.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/copyright/profiles_settings.xml

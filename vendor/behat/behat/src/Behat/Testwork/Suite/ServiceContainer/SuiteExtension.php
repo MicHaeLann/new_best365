@@ -82,6 +82,7 @@ final class SuiteExtension implements Extension
             ->treatNullLike(array())
             ->treatFalseLike(array())
             ->useAttributeAsKey('name')
+            ->normalizeKeys(false)
             ->prototype('array')
                 ->beforeNormalization()
                     ->ifTrue(function ($suite) {
@@ -103,6 +104,7 @@ final class SuiteExtension implements Extension
                         return $suite;
                     })
                 ->end()
+                ->normalizeKeys(false)
                 ->addDefaultsIfNotSet()
                 ->treatTrueLike(array('enabled' => true))
                 ->treatNullLike(array('enabled' => true))

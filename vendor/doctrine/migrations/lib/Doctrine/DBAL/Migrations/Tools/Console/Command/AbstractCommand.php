@@ -19,7 +19,6 @@
 
 namespace Doctrine\DBAL\Migrations\Tools\Console\Command;
 
-use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\Configuration\Connection\Loader\ArrayConnectionConfigurationLoader;
 use Doctrine\DBAL\Migrations\Configuration\Connection\Loader\ConnectionConfigurationLoader;
@@ -159,27 +158,25 @@ abstract class AbstractCommand extends Command
      */
     private function getConnection(InputInterface $input)
     {
-        if (!$this->connection) {
-            $chainLoader = new ConnectionConfigurationChainLoader(
-                [
-                    new ArrayConnectionConfigurationLoader($input->getOption('db-configuration')),
-                    new ArrayConnectionConfigurationLoader('migrations-db.php'),
-                    new ConnectionHelperLoader($this->getHelperSet(), 'connection'),
-                    new ConnectionConfigurationLoader($this->configuration),
-                ]
-            );
-            $connection = $chainLoader->chosen();
-
-            if ($connection) {
-                $this->connection = $connection;
-
-                return $this->connection;
-            }
-
-            throw new \InvalidArgumentException('You have to specify a --db-configuration file or pass a Database Connection as a dependency to the Migrations.');
+        if ($this->connection) {
+            return $this->connection;
         }
 
-        return $this->connection;
+        $chainLoader = new ConnectionConfigurationChainLoader(
+            [
+                new ArrayConnectionConfigurationLoader($input->getOption('db-configuration')),
+                new ArrayConnectionConfigurationLoader('migrations-db.php'),
+                new ConnectionHelperLoader($this->getHelperSet(), 'connection'),
+                new ConnectionConfigurationLoader($this->configuration),
+            ]
+        );
+        $connection = $chainLoader->chosen();
+
+        if ($connection) {
+            return $this->connection = $connection;
+        }
+
+        throw new \InvalidArgumentException('You have to specify a --db-configuration file or pass a Database Connection as a dependency to the Migrations.');
     }
 
 }

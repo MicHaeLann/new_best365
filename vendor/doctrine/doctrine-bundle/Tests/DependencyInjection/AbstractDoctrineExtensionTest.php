@@ -75,6 +75,7 @@ abstract class AbstractDoctrineExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('pgsql_user', $config['user']);
         $this->assertSame('pgsql_s3cr3t', $config['password']);
         $this->assertSame('require', $config['sslmode']);
+        $this->assertSame('postgresql-ca.pem', $config['sslrootcert']);
         $this->assertSame('utf8', $config['charset']);
 
         // doctrine.dbal.sqlanywhere_connection
@@ -732,6 +733,22 @@ abstract class AbstractDoctrineExtensionTest extends \PHPUnit_Framework_TestCase
 
         $definition = $container->getDefinition('doctrine.dbal.default_connection.configuration');
         $this->assertDICDefinitionMethodCallOnce($definition, 'setAutoCommit', array(false));
+    }
+
+    public function testDbalOracleConnectstring()
+    {
+        $container = $this->loadContainer('dbal_oracle_connectstring');
+
+        $config = $container->getDefinition('doctrine.dbal.default_connection')->getArgument(0);
+        $this->assertSame('scott@sales-server:1521/sales.us.example.com', $config['connectstring']);
+    }
+
+    public function testDbalOracleInstancename()
+    {
+        $container = $this->loadContainer('dbal_oracle_instancename');
+
+        $config = $container->getDefinition('doctrine.dbal.default_connection')->getArgument(0);
+        $this->assertSame('mySuperInstance', $config['instancename']);
     }
 
     public function testDbalSchemaFilter()

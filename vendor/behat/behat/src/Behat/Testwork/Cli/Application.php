@@ -12,6 +12,7 @@ namespace Behat\Testwork\Cli;
 
 use Behat\Testwork\ServiceContainer\Configuration\ConfigurationLoader;
 use Behat\Testwork\ServiceContainer\ContainerLoader;
+use Behat\Testwork\ServiceContainer\Exception\ConfigurationLoadingException;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
@@ -49,6 +50,8 @@ final class Application extends BaseApplication
      */
     public function __construct($name, $version, ConfigurationLoader $configLoader, ExtensionManager $extensionManager)
     {
+        putenv('COLUMNS=9999');
+
         $this->configurationLoader = $configLoader;
         $this->extensionManager = $extensionManager;
 
@@ -65,9 +68,14 @@ final class Application extends BaseApplication
         return new InputDefinition(array(
             new InputOption('--profile', '-p', InputOption::VALUE_REQUIRED, 'Specify config profile to use.'),
             new InputOption('--config', '-c', InputOption::VALUE_REQUIRED, 'Specify config file to use.'),
-            new InputOption('--verbose', '-v', InputOption::VALUE_NONE, 'Increase verbosity of exceptions.'),
+            new InputOption(
+                '--verbose', '-v', InputOption::VALUE_OPTIONAL,
+                'Increase verbosity of exceptions.' . PHP_EOL .
+                'Use -vv or --verbose=2 to display backtraces in addition to exceptions.'
+            ),
             new InputOption('--help', '-h', InputOption::VALUE_NONE, 'Display this help message.'),
             new InputOption('--config-reference', null, InputOption::VALUE_NONE, 'Display the configuration reference.'),
+            new InputOption('--debug', null, InputOption::VALUE_NONE, 'Provide debuggin information about current environment.'),
             new InputOption('--version', '-V', InputOption::VALUE_NONE, 'Display this behat version.'),
             new InputOption('--no-interaction', '-n', InputOption::VALUE_NONE, 'Do not ask any interactive question.'),
             new InputOption(
@@ -89,15 +97,29 @@ final class Application extends BaseApplication
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        if (is_file($path = $input->getParameterOption(array('--config', '-c')))) {
-            $this->configurationLoader->setConfigurationFilePath($path);
+        // xdebug's default nesting level of 100 is not enough
+        if (extension_loaded('xdebug')
+            && false === strpos(ini_get('disable_functions'), 'ini_set')
+        ) {
+            $oldValue = ini_get('xdebug.max_nesting_level');
+            if ($oldValue === false || $oldValue < 256) {
+                ini_set('xdebug.max_nesting_level', 256);
+            }
         }
-
-        $this->add($this->createCommand($input, $output));
 
         if ($input->hasParameterOption(array('--config-reference'))) {
             $input = new ArrayInput(array('--config-reference' => true));
         }
+
+        if ($path = $input->getParameterOption(array('--config', '-c'))) {
+            if (!is_file($path)) {
+                throw new ConfigurationLoadingException("The requested config file does not exist");
+            }
+
+            $this->configurationLoader->setConfigurationFilePath($path);
+        }
+
+        $this->add($this->createCommand($input, $output));
 
         return parent::doRun($input, $output);
     }
@@ -107,6 +129,7 @@ final class Application extends BaseApplication
         $commands = parent::getDefaultCommands();
 
         $commands[] = new DumpReferenceCommand($this->extensionManager);
+        $commands[] = new DebugCommand($this, $this->configurationLoader, $this->extensionManager);
 
         return $commands;
     }
@@ -191,6 +214,10 @@ final class Application extends BaseApplication
     {
         if ($input->hasParameterOption(array('--config-reference'))) {
             return 'dump-reference';
+        }
+
+        if ($input->hasParameterOption(array('--debug'))) {
+            return 'debug';
         }
 
         return $this->getName();

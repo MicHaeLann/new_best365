@@ -161,6 +161,11 @@ class AppKernel extends Kernel
             'Elcodi\Plugin\CustomShippingBundle\ElcodiCustomShippingBundle',
             'Elcodi\Plugin\BankwireBundle\ElcodiBankwireBundle',
 
+			/**
+			 *
+			 */
+			new JMS\TranslationBundle\JMSTranslationBundle(),
+
             /**
              * Serializer
              */

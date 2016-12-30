@@ -16,7 +16,7 @@ use Behat\Testwork\Call\Exception\CallErrorException;
 use Exception;
 
 /**
- * Handles calls in teh current runtime.
+ * Handles calls in the current runtime.
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
@@ -26,6 +26,11 @@ final class RuntimeCallHandler implements CallHandler
      * @var integer
      */
     private $errorReportingLevel;
+
+    /**
+     * @var bool
+     */
+    private $obStarted = false;
 
     /**
      * Initializes executor.
@@ -73,12 +78,11 @@ final class RuntimeCallHandler implements CallHandler
      */
     public function handleError($level, $message, $file, $line)
     {
-        if (0 !== error_reporting()) {
-            throw new CallErrorException($level, $message, $file, $line);
+        if ($this->errorLevelIsNotReportable($level)) {
+            return false;
         }
 
-        // error reporting turned off or more likely suppressed with @
-        return false;
+        throw new CallErrorException($level, $message, $file, $line);
     }
 
     /**
@@ -101,9 +105,9 @@ final class RuntimeCallHandler implements CallHandler
             $exception = $caught;
         }
 
-        $stdOud = $this->getBufferedStdOut();
+        $stdOut = $this->getBufferedStdOut();
 
-        return new CallResult($call, $return, $exception, $stdOud);
+        return new CallResult($call, $return, $exception, $stdOut);
     }
 
     /**
@@ -125,7 +129,7 @@ final class RuntimeCallHandler implements CallHandler
     {
         $errorReporting = $call->getErrorReportingLevel() ? : $this->errorReportingLevel;
         set_error_handler(array($this, 'handleError'), $errorReporting);
-        ob_start();
+        $this->obStarted = ob_start();
     }
 
     /**
@@ -133,7 +137,21 @@ final class RuntimeCallHandler implements CallHandler
      */
     private function stopErrorAndOutputBuffering()
     {
-        ob_end_clean();
+        if ($this->obStarted) {
+            ob_end_clean();
+        }
         restore_error_handler();
+    }
+
+    /**
+     * Checks if provided error level is not reportable.
+     *
+     * @param integer $level
+     *
+     * @return Boolean
+     */
+    private function errorLevelIsNotReportable($level)
+    {
+        return !(error_reporting() & $level);
     }
 }

@@ -97,9 +97,9 @@ class FlushAnnotationResolver implements AnnotationResolverInterface
     }
 
     /**
-     * Get Manager object
+     * Get Managers object
      *
-     * @return ObjectManager Manager
+     * @return ObjectManager Managers
      */
     public function getManager()
     {
@@ -119,7 +119,7 @@ class FlushAnnotationResolver implements AnnotationResolverInterface
     /**
      * Return if manager must be flushed
      *
-     * @return boolean Manager must be flushed
+     * @return boolean Managers must be flushed
      */
     public function getMustFlush()
     {

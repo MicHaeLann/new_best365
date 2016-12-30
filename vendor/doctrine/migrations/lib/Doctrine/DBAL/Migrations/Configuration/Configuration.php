@@ -20,6 +20,7 @@
 namespace Doctrine\DBAL\Migrations\Configuration;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Connections\MasterSlaveConnection;
 use Doctrine\DBAL\Migrations\Finder\MigrationDeepFinderInterface;
 use Doctrine\DBAL\Migrations\MigrationException;
 use Doctrine\DBAL\Migrations\OutputWriter;
@@ -53,6 +54,11 @@ class Configuration
      * @var string
      */
     const VERSIONS_ORGANIZATION_BY_YEAR_AND_MONTH = 'year_and_month';
+
+    /**
+     * The date format for new version numbers
+     */
+    const VERSION_FORMAT = 'YmdHis';
 
     /**
      * Name of this set of migrations
@@ -409,7 +415,7 @@ class Configuration
         }
         $version = new Version($this, $version, $class);
         $this->migrations[$version->getVersion()] = $version;
-        ksort($this->migrations);
+        ksort($this->migrations, SORT_STRING);
 
         return $version;
     }
@@ -454,6 +460,10 @@ class Configuration
      */
     public function getVersion($version)
     {
+        if (empty($this->migrations)) {
+            $this->registerMigrationsFromDirectory($this->getMigrationsDirectory());
+        }
+
         if (!isset($this->migrations[$version])) {
             throw MigrationException::unknownMigrationVersion($version);
         }
@@ -486,6 +496,7 @@ class Configuration
      */
     public function hasVersionMigrated(Version $version)
     {
+        $this->connect();
         $this->createMigrationTable();
 
         $version = $this->connection->fetchColumn(
@@ -503,15 +514,12 @@ class Configuration
      */
     public function getMigratedVersions()
     {
+        $this->connect();
         $this->createMigrationTable();
 
         $ret = $this->connection->fetchAll("SELECT " . $this->migrationsColumnName . " FROM " . $this->migrationsTableName);
-        $versions = [];
-        foreach ($ret as $version) {
-            $versions[] = current($version);
-        }
 
-        return $versions;
+        return array_map('current', $ret);
     }
 
     /**
@@ -541,6 +549,7 @@ class Configuration
      */
     public function getCurrentVersion()
     {
+        $this->connect();
         $this->createMigrationTable();
 
         if (empty($this->migrations)) {
@@ -601,15 +610,15 @@ class Configuration
             $this->registerMigrationsFromDirectory($this->getMigrationsDirectory());
         }
 
-        $versions = array_keys($this->migrations);
-        array_unshift($versions, 0);
-        $offset = array_search($version, $versions);
+        $versions = array_map('strval', array_keys($this->migrations));
+        array_unshift($versions, '0');
+        $offset = array_search((string)$version, $versions);
         if ($offset === false || !isset($versions[$offset + $delta])) {
             // Unknown version or delta out of bounds.
             return null;
         }
 
-        return (string) $versions[$offset + $delta];
+        return $versions[$offset + $delta];
     }
 
     /**
@@ -657,6 +666,7 @@ class Configuration
      */
     public function getNumberOfExecutedMigrations()
     {
+        $this->connect();
         $this->createMigrationTable();
 
         $result = $this->connection->fetchColumn("SELECT COUNT(" . $this->migrationsColumnName . ") FROM " . $this->migrationsTableName);
@@ -708,22 +718,23 @@ class Configuration
             return false;
         }
 
-        if (!$this->connection->getSchemaManager()->tablesExist([$this->migrationsTableName])) {
-            $columns = [
-                $this->migrationsColumnName => new Column($this->migrationsColumnName, Type::getType('string'), ['length' => 255]),
-            ];
-            $table = new Table($this->migrationsTableName, $columns);
-            $table->setPrimaryKey([$this->migrationsColumnName]);
-            $this->connection->getSchemaManager()->createTable($table);
-
+        $this->connect();
+        if ($this->connection->getSchemaManager()->tablesExist([$this->migrationsTableName])) {
             $this->migrationTableCreated = true;
 
-            return true;
+            return false;
         }
+
+        $columns = [
+            $this->migrationsColumnName => new Column($this->migrationsColumnName, Type::getType('string'), ['length' => 255]),
+        ];
+        $table = new Table($this->migrationsTableName, $columns);
+        $table->setPrimaryKey([$this->migrationsColumnName]);
+        $this->connection->getSchemaManager()->createTable($table);
 
         $this->migrationTableCreated = true;
 
-        return false;
+        return true;
     }
 
     /**
@@ -795,6 +806,37 @@ class Configuration
 
         $this->migrationsAreOrganizedByYear = $migrationsAreOrganizedByYearAndMonth;
         $this->migrationsAreOrganizedByYearAndMonth = $migrationsAreOrganizedByYearAndMonth;
+    }
+
+    /**
+     * Generate a new migration version. A version is (usually) a datetime string.
+     *
+     * @param DateTimeInterface|null $now Defaults to the current time in UTC
+     * @return string The newly generated version
+     */
+    public function generateVersionNumber(\DateTimeInterface $now=null)
+    {
+        $now = $now ?: new \DateTime('now', new \DateTimeZone('UTC'));
+
+        return $now->format(self::VERSION_FORMAT);
+    }
+
+    /**
+     * Explicitely opens the database connection. This is done to play nice
+     * with DBAL's MasterSlaveConnection. Which, in some cases, connects to a
+     * follower when fetching the executed migrations. If a follower is lagging
+     * significantly behind that means the migrations system may see unexecuted
+     * migrations that were actually executed earlier.
+     *
+     * @return bool The same value returned from the `connect` method
+     */
+    protected function connect()
+    {
+        if ($this->connection instanceof MasterSlaveConnection) {
+            return $this->connection->connect('master');
+        }
+
+        return $this->connection->connect();
     }
 
     /**

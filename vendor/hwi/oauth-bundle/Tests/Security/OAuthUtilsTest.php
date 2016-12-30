@@ -24,12 +24,16 @@ class OAuthUtilsTest extends \PHPUnit_Framework_TestCase
         $redirect = 'https://api.instagram.com/oauth/authorize?redirect='.rawurlencode($url);
 
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $authorizationChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+            $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+                ->disableOriginalConstructor()
+                ->getMock();
         } else {
-            $authorizationChecker = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+            $authorizationChecker = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContextInterface')
+                ->disableOriginalConstructor()
+                ->getMock();
         }
         $utils = new OAuthUtils($this->getHttpUtils($url), $authorizationChecker, true);
-        $utils->setResourceOwnerMap($this->getMap($url, $redirect, false, true));
+        $utils->addResourceOwnerMap($this->getMap($url, $redirect, false, true));
 
         $this->assertEquals(
             $redirect,
@@ -46,7 +50,7 @@ class OAuthUtilsTest extends \PHPUnit_Framework_TestCase
         $redirect = 'https://api.instagram.com/oauth/authorize?redirect='.rawurlencode($url);
 
         $utils = new OAuthUtils($this->getHttpUtils($url), $this->getAutorizationChecker(true), true);
-        $utils->setResourceOwnerMap($this->getMap($url, $redirect, true));
+        $utils->addResourceOwnerMap($this->getMap($url, $redirect, true));
 
         $this->assertEquals(
             $redirect,
@@ -66,7 +70,7 @@ class OAuthUtilsTest extends \PHPUnit_Framework_TestCase
         $redirect = 'https://api.instagram.com/oauth/authorize?redirect='.rawurlencode($url);
 
         $utils = new OAuthUtils($this->getHttpUtils($url), $this->getAutorizationChecker(false), true);
-        $utils->setResourceOwnerMap($this->getMap($url, $redirect));
+        $utils->addResourceOwnerMap($this->getMap($url, $redirect));
 
         $this->assertEquals(
             $redirect,
@@ -175,7 +179,9 @@ class OAuthUtilsTest extends \PHPUnit_Framework_TestCase
 
     private function getHttpUtils($generatedUrl = '/')
     {
-        $urlGenerator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $urlGenerator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
         $urlGenerator
             ->expects($this->any())
             ->method('generate')
@@ -188,12 +194,16 @@ class OAuthUtilsTest extends \PHPUnit_Framework_TestCase
     private function getAutorizationChecker($hasUser)
     {
         if (interface_exists('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')) {
-            $mock = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+            $mock = $this->getMockBuilder('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface')
+                ->disableOriginalConstructor()
+                ->getMock();
         } else {
-            $mock= $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+            $mock= $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContextInterface')
+                ->disableOriginalConstructor()
+                ->getMock();
         }
-        $mock
-            ->expects($this->once())
+
+        $mock->expects($this->once())
             ->method('isGranted')
             ->with('IS_AUTHENTICATED_REMEMBERED')
             ->will($this->returnValue($hasUser));

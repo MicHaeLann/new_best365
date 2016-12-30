@@ -187,7 +187,7 @@ class ConnectController extends Controller
         if (null === $accessToken) {
             return $this->redirectToRoute($this->container->getParameter('hwi_oauth.failed_auth_path'));
         }
-        
+
         $userInformation = $resourceOwner->getUserInformation($accessToken);
 
         // Show confirmation page?
@@ -197,7 +197,7 @@ class ConnectController extends Controller
 
         // Handle the form
         /** @var $form FormInterface */
-        $form = $this->createForm('form');
+        $form = $this->createForm('Symfony\Component\Form\Extension\Core\Type\FormType');
 
         $form->handleRequest($request);
 

@@ -1,5 +1,23 @@
 Changelog
 =========
+## 0.4.3 (2016-09-11)
+* Fixed: Request parameters are not copied into new Request on forward
+* Fixed: Fixed scope deprecating message
+* Fixed: Resolved deprecated message in ConnectController
+* Fixed: Removed usage of deprecated code in tests
+
+## 0.4.2 (2016-07-27)
+* Fixed: Change Discogs URL from http to https
+* Fixed: Update Facebook API URLs to not use outdated ones
+
+## 0.4.1 (2016-03-08)
+* Fixed: Remove usage of deprecated Twig function `form_enctype` & replace with usage of `form_start`/`form_end`,
+* Fixed: Mark as not fully compatible with Symfony `~3.0`,
+* Fixed: Multiple firewalls can now have different resource owners,
+* Fixed: Wrong URL generated for Safesforce resource owner,
+* Added: `include_email` option into Twitter resource owner,
+* Added: Hungarian translation,
+* Added: Documentation about FOSUser integration
 
 ## 0.4.0 (2015-12-04)
 * [BC break] Added `UserResponseInterface#getFirstName()` method, also a new default path `firstname`

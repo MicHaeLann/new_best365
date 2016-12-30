@@ -164,7 +164,9 @@ class DoctrineCrudGeneratorTest extends GeneratorTest
             'namespace Foo\BarBundle\Controller;',
             'public function indexAction',
             'public function showAction',
-            '@Route',
+            '@Route("/post")', // Controller level
+            '@Route("/", name="post_index")',
+            '@Route("/{id}", name="post_show")',
         );
         foreach ($strings as $string) {
             $this->assertContains($string, $content);
@@ -177,6 +179,48 @@ class DoctrineCrudGeneratorTest extends GeneratorTest
         );
         foreach ($strings as $string) {
             $this->assertNotContains($string, $content);
+        }
+    }
+
+    public function testGenerateNamespacedEntity()
+    {
+        $this->getGenerator()->generate($this->getBundle(), 'Blog\Post', $this->getMetadata(), 'annotation', '/blog_post', true, true);
+
+        $files = array(
+            'Controller/Blog/PostController.php',
+            'Tests/Controller/Blog/PostControllerTest.php',
+            'Resources/views/blog/post/index.html.twig',
+            'Resources/views/blog/post/show.html.twig',
+            'Resources/views/blog/post/new.html.twig',
+            'Resources/views/blog/post/edit.html.twig',
+        );
+        foreach ($files as $file) {
+            $this->assertTrue(file_exists($this->tmpDir.'/'.$file), sprintf('%s has been generated', $file));
+        }
+
+        $content = file_get_contents($this->tmpDir.'/Controller/Blog/PostController.php');
+        $strings = array(
+            'namespace Foo\BarBundle\Controller\Blog;',
+            '@Route("/blog_post")', // Controller level
+            '@Route("/", name="blog_post_index")',
+            '@Route("/{id}", name="blog_post_show")',
+            '@Route("/new", name="blog_post_new")',
+            '@Route("/{id}/edit", name="blog_post_edit")',
+            '@Route("/{id}", name="blog_post_delete")',
+            'public function showAction(Post $post)',
+            '\'post\' => $post,',
+            '\'posts\' => $posts,',
+        );
+        if (method_exists('Symfony\Compoennt\Form\AbstractType', 'getBlockPrefix')) {
+            // Symfony >= 2.8
+            $strings[] = '$form = $this->createForm(\'Foo\BarBundle\Form\Blog\PostType\', $post);';
+            $strings[] = '$editForm = $this->createForm(\'Foo\BarBundle\Form\Blog\PostType\', $post);';
+        } else {
+            $strings[] = '$form = $this->createForm(new PostType(), $post);';
+            $strings[] = '$editForm = $this->createForm(new PostType(), $post);';
+        }
+        foreach ($strings as $string) {
+            $this->assertContains($string, $content);
         }
     }
 

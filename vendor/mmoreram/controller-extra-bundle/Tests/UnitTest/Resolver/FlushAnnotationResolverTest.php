@@ -105,8 +105,8 @@ class FlushAnnotationResolverTest extends \PHPUnit_Framework_TestCase
     /**
      * Tests DefaultManager name method
      *
-     * @param string $annotationManager Manager defined in annotation
-     * @param string $resultManager     Result Manager
+     * @param string $annotationManager Managers defined in annotation
+     * @param string $resultManager     Result Managers
      *
      * @dataProvider dataManager
      */

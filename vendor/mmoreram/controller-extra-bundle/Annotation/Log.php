@@ -116,7 +116,7 @@ class Log extends Annotation
     /**
      * return manager
      *
-     * @return string Manager
+     * @return string Services
      */
     public function getLevel()
     {

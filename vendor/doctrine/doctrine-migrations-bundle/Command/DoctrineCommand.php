@@ -14,12 +14,12 @@
 
 namespace Doctrine\Bundle\MigrationsBundle\Command;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Doctrine\Bundle\DoctrineBundle\Command\DoctrineCommand as BaseCommand;
-use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\Configuration\AbstractFileConfiguration;
+use Doctrine\DBAL\Migrations\Configuration\Configuration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**
  * Base class for Doctrine console commands to extend from.
@@ -32,8 +32,9 @@ abstract class DoctrineCommand extends BaseCommand
     {
         if (!$configuration->getMigrationsDirectory()) {
             $dir = $container->getParameter('doctrine_migrations.dir_name');
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
+            if (!is_dir($dir) && !@mkdir($dir, 0777, true) && !is_dir($dir)) {
+                $error = error_get_last();
+                throw new \ErrorException($error['message']);
             }
             $configuration->setMigrationsDirectory($dir);
         } else {
@@ -45,8 +46,9 @@ abstract class DoctrineCommand extends BaseCommand
                     $dir = str_replace('%'.$pathPlaceholder.'%', $container->getParameter($pathPlaceholder), $dir);
                 }
             }
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
+            if (!is_dir($dir) && !@mkdir($dir, 0777, true) && !is_dir($dir)) {
+                $error = error_get_last();
+                throw new \ErrorException($error['message']);
             }
             $configuration->setMigrationsDirectory($dir);
         }
@@ -57,7 +59,7 @@ abstract class DoctrineCommand extends BaseCommand
             $configuration->setName($container->getParameter('doctrine_migrations.name'));
         }
         // For backward compatibility, need use a table from parameters for overwrite the default configuration
-        if (!$configuration->getMigrationsTableName() || !($configuration instanceof AbstractFileConfiguration)) {
+        if (!($configuration instanceof AbstractFileConfiguration) || !$configuration->getMigrationsTableName()) {
             $configuration->setMigrationsTableName($container->getParameter('doctrine_migrations.table_name'));
         }
         // Migrations is not register from configuration loader
@@ -65,10 +67,30 @@ abstract class DoctrineCommand extends BaseCommand
             $configuration->registerMigrationsFromDirectory($configuration->getMigrationsDirectory());
         }
 
+        $organizeMigrations = $container->getParameter('doctrine_migrations.organize_migrations');
+        switch ($organizeMigrations) {
+            case Configuration::VERSIONS_ORGANIZATION_BY_YEAR:
+                $configuration->setMigrationsAreOrganizedByYear(true);
+                break;
+
+            case Configuration::VERSIONS_ORGANIZATION_BY_YEAR_AND_MONTH:
+                $configuration->setMigrationsAreOrganizedByYearAndMonth(true);
+                break;
+
+            case false:
+                break;
+
+            default:
+                throw new InvalidArgumentException('Invalid value for "doctrine_migrations.organize_migrations" parameter.');
+        }
+
         self::injectContainerToMigrations($container, $configuration->getMigrations());
     }
 
     /**
+     * @param ContainerInterface $container
+     * @param array $versions
+     *
      * Injects the container to migrations aware of it
      */
     private static function injectContainerToMigrations(ContainerInterface $container, array $versions)

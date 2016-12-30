@@ -19,7 +19,6 @@
 
 namespace Doctrine\DBAL\Migrations\Tools\Console\Command;
 
-use Doctrine\DBAL\Migrations\Configuration\AbstractFileConfiguration;
 use Doctrine\DBAL\Migrations\Configuration\Configuration;
 use Doctrine\DBAL\Migrations\Tools\Console\Helper\MigrationStatusInfosHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -90,7 +89,7 @@ EOT
         }
     }
 
-    private function writeStatusInfosLineAligned($output, $title, $value)
+    private function writeStatusInfosLineAligned(OutputInterface $output, $title, $value)
     {
         $output->writeln('    <comment>>></comment> ' . $title . ': ' . str_repeat(' ', 50 - strlen($title)) . $value);
     }
@@ -102,10 +101,11 @@ EOT
         foreach($migrations as $version) {
             $isMigrated = in_array($version->getVersion(), $migratedVersions);
             $status = $isMigrated ? '<info>migrated</info>' : '<error>not migrated</error>';
-            $migrationDescription = '';
-            if ($version->getMigration()->getDescription()) {
-                $migrationDescription = str_repeat(' ', 5) . $version->getMigration()->getDescription();
-            }
+
+            $migrationDescription = $version->getMigration()->getDescription()
+                ? str_repeat(' ', 5) . $version->getMigration()->getDescription()
+                : '';
+
             $formattedVersion = $configuration->getDateTime($version->getVersion());
 
             $output->writeln('    <comment>>></comment> ' . $formattedVersion .

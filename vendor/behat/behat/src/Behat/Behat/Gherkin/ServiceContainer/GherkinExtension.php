@@ -37,6 +37,7 @@ final class GherkinExtension implements Extension
      */
     const MANAGER_ID = 'gherkin';
     const KEYWORDS_DUMPER_ID = 'gherkin.keywords_dumper';
+    const KEYWORDS_ID = 'gherkin.keywords';
 
     /*
      * Available extension points
@@ -116,6 +117,7 @@ final class GherkinExtension implements Extension
         $this->loadSuiteWithPathsSetup($container);
         $this->loadFilesystemFeatureLocator($container);
         $this->loadFilesystemScenariosListLocator($container);
+        $this->loadFilesystemRerunScenariosListLocator($container);
     }
 
     /**
@@ -178,10 +180,10 @@ final class GherkinExtension implements Extension
         $definition = new Definition('Behat\Gherkin\Keywords\CachedArrayKeywords', array(
             '%gherkin.paths.i18n%'
         ));
-        $container->setDefinition('gherkin.keywords', $definition);
+        $container->setDefinition(self::KEYWORDS_ID, $definition);
 
         $definition = new Definition('Behat\Gherkin\Keywords\KeywordsDumper', array(
-            new Reference('gherkin.keywords')
+            new Reference(self::KEYWORDS_ID)
         ));
         $container->setDefinition(self::KEYWORDS_DUMPER_ID, $definition);
     }
@@ -316,6 +318,20 @@ final class GherkinExtension implements Extension
     }
 
     /**
+     * Loads filesystem rerun scenarios list locator.
+     *
+     * @param ContainerBuilder $container
+     */
+    private function loadFilesystemRerunScenariosListLocator(ContainerBuilder $container)
+    {
+        $definition = new Definition('Behat\Behat\Gherkin\Specification\Locator\FilesystemRerunScenariosListLocator', array(
+            new Reference(self::MANAGER_ID)
+        ));
+        $definition->addTag(SpecificationExtension::LOCATOR_TAG, array('priority' => 50));
+        $container->setDefinition(SpecificationExtension::LOCATOR_TAG . '.filesystem_rerun_scenarios_list', $definition);
+    }
+
+    /**
      * Processes all available gherkin loaders.
      *
      * @param ContainerBuilder $container
@@ -354,10 +370,14 @@ final class GherkinExtension implements Extension
             return new Definition('Behat\Gherkin\Filter\TagFilter', array($filterString));
         }
 
+        if ('narrative' === $type) {
+            return new Definition('Behat\Gherkin\Filter\NarrativeFilter', array($filterString));
+        }
+
         throw new ExtensionException(sprintf(
             '`%s` filter is not supported by the `filters` option of gherkin extension. Supported types are `%s`.',
             $type,
-            implode('`, `', array('role', 'name', 'tags'))
+            implode('`, `', array('narrative', 'role', 'name', 'tags'))
         ), 'gherkin');
     }
 }

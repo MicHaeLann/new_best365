@@ -25,7 +25,7 @@ class Flush extends Annotation
     /**
      * @var string
      *
-     * Manager to use when flushing
+     * Services to use when flushing
      */
     public $manager;
 

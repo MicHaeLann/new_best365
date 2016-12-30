@@ -11,16 +11,26 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '32dcc8afd4335739640db7d200c1971d' => __DIR__ . '/..' . '/symfony/polyfill-apcu/bootstrap.php',
         '3fad0ebbff9928a94a9d8941fb314bd8' => __DIR__ . '/..' . '/symfony/symfony/src/Symfony/Component/Intl/Resources/stubs/functions.php',
-        'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
         '08f60432e002f914fc1b5cc2586c0d2c' => __DIR__ . '/..' . '/raulfraile/ladybug-themes/Ladybug/Plugin/Extra/Resources/php/helpers.php',
+        'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'p' => 
+        array (
+            'phpDocumentor\\Reflection\\' => 25,
+        ),
         'Z' => 
         array (
             'Zend\\EventManager\\' => 18,
             'Zend\\Code\\' => 10,
+        ),
+        'W' => 
+        array (
+            'Webmozart\\Assert\\' => 17,
         ),
         'V' => 
         array (
@@ -29,6 +39,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Asset\\' => 24,
             'Symfony\\Component\\' => 18,
             'Symfony\\CS\\' => 11,
@@ -52,7 +63,9 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Predis\\' => 7,
+            'PhpParser\\' => 10,
             'PaymentSuite\\' => 13,
         ),
         'N' => 
@@ -80,6 +93,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'I' => 
         array (
+            'Interop\\Container\\' => 18,
             'Incenteev\\ParameterHandler\\' => 27,
         ),
         'H' => 
@@ -103,6 +117,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\DBAL\\Migrations\\' => 25,
             'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
             'Doctrine\\Bundle\\FixturesBundle\\' => 31,
@@ -117,6 +132,12 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpDocumentor\\Reflection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
         'Zend\\EventManager\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-eventmanager/src',
@@ -125,6 +146,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
         ),
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
         'Visithor\\Bundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/visithor/visithor-bundle',
@@ -132,6 +157,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'Visithor\\' => 
         array (
             0 => __DIR__ . '/..' . '/visithor/visithor/src/Visithor',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
         'Symfony\\Component\\Asset\\' => 
         array (
@@ -201,9 +230,17 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Predis\\' => 
         array (
             0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
+        'PhpParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
         ),
         'PaymentSuite\\' => 
         array (
@@ -253,6 +290,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/jms/aop-bundle',
         ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
         'Incenteev\\ParameterHandler\\' => 
         array (
             0 => __DIR__ . '/..' . '/incenteev/composer-parameter-handler',
@@ -298,6 +339,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
         ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
         'Doctrine\\Common\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
@@ -334,13 +379,6 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
     );
 
     public static $prefixesPsr0 = array (
-        'p' => 
-        array (
-            'phpDocumentor' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            ),
-        ),
         'W' => 
         array (
             'WebDriver' => 
@@ -387,10 +425,6 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         ),
         'P' => 
         array (
-            'Psr\\Log\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/psr/log',
-            ),
             'ProxyManager\\' => 
             array (
                 0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
@@ -458,6 +492,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             array (
                 0 => __DIR__ . '/..' . '/willdurand/jsonp-callback-validator/src',
             ),
+            'JMS\\TranslationBundle' => 
+            array (
+                0 => __DIR__ . '/..' . '/jms/translation-bundle',
+            ),
             'JMS\\SerializerBundle' => 
             array (
                 0 => __DIR__ . '/..' . '/jms/serializer-bundle',
@@ -469,6 +507,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'JMS\\I18nRoutingBundle' => 
             array (
                 0 => __DIR__ . '/..' . '/acasademont/i18n-routing-bundle',
+                1 => __DIR__ . '/..' . '/jms/i18n-routing-bundle',
             ),
             'JMS\\' => 
             array (
@@ -518,10 +557,6 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'Doctrine\\Common\\Collections\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/collections/lib',
-            ),
-            'Doctrine\\Common\\Annotations\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/doctrine/annotations/lib',
             ),
         ),
         'C' => 
@@ -949,6 +984,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'PHP_Token_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_STRING_VARNAME' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_SUPER' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_SWITCH' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_Stream' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream.php',
         'PHP_Token_Stream_CachingFactory' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token/Stream/CachingFactory.php',
@@ -963,6 +999,7 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'PHP_Token_UNSET' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_UNSET_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_USE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_USE_FUNCTION' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VAR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_VARIABLE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_WHERE' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',

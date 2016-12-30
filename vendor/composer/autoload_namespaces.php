@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
     'WebDriver' => array($vendorDir . '/instaclick/php-webdriver/lib'),
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
@@ -15,7 +14,6 @@ return array(
     'Sensio\\Bundle\\DistributionBundle' => array($vendorDir . '/sensio/distribution-bundle'),
     'SensioLabs\\Security' => array($vendorDir . '/sensiolabs/security-checker'),
     'RaulFraile\\Bundle\\LadybugBundle' => array($vendorDir . '/raulfraile/ladybug-bundle'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
     'ProxyManager\\' => array($vendorDir . '/ocramius/proxy-manager/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
@@ -29,9 +27,10 @@ return array(
     'Ladybug\\Plugin' => array($vendorDir . '/raulfraile/ladybug-plugins', $vendorDir . '/raulfraile/ladybug/data/plugins'),
     'Ladybug' => array($vendorDir . '/raulfraile/ladybug-installer/src', $vendorDir . '/raulfraile/ladybug/src'),
     'JsonpCallbackValidator' => array($vendorDir . '/willdurand/jsonp-callback-validator/src'),
+    'JMS\\TranslationBundle' => array($vendorDir . '/jms/translation-bundle'),
     'JMS\\SerializerBundle' => array($vendorDir . '/jms/serializer-bundle'),
     'JMS\\Serializer' => array($vendorDir . '/jms/serializer/src'),
-    'JMS\\I18nRoutingBundle' => array($vendorDir . '/acasademont/i18n-routing-bundle'),
+    'JMS\\I18nRoutingBundle' => array($vendorDir . '/acasademont/i18n-routing-bundle', $vendorDir . '/jms/i18n-routing-bundle'),
     'JMS\\' => array($vendorDir . '/jms/parser-lib/src'),
     'Goodby\\CSV' => array($vendorDir . '/goodby/csv/src'),
     'Gaufrette' => array($vendorDir . '/knplabs/gaufrette/src'),
@@ -42,7 +41,6 @@ return array(
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Doctrine\\Common\\DataFixtures' => array($vendorDir . '/doctrine/data-fixtures/lib'),
     'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
-    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'CssEmbed' => array($vendorDir . '/ptachoire/cssembed/src'),
     'CG\\' => array($vendorDir . '/jms/cg/src'),
     'Buzz' => array($vendorDir . '/kriswallsmith/buzz/lib'),
