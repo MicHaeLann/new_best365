@@ -187,7 +187,7 @@ class Best365CartController extends CartController
 			->emptyLines($cart);
 
 		return $this->redirect(
-			$this->generateUrl('store_homepage')
+			$this->generateUrl('best365_store_homepage')
 		);
 	}
 
