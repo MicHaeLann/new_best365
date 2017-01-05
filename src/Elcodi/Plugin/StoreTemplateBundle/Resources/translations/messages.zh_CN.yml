@@ -181,7 +181,7 @@ template:
                 congratulations: 哇喔！
                 continue_shopping: '继续购物'
                 order: 订单
-                shipping: '快递：'
+                shipping: '快递'
                 status: '状态：'
                 reference: '转账时请在备注中添加附注。您的附注是 '
                 thanks: ' 感谢您在本网站购物！我们会尽快派送您的包裹。'
@@ -218,6 +218,8 @@ template:
             view_item:
                 purchasable_pack: 组合
         shipping:
+            subtotal: 商品总计
+            total: 总计
             carrier: 快递
             costs_will_be_calculated_after_address: '选择收件地址后，自动计算所需快递费用。'
             costs_will_be_calculated_after_login: '登录或选择收件地址后计算快递费用。'

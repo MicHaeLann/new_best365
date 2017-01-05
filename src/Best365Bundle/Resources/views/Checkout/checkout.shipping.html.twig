@@ -9,6 +9,17 @@
             <form method="post" action="{{ url('best365_store_save_shipping') }}" class="margin-top-30">
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
+                        {{ 'template.store_template_bundle.shipping.subtotal'|trans }}
+                    </label>
+                    <div class="col-sm-8">
+                        <p id="subtotal" class="margin-top-5">
+                            {{ cart.amount|print_convert_money() }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.shipping.carrier'|trans }}
                     </label>
                     <div class="col-sm-8">
@@ -35,6 +46,18 @@
                         </p>
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-1 margin-top-5">
+                        {{ 'template.store_template_bundle.shipping.total'|trans }}
+                    </label>
+                    <div class="col-sm-8">
+                        <p id="total-price" class="margin-top-5">
+
+                        </p>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.address.item.address'|trans }}

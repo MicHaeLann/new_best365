@@ -218,6 +218,8 @@ template:
             view_item:
                 purchasable_pack: Pack
         shipping:
+            subtotal: Subtotal
+            total: Total
             carrier: Carrier
             costs_will_be_calculated_after_address: 'After you set your address, shipping costs will be calculated.'
             costs_will_be_calculated_after_login: 'After you login or add your shipping address the shipping costs will be calculated.'

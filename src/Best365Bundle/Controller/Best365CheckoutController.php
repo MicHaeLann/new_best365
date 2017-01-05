@@ -247,10 +247,14 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.wrapper.shipping_methods')
 			->getOneById($cart, $cart->getShippingMethod());
 
+		// reset shipping amount and amount
+		$cart->setAmount($cart->getAmount()->subtract($cart->getShippingAmount()));
+
 		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight/1000);
 
 		$order = $cart->getOrder();
 		$order->setShippingAmount($shipping_amount);
+		$order->setAmount($cart->getAmount()->add($shipping_amount));
 
 		$orderObjectManager = $this
 			->get('elcodi.object_manager.order');
