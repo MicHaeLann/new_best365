@@ -163,8 +163,8 @@ jms_i18n_routing:
     # All references to this configuration are overriden.
     # See common/services.yml file in this folder for more insight.
     #
-    default_locale: en
-    locales: [en]
+    default_locale: zh-CN
+    locales: [zh-CN]
 
 #
 # HTTP Headers
