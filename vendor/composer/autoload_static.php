@@ -136,7 +136,6 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Zend\\EventManager\\' => 
         array (
@@ -379,6 +378,13 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
     );
 
     public static $prefixesPsr0 = array (
+        'p' => 
+        array (
+            'phpDocumentor' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            ),
+        ),
         'W' => 
         array (
             'WebDriver' => 
