@@ -1,6 +1,5 @@
 $( document ).ready(function() {
-    var display = getPrice();
-    $("#shipping-price").html(display);
+    display();
 });
 
 $("#add_new").click(function(event) {
@@ -14,11 +13,10 @@ $("#add_new").click(function(event) {
 });
 
 $("#shipping_method").change(function() {
-    var display = getPrice();
-    $("#shipping-price").html(display);
+    display();
 });
 
-function getPrice()
+function getShippingPrice()
 {
     var weight = $("#cart-weight").val();
 
@@ -33,7 +31,31 @@ function getPrice()
 
     var total = val.replace(/[^0-9\.]+/g,"") * weight / 1000;
 
-    return val.replace(/[0-9\.]+/g,"") +  total.toFixed(2) ;
+    return total.toFixed(2);
+}
+
+function getSubtotal()
+{
+    return $("#subtotal").html().replace(/[^0-9\.]+/g,"");
+}
+
+function getPrice(price)
+{
+    // get currency
+    var id = $("#shipping_method").val() + '_price';
+    var val = $("#" + id).val();
+
+    return val.replace(/[0-9\.]+/g,"") +  price;
+}
+
+function display()
+{
+    var shipping = getShippingPrice();
+    var subtotal = getSubtotal();
+    var total = parseFloat(shipping) + parseFloat(subtotal);
+
+    $("#shipping-price").html(getPrice(shipping));
+    $("#total-price").html(getPrice(total));
 }
 
 
