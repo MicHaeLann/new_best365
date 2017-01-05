@@ -151,7 +151,7 @@ class LanguageController extends AbstractAdminController
      *      path = "/{iso}/master",
      *      name = "admin_language_master"
      * )
-     * @Method({"POST"})
+     * @Method({"POST", "GET"})
      *
      * @EntityAnnotation(
      *      class = {
@@ -183,12 +183,11 @@ class LanguageController extends AbstractAdminController
                 $translator->trans('admin.language.error.setting_disabled_master_language')
             );
         }
-
         $store->setDefaultLanguage($language);
-        $this
+		$this
             ->get('elcodi.object_manager.store')
             ->flush($store);
-        $this->flushCache();
+		//$this->flushCache();
 
         return [
             'message' => $translator->trans('admin.language.saved.master'),
