@@ -1,7 +1,7 @@
-Best365Bundle\Entity\PurchasableTag:
+Best365Bundle\Entity\PurchasableExt:
     type: entity
-    table: purchasable_tag
-    repositoryClass: Best365Bundle\Repository\PurchasableTagRepository
+    table: purchasable_ext
+    repositoryClass: Best365Bundle\Repository\PurchasableExtRepository
     id:
         id:
             type: integer
@@ -13,6 +13,9 @@ Best365Bundle\Entity\PurchasableTag:
             type: integer
             column: purchasable_id
         tag:
+            type: string
+            length: 255
+        barcode:
             type: string
             length: 255
     lifecycleCallbacks: {  }

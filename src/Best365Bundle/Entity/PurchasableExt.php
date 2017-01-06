@@ -3,9 +3,9 @@
 namespace Best365Bundle\Entity;
 
 /**
- * PurchasableTag
+ * PurchasableExt
  */
-class PurchasableTag
+class PurchasableExt
 {
     /**
      * @var int
@@ -21,6 +21,11 @@ class PurchasableTag
      * @var string
      */
     private $tag;
+
+    /**
+     * @var string
+     */
+    private $barcode;
 
 
     /**
@@ -38,7 +43,7 @@ class PurchasableTag
      *
      * @param integer $purchasableId
      *
-     * @return PurchasableTag
+     * @return PurchasableExt
      */
     public function setPurchasableId($purchasableId)
     {
@@ -62,7 +67,7 @@ class PurchasableTag
      *
      * @param string $tag
      *
-     * @return PurchasableTag
+     * @return PurchasableExt
      */
     public function setTag($tag)
     {
@@ -79,6 +84,30 @@ class PurchasableTag
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * Set barcode
+     *
+     * @param string $barcode
+     *
+     * @return PurchasableExt
+     */
+    public function setBarcode($barcode)
+    {
+        $this->barcode = $barcode;
+
+        return $this;
+    }
+
+    /**
+     * Get barcode
+     *
+     * @return string
+     */
+    public function getBarcode()
+    {
+        return $this->barcode;
     }
 }
 

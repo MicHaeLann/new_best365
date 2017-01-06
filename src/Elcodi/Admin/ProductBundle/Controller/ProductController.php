@@ -168,8 +168,8 @@ class ProductController extends AbstractAdminController
 
             $this->flush($product);
 
-			// update tag
-			$this->get('best365.manager.purchasable')->updateTag($product, $this->get('request'));
+			// update ext info
+			$this->get('best365.manager.purchasable')->updateProductExt($product, $this->get('request'));
 
             $this->addFlash(
                 'success',
