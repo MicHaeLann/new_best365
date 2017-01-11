@@ -30,7 +30,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class PasswordController
  *
  * @Route(
- *      path = "/password",
+ *      path = "/bamboo/password",
  * )
  */
 class PasswordController extends Controller

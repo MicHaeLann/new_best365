@@ -34,7 +34,7 @@ class Best365HomeController extends HomeController
 	 * @return Response Response
 	 *
 	 * @Route(
-	 *      path = "/best365",
+	 *      path = "/",
 	 *      name = "best365_store_homepage",
 	 *      methods = {"GET"}
 	 * )

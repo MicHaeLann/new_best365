@@ -39,7 +39,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
- *      path = "/checkout",
+ *      path = "/bamboo/checkout",
  * )
  */
 class CheckoutController extends Controller

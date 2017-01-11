@@ -28,7 +28,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class LanguageController
  *
  * @Route(
- *      path = "/language",
+ *      path = "/bamboo/language",
  * )
  */
 class LanguageController extends Controller

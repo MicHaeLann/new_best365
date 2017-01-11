@@ -27,7 +27,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Address controllers
  *
  * @Route(
- *      path = "/location",
+ *      path = "/bamboo/location",
  * )
  */
 class LocationController extends Controller

@@ -32,7 +32,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class CouponController
  *
  * @Route(
- *      path = "/coupon",
+ *      path = "/bamboo/coupon",
  * )
  */
 class CouponController extends Controller

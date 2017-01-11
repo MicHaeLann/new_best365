@@ -28,6 +28,9 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
 /**
  * Product related actions
+ * @Route(
+ *     path="/bamboo"
+ * )
  */
 class PurchasableController extends Controller
 {

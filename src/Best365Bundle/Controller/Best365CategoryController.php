@@ -17,13 +17,6 @@ use Elcodi\Component\Product\Repository\PurchasableRepository;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 use Elcodi\Store\ProductBundle\Controller\CategoryController;
 
-/**
- * Category controller
- *
- * @Route(
- *      path = "/best365"
- * )
- */
 class Best365CategoryController extends CategoryController
 {
 	use TemplateRenderTrait;

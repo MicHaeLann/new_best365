@@ -14,9 +14,6 @@ use Elcodi\Store\UserBundle\Controller\SecurityController;
 use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
-/**
- * @Route("/best365")
- */
 class Best365SecurityController extends SecurityController
 {
 	use TemplateRenderTrait;

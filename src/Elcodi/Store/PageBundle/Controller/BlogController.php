@@ -29,7 +29,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class BlogController
  *
  * @Route(
- *      path = "/blog"
+ *      path = "/bamboo/blog"
  * )
  */
 class BlogController extends Controller

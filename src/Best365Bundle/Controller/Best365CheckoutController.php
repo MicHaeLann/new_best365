@@ -24,7 +24,7 @@ use Elcodi\Component\Cart\Transformer\CartOrderTransformer;
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
- *      path = "/best365/checkout",
+ *      path = "/checkout",
  * )
  */
 class Best365CheckoutController extends CheckoutController

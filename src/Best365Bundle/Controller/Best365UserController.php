@@ -13,11 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Elcodi\Store\UserBundle\Controller\UserController;
 use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
-use Best365\Store\CommonBundle\Entity\Membership;
 
-/**
- * @Route("/best365")
- */
 class Best365UserController extends UserController
 {
     use TemplateRenderTrait;
@@ -33,7 +29,7 @@ class Best365UserController extends UserController
      *      methods = {"GET"}
      * )
      */
-    public function navAction()
+    public function navBarAction()
     {
         $customer = $this
             ->get('elcodi.wrapper.customer')

@@ -27,6 +27,9 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Home controller
  *
  * This class should only contain home actions
+ * @Route(
+ *      path = "/bamboo"
+ * )
  */
 class HomeController extends Controller
 {

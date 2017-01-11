@@ -30,6 +30,9 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
 /**
  * Class UserController
+ * @Route(
+ *     path="/bamboo"
+ * )
  */
 class UserController extends Controller
 {

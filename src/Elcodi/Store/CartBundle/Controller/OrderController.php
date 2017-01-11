@@ -30,7 +30,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
- *      path = "/order",
+ *      path = "/bamboo/order",
  * )
  */
 class OrderController extends Controller

@@ -23,6 +23,9 @@ use Elcodi\Bundle\CoreBundle\Abstracts\AbstractElcodiBundle;
 
 /**
  * Class StoreCurrencyBundle
+ * @Route(
+ *     path='/bamboo'
+ * )
  */
 class StoreCurrencyBundle extends AbstractElcodiBundle
 {

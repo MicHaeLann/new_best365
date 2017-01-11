@@ -19,9 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * Product controllers
  *
  * @Security("has_role('ROLE_CUSTOMER')")
- * @Route(
- *      path = "/best365",
- * )
+ *
  */
 class Best365ProductController extends PurchasableController
 {

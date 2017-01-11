@@ -37,7 +37,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Cart controllers
  *
  * @Route(
- *      path = "/cart",
+ *      path = "/bamboo/cart",
  * )
  */
 class CartController extends Controller

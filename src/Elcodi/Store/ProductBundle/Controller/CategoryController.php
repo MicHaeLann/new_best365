@@ -33,7 +33,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Category controller
  *
  * @Route(
- *      path = ""
+ *      path = "/bamboo"
  * )
  */
 class CategoryController extends Controller

@@ -36,7 +36,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
- *      path = "/user/address",
+ *      path = "/bamboo/user/address",
  * )
  */
 class AddressController extends Controller
