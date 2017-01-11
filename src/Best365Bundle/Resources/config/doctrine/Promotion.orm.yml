@@ -1,6 +1,6 @@
 Best365Bundle\Entity\Promotion:
     type: entity
-    table: null
+    table: promotion
     repositoryClass: Best365Bundle\Repository\PromotionRepository
     id:
         id:

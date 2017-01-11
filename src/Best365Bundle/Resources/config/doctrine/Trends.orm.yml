@@ -1,6 +1,6 @@
 Best365Bundle\Entity\Trends:
     type: entity
-    table: null
+    table: trends
     repositoryClass: Best365Bundle\Repository\TrendsRepository
     id:
         id:

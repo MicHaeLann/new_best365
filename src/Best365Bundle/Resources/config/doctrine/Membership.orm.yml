@@ -1,6 +1,6 @@
 Best365Bundle\Entity\Membership:
     type: entity
-    table: null
+    table: membership
     repositoryClass: Best365Bundle\Repository\MembershipRepository
     id:
         id:

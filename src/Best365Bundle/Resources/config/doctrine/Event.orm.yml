@@ -1,6 +1,6 @@
 Best365Bundle\Entity\Event:
     type: entity
-    table: null
+    table: event
     repositoryClass: Best365Bundle\Repository\EventRepository
     id:
         id:
