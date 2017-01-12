@@ -13,7 +13,7 @@ use Elcodi\Component\User\Entity\Abstracts\AbstractUser;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
 /**
- * @Route("/password")
+ * @Route("/best365/password")
  */
 class Best365PasswordController extends Controller
 {

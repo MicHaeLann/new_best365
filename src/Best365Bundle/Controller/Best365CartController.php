@@ -22,7 +22,7 @@ use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
  *
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
- *      path = "/cart",
+ *      path = "/best365/cart",
  * )
  */
 class Best365CartController extends CartController

@@ -17,7 +17,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class ControllerCurrency
  *
  * @Route(
- *      path = "/currency",
+ *      path = "/best365/currency",
  * )
  */
 class Best365CurrencyController extends CurrencyController

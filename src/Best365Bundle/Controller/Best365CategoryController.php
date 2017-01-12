@@ -16,6 +16,13 @@ use Elcodi\Component\Product\Repository\CategoryRepository;
 use Elcodi\Component\Product\Repository\PurchasableRepository;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 use Elcodi\Store\ProductBundle\Controller\CategoryController;
+/**
+ * Category controllers
+ *
+ * @Route(
+ *      path = "/best365/category",
+ * )
+ */
 
 class Best365CategoryController extends CategoryController
 {
@@ -29,7 +36,7 @@ class Best365CategoryController extends CategoryController
 	 * @return Response Response
 	 *
 	 * @Route(
-	 *      path = "/category/{id}",
+	 *      path = "/{id}",
 	 *      name = "best365_store_category_purchasables_list",
 	 *      requirements = {
 	 *          "slug" = "[a-zA-Z0-9-]+",

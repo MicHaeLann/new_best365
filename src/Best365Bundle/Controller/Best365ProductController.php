@@ -18,8 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Product controllers
  *
- * @Security("has_role('ROLE_CUSTOMER')")
- *
+ * @Route(
+ *      path = "/best365/product",
+ * )
  */
 class Best365ProductController extends PurchasableController
 {
@@ -28,9 +29,8 @@ class Best365ProductController extends PurchasableController
 	 *
 	 * @return Response Response
 	 *
-	 * @Security("has_role('ROLE_CUSTOMER')")
 	 * @Route(
-	 *      path = "/product/search",
+	 *      path = "/search",
 	 *      name = "best365_store_product_search",
 	 *      methods = {"GET", "POST"}
 	 * )

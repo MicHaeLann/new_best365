@@ -14,6 +14,13 @@ use Elcodi\Store\UserBundle\Controller\UserController;
 use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
+/**
+ * Class Best365UserController
+ * @Route(
+ *      path = "/best365/user",
+ * )
+ */
+
 class Best365UserController extends UserController
 {
     use TemplateRenderTrait;
@@ -24,7 +31,7 @@ class Best365UserController extends UserController
      * @return array
      *
      * @Route(
-     *      path = "/user/nav",
+     *      path = "/nav",
      *      name = "best365_store_user_nav",
      *      methods = {"GET"}
      * )
@@ -55,7 +62,7 @@ class Best365UserController extends UserController
      *
      * @Security("has_role('ROLE_CUSTOMER')")
      * @Route(
-     *      path = "/user",
+     *      path = "",
      *      name = "best365_store_user",
      *      methods = {"GET"}
      * )
@@ -92,7 +99,7 @@ class Best365UserController extends UserController
      *
      * @Security("has_role('ROLE_CUSTOMER')")
      * @Route(
-     *      path = "/user/edit",
+     *      path = "/edit",
      *      name = "best365_store_user_edit",
      *      methods = {"GET", "POST"}
      * )
@@ -134,28 +141,6 @@ class Best365UserController extends UserController
             [
                 'form' => $formView,
             ]
-        );
-    }
-
-    /**
-     * User profile page
-     *
-     *
-     * @return Response Response
-     *
-     * @Route(
-     *      path = "/user/test",
-     *      name = "best365_store_user_test",
-     *      methods = {"GET", "POST"}
-     * )
-     *
-     */
-    public function testAction()
-    {
-        $membership = $this->get('best365.manager.customer')->initializeMembership($this->getUser());
-        var_dump($membership);exit;
-        return $this->render(
-            'Best365LayoutStoreTemplateBundle:User:user.edit.html.twig'
         );
     }
 }
