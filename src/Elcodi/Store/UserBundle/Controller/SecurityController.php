@@ -31,7 +31,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 /**
  * Class SecurityController
  * @Route(
- *     path="/bamboo"
+ *      path = "/bamboo"
  * )
  */
 class SecurityController extends Controller
