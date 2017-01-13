@@ -73,7 +73,7 @@ class Best365ProductController extends PurchasableController
 	 * @return array
 	 *
 	 * @Route(
-	 *      path = "/product/{id}",
+	 *      path = "/{id}",
 	 *      name = "best365_store_product_view",
 	 *      requirements = {
 	 *          "id": "\d+",
