@@ -1,4 +1,0 @@
-best365:
-    resource: "@Best365Bundle/Controller/"
-    type:     annotation
-    prefix:   /
