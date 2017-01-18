@@ -95,7 +95,7 @@
             {% include "@AdminMedia/Module/_image-single-form-field.html.twig" with {
                 sectionTitle: 'admin.manufacturer.section.logo.title',
                 sectionDescription: 'admin.manufacturer.section.logo.description',
-                image: manufacturer.images.0,
+                image: manufacturer.images.first,
                 imageForm: form.images,
                 imageName : 'logo'
             } %}
