@@ -202,6 +202,7 @@ template:
                 no_products_in_category: 'Sorry, we don''t have products for this category'
                 no_products: 'Oops! No product matched your query.'
             view_item:
+                tag: Tag
                 add_to_cart: 'Add to cart'
                 delivery: Delivery
                 description: Description

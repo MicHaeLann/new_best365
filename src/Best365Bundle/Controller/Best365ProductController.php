@@ -88,6 +88,26 @@ class Best365ProductController extends PurchasableController
 			->get('elcodi.repository.purchasable')
 			->find($id);
 
+		// get product ext
+		$purchasable_ext = $this
+			->get('best365.manager.purchasable')
+			->getProductExt($purchasable);
+
+		// redefine tag by current locale
+		$tags = explode(',', $purchasable_ext->getTag());
+		$locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+		$new_tags = array();
+		foreach ($tags as $tag) {
+			if ($locale == 'zh-CN' && mb_strlen($tag, 'utf8') != strlen($tag) ||
+				$locale == 'en' && mb_strlen($tag, 'utf8') == strlen($tag)) {
+				$new_tags[] = $tag;
+			}
+		}
+		$purchasable_ext->setTag($new_tags);
+
 		$useStock = $this
 			->get('elcodi.store')
 			->getUseStock();
@@ -99,6 +119,7 @@ class Best365ProductController extends PurchasableController
 			'Best365Bundle:Product:product.detail.html.twig',
 			[
 			'purchasable' => $purchasable,
+			'purchasable_ext' => $purchasable_ext,
 			'categories' => $categories,
 			'useStock'    => $useStock
 			]

@@ -202,6 +202,7 @@ template:
                 no_products_in_category: '对不起，当前类别无搜索结果。'
                 no_products: '哇喔！当前搜索条件无对应结果。'
             view_item:
+                tag: 标签
                 add_to_cart: '加入购物车'
                 delivery: 派送
                 description: 商品介绍
