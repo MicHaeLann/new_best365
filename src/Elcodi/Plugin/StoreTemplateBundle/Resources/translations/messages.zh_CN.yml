@@ -6,6 +6,8 @@ store:
         previous: 上一页
 template:
     store_template_bundle:
+        home:
+            brands: 品牌专区
         search:
             search_place_holder: '搜索...'
             searching: '搜索条件'

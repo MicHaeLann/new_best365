@@ -6,6 +6,8 @@ store:
         previous: Previous
 template:
     store_template_bundle:
+        home:
+            brands: Our Brand
         search:
             search_place_holder: 'Search for...'
             searching: 'Searching'

@@ -101,6 +101,10 @@ class Best365HomeController extends HomeController
 			$list[] = $item;
 		}
 
+		// manufacturer
+		$manufacturers = $this->get('elcodi.repository.manufacturer')
+			->findBy(array('enabled' => 1), array('name' => 'ASC'));
+
 		return $this->render(
 			'Best365Bundle:Home:home.html.twig',
 			[
@@ -108,6 +112,7 @@ class Best365HomeController extends HomeController
 				'events' => $events,
 				'customer' => $customer,
 				'products' => $list,
+				'manufacturers' => $manufacturers
 			]
 		);
 	}

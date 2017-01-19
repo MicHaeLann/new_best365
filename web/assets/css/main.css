@@ -68,10 +68,19 @@
 	margin-left: 15px !important;
 }
 
+.margin-left-0
+{
+	margin-left: 0 !important;
+}
 
 .margin-right-15
 {
 	margin-right: 15px !important;
+}
+
+.margin-right-0
+{
+	margin-right: 0 !important;
 }
 
 .margin-bottom-5
@@ -123,6 +132,11 @@
 .padding-right-30
 {
 	padding-right: 30px;
+}
+
+.padding-0-8
+{
+	padding: 0 8px;
 }
 
 .padding-0-30
@@ -396,11 +410,6 @@
 	text-align: right;
 }
 
-.margin-left-10
-{
-	margin-left: 10px;
-}
-
 .footer
 {
 	margin-top: 30px;
@@ -590,6 +599,17 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 	padding-left: 40px;
+}
+
+.thumbnail
+{
+	line-height: 0;
+	display: inline-block;
+	border: solid 0.4em #FFF;
+	max-width: 100%;
+	box-shadow: 0 0 2px 1px rgba(50,50,50,0.2);
+	transition: all 200ms ease-out;
+	margin-bottom: 0 !important;
 }
 
 a
