@@ -29,7 +29,11 @@
     </div>
     {% endblock container %}
     {%  block footer %}
-        {% include '@Best365/Layout/_footer.html.twig' %}
+        <div class="container">
+            <div class="row">
+                {% include '@Best365/Layout/_footer.html.twig' %}
+            </div>
+        </div>
     {%  endblock footer %}
 {% endblock body %}
 
