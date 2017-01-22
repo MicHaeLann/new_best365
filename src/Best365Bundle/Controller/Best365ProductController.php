@@ -42,12 +42,16 @@ class Best365ProductController extends PurchasableController
 		$tag_ids = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
 
 
-		// find by name(if Chinese, split by word;if English, split by space)
+		// find by name
 		$name = $this->get('request')->get('field');
 		$name_ids = $this->getPurchasableByName($name);
 
+		// find by manufacturer
+		$manufacturer_ids = $this->getPurchasableByManufacturerName($name);
+
 		// merge ids
 		$ids = array_unique(array_merge($name_ids, $tag_ids));
+		$ids = array_unique(array_merge($manufacturer_ids, $ids));
 
 		// get collection by ids
 		$collection = array();
@@ -133,44 +137,48 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function getPurchasableByName($name)
 	{
-		// check lan
-		if (strlen($name) != mb_strlen($name, 'utf-8')) {
-			// Chinese
-			$field_chars = str_split($name);
-		} else {
-			// English
-			$field_chars = explode(' ', $name);
-		}
-		$chars = array();
-		foreach ($field_chars as $char) {
-			if ($char !== ' ' && !in_array($char, $chars)) {
-				$chars[] = $char;
-			}
-		}
-
-		$length = count($chars);
-
-		$query = $this->get('elcodi.repository.purchasable')
-			->createQueryBuilder('p');
-		$where = 'p.name LIKE ';
-		for ($i = 0; $i < $length; $i++) {
-			if ($i > 0) {
-				$where .= ' AND p.name LIKE ';
-			}
-			$where .= ':letter'.$i;
-		}
-		$query->where($where);
-
-		for($i = 0; $i < $length; $i++) {
-			$letter = 'letter' . $i;
-			$query->setParameter($letter, '%' . $chars[$i] . '%');
-		}
-		$result = $query->getQuery()
-			->getResult();
-
 		$ids = array();
-		foreach ($result as $purchasable) {
-			$ids[] = $purchasable->getId();
+
+		$purchasable = $this
+			->get('elcodi.repository.purchasable')
+			->findAll();
+		foreach($purchasable as $product) {
+			if (strpos(strtolower($product->getName()), strtolower($name)) !== false) {
+				$ids[] = $product->getId();
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * get product by manufacturer
+	 * @param $name
+	 * @return array
+	 */
+	public function getPurchasableByManufacturerName($name)
+	{
+		$ids = $mids = array();
+
+		// get manufacturer
+		$manufacturers = $this
+			->get('elcodi.repository.manufacturer')
+			->findAll();
+		foreach ($manufacturers as $manufacturer) {
+			if (strpos(strtolower($manufacturer->getName()), strtolower($name)) !== false) {
+				$mids[] = $manufacturer->getId();
+			}
+		}
+
+		// get product
+		$purchasables = $this
+			->get('elcodi.repository.purchasable')
+			->findAll();
+		foreach ($purchasables as $product) {
+			$manufacturer = $product->getManufacturer();
+			if (!empty($manufacturer) && in_array($manufacturer->getId(), $mids)) {
+				$ids[] = $product->getId();
+			}
 		}
 
 		return $ids;
