@@ -21,6 +21,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Doctrine\ORM\EntityRepository;
 
 use Elcodi\Admin\ProductBundle\Validation\MinimumMoney;
 use Elcodi\Component\Core\Factory\Traits\FactoryTrait;
@@ -186,6 +187,9 @@ class ProductType extends AbstractType
             ])
             ->add('manufacturer', 'entity', [
                 'class'    => $this->manufacturerNamespace,
+				'query_builder' => function(EntityRepository $repository) {
+					return $repository->createQueryBuilder('m')->orderBy('m.name', 'ASC');
+				},
                 'required' => false,
                 'multiple' => false,
             ])
