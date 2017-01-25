@@ -195,6 +195,9 @@ class ProductType extends AbstractType
             ])
             ->add('principalCategory', 'entity', [
                 'class'    => $this->categoryNamespace,
+				'query_builder' => function(EntityRepository $repository) {
+					return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+				},
                 'required' => true,
                 'multiple' => false,
             ])
