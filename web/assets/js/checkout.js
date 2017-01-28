@@ -52,7 +52,7 @@ function display()
 {
     var shipping = getShippingPrice();
     var subtotal = getSubtotal();
-    var total = parseFloat(shipping) + parseFloat(subtotal);
+    var total = (parseFloat(shipping) + parseFloat(subtotal)).toFixed(2);
 
     $("#shipping-price").html(getPrice(shipping));
     $("#total-price").html(getPrice(total));

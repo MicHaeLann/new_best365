@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Elcodi\Admin\CoreBundle\Controller\Abstracts\AbstractAdminController;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\StateTransitionMachine\Entity\Interfaces\StateLineInterface;
+use Elcodi\Component\Currency\Services\CurrencyConverter;
 
 /**
  * Class Controller for Order
@@ -209,6 +210,7 @@ class OrderController extends AbstractAdminController
         OrderInterface $order,
         $transition
     ) {
+
         $stateLineStack = $this
             ->get('elcodi.order_payment_states_machine_manager')
             ->transition(
@@ -221,6 +223,22 @@ class OrderController extends AbstractAdminController
         $order->setPaymentStateLineStack($stateLineStack);
         $this->flush($order);
 
+		// update membership point
+		if ($transition == "pay") {
+			// calculate points
+			$currency = $this->get('elcodi.wrapper.currency')
+				->loadDefaultCurrency();
+			$nzd = $this->get('elcodi.converter.currency')
+				->convertMoney(
+					$order->getPurchasableAmount(),
+					$currency
+				);
+			$points = floor($nzd->getAmount() / 100 * 10);
+
+			// add points to customer
+			$this->get('best365.manager.customer')
+				->updatePoints($order->getCustomer(), $points);
+		}
         return $this->redirect($request->headers->get('referer'));
     }
 

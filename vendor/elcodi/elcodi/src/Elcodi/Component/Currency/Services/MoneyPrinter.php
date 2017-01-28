@@ -108,9 +108,46 @@ class MoneyPrinter
                 $money,
                 $targetCurrency
             );
-
         return $this->printMoney($moneyConverted);
     }
+
+	/**
+	 * print money after calculated with membership strategy
+	 * @param MoneyInterface|null $money
+	 * @param int $strategy
+	 * @param CurrencyInterface|null $targetCurrency
+	 * @return string
+	 */
+	public function printConvertMoneyWithStrategy(
+		MoneyInterface $money = null,
+		$strategy = 100,
+		CurrencyInterface $targetCurrency = null
+
+	) {
+		if (!($money instanceof MoneyInterface)) {
+			return '';
+		}
+
+		if (!($targetCurrency instanceof CurrencyInterface)) {
+			$targetCurrency = $this
+				->currencyWrapper
+				->get();
+		}
+		$money_with_strategy = $money->multiply($strategy / 100);
+
+		/**
+		 * @var CurrencyInterface $targetCurrency
+		 */
+		$moneyConverted = $this
+			->currencyConverter
+			->convertMoney(
+				$money_with_strategy,
+				$targetCurrency
+			);
+		return $this->printMoney($moneyConverted);
+	}
+
+
 
     /**
      * Return a formatted price given an Money object.

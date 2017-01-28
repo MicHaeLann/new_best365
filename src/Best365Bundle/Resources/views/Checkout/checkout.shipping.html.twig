@@ -13,7 +13,7 @@
                     </label>
                     <div class="col-sm-8">
                         <p id="subtotal" class="margin-top-5">
-                            {{ cart.amount|print_convert_money() }}
+                            {{ cart.amount|print_convert_money_with_strategy(strategy) }}
                         </p>
                     </div>
                 </div>

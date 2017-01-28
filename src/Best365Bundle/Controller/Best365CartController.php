@@ -57,6 +57,15 @@ class Best365CartController extends CartController
 	 */
 	public function viewAction(FormView $formView, CartInterface $cart)
 	{
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
+
 		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
 			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
@@ -65,8 +74,9 @@ class Best365CartController extends CartController
 		return $this->render(
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
-				'cart'        => $cart,
-				'form'        => $formView,
+				'cart'		=> $cart,
+				'form'		=> $formView,
+				'strategy'	=> $membership->getStrategy()
 			]
 		);
 	}

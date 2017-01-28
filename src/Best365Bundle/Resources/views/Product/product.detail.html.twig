@@ -58,7 +58,7 @@
                                 {{ 'template.store_template_bundle.order.item.price'|trans }}
                             </div>
                             <div class="col-sm-7">
-                                <h3 class="margin-bottom-20 margin-top-20 main-theme-font">{{ purchasable.price|print_convert_money() }}</h3>
+                                <h3 class="margin-bottom-20 margin-top-20 main-theme-font">{{ purchasable.price|print_convert_money_with_strategy(strategy) }}</h3>
                             </div>
                         </div>
                         <div class="row">

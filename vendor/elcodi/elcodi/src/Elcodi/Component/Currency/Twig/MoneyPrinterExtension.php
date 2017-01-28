@@ -66,6 +66,11 @@ class MoneyPrinterExtension extends Twig_Extension
                 $this->moneyPrinter,
                 'printMoneyFromValue',
             ]),
+			new Twig_SimpleFilter('print_convert_money_with_strategy',[
+				$this->moneyPrinter,
+				'printConvertMoneyWithStrategy'
+				]
+			),
         ];
     }
 

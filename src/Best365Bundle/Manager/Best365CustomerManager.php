@@ -48,9 +48,7 @@ class Best365CustomerManager
 		$display_customer->currentPoint = $customer_membership->getCurrentPoint();
 
 		// membership name
-		$membership = $this->em
-							->getRepository('Best365Bundle\Entity\Membership')
-							->find($customer_membership->getMembership());
+		$membership = $this->getCustomerMembership($customer);
 		$display_customer->membership = $membership->getName();
 
 		return $display_customer;
@@ -109,6 +107,56 @@ class Best365CustomerManager
 			->getRepository('Best365Bundle\Entity\CustomerMembership')
 			->findOneByCustomerId($customer->getId());
 		$customer_membership->setMembership($request->get('membership'));
+
+		$this->em->persist($customer_membership);
+		$this->em->flush();
+	}
+
+	/**
+	 * get customer membership configuration
+	 * @param Customer $customer
+	 * @return null|object
+	 */
+	public function getCustomerMembership(Customer $customer)
+	{
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+
+		$membership = $this->em
+			->getRepository('Best365Bundle\Entity\Membership')
+			->find($customer_membership->getMembership());
+
+		return $membership;
+	}
+
+	/**
+	 * update customer points and membership
+	 * @param Customer $customer
+	 * @param $points
+	 */
+	public function updatePoints(Customer $customer, $points)
+	{
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+
+		$customer_membership->setCurrentPoint($customer_membership->getCurrentPoint() + $points);
+		$customer_membership->setTotalPoint($customer_membership->getTotalPoint() + $points);
+
+		// if upgrade, check premium
+		$membership = $this->getCustomerMembership($customer);
+		$membership_list = $this->em
+			->getRepository('Best365Bundle\Entity\Membership')
+			->findby(array(), array('point' => 'DESC'));
+
+		foreach ($membership_list as $cfg) {
+			if ($cfg->getPoint() <= $customer_membership->getTotalPoint() &&
+			$cfg->getPoint() >= $membership->getPoint()) {
+				$customer_membership->setMembership($cfg->getId());
+				break;
+			}
+		}
 
 		$this->em->persist($customer_membership);
 		$this->em->flush();

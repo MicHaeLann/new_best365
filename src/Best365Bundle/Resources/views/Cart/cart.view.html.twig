@@ -54,10 +54,10 @@
                                     {{ form_row(line.quantity, {'attr': {'class': 'unit-max-width'}}) }}
                                 </td>
                                 <td>
-                                    {{ purchasablePrice|print_convert_money() }}
+                                    {{ purchasablePrice|print_convert_money_with_strategy(strategy) }}
                                 </td>
                                 <td>
-                                    {{ lineObject.amount|print_convert_money() }}
+                                    {{ lineObject.amount|print_convert_money_with_strategy(strategy) }}
                                 </td>
                                 <td>
                                     <a href="{{ url('best365_store_cartline_remove', { id: lineObject.id }) }}" class="btn btn-danger btn-xs">
@@ -70,7 +70,7 @@
                     </table>
                     <p class="align-right">
                         {{ 'template.store_template_bundle.cart.view.total'|trans }}
-                        {{ cart.amount|print_convert_money() }}
+                        {{ cart.amount|print_convert_money_with_strategy(strategy) }}
                     </p>
                 </div>
 

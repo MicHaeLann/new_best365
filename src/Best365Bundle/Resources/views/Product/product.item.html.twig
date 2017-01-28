@@ -21,7 +21,7 @@
             </div>
         {% endblock %}
         <div class="main-theme-font font-18 margin-top-10">
-            {{ item.price|print_convert_money() }}
+            {{ item.price|print_convert_money_with_strategy(strategy) }}
         </div>
     </div>
 </div>

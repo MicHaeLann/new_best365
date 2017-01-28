@@ -56,6 +56,9 @@ class Best365HomeController extends HomeController
 			->get('elcodi.wrapper.customer')
 			->get();
 
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
 		// locale
 		$locale = $this
 			->get('request_stack')
@@ -72,13 +75,13 @@ class Best365HomeController extends HomeController
 			if (!array_key_exists($promotion->getCategoryId(), $cids)) {
 				$cids[$promotion->getCategoryId()] = array();
 			}
+
 			$purchasable = $this
 				->get('elcodi.repository.purchasable')
 				->find($promotion->getPurchasableId());
 
 			$cids[$promotion->getCategoryId()][] = $purchasable;
 		}
-
 		$list = array();
 		foreach ($cids as $cid => $purchasables) {
 			$category = $this
@@ -112,7 +115,8 @@ class Best365HomeController extends HomeController
 				'events' => $events,
 				'customer' => $customer,
 				'products' => $list,
-				'manufacturers' => $manufacturers
+				'manufacturers' => $manufacturers,
+				'strategy' => $membership->getStrategy()
 			]
 		);
 	}

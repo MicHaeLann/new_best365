@@ -35,7 +35,7 @@
                                 {% if currentColumn == 1 %}
                                     <div class="row">
                                 {% endif %}
-                                {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable} %}
+                                {% include "@Best365/Product/product.item.html.twig" with { "item": purchasable, "strategy": strategy} %}
                                 {% set currentColumn = currentColumn + 1 %}
                                 {% if currentColumn > perLine %}
                                     </div>

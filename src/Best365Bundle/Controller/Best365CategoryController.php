@@ -56,6 +56,15 @@ class Best365CategoryController extends CategoryController
 	 */
 	public function listAction(CategoryInterface $category)
 	{
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
+		// get purchasables
 		$categoryRepository = $this->get('elcodi.repository.category');
 		$purchasableRepository = $this->get('elcodi.repository.purchasable');
 
@@ -88,7 +97,8 @@ class Best365CategoryController extends CategoryController
 			'Best365Bundle:Product:product.list.html.twig',
 			[
 				'categories' => $category_tree,
-				'purchasables' => $purchasables
+				'purchasables' => $purchasables,
+				'strategy' => $membership->getStrategy()
 			]
 		);
 	}

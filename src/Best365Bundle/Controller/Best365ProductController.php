@@ -38,6 +38,14 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function searchAction()
 	{
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
 		// find by key word
 		$tag_ids = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
 
@@ -66,6 +74,7 @@ class Best365ProductController extends PurchasableController
 			[
 				'searching' => $name,
 				'purchasables' => $collection,
+				'strategy' => $membership->getStrategy()
 			]
 		);
 	}
@@ -87,9 +96,16 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function detailAction($id)
 	{
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
 		// get product
-		$purchasable = $this
-			->get('elcodi.repository.purchasable')
+		$purchasable = $this->get('elcodi.repository.purchasable')
 			->find($id);
 
 		// get product ext
@@ -98,7 +114,12 @@ class Best365ProductController extends PurchasableController
 			->getProductExt($purchasable);
 
 		// redefine tag by current locale
-		$tags = explode(',', $purchasable_ext->getTag());
+		if (!empty($purchasable_ext)) {
+			$tags = explode(',', $purchasable_ext->getTag());
+		} else {
+			$tags = array();
+		}
+
 		$locale = $this
 			->get('request_stack')
 			->getMasterRequest()
@@ -110,7 +131,9 @@ class Best365ProductController extends PurchasableController
 				$new_tags[] = $tag;
 			}
 		}
-		$purchasable_ext->setTag($new_tags);
+		if (!empty($purchasable_ext)) {
+			$purchasable_ext->setTag($new_tags);
+		}
 
 		$useStock = $this
 			->get('elcodi.store')
@@ -125,7 +148,8 @@ class Best365ProductController extends PurchasableController
 			'purchasable' => $purchasable,
 			'purchasable_ext' => $purchasable_ext,
 			'categories' => $categories,
-			'useStock'    => $useStock
+			'useStock'    => $useStock,
+			'strategy' => $membership->getStrategy()
 			]
 		);
 	}

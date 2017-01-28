@@ -17,6 +17,9 @@ services:
         class: Best365Bundle\Manager\PurchasableManager
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@elcodi.repository.purchasable'
+            - '@elcodi.wrapper.customer'
+            - '@best365.manager.membership'
 
     best365.manager.address:
         class: Best365Bundle\Manager\Best365AddressManager

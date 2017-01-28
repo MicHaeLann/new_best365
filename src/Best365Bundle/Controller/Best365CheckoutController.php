@@ -63,6 +63,14 @@ class Best365CheckoutController extends CheckoutController
 	 */
 	public function shippingAction(AddressInterface $address, FormView $formView, $isValid)
 	{
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
 		if ($isValid) {
 			// User is adding a new address
 			$best365_address = $this->get('best365.manager.address')
@@ -106,9 +114,14 @@ class Best365CheckoutController extends CheckoutController
 					->toArray($address);
 		}
 
+		// subtract shipping amount
 		$cart = $this
 			->get('elcodi.wrapper.cart')
 			->get();
+		$shipping_price = $this->get('elcodi.converter.currency')
+			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
+		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
+
 
 		$shippingMethods = $this
 			->get('elcodi.wrapper.shipping_methods')
@@ -121,6 +134,7 @@ class Best365CheckoutController extends CheckoutController
 				'shipping_methods'      => $shippingMethods,
 				'addresses' => $addressesFormatted,
 				'form'      => $formView,
+				'strategy' => $membership->getStrategy()
 			]
 		);
 	}
@@ -232,15 +246,29 @@ class Best365CheckoutController extends CheckoutController
 	 */
 	public function saveOrderAction()
 	{
+		$cart = $this
+			->get('elcodi.wrapper.cart')
+			->get();
+		$shipping_price = $this->get('elcodi.converter.currency')
+			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
+		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
+
+		// get strategy
+		$customer = $this
+			->get('elcodi.wrapper.customer')
+			->get();
+
+		$membership = $this->get('best365.manager.customer')
+			->getCustomerMembership($customer);
+
+		// reset cart amount according to strategy
+		$cart->setAmount($cart->getAmount()->multiply($membership->getStrategy() / 100));
+
 		// generate order
 		$this->get('best365.manager.payment')
 			->generateOrder();
 
 		// update order shipping amount(not persisted in cart)
-		$cart = $this
-			->get('elcodi.wrapper.cart')
-			->get();
-
 		$cart_weight = $cart->getWeight() < 1000 ? 1000 : $cart->getWeight();
 
 		$shipping_method = $this
@@ -248,16 +276,22 @@ class Best365CheckoutController extends CheckoutController
 			->getOneById($cart, $cart->getShippingMethod());
 
 		// reset shipping amount and amount
-		$cart->setAmount($cart->getAmount()->subtract($cart->getShippingAmount()));
-
 		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight/1000);
-
+		$shipping_amount = $this->get('elcodi.converter.currency')
+			->convertMoney($shipping_amount, $cart->getAmount()->getCurrency());
 		$order = $cart->getOrder();
 		$order->setShippingAmount($shipping_amount);
 		$order->setAmount($cart->getAmount()->add($shipping_amount));
 
+		// set item info
+		foreach ($order->getOrderLines() as &$line) {
+			$line->setAmount($line->getAmount()->multiply($membership->getStrategy() / 100));
+			$line->setPurchasableAmount($line->getPurchasableAmount()->multiply($membership->getStrategy() / 100));
+		}
+
 		$orderObjectManager = $this
 			->get('elcodi.object_manager.order');
+		$order->setPurchasableAmount($order->getPurchasableAmount()->multiply($membership->getStrategy() / 100));
 		$orderObjectManager->persist($order);
 		$orderObjectManager->flush();
 

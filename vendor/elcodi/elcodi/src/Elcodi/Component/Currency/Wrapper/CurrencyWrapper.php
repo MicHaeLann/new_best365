@@ -155,7 +155,7 @@ class CurrencyWrapper implements WrapperInterface
      *
      * @return CurrencyInterface Currency
      */
-    private function loadDefaultCurrency()
+    public function loadDefaultCurrency()
     {
         return $this
             ->defaultCurrencyWrapper

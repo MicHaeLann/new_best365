@@ -39,7 +39,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
                 <div class="col-sm-6  promotion-item-top promotion-padding">
@@ -60,7 +60,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
                 <div class="col-sm-6 promotion-bottom-image-padding">
@@ -109,7 +109,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
                 <div class="col-sm-6  promotion-item-top promotion-padding">
@@ -129,7 +129,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
             </div>
@@ -142,7 +142,7 @@
                         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
                     </div>
                     <div class="main-theme-font margin-top-10 align-center">
-                        {{ item.price|print_convert_money() }}
+                        {{ item.price|print_convert_money_with_strategy(strategy) }}
                     </div>
                 </div>
                 <div class="col-sm-6 promotion-bottom-image-padding">
@@ -178,7 +178,7 @@
                 <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
             </div>
             <div class="main-theme-font margin-top-10 align-center">
-                {{ item.price|print_convert_money() }}
+                {{ item.price|print_convert_money_with_strategy(strategy) }}
             </div>
         </div>
         <div class="promotion-item-bottom promotion-item-right padding-top-15 padding-left-30">

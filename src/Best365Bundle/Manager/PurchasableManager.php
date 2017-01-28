@@ -6,14 +6,25 @@ use Best365Bundle\Entity\PurchasableExt;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
+use Elcodi\Component\Product\Repository\PurchasableRepository;
+use Elcodi\Component\User\Wrapper\CustomerWrapper;
 
 class PurchasableManager
 {
 	private $em;
 
-	public function __construct(EntityManager $em)
+	private $pr;
+
+	private $cw;
+
+	private $mm;
+
+	public function __construct(EntityManager $em, PurchasableRepository $pr, CustomerWrapper $cw, MembershipManager $mm)
 	{
 		$this->em = $em;
+		$this->pr = $pr;
+		$this->cw = $cw;
+		$this->mm = $mm;
 	}
 
 	/**
@@ -116,5 +127,38 @@ class PurchasableManager
 		$purchasable_ext->setBarcode($request->get('barcode'));
 		$this->em->persist($purchasable_ext);
 		$this->em->flush();
+	}
+
+	/**
+	 * get product info
+	 * @param $id
+	 * @return object
+	 */
+	public function getProduct($id)
+	{
+		// get customer info
+		$customer = $this->cw->get();
+
+		if (!empty($customer->getId())) {
+			$membership = $this->em
+				->getRepository('Best365Bundle\Entity\CustomerMembership')
+				->findOneByCustomerId($customer->getId())
+				->getMembership();
+			$cfg = $this->mm->get($membership);
+			$strategy = $cfg->getStrategy();
+		} else {
+			$strategy = 100;
+		}
+
+		$purchasable = $this->pr->find($id);
+
+		// refresh data to prevent nesting strategy
+//		$this->em->refresh($purchasable);
+		$purchasable->setPrice($purchasable->getPrice()->multiply($strategy / 100));
+
+		// fetch data from database but not cache to prevent nesting membership strategy
+		$this->em->detach($purchasable);
+
+		return $purchasable;
 	}
 }
