@@ -15,7 +15,7 @@
                 <img src="{{ manufacturer.getSortedImages.first|resize({ height: 100, width: 100, type: 4 }) }}" class="brand-thumbnail" />
             </a>
         </div>
-        {% if i % 6 == 0  %}
+        {% if i % 6 == 0 or i == manufacturers|length %}
         </div>
         {% endif %}
         {% set i = i + 1 %}
