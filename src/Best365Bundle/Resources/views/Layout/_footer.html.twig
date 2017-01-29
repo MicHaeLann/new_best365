@@ -53,9 +53,8 @@
                         {% set pages = elcodi_footer_pages() %}
                         {% for page in pages %}
                         <li class="footer-li">
-                            <a class="main-theme-font" href="{{ url("elcodi.route.page_render", {
-                                "id": page.id,
-                                "path": page.path
+                            <a class="main-theme-font" href="{{ url("best365_store_page", {
+                                "id": page.id
                             }) }}">{{ page.title }}</a>
                         </li>
                         {% endfor %}

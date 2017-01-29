@@ -1,24 +1,22 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
 
 {% block content %}
-
-        <div class="row">
-            <div class="col-sm-2">
-                {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
-            </div>
-            <div class="col-sm-8">
-                {% include "@Best365/Home/events.html.twig" with {"events": events} %}
-            </div>
-            <div class="col-sm-2">
-                {% include "@Best365/Home/profile.html.twig" %}
-            </div>
+    <div class="row">
+        <div class="col-sm-2">
+            {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
         </div>
-        {% for product in products %}
-            <div>
-                {% include "@Best365/Home/products.html.twig" with {"products": product} %}
-            </div>
-        {% endfor %}
+        <div class="col-sm-8">
+            {% include "@Best365/Home/events.html.twig" with {"events": events} %}
+        </div>
+        <div class="col-sm-2">
+            {% include "@Best365/Home/profile.html.twig" %}
+        </div>
+    </div>
+    {% for product in products %}
+        <div>
+            {% include "@Best365/Home/products.html.twig" with {"products": product} %}
+        </div>
+    {% endfor %}
 
-        {% include "@Best365/Home/manufacturers.html.twig" with {"manufacturers" : manufacturers} %}
-
+    {% include "@Best365/Home/manufacturers.html.twig" with {"manufacturers" : manufacturers} %}
 {% endblock %}
