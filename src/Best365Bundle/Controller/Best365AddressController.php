@@ -139,7 +139,7 @@ class Best365AddressController extends AddressController
             return $this->redirect(
                 $this->generateUrl($redirectUrl)
             );
-        } else {
+        } elseif ($request->isMethod('POST')) {
             $this
                 ->get('elcodi.object_manager.address')
                 ->clear($address);
