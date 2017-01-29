@@ -61,8 +61,13 @@ class Best365CategoryController extends CategoryController
 			->get('elcodi.wrapper.customer')
 			->get();
 
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
+		if (!empty($customer->getId())) {
+			$membership = $this->get('best365.manager.customer')
+				->getCustomerMembership($customer);
+			$strategy = $membership->getStrategy();
+		} else {
+			$strategy = 100;
+		}
 
 		// get purchasables
 		$categoryRepository = $this->get('elcodi.repository.category');
@@ -98,7 +103,7 @@ class Best365CategoryController extends CategoryController
 			[
 				'categories' => $category_tree,
 				'purchasables' => $purchasables,
-				'strategy' => $membership->getStrategy()
+				'strategy' => $strategy
 			]
 		);
 	}

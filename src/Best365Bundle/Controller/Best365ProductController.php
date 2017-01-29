@@ -43,8 +43,13 @@ class Best365ProductController extends PurchasableController
 			->get('elcodi.wrapper.customer')
 			->get();
 
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
+		if (!empty($customer->getId())) {
+			$membership = $this->get('best365.manager.customer')
+				->getCustomerMembership($customer);
+			$strategy = $membership->getStrategy();
+		} else {
+			$strategy = 100;
+		}
 
 		// find by key word
 		$tag_ids = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
@@ -74,7 +79,7 @@ class Best365ProductController extends PurchasableController
 			[
 				'searching' => $name,
 				'purchasables' => $collection,
-				'strategy' => $membership->getStrategy()
+				'strategy' => $strategy
 			]
 		);
 	}
@@ -101,8 +106,13 @@ class Best365ProductController extends PurchasableController
 			->get('elcodi.wrapper.customer')
 			->get();
 
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
+		if (!empty($customer->getId())) {
+			$membership = $this->get('best365.manager.customer')
+				->getCustomerMembership($customer);
+			$strategy = $membership->getStrategy();
+		} else {
+			$strategy = 100;
+		}
 
 		// get product
 		$purchasable = $this->get('elcodi.repository.purchasable')
@@ -149,7 +159,7 @@ class Best365ProductController extends PurchasableController
 			'purchasable_ext' => $purchasable_ext,
 			'categories' => $categories,
 			'useStock'    => $useStock,
-			'strategy' => $membership->getStrategy()
+			'strategy' => $strategy
 			]
 		);
 	}

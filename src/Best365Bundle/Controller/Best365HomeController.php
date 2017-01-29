@@ -56,8 +56,14 @@ class Best365HomeController extends HomeController
 			->get('elcodi.wrapper.customer')
 			->get();
 
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
+		if (!empty($customer->getId())) {
+			$membership = $this->get('best365.manager.customer')
+				->getCustomerMembership($customer);
+			$strategy = $membership->getStrategy();
+		} else {
+			$strategy = 100;
+		}
+
 
 		// locale
 		$locale = $this
@@ -116,7 +122,7 @@ class Best365HomeController extends HomeController
 				'customer' => $customer,
 				'products' => $list,
 				'manufacturers' => $manufacturers,
-				'strategy' => $membership->getStrategy()
+				'strategy' => $strategy
 			]
 		);
 	}
