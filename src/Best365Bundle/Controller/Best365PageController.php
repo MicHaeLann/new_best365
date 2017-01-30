@@ -4,6 +4,11 @@ namespace Best365Bundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class Best365PageController
+ * @package Best365Bundle\Controller
+ * @Route("/best365/page")
+ */
 class Best365PageController extends Controller
 {
 	/**
