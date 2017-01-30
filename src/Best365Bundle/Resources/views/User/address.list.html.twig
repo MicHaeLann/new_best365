@@ -31,10 +31,14 @@
 			<tbody>
 			{% for address in addresses %}
 				<tr>
-					<td>
-						{{ address.recipientName }} {{ address.recipientSurname }}
+					<td style="max-width: 80px;word-wrap: break-word;">
+						{% if activeLocale == 'zh-CN' %}
+							{{ address.recipientSurname }}{{ address.recipientName }}
+						{% else %}
+							{{ address.recipientName }} {{ address.recipientSurname }}
+						{% endif %}
 					</td>
-					<td>
+					<td style="max-width: 300px;word-wrap: break-word;">
 						{{ address.address }}
 					</td>
 					<td>

@@ -8,8 +8,13 @@
     {{ form_start(form) }}
     <div class="margin-top-30 profile-box padding-25">
         {{ form_row(form.email, { "attr": { "class": "form-control", "readonly": true } }) }}
-        {{ form_row(form.firstname, { "attr": { "class": "form-control"} }) }}
-        {{ form_row(form.lastname, { "attr": { "class": "form-control"} }) }}
+        {% if activeLocale == 'zh-CN' %}
+            {{ form_row(form.lastname, { "attr": { "class": "form-control", "length": 255 } }) }}
+            {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}
+        {% else %}
+            {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}
+            {{ form_row(form.lastname, { "attr": { "class": "form-control", "length": 255 } }) }}
+        {% endif %}
         {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
         {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
     </div>

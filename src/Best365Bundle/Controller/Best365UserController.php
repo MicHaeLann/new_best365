@@ -82,9 +82,15 @@ class Best365UserController extends UserController
 		$display_customer = $this->get('best365.manager.customer')
 			->buildDisplayCustomer($customer);
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
 		// append customer info to twig
         return $this->render('Best365Bundle:User:user.home.html.twig', [
-        	'customer' => $display_customer
+        	'customer' => $display_customer,
+			'activeLocale' => $active_locale
 		]);
     }
 
@@ -136,10 +142,16 @@ class Best365UserController extends UserController
             );
         }
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
         return $this->render(
             'Best365Bundle:User:user.edit.html.twig',
             [
                 'form' => $formView,
+				'activeLocale' => $active_locale
             ]
         );
     }

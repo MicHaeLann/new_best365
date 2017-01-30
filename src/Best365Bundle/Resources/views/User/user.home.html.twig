@@ -18,10 +18,20 @@
             <div class="row padding-25">
                 <a href="{{ url('best365_store_user_edit') }}" class="color-black">
                     <div class="col-sm-4">
-                        <span class="font-weight-500">{{ 'store.user.form.fields.firstname.label'|trans }}</span>
+                        <span class="font-weight-500">
+                            {% if activeLocale == "zh-CN" %}
+                                {{ 'store.user.form.fields.lastname.label'|trans }}
+                            {% else %}
+                                {{ 'store.user.form.fields.firstname.label'|trans }}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="col-sm-7">
-                        {{ customer.firstName }}
+                        {% if activeLocale == "zh-CN" %}
+                            {{ customer.lastName }}
+                        {% else %}
+                            {{ customer.firstName }}
+                        {% endif %}
                     </div>
                     <div class="col-sm-1">
                         <i class="fa fa-chevron-right"></i>
@@ -32,10 +42,20 @@
             <div class="row padding-25">
                 <a href="{{ url('best365_store_user_edit') }}" class="color-black">
                     <div class="col-sm-4">
-                        <span class="font-weight-500">{{ 'store.user.form.fields.lastname.label'|trans }}</span>
+                        <span class="font-weight-500">
+                            {% if activeLocale == "zh-CN" %}
+                                {{ 'store.user.form.fields.firstname.label'|trans }}
+                            {% else %}
+                                {{ 'store.user.form.fields.lastname.label'|trans }}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="col-sm-7">
-                        {{ customer.lastName }}
+                        {% if activeLocale == "zh-CN" %}
+                            {{ customer.firstName }}
+                        {% else %}
+                            {{ customer.lastName }}
+                        {% endif %}
                     </div>
                     <div class="col-sm-1">
                         <i class="fa fa-chevron-right"></i>

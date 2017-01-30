@@ -120,10 +120,16 @@ class Best365SecurityController extends SecurityController
             return $this->redirectToRoute('best365_store_homepage');
         }
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
         return $this->render(
             'Best365Bundle:User:user.register.html.twig',
             [
                 'form' => $registerFormView,
+				'activeLocale' => $active_locale
             ]
         );
     }

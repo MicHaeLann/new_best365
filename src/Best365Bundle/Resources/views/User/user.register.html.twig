@@ -6,11 +6,17 @@
         {{ "template.store_template_bundle.user.login.create_new_account"|trans }}
     </p>
     {{ form_start(form) }}
-    {{ form_row(form.email, { "attr": { "class": "form-control"} }) }}
+    {{ form_row(form.email, { "attr": { "class": "form-control", "length": 255 } }) }}
+    {% if activeLocale == "zh-CN" %}
+        {{ form_row(form.lastName, { "attr": { "class": "form-control", "length": 255 } }) }}
+        {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}
+    {% else %}
+        {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}
+        {{ form_row(form.lastName, { "attr": { "class": "form-control", "length": 255 } }) }}
+    {% endif %}
     {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
     {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
-    {{ form_row(form.firstname, { "attr": { "class": "form-control"} }) }}
-    {{ form_row(form.lastName, { "attr": { "class": "form-control"} }) }}
+
     {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
     {{ form_end(form) }}
     <h6 class="unregistered-title">

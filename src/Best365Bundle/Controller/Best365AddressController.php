@@ -63,10 +63,16 @@ class Best365AddressController extends AddressController
                     ->toArray($address);
         }
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
         return $this->render(
             'Best365Bundle:User:address.list.html.twig',
             [
                 'addresses' => $addressesFormatted,
+				'activeLocale' => $active_locale
             ]
         );
     }
@@ -145,11 +151,17 @@ class Best365AddressController extends AddressController
                 ->clear($address);
         }
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
         return $this->render(
             'Best365Bundle:User:address.edit.html.twig',
             [
                 'address' => $address,
                 'form'    => $form->createView(),
+				'activeLocale' => $active_locale
             ]
         );
     }
@@ -223,11 +235,17 @@ class Best365AddressController extends AddressController
             );
         }
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
         return $this->render(
             'Best365Bundle:User:address.edit.html.twig',
             [
                 'address' => $address,
                 'form'    => $formView,
+				'activeLocale' => $active_locale
             ]
         );
     }
