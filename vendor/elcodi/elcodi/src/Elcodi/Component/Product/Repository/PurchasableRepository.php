@@ -50,6 +50,28 @@ class PurchasableRepository extends EntityRepository
             ->getResult();
     }
 
+	/**
+	 * get enabled product by categories
+	 * @param array $categories
+	 * @return array|\Doctrine\DBAL\Driver\Statement|null
+	 */
+    public function getAllEnabledFromCategories(array $categories)
+	{
+		$queryBuilder = $this->createQueryBuilder('p');
+		$this->addPerformanceJoinsToQueryBuilder($queryBuilder);
+
+		return $queryBuilder
+			->innerJoin('p.categories', 'c')
+			->where('c.id IN (:categories)')
+			->andwhere('p.enabled = :enabled')
+			->setParameters([
+				'categories' => $categories,
+				'enabled' => 1
+			])
+			->getQuery()
+			->getResult();
+	}
+
     /**
      * Get purchasables that can be shown in Home.
      *

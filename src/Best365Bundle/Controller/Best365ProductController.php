@@ -175,7 +175,7 @@ class Best365ProductController extends PurchasableController
 
 		$purchasable = $this
 			->get('elcodi.repository.purchasable')
-			->findAll();
+			->findBy(array('enabled' => 1));
 		foreach($purchasable as $product) {
 			if (strpos(strtolower($product->getName()), strtolower($name)) !== false) {
 				$ids[] = $product->getId();
@@ -197,7 +197,7 @@ class Best365ProductController extends PurchasableController
 		// get manufacturer
 		$manufacturers = $this
 			->get('elcodi.repository.manufacturer')
-			->findAll();
+			->findBy(array('enabled' => 1));
 		foreach ($manufacturers as $manufacturer) {
 			if (strpos(strtolower($manufacturer->getName()), strtolower($name)) !== false) {
 				$mids[] = $manufacturer->getId();
@@ -207,7 +207,8 @@ class Best365ProductController extends PurchasableController
 		// get product
 		$purchasables = $this
 			->get('elcodi.repository.purchasable')
-			->findAll();
+			->findby(array('enabled' => 1));
+
 		foreach ($purchasables as $product) {
 			$manufacturer = $product->getManufacturer();
 			if (!empty($manufacturer) && in_array($manufacturer->getId(), $mids)) {

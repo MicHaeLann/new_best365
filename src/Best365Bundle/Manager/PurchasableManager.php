@@ -45,7 +45,10 @@ class PurchasableManager
 			->getResult();
 
 		foreach ($collection as $tag) {
-			$ids[] = $tag->getPurchasableId();
+			$product = $this->pr->find($tag->getPurchasableId());
+			if ($product->getEnabled()) {
+				$ids[] = $tag->getPurchasableId();
+			}
 		}
 
 		return $ids;

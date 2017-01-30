@@ -77,7 +77,7 @@ class Best365CategoryController extends CategoryController
 			[$category],
 			$categoryRepository->getChildrenCategories($category)
 		);
-		$purchasables = $purchasableRepository->getAllFromCategories($categories);
+		$purchasables = $purchasableRepository->getAllEnabledFromCategories($categories);
 
 		// store category tree
 		$categories = $this
