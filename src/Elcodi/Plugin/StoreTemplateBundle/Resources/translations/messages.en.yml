@@ -11,7 +11,7 @@ template:
         search:
             search_place_holder: 'Search for...'
             searching: 'Searching'
-        copy_right: '© 2002-2016, Best365.co.nz, Inc. or its affiliates'
+        copy_right: '© 2002-2017, Best365.co.nz, Inc. or its affiliates'
         nav:
             lang:
                 selector: Language
@@ -253,3 +253,4 @@ template:
                 password_sent_text: 'We have sent you an email with all the information to recover your password.'
                 recover_password: 'Recover password'
                 register: Register
+

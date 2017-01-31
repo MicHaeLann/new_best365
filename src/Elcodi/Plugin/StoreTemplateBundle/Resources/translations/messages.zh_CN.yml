@@ -11,7 +11,7 @@ template:
         search:
             search_place_holder: '搜索...'
             searching: '搜索条件'
-        copy_right: '© 2002-2016, Best365.co.nz, Inc. or its affiliates'
+        copy_right: '© 2002-2017, Best365.co.nz, Inc. or its affiliates'
         nav:
             lang:
                 selector: 语言
@@ -250,6 +250,6 @@ template:
                 logout: 登出
             password:
                 password_sent: '密码已发送'
-                password_sent_text: '我们已向您发送重置密码邮件。'
+                password_sent_text: '重置密码邮件已发送。'
                 recover_password: '重置密码'
                 register: 注册
