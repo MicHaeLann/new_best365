@@ -42,6 +42,7 @@ class Best365PasswordController extends Controller
      */
     public function rememberAction(Form $passwordRememberForm, $isValid)
     {
+    	$sent = false;
         if ($isValid) {
             $email = $passwordRememberForm
                 ->get('email')
@@ -56,14 +57,15 @@ class Best365PasswordController extends Controller
                 );
 
             if ($emailFound) {
-                return $this->redirectToRoute('best365_store_password_recover_sent');
+                $sent = true;
             }
         }
 
         return $this->render(
-            'Best365LayoutStoreTemplateBundle:User:password.recover.html.twig',
+            'Best365Bundle:User:password.recover.html.twig',
             [
                 'form' => $passwordRememberForm->createView(),
+				'sent' => $sent
             ]
         );
     }
@@ -83,10 +85,10 @@ class Best365PasswordController extends Controller
     {
         // If user is already logged, go to redirect url
         if ($this->isGranted('ROLE_CUSTOMER')) {
-            return $this->redirectToRoute('store_homepage');
+            return $this->redirectToRoute('best365_store_homepage');
         }
 
-        return $this->render('Best365LayoutStoreTemplateBundle:User:password.sent.html.twig');
+        return $this->render('Best365Bundle:User:password.sent.html.twig');
     }
 
     /**
