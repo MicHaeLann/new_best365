@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Response;
 
-use Elcodi\Store\UserBundle\Controlelr\PasswordController;
+use Elcodi\Store\UserBundle\Controller\PasswordController;
 use Elcodi\Component\User\Entity\Abstracts\AbstractUser;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
 
@@ -43,6 +43,7 @@ class Best365PasswordController extends Controller
     public function rememberAction(Form $passwordRememberForm, $isValid)
     {
     	$sent = false;
+		$invalid = false;
         if ($isValid) {
             $email = $passwordRememberForm
                 ->get('email')
@@ -53,19 +54,22 @@ class Best365PasswordController extends Controller
                 ->rememberPasswordByEmail(
                     $this->get('elcodi.repository.customer'),
                     $email,
-                    'store_password_recover'
+                    'best365_store_password_recover'
                 );
 
             if ($emailFound) {
                 $sent = true;
-            }
+            } else {
+            	$invalid = true;
+			}
         }
 
         return $this->render(
             'Best365Bundle:User:password.recover.html.twig',
             [
                 'form' => $passwordRememberForm->createView(),
-				'sent' => $sent
+				'sent' => $sent,
+				'invalid' => $invalid
             ]
         );
     }
@@ -118,6 +122,7 @@ class Best365PasswordController extends Controller
      */
     public function recoverAction(Form $passwordRecoverForm, $isValid, $hash)
     {
+    	$invalid = false;
         if ($isValid) {
             $customer = $this
                 ->get('elcodi.repository.customer')
@@ -134,14 +139,17 @@ class Best365PasswordController extends Controller
                     ->get('elcodi.manager.password')
                     ->recoverPassword($customer, $hash, $password);
 
-                return $this->redirectToRoute('store_homepage');
-            }
+                return $this->redirectToRoute('best365_store_homepage');
+            } else {
+				$invalid = true;
+			}
         }
 
         return $this->render(
-            'Best365LayoutStoreTemplateBundle:User:password.change.html.twig',
+            'Best365Bundle:User:password.change.html.twig',
             [
                 'form' => $passwordRecoverForm->createView(),
+				'invalid' => $invalid
             ]
         );
     }

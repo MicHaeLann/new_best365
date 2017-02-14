@@ -253,3 +253,5 @@ template:
                 password_sent_text: '重置密码邮件已发送。'
                 recover_password: '重置密码'
                 register: 注册
+                invalid: 重置密码失败
+                invalid_email: 邮件地址错误.

@@ -253,4 +253,6 @@ template:
                 password_sent_text: 'We have sent you an email with all the information to recover your password.'
                 recover_password: 'Recover password'
                 register: Register
+                invalid: Invalid hash.
+                invalid_email: Invalid email.
 

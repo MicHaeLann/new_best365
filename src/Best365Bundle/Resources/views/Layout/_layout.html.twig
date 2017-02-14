@@ -12,7 +12,8 @@
 {% block body %}
     {% if app.request.attributes.get('_route') != "best365_store_login" and
         app.request.attributes.get('_route') != "best365_store_register" and
-        app.request.attributes.get('_route') != "best365_store_password_remember"%}
+        app.request.attributes.get('_route') != "best365_store_password_remember" and
+        app.request.attributes.get('_route') != "best365_store_password_recover" %}
         {% block header %}
             {% include '@Best365/Layout/_header.html.twig' %}
         {% endblock header %}

@@ -1,6 +1,7 @@
 {% if app.request.get('_route') == 'best365_store_login' or
         app.request.get('_route') == 'best365_store_register' or
-        app.request.get('_route') == 'best365_store_password_remember'%}
+        app.request.get('_route') == 'best365_store_password_remember' or
+        app.request.get('_route') == 'best365_store_password_recover'%}
 <hr class="hr-fade-out margin-top-30">
 <p class="align-center font-11">
     {{ "template.store_template_bundle.copy_right"|trans }}
