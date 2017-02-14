@@ -22,6 +22,11 @@ class Event
      */
     private $link;
 
+	/**
+	 * @var int
+	 */
+	private $enabled;
+
 
     /**
      * Get id
@@ -80,5 +85,29 @@ class Event
     {
         return $this->link;
     }
+
+	/**
+	 * Set enabled
+	 *
+	 * @param int $enabled
+	 *
+	 * @return Event
+	 */
+    public function setEnabled($enabled)
+	{
+		$this->enabled = $enabled;
+
+		return $this;
+	}
+
+	/**
+	 * Get enabled
+	 *
+	 * @return int
+	 */
+    public function getEnabled()
+	{
+		return $this->enabled;
+	}
 }
 

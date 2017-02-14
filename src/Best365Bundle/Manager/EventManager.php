@@ -15,7 +15,7 @@ class EventManager
 
 	public function getEvent()
 	{
-		$list = $this->em->getRepository('Best365Bundle\Entity\Event')->findAll();
+		$list = $this->em->getRepository('Best365Bundle\Entity\Event')->findBy(array('enabled' => 1));
 		return $list;
 	}
 }

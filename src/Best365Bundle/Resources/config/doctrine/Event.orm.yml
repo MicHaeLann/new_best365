@@ -15,4 +15,6 @@ Best365Bundle\Entity\Event:
         link:
             type: string
             length: 255
+        enabled:
+            type: integer
     lifecycleCallbacks: {  }
