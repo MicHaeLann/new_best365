@@ -72,28 +72,47 @@ class Best365HomeController extends HomeController
 			->getLocale();
 
 		// products(category->product)
-		$promotions = $this
-			->get('best365.manager.promotion')
-			->getPromotion();
+		$amount = 7 * count($categories);
 
-		$cids = array();
+		$promotions = $this
+			->get('elcodi.repository.purchasable')
+			->getHomePurchasables($amount, false);
+
+		// initialize cid array
+		foreach ($categories as $category) {
+			$cids[$category['entity']['id']] = array();
+		}
 		foreach ($promotions as $promotion) {
-			if (!array_key_exists($promotion->getCategoryId(), $cids)) {
-				$cids[$promotion->getCategoryId()] = array();
+			$parent_category = $promotion->getPrincipalCategory()->getParent();
+			if (empty($parent_category)) {
+				$parent_category = $promotion->getPrincipalCategory();
+			}
+			$cids[$parent_category->getId()][] = $promotion;
+		}
+		ksort($cids);
+		
+		// used to fill $cids when short of data, at least 1 not empty required
+		foreach ($cids as $v) {
+			if (!empty($v)) {
+				$const = $v;
+				break;
+			}
+		}
+		foreach ($cids as &$v) {
+			if (empty($v)) {
+				$v = $const;
 			}
 
-			$purchasable = $this
-				->get('elcodi.repository.purchasable')
-				->find($promotion->getPurchasableId());
-
-			$cids[$promotion->getCategoryId()][] = $purchasable;
+			if (count($v) < 7) {
+				$v[1] = $v[2] = $v[3] = $v[4] = $v[5] = $v[6] = $v[0];
+			}
 		}
+
 		$list = array();
 		foreach ($cids as $cid => $purchasables) {
 			$category = $this
 				->get('elcodi.repository.category')
 				->find($cid);
-
 			$current_trends = array();
 			$trends = $this
 				->get('best365.manager.trends')
