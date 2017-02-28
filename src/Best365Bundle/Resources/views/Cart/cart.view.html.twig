@@ -51,7 +51,7 @@
                                     <a href="{{ purchasableRoute }}" class="sub-theme-link">{{ purchasableName }}</a>
                                 </td>
                                 <td>
-                                    {{ form_row(line.quantity, {'attr': {'class': 'unit-max-width'}}) }}
+                                    {{ form_row(line.quantity, {'attr': {'class': 'unit-display'}}) }}
                                 </td>
                                 <td>
                                     {{ purchasablePrice|print_convert_money_with_strategy(strategy) }}
