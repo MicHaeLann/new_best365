@@ -296,6 +296,13 @@
 	border-radius: 4px;
 }
 
+.stock-container
+{
+	border: 1px solid #e7e7e7;
+	border-radius: 4px;
+	padding: 0.2em 1em;
+}
+
 .content-container
 {
 	margin: 0 auto;
@@ -671,6 +678,11 @@ a
 .sub-theme-font, .sub-theme-font:hover
 {
 	color: #888
+}
+
+.sold-out-font
+{
+	color: #f0ad4e;
 }
 
 .sub-theme-link

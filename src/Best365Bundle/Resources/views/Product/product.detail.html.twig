@@ -44,12 +44,17 @@
                             {{ purchasable.price|print_convert_money_with_strategy(strategy) }}
                         </div>
                         <div class="row margin-top-10">
-                            {% if purchasable.stock > 0 %}
-                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            <span class="stock-container">
+                                {% if purchasable.stock > 0 %}
+                                    <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                                 {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
                             {% else %}
-                                {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
-                            {% endif %}
+                                    <span class="sold-out-font">
+                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                </span>
+                                    {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
+                                {% endif %}
+                            </span>
                         </div>
                         <div class="row">
                             <hr>
