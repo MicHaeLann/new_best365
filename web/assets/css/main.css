@@ -104,14 +104,30 @@
 	padding-top: 15px;
 }
 
+.padding-top-3
+{
+	padding-top: 3px;
+}
+
 .padding-top-5
 {
 	padding-top: 5px;
 }
 
+.padding-top-8
+{
+	padding-top: 8px;
+}
+
 .padding-0
 {
 	padding: 0;
+}
+
+.padding-10-0
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .padding-25
@@ -148,8 +164,13 @@
 {
 	width: 100%
 }
+.unit-display
+{
+	max-width: 50px;
+	display: inline;
+}
 
-.unit-max-width, .carrier-max-width
+.carrier-max-width
 {
 	max-width: 100px;
 }
@@ -677,6 +698,11 @@ a
 	font-size: 18px;
 }
 
+.font-25
+{
+    font-size: 25px;
+}
+
 .font-30
 {
 	font-size: 30px;
@@ -719,5 +745,10 @@ a
 .color-black, .color-black:hover
 {
 	color: black;
+}
+
+.dotted-bottom
+{
+	border-bottom: 1px dotted #e7e7e7;
 }
 
