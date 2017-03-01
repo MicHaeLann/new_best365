@@ -26,7 +26,7 @@
 		{% endif %}
 	</td>
 	<td>
-		{% if "common.order.states.#{item.paymentStateLineStack.lastStateLine.name}"|trans == "Paid"  %}
+		{% if "#{item.paymentStateLineStack.lastStateLine.name}" == "paid" %}
 			{% for trackingNum in item.trackingNum  %}
 				<p>{{ trackingNum }}</p>
 			{% endfor %}
