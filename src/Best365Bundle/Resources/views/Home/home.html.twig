@@ -5,11 +5,8 @@
         <div class="col-sm-2">
             {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             {% include "@Best365/Home/events.html.twig" with {"events": events} %}
-        </div>
-        <div class="col-sm-2">
-            {% include "@Best365/Home/profile.html.twig" %}
         </div>
     </div>
     {% for product in products %}
