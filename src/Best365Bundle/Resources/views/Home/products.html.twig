@@ -182,7 +182,7 @@
             </div>
         </div>
         <div class="promotion-item-bottom promotion-item-right padding-top-15 padding-left-30">
-            <h4 class="theme-font">{{ 'template.store_template_bundle.product.trending'|trans }}</h4>
+            <div class="theme-font">{{ 'template.store_template_bundle.product.trending'|trans }}</div>
             {% for trending in products.trends %}
                 <a href="{{ url('best365_store_product_search', { field: trending.trends }) }}" class="trends-item">
                     {{ trending.trends }}
