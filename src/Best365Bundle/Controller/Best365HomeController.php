@@ -72,16 +72,15 @@ class Best365HomeController extends HomeController
 			->getLocale();
 
 		// products(category->product)
-		$amount = 7 * count($categories);
-
 		$promotions = $this
 			->get('elcodi.repository.purchasable')
-			->getHomePurchasables($amount, false);
+			->getHomePurchasables(200, false);
 
 		// initialize cid array
 		foreach ($categories as $category) {
 			$cids[$category['entity']['id']] = array();
 		}
+
 		foreach ($promotions as $promotion) {
 			$parent_category = $promotion->getPrincipalCategory()->getParent();
 			if (empty($parent_category)) {
