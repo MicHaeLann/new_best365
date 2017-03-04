@@ -35,3 +35,7 @@ parameters:
     bamboo_admin_prefix: admin
     bamboo_api_prefix: api
     bamboo_store_firewall: store_area
+
+    merchant_id: 'af54f0607d474924898465b256b1ff7f'
+    merchant_key: '03391775'
+    qrcode_url: 'http://www.kiwifast.com/api/v1/info/pay'

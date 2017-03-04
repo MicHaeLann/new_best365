@@ -159,6 +159,10 @@ class Best365CheckoutController extends CheckoutController
 			->request
 			->get('shipping_method', false);
 
+		$payment_method = $request
+			->request
+			->get('payment_method', false);
+
 		$address = $request
 			->request
 			->get('address', false);
@@ -222,18 +226,20 @@ class Best365CheckoutController extends CheckoutController
 		$cartObjectManager->persist($cart);
 		$cartObjectManager->flush();
 
-		// temporarily transfer payment only, may change later
-		$redirection_url = ($address)
-			? 'best365_store_checkout_finish'
-			: 'best365_store_checkout_shipping';
+		return $this->saveOrder($payment_method);
 
-		return $this->redirect(
-			$this->generateUrl($redirection_url)
-		);
+		// temporarily transfer payment only, may change later
+//		$redirection_url = ($address)
+//			? 'best365_store_checkout_finish'
+//			: 'best365_store_checkout_shipping';
+//
+//		return $this->redirect(
+//			$this->generateUrl($redirection_url)
+//		);
 	}
 
 	/**
-	 * Saves order redirects to the next page
+	 * Saves order
 	 *
 	 * @return Response
 	 *
@@ -244,7 +250,7 @@ class Best365CheckoutController extends CheckoutController
 	 * )
 	 *
 	 */
-	public function saveOrderAction()
+	private function saveOrder($payment_method)
 	{
 		$cart = $this
 			->get('elcodi.wrapper.cart')
@@ -297,13 +303,92 @@ class Best365CheckoutController extends CheckoutController
 
 		// generate reference and bend reference to order
 		$order_id = $order->getId();
-		$reference = uniqid();
+		if ($payment_method == 'transfer') {
+			$reference = uniqid();
+			$url = $this->generateUrl('best365_store_order_thanks_transfer', array('id' => $order_id));
+		} else {
+			$content = json_decode($this->getQrcode($order), true);
+			$reference = '';
+			if (!empty($content) && $content['response']['message'] == 'success') {
+				$reference = $content['response']['qrcode_url'];
+			}
+
+			$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
+		}
 
 		$this->get('best365.manager.order')
 			->createExtRecord($order_id, $reference);
 
-		return $this->redirect(
-			$this->generateUrl('best365_store_order_thanks_transfer', array('id' => $order_id))
+		return $this->redirect($url);
+	}
+
+	private function getQrcode($order)
+	{
+		// get CNY
+		$currencies = $this
+			->get('elcodi.repository.currency')
+			->findBy([
+				'enabled' => true,
+			]);
+
+		foreach ($currencies as $currency) {
+			if ($currency->getIso() == 'CNY') {
+				$target_currency = $currency;
+				break;
+			}
+		}
+		$currency = 'CNY';
+
+		// convert to cny
+		$grandtotal = $this->get('elcodi.converter.currency')
+			->convertMoney($order->getAmount(), $target_currency);
+		$amount = $grandtotal->getAmount() / 100;
+		$amount = 0.01;
+		$return_url = $this->generateUrl('best365_store_order_thanks', array('id' => $order->getId()));
+		$notify_url = 'best365.co.nz/best365/epayment';
+
+		$arr = array(
+			'merchant_id' => $this->container->getParameter('merchant_id'),
+			'increment_id' => $order->getId(),
+			'grandtotal' => $amount,
+			'currency' => $currency,
+			'return_url' => $return_url,
+			'notify_url' => $notify_url,
+			'subject' => 'Best365',
+			'describe' => 'Best365',
+			'service' => 'create_scan_code'
 		);
+		ksort($arr);
+		$str = '';
+		foreach ($arr as $k => $v) {
+			if (strlen($str) > 0) {
+				$str .= '&';
+			}
+			$str .= $k . '=' . $v;
+		}
+		$before = $str . $this->container->getParameter('merchant_key');
+		$signature = md5(utf8_encode($before));
+		$arr['signature'] = $signature;
+		$arr['sign_type'] = 'MD5';
+		$str = $this->encodeURIComponent($arr);
+		$url = $this->container->getParameter('qrcode_url') . '?' . $str;
+
+		// send request to get qrcode
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$content  = curl_exec($ch);
+		curl_close($ch);
+		return $content;
+	}
+
+	private function encodeURIComponent($arr) {
+		$str = '';
+		foreach ($arr as $k => $v) {
+			if (strlen($str) > 0) {
+				$str .= '&';
+			}
+			$str .= $k . '=' . $v;
+		}
+		return $str;
 	}
 }

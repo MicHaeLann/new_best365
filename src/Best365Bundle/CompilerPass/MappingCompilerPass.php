@@ -74,6 +74,13 @@ class MappingCompilerPass extends AbstractMappingCompilerPass
 				'@Best365Bundle/Resources/config/doctrine/Trends.orm.yml',
 				true
 			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\EpaymentOrder',
+				'@Best365Bundle/Resources/config/doctrine/EpaymentOrder.orm.yml',
+				true
+			)
 //			->addEntityMapping(
 //				$container,
 //				'default',

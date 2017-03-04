@@ -170,7 +170,7 @@
 	display: inline;
 }
 
-.carrier-max-width
+.carrier-max-width, .payment-max-width
 {
 	max-width: 100px;
 }

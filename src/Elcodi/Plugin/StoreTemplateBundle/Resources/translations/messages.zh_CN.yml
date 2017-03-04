@@ -119,6 +119,8 @@ template:
                 total: 总计
                 your_cart: '购物车'
             payment:
+                transfer: 转帐
+                wechat: 微信
                 back: 返回
                 bankwire: 'Bank wire'
                 continue: 继续
@@ -165,6 +167,7 @@ template:
                 total: 小计
                 units: 数量
                 reference: 附注
+                wechat: 扫码支付
             list:
                 item: 商品
                 date: 日期

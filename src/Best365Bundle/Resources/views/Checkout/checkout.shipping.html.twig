@@ -4,20 +4,24 @@
     <div class="container">
         <div class="row padding-0-30">
             <p class="page-title">
-                {{ 'template.store_template_bundle.checkout.address.select_address'|trans }}
+                {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
             </p>
             <form method="post" action="{{ url('best365_store_save_shipping') }}" class="margin-top-30">
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
-                        {{ 'template.store_template_bundle.shipping.subtotal'|trans }}
+                        {{ 'template.store_template_bundle.checkout.payment.payment_method'|trans }}
                     </label>
                     <div class="col-sm-8">
-                        <p id="subtotal" class="margin-top-5">
-                            {{ cart.amount|print_convert_money_with_strategy(strategy) }}
-                        </p>
+                        <select name="payment_method" class="form-control payment-max-width">
+                            <option value="transfer">
+                                {{ 'template.store_template_bundle.checkout.payment.transfer'|trans }}
+                            </option>
+                            <option value="wechat">
+                                {{ 'template.store_template_bundle.checkout.payment.wechat'|trans }}
+                            </option>
+                        </select>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.shipping.carrier'|trans }}
@@ -36,7 +40,6 @@
                         <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.checkout.price'|trans }}
@@ -46,7 +49,16 @@
                         </p>
                     </div>
                 </div>
-
+                <div class="form-group row">
+                    <label class="col-sm-1 margin-top-5">
+                        {{ 'template.store_template_bundle.shipping.subtotal'|trans }}
+                    </label>
+                    <div class="col-sm-8">
+                        <p id="subtotal" class="margin-top-5">
+                            {{ cart.amount|print_convert_money_with_strategy(strategy) }}
+                        </p>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.shipping.total'|trans }}
@@ -57,7 +69,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-sm-1 margin-top-5">
                         {{ 'template.store_template_bundle.address.item.address'|trans }}
@@ -83,7 +94,7 @@
                     {{ 'template.store_template_bundle.checkout.back'|trans }}
                 </a>
                 <button type="submit" name="payment" class="btn btn-success float-right" data-test="payment-button">
-                    {{ 'template.store_template_bundle.checkout.address.payment'|trans }}
+                    {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </button>
             </form>

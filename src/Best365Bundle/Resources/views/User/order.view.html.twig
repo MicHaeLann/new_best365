@@ -15,7 +15,7 @@
         {% else %}
             <p class="page-title">
                 {{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }}
-                {% if not thanks %}
+                {% if not thanks and transfer %}
                 ({{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }})
                 {% endif %}
             </p>
@@ -34,10 +34,15 @@
                 <td>
                     {{ 'template.store_template_bundle.order.item.total'|trans }}
                 </td>
+                {% if order.ref|length > 13 and "#{order.paymentStateLineStack.lastStateLine.name}" != "paid" %}
+                <td>
+                    {{ 'template.store_template_bundle.order.item.wechat'|trans }}
+                </td>
+                {% endif %}
             </thead>
             <tbody>
                 {% for line in order.orderLines %}
-                    {% include "@Best365/User/order.item.html.twig" with { "line": line } %}
+                    {% include "@Best365/User/order.item.html.twig" with { "line": line, "order":order} %}
                 {% endfor %}
             </tbody>
         </table>

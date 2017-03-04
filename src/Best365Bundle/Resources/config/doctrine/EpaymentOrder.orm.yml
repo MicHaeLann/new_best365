@@ -1,0 +1,62 @@
+Best365Bundle\Entity\EpaymentOrder:
+    type: entity
+    table: epayment_order
+    repositoryClass: Best365Bundle\Repository\EpaymentOrderRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        tradeNo:
+            type: string
+            length: 255
+            column: trade_no
+        incrementId:
+            type: string
+            length: 255
+            column: increment_id
+        grandtotal:
+            type: float
+        receiptAmount:
+            type: float
+            column: receipt_amount
+        currency:
+            type: string
+            length: 255
+        subject:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+        signType:
+            type: string
+            length: 255
+            column: sign_type
+        signature:
+            type: string
+            length: 255
+        notifyTime:
+            type: datetime
+            column: notify_time
+        createdAt:
+            type: datetime
+            column: created_at
+        gmtPayment:
+            type: datetime
+            column: gmt_payment
+        tradeStatus:
+            type: string
+            length: 255
+            column: trade_status
+        paymentChannels:
+            type: string
+            length: 255
+            column: payment_channels
+        buyerPaymentAccount:
+            type: string
+            length: 255
+            column: buyer_payment_account
+    lifecycleCallbacks: {  }

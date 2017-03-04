@@ -119,6 +119,8 @@ template:
                 total: Total
                 your_cart: 'Your cart'
             payment:
+                transfer: Transfer
+                wechat: Wechat
                 back: Back
                 bankwire: 'Bank wire'
                 continue: Continue
@@ -165,6 +167,7 @@ template:
                 total: Total
                 units: Units
                 reference: Ref
+                wechat: QRcode
             list:
                 item: Item
                 date: Date

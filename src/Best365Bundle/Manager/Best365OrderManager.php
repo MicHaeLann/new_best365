@@ -3,6 +3,7 @@
 namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\OrderExt;
+use Best365Bundle\Entity\EpaymentOrder;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 
@@ -41,9 +42,9 @@ class Best365OrderManager
 			$tracking_num = $order_ext->getTrackingNum();
 		}
 
-		if (!empty($tracking_num)) {
-			$tracking_num = explode(',', $tracking_num);
-		}
+//		if (!empty($tracking_num)) {
+//			$tracking_num = explode(',', $tracking_num);
+//		}
 
 		$order->ref = $ref;
 		$order->trackingNum = $tracking_num;
@@ -58,6 +59,30 @@ class Best365OrderManager
 		$order_ext->setTrackingNum($tracking_num);
 
 		$this->em->persist($order_ext);
+		$this->em->flush();
+	}
+
+	public function createEpaymentOrder($arr)
+	{
+		$order = new EpaymentOrder();
+		$order->setIncrementId($arr['increment_id']);
+		$order->setGrandtotal($arr['grandtotal']);
+		$order->setReceiptAmount($arr['receipt_amount']);
+		$order->setCurrency($arr['currency']);
+		$order->setSubject($arr['subject']);
+		$order->setDescription($arr['describe']);
+		$order->setTradeNo($arr['trade_no']);
+		$order->setNotifyTime(new \DateTime($arr['notify_time']));
+		$order->setCreatedAt(new \DateTime($arr['created_at']));
+		$order->setGmtPayment(new \DateTime($arr['gmt_payment']));
+		$order->setTradeStatus($arr['trade_status']);
+		$order->setPaymentChannels($arr['payment_channels']);
+		$order->setBuyerPaymentAccount($arr['buyer_payment_account']);
+		$order->setSignature($arr['signature']);
+		$order->setSignType($arr['sign_type']);
+
+		ladybug_dump($order);
+		$this->em->persist($order);
 		$this->em->flush();
 	}
 
