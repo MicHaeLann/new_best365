@@ -30,7 +30,7 @@ class Best365EpaymentController extends Controller
 	 *
 	 * @Route(
 	 *      path = "",
-	 *      name = "best365_epayment",
+	 *      name = "best365_store_epayment",
 	 *      methods = {"GET", "POST"}
 	 * )
 	 *

@@ -345,7 +345,8 @@ class Best365CheckoutController extends CheckoutController
 		$amount = $grandtotal->getAmount() / 100;
 		$amount = 0.05;
 		$return_url = $this->generateUrl('best365_store_order_thanks', array('id' => $order->getId()));
-		$notify_url = 'best365.co.nz/best365/epayment';
+		$notify_url = $this->generateUrl('best365_store_epayment');
+		echo $notify_url;exit;
 
 		$arr = array(
 			'merchant_id' => $this->container->getParameter('merchant_id'),
