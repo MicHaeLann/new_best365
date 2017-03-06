@@ -12,23 +12,22 @@
                 {% endif %}
             </div>
             {{ elcodi_hook("store.order_thanks") }}
-        {% else %}
-            <p class="page-title">
-                {{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }} ( {{ "common.order.states.#{order.paymentStateLineStack.lastStateLine.name}"|trans }} )
-            </p>
-            <div class="main-theme-font">
-                {% if "#{order.paymentStateLineStack.lastStateLine.name}" != "paid" and not thanks and order.ref|length == 13 %}
-                    {{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }}
-                {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "paid" and order.trackingNum %}
-                    {{ 'template.store_template_bundle.order.list.tracking_num'|trans }} : {{ order.trackingNum }}
-                {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" != "paid" and order.ref|length > 13 %}
-                    <p>{{ 'template.store_template_bundle.order.item.wechat'|trans }}</p>
-                    <div id="qr-{{ order.id }}">
-                        <input type="hidden" value="{{ order.ref }}" id="ref-{{ order.id }}" />
-                    </div>
-                {% endif %}
-            </div>
         {% endif %}
+        <p class="page-title">
+            {{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }} ( {{ "common.order.states.#{order.paymentStateLineStack.lastStateLine.name}"|trans }} )
+        </p>
+        <div class="main-theme-font">
+            {% if "#{order.paymentStateLineStack.lastStateLine.name}" == "upaid" and not thanks and order.ref|length == 13 %}
+                {{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }}
+            {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "paid" and order.trackingNum %}
+                {{ 'template.store_template_bundle.order.list.tracking_num'|trans }} : {{ order.trackingNum }}
+            {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "unpaid" and order.ref|length > 13 %}
+                <p>{{ 'template.store_template_bundle.order.item.wechat'|trans }}</p>
+                <div id="qr-{{ order.id }}">
+                    <input type="hidden" value="{{ order.ref }}" id="ref-{{ order.id }}" />
+                </div>
+            {% endif %}
+        </div>
         <table class="table">
             <thead>
                 <td colspan="2">
