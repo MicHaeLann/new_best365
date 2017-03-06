@@ -2,6 +2,8 @@
 
 namespace Best365Bundle\Manager;
 
+use Doctrine\ORM\EntityManager;
+
 class Best365EpaymentManager
 {
 	private $em;
@@ -13,8 +15,8 @@ class Best365EpaymentManager
 	public function getEpaymentOrder($trade_no)
 	{
 		$epayment = $this->em
-			->getRepository('Best365Bundle\Repository\EpaymentOrder')
-			->findOneBy(array('trade_no' => $trade_no));
+			->getRepository('Best365Bundle\Entity\EpaymentOrder')
+			->findOneBy(array('tradeNo' => $trade_no));
 		return $epayment;
 	}
 }

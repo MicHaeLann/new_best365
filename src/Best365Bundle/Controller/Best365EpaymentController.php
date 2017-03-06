@@ -45,7 +45,7 @@ class Best365EpaymentController extends Controller
 		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
 
 		// store request data
-		$epayment_order = $this->get('best365.manager.epayment')->getOrder($arr['trade_no']);
+		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $sig, $sign_type);
 		}
