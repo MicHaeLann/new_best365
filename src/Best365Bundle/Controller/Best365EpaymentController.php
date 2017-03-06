@@ -42,16 +42,17 @@ class Best365EpaymentController extends Controller
 
 		$arr = $this->getRequestArray($request);
 		$sig = $this->getSignature($arr);
+		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
 
 		// store request data
-		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
-		$this->insertEpaymentOrder($arr, $sig, $sign_type);
-
+		$epayment_order = $this->get('best365.manager.epayment')->getOrder($arr['trade_no']);
+		if (empty($epayment_order)) {
+			$this->insertEpaymentOrder($arr, $sig, $sign_type);
+		}
 
 		// check if signature match
-//		if ($sig == $request->request->get('signature')) {
-		if (1) {
-				$order_id = $arr['increment_id'];
+		if ($sig == $request->request->get('signature')) {
+			$order_id = $arr['increment_id'];
 
 			// check if order exists
 			$order = $this
@@ -60,7 +61,6 @@ class Best365EpaymentController extends Controller
 
 			if (!empty($order)) {
 				$response = new Response('success');
-
 
 				if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid") {
 					// update payment status

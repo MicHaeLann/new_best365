@@ -50,3 +50,8 @@ services:
         class: Best365Bundle\Manager\TrendsManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    best365.manager.epayment:
+            class: Best365Bundle\Manager\Best365EpaymentManager
+            arguments:
+                - '@doctrine.orm.entity_manager'
