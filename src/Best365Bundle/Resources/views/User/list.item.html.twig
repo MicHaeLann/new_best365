@@ -27,9 +27,7 @@
 	</td>
 	<td>
 		{% if "#{item.paymentStateLineStack.lastStateLine.name}" == "paid" %}
-			{% for trackingNum in item.trackingNum  %}
-				<p>{{ trackingNum }}</p>
-			{% endfor %}
+			{{ item.trackingNum }}
 		{% elseif item.ref|length == 13 %}
 			{{ item.ref }}
 		{% else %}

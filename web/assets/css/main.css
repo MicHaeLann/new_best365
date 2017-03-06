@@ -764,3 +764,13 @@ a
 	border-bottom: 1px dotted #e7e7e7;
 }
 
+.inline-block
+{
+	display: inline-block;
+}
+
+.valign-top
+{
+	vertical-align: top;
+}
+
