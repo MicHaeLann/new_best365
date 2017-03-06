@@ -8,6 +8,7 @@
 
 namespace Best365Bundle\Controller;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
 use Symfony\Component\Form\FormView;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
@@ -345,8 +346,7 @@ class Best365CheckoutController extends CheckoutController
 		$amount = $grandtotal->getAmount() / 100;
 		$amount = 0.05;
 		$return_url = $this->generateUrl('best365_store_order_thanks', array('id' => $order->getId()));
-		$notify_url = $this->generateUrl('best365_store_epayment');
-		echo $notify_url;exit;
+		$notify_url = $this->generateUrl('best365_store_epayment',  array(), UrlGeneratorInterface::ABSOLUTE_URL);
 
 		$arr = array(
 			'merchant_id' => $this->container->getParameter('merchant_id'),
