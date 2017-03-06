@@ -39,8 +39,14 @@ class Best365EpaymentController extends Controller
 	{
 		$response = new Response('fail');
 
+
 		$arr = $this->getRequestArray($request);
 		$sig = $this->getSignature($arr);
+
+		// store request data
+		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
+		$this->insertEpaymentOrder($arr, $sig, $sign_type);
+
 
 		// check if signature match
 //		if ($sig == $request->request->get('signature')) {
@@ -57,10 +63,6 @@ class Best365EpaymentController extends Controller
 
 
 				if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid") {
-					// store request data
-					$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
-					$this->insertEpaymentOrder($arr, $sig, $sign_type);
-
 					// update payment status
 					$stateLineStack = $this
 						->get('elcodi.order_payment_states_machine_manager')
@@ -102,21 +104,21 @@ class Best365EpaymentController extends Controller
 	private function getRequestArray($request)
 	{
 		$arr =  array(
-			'merchant_id' => $request->request->get('merchant_id'),
-			'increment_id' => $request->request->get('increment_id'),
-			'grandtotal' => $request->request->get('grandtotal'),
-			'receipt_amount' => $request->request->get('receipt_amount'),
-			'currency' => $request->request->get('currency'),
-			'subject' => $request->request->get('subject'),
-			'describe' => $request->request->get('describe'),
-			'service' => $request->request->get('service'),
-			'trade_no' => $request->request->get('trade_no'),
-			'notify_time' => $request->request->get('notify_time'),
-			'created_at' => $request->request->get('created_at'),
-			'gmt_payment' => $request->request->get('gmt_payment'),
-			'trade_status' => $request->request->get('trade_status'),
-			'payment_channels' => $request->request->get('trade_status'),
-			'buyer_payment_account' => $request->request->get('buyer_payment_account'),
+			'merchant_id' => $request->request->get('merchant_id') ? $request->request->get('merchant_id') : 12121,
+			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : 12121,
+			'grandtotal' => $request->request->get('grandtotal') ? $request->request->get('grandtotal') : 12121,
+			'receipt_amount' => $request->request->get('receipt_amount') ? $request->request->get('receipt_amount') : 12121,
+			'currency' => $request->request->get('currency') ? $request->request->get('currency') : 12121,
+			'subject' => $request->request->get('subject') ? $request->request->get('subject') : 12121,
+			'describe' => $request->request->get('describe') ? $request->request->get('describe') : 12121,
+			'service' => $request->request->get('service') ? $request->request->get('service') : 12121,
+			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : 12121,
+			'notify_time' => $request->request->get('notify_time') ? $request->request->get('notify_time') : '2017-02-02 11:11:11',
+			'created_at' => $request->request->get('created_at') ? $request->request->get('created_at') : '2017-02-02 11:11:11',
+			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-02-02 11:11:11',
+			'trade_status' => $request->request->get('trade_status') ? $request->request->get('trade_status') : 12121,
+			'payment_channels' => $request->request->get('payment_channels') ? $request->request->get('payment_channels') : 12121,
+			'buyer_payment_account' => $request->request->get('buyer_payment_account') ? $request->request->get('buyer_payment_account') : 12121,
 		);
 
 //		$arr =  array(

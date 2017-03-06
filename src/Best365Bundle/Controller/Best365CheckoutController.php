@@ -343,7 +343,7 @@ class Best365CheckoutController extends CheckoutController
 		$grandtotal = $this->get('elcodi.converter.currency')
 			->convertMoney($order->getAmount(), $target_currency);
 		$amount = $grandtotal->getAmount() / 100;
-		$amount = 0.01;
+		$amount = 0.05;
 		$return_url = $this->generateUrl('best365_store_order_thanks', array('id' => $order->getId()));
 		$notify_url = 'best365.co.nz/best365/epayment';
 

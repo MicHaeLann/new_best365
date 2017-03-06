@@ -42,10 +42,6 @@ class Best365OrderManager
 			$tracking_num = $order_ext->getTrackingNum();
 		}
 
-//		if (!empty($tracking_num)) {
-//			$tracking_num = explode(',', $tracking_num);
-//		}
-
 		$order->ref = $ref;
 		$order->trackingNum = $tracking_num;
 	}
@@ -81,7 +77,6 @@ class Best365OrderManager
 		$order->setSignature($arr['signature']);
 		$order->setSignType($arr['sign_type']);
 
-		ladybug_dump($order);
 		$this->em->persist($order);
 		$this->em->flush();
 	}
