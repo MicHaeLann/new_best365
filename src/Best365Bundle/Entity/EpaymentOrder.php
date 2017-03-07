@@ -18,9 +18,14 @@ class EpaymentOrder
     private $tradeNo;
 
     /**
-     * @var int
+     * @var string
      */
     private $incrementId;
+
+    /**
+     * @var string
+     */
+    private $merchantId;
 
     /**
      * @var float
@@ -56,11 +61,6 @@ class EpaymentOrder
      * @var string
      */
     private $signature;
-
-    /**
-     * @var string
-     */
-    private $service;
 
     /**
      * @var \DateTime
@@ -130,7 +130,7 @@ class EpaymentOrder
     /**
      * Set incrementId
      *
-     * @param integer $incrementId
+     * @param string $incrementId
      *
      * @return EpaymentOrder
      */
@@ -144,11 +144,35 @@ class EpaymentOrder
     /**
      * Get incrementId
      *
-     * @return int
+     * @return string
      */
     public function getIncrementId()
     {
         return $this->incrementId;
+    }
+
+    /**
+     * Set merchantId
+     *
+     * @param string $merchantId
+     *
+     * @return EpaymentOrder
+     */
+    public function setMerchantId($merchantId)
+    {
+        $this->merchantId = $merchantId;
+
+        return $this;
+    }
+
+    /**
+     * Get merchantId
+     *
+     * @return string
+     */
+    public function getMerchantId()
+    {
+        return $this->merchantId;
     }
 
     /**
@@ -317,30 +341,6 @@ class EpaymentOrder
     public function getSignature()
     {
         return $this->signature;
-    }
-
-    /**
-     * Set service
-     *
-     * @param string $service
-     *
-     * @return EpaymentOrder
-     */
-    public function setService($service)
-    {
-        $this->service = $service;
-
-        return $this;
-    }
-
-    /**
-     * Get service
-     *
-     * @return string
-     */
-    public function getService()
-    {
-        return $this->service;
     }
 
     /**

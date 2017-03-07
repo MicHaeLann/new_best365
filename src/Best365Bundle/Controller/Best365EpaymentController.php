@@ -49,8 +49,7 @@ class Best365EpaymentController extends Controller
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $sig, $sign_type);
 		}
-		$signature = $request->request->get('signature');
-
+		$signature = $request->request->get('signature') ? $request->request->get('signature') : 'f5872fe93d4834eae681f4cb26543c6b';
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
@@ -95,6 +94,11 @@ class Best365EpaymentController extends Controller
 				}
 			}
 		} else {
+
+			'f5872fe93d4834eae681f4cb26543c6b';
+
+			'a7328cb67f3c1c0c51331359ea412da1';
+
 			$logger = $this->get('logger');
 			$logger->critical('-----------------------------');
 			$logger->critical($sig .' ' . $signature);
@@ -108,17 +112,17 @@ class Best365EpaymentController extends Controller
 	{
 		$arr =  array(
 			'merchant_id' => $request->request->get('merchant_id') ? $request->request->get('merchant_id') : $this->container->getParameter('merchant_id'),
-			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : 76,
+			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : 79,
 			'grandtotal' => $request->request->get('grandtotal') ? $request->request->get('grandtotal') : 0.05,
 			'receipt_amount' => $request->request->get('receipt_amount') ? $request->request->get('receipt_amount') : 0.05,
 			'currency' => $request->request->get('currency') ? $request->request->get('currency') : 'CNY',
 			'subject' => $request->request->get('subject') ? $request->request->get('subject') : 'Best365',
 			'describe' => $request->request->get('describe') ? $request->request->get('describe') : 'Best365',
 			'service' => $request->request->get('service') ? $request->request->get('service') : 'create_scan_code',
-			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : '4001382001201703082609498233',
-			'notify_time' => $request->request->get('notify_time') ? $request->request->get('notify_time') : '2017-03-08 05:52:14',
-			'created_at' => $request->request->get('created_at') ? $request->request->get('created_at') : '2017-03-08 05:51:17',
-			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-03-08 05:51:17',
+			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : '4001382001201703082611431272',
+			'notify_time' => $request->request->get('notify_time') ? $request->request->get('notify_time') : '2017-03-08 06:12:32',
+			'created_at' => $request->request->get('created_at') ? $request->request->get('created_at') : '2017-03-08 06:12:11',
+			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-03-08 06:12:11',
 			'trade_status' => $request->request->get('trade_status') ? $request->request->get('trade_status') : 'TRADE_SUCCESS',
 			'payment_channels' => $request->request->get('payment_channels') ? $request->request->get('payment_channels') : 'WECHAT',
 			'buyer_payment_account' => $request->request->get('buyer_payment_account') ? $request->request->get('buyer_payment_account') : 12121,

@@ -14,8 +14,13 @@ Best365Bundle\Entity\EpaymentOrder:
             length: 255
             column: trade_no
         incrementId:
-            type: integer
+            type: string
+            length: 255
             column: increment_id
+        merchantId:
+            type: string
+            length: 255
+            column: merchant_id
         grandtotal:
             type: float
         receiptAmount:
@@ -35,9 +40,6 @@ Best365Bundle\Entity\EpaymentOrder:
             length: 255
             column: sign_type
         signature:
-            type: string
-            length: 255
-        service:
             type: string
             length: 255
         notifyTime:
