@@ -19,4 +19,20 @@ class Best365EpaymentManager
 			->findOneBy(array('tradeNo' => $trade_no));
 		return $epayment;
 	}
+
+	public function generateSignature($arr, $key)
+	{
+		ksort($arr);
+		$str = '';
+		foreach ($arr as $k => $v) {
+			if (strlen($str) > 0) {
+				$str .= '&';
+			}
+			$str .= $k . '=' . $v;
+		}
+		$str .= $key;
+		$signature = md5(utf8_encode($str));
+
+		return $signature;
+	}
 }

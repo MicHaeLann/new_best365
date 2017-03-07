@@ -359,16 +359,10 @@ class Best365CheckoutController extends CheckoutController
 			'describe' => 'Best365',
 			'service' => 'create_scan_code'
 		);
-		ksort($arr);
-		$str = '';
-		foreach ($arr as $k => $v) {
-			if (strlen($str) > 0) {
-				$str .= '&';
-			}
-			$str .= $k . '=' . $v;
-		}
-		$before = $str . $this->container->getParameter('merchant_key');
-		$signature = md5(utf8_encode($before));
+
+		$signature = $this->get('best365.manager.epayment')
+			->generateSignature($arr, $this->container->getParameter('merchant_key'));
+
 		$arr['signature'] = $signature;
 		$arr['sign_type'] = 'MD5';
 		$str = $this->encodeURIComponent($arr);

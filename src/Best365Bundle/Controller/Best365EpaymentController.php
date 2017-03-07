@@ -41,15 +41,16 @@ class Best365EpaymentController extends Controller
 
 
 		$arr = $this->getRequestArray($request);
-		$sig = $this->getSignature($arr);
-		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
+		$sig = $this->get('best365.manager.epayment')
+			->generateSignature($arr, $this->container->getParameter('merchant_key'));
 
 		// store request data
 		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
+		$signature = $request->request->get('signature') ? $request->request->get('signature') : '4e1faeb2e1e884fbc748b78a55da209c';
 		if (empty($epayment_order)) {
-			$this->insertEpaymentOrder($arr, $sig, $sign_type);
+			$this->insertEpaymentOrder($arr, $signature);
 		}
-		$signature = $request->request->get('signature') ? $request->request->get('signature') : 'fe30bb1fc02ff3d6ef99ce023d3951ed';
+		echo $sig;exit;
 
 		// check if signature match
 		if ($sig == $signature) {
@@ -95,9 +96,9 @@ class Best365EpaymentController extends Controller
 				}
 			}
 		} else {
-			'cb38b4a3e4d91d415fd01b64bcd939fa';
+			'28dc54ee6f4868faec836c322549de3f';
 
-			'4e1faeb2e1e884fbc748b78a55da209c';
+			'02f6a93b3f62b21a53363630f071cf5e';
 			$logger = $this->get('logger');
 			$logger->critical('-----------------------------');
 			$logger->critical($sig .' ' . $signature);
@@ -110,8 +111,8 @@ class Best365EpaymentController extends Controller
 	private function getRequestArray($request)
 	{
 		$arr =  array(
-			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : '4001382001201703082609769443',
-			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : '82',
+			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : '4001382001201703082611847601',
+			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : '84',
 			'merchant_id' => $request->request->get('merchant_id') ? $request->request->get('merchant_id') : 'af54f0607d474924898465b256b1ff7f',
 			'grandtotal' => $request->request->get('grandtotal') ? $request->request->get('grandtotal') : '0.05',
 			'receipt_amount' => $request->request->get('receipt_amount') ? $request->request->get('receipt_amount') : '0.05',
@@ -119,12 +120,13 @@ class Best365EpaymentController extends Controller
 			'subject' => $request->request->get('subject') ? $request->request->get('subject') : 'Best365',
 			'describe' => $request->request->get('describe') ? $request->request->get('describe') : 'Best365',
 			'service' => $request->request->get('service') ? $request->request->get('service') : 'create_scan_code',
-			'notify_time' => $request->request->get('notify_time') ? $request->request->get('notify_time') : '2017-03-08 06:45:43',
-			'created_at' => $request->request->get('created_at') ? $request->request->get('created_at') : '2017-03-08 06:44:53',
-			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-03-08 06:44:53',
+			'notify_time' => $request->request->get('notify_time') ? $request->request->get('notify_time') : '2017-03-08 07:12:30',
+			'created_at' => $request->request->get('created_at') ? $request->request->get('created_at') : '2017-03-08 07:12:09',
+			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-03-08 07:12:09',
 			'trade_status' => $request->request->get('trade_status') ? $request->request->get('trade_status') : 'TRADE_SUCCESS',
 			'payment_channels' => $request->request->get('payment_channels') ? $request->request->get('payment_channels') : 'WECHAT',
 			'buyer_payment_account' => $request->request->get('buyer_payment_account') ? $request->request->get('buyer_payment_account') : '12121',
+			'sign_type' => $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5"
 		);
 
 //		$arr =  array(
@@ -157,6 +159,8 @@ class Best365EpaymentController extends Controller
 			}
 			$str .= $k . '=' . $v;
 		}
+		$str.= $this->container->getParameter('merchant_key');
+		echo $str;exit;
 		$logger = $this->get('logger');
 		$logger->critical($str);
 		$sig = md5(utf8_encode($str));
@@ -164,11 +168,10 @@ class Best365EpaymentController extends Controller
 		return $sig;
 	}
 
-	private function insertEpaymentOrder($arr, $signature, $sign_type)
+	private function insertEpaymentOrder($arr, $signature)
 	{
 		// construct data
 		$arr['signature'] = $signature;
-		$arr['sign_type'] = $sign_type;
 
 		// insert data
 		$this->get('best365.manager.order')->createEpaymentOrder($arr);
