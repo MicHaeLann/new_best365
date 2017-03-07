@@ -96,9 +96,9 @@ class Best365EpaymentController extends Controller
 			}
 		} else {
 			$logger = $this->get('logger');
-			$logger->info('-----------------------------');
-			$logger->info($sig .' ' . $signature);
-			$logger->info('-----------------------------');
+			$logger->critical('-----------------------------');
+			$logger->critical($sig .' ' . $signature);
+			$logger->critical('-----------------------------');
 		}
 
 		return $response;
