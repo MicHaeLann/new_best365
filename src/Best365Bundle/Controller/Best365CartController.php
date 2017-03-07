@@ -65,6 +65,18 @@ class Best365CartController extends CartController
 		$membership = $this->get('best365.manager.customer')
 			->getCustomerMembership($customer);
 
+		// fixing cart amount bug
+		$total = '';
+		foreach ($cart->getCartLines() as $line) {
+			if ($total == '') {
+				$total = $line->getAmount();
+			} else {
+				$total->add($line->getAmount());
+			}
+		}
+
+		$cart->setAmount($total);
+
 
 		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
@@ -163,6 +175,18 @@ class Best365CartController extends CartController
 				->flush();
 		}
 
+		// fixing cart amount bug
+		$total = '';
+		foreach ($cart->getCartLines() as $line) {
+			if ($total == '') {
+				$total = $line->getAmount();
+			} else {
+				$total->add($line->getAmount());
+			}
+		}
+
+		$cart->setAmount($total);
+
 		return $this->redirect(
 			$this->generateUrl('best365_store_cart_view')
 		);
@@ -248,6 +272,18 @@ class Best365CartController extends CartController
 				$purchasable,
 				(int) $quantity
 			);
+
+		// fixing cart amount bug
+		$total = '';
+		foreach ($cart->getCartLines() as $line) {
+			if ($total == '') {
+				$total = $line->getAmount();
+			} else {
+				$total->add($line->getAmount());
+			}
+		}
+
+		$cart->setAmount($total);
 
 		return $this->redirect(
 			$this->generateUrl('best365_store_cart_view')
