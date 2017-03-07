@@ -67,6 +67,7 @@ class Best365OrderManager
 		$order->setCurrency($arr['currency']);
 		$order->setSubject($arr['subject']);
 		$order->setDescription($arr['describe']);
+		$order->setService($arr['service']);
 		$order->setTradeNo($arr['trade_no']);
 		$order->setNotifyTime(new \DateTime($arr['notify_time']));
 		$order->setCreatedAt(new \DateTime($arr['created_at']));

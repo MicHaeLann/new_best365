@@ -14,8 +14,7 @@ Best365Bundle\Entity\EpaymentOrder:
             length: 255
             column: trade_no
         incrementId:
-            type: string
-            length: 255
+            type: integer
             column: increment_id
         grandtotal:
             type: float
@@ -36,6 +35,9 @@ Best365Bundle\Entity\EpaymentOrder:
             length: 255
             column: sign_type
         signature:
+            type: string
+            length: 255
+        service:
             type: string
             length: 255
         notifyTime:
