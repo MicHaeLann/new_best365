@@ -50,7 +50,7 @@ class Best365EpaymentController extends Controller
 			$this->insertEpaymentOrder($arr, $sig, $sign_type);
 		}
 		$signature = $request->request->get('signature') ? $request->request->get('signature') : 'fe30bb1fc02ff3d6ef99ce023d3951ed';
-		
+
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
@@ -95,11 +95,9 @@ class Best365EpaymentController extends Controller
 				}
 			}
 		} else {
+			'cb38b4a3e4d91d415fd01b64bcd939fa';
 
-			'f5872fe93d4834eae681f4cb26543c6b';
-
-			'a7328cb67f3c1c0c51331359ea412da1';
-
+			'4e1faeb2e1e884fbc748b78a55da209c';
 			$logger = $this->get('logger');
 			$logger->critical('-----------------------------');
 			$logger->critical($sig .' ' . $signature);
@@ -162,6 +160,7 @@ class Best365EpaymentController extends Controller
 		$logger = $this->get('logger');
 		$logger->critical($str);
 		$sig = md5(utf8_encode($str));
+		$logger->critical($sig);
 		return $sig;
 	}
 
