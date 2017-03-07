@@ -35,6 +35,9 @@ Best365Bundle\Entity\EpaymentOrder:
         description:
             type: string
             length: 255
+        service:
+            type: string
+            length: 255
         signType:
             type: string
             length: 255

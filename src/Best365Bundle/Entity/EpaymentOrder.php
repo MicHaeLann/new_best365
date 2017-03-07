@@ -55,6 +55,11 @@ class EpaymentOrder
     /**
      * @var string
      */
+    private $service;
+
+    /**
+     * @var string
+     */
     private $signType;
 
     /**
@@ -293,6 +298,30 @@ class EpaymentOrder
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set service
+     *
+     * @param string $service
+     *
+     * @return EpaymentOrder
+     */
+    public function setService($service)
+    {
+        $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return string
+     */
+    public function getService()
+    {
+        return $this->service;
     }
 
     /**

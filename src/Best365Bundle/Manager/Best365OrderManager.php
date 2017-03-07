@@ -62,6 +62,7 @@ class Best365OrderManager
 	{
 		$order = new EpaymentOrder();
 		$order->setIncrementId($arr['increment_id']);
+		$order->setMerchantId($arr['merchant_id']);
 		$order->setGrandtotal($arr['grandtotal']);
 		$order->setReceiptAmount($arr['receipt_amount']);
 		$order->setCurrency($arr['currency']);
