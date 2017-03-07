@@ -49,9 +49,10 @@ class Best365EpaymentController extends Controller
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $sig, $sign_type);
 		}
+		$signature = $request->request->get('signature');
 
 		// check if signature match
-		if ($sig == $request->request->get('signature')) {
+		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
 
 			// check if order exists
@@ -93,6 +94,11 @@ class Best365EpaymentController extends Controller
 						->updatePoints($order->getCustomer(), $points);
 				}
 			}
+		} else {
+			$logger = $this->get('logger');
+			$logger->info('-----------------------------');
+			$logger->info($sig .' ' . $signature);
+			$logger->info('-----------------------------');
 		}
 
 		return $response;
