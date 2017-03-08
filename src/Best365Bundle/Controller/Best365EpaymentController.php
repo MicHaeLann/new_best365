@@ -44,9 +44,11 @@ class Best365EpaymentController extends Controller
 		$sig = $this->get('best365.manager.epayment')
 			->generateSignature($arr, $this->container->getParameter('merchant_key'));
 
+		echo $sig;exit;
 		// store request data
 		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
 		$signature = $request->request->get('signature') ? $request->request->get('signature') : '4e1faeb2e1e884fbc748b78a55da209c';
+		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5";
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $signature);
 		}
@@ -110,6 +112,12 @@ class Best365EpaymentController extends Controller
 
 	private function getRequestArray($request)
 	{
+		// add logger
+		$logger = $this->get('logger');
+		$params = $request->request->all();
+		foreach ($params as $k => $v) {
+			$logger->critical('----------' . $k . ': ' . $v . '---------------');
+		}
 		$arr =  array(
 			'trade_no' => $request->request->get('trade_no') ? $request->request->get('trade_no') : '4001382001201703082611847601',
 			'increment_id' => $request->request->get('increment_id') ? $request->request->get('increment_id') : '84',
@@ -125,8 +133,7 @@ class Best365EpaymentController extends Controller
 			'gmt_payment' => $request->request->get('gmt_payment') ? $request->request->get('gmt_payment') : '2017-03-08 07:12:09',
 			'trade_status' => $request->request->get('trade_status') ? $request->request->get('trade_status') : 'TRADE_SUCCESS',
 			'payment_channels' => $request->request->get('payment_channels') ? $request->request->get('payment_channels') : 'WECHAT',
-			'buyer_payment_account' => $request->request->get('buyer_payment_account') ? $request->request->get('buyer_payment_account') : '12121',
-			'sign_type' => $request->request->get('sign_type') ? $request->request->get('sign_type') : "MD5"
+			'buyer_payment_account' => $request->request->get('buyer_payment_account') ? $request->request->get('buyer_payment_account') : '12121'
 		);
 
 //		$arr =  array(
