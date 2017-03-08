@@ -50,9 +50,9 @@ class Best365EpaymentController extends Controller
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $signature, $sign_type);
 		} else {
-			$logger->critical('---------trade_no: '. $arr['trade_no']);
+			$logger->critical('trade_no: '. $arr['trade_no']);
 		}
-		
+
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
