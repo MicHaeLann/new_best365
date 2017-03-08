@@ -37,11 +37,11 @@ class Best365EpaymentController extends Controller
 	 */
 	public function paymentAction(Request $request)
 	{
+		$logger = $this->get('logger');
 		$response = new Response('fail');
 		$arr = $this->getRequestArray($request);
 		$sig = $this->get('best365.manager.epayment')
 			->generateSignature($arr, $this->container->getParameter('merchant_key'));
-		echo $sig;exit;
 
 		// store request data
 		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
@@ -49,8 +49,10 @@ class Best365EpaymentController extends Controller
 		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : 'MD5';
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $signature, $sign_type);
+		} else {
+			$logger->critical('---------trade_no: '. $arr['trade_no']);
 		}
-		echo $sig . ' 25e3e0c72a62c3296831182e3159dc86';exit;
+		
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
