@@ -41,6 +41,7 @@ class Best365EpaymentController extends Controller
 		$arr = $this->getRequestArray($request);
 		$sig = $this->get('best365.manager.epayment')
 			->generateSignature($arr, $this->container->getParameter('merchant_key'));
+		echo $sig;exit;
 
 		// store request data
 		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
@@ -49,7 +50,7 @@ class Best365EpaymentController extends Controller
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $signature, $sign_type);
 		}
-
+		echo $sig . ' 25e3e0c72a62c3296831182e3159dc86';exit;
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
@@ -101,28 +102,12 @@ class Best365EpaymentController extends Controller
 	private function getRequestArray($request)
 	{
 		// get all parameters in request
+		$logger = $this->get('logger');
 		$params = $request->request->all();
 
-		$params = array(
-			'merchant_id' => 'af54f0607d474924898465b256b1ff7f',
-			'increment_id' => '85',
-			'grandtotal' => '0.05',
-			'receipt_amount' => '0.05',
-			'currency' => 'CNY',
-			'trade_no' => '4001382001201703082621933223',
-			'service' => 'create_scan_code',
-			'rate' => '4.8508',
-			'notify_time' => '2017-03-08 09:27:17',
-			'created_at' => '2017-03-08 09:26:46',
-			'gmt_payment' => '2017-03-08 09:26:46',
-			'payment_channels' => 'WECHAT',
-			'subject' => 'Best365',
-			'openid' => 'o4FhqwC2na4o7LNU48EYrijirmt4',
-			'describe' => 'Best365',
-			'trade_status' => 'TRADE_SUCCESS',
-			'signature' => '861d94a96b122ea55ebc081af05e5af6',
-			'sign_type' => 'MD5'
-		);
+		foreach ($params as $k => $v) {
+			$logger->critical('-----------' . $k . ' : '.$v);
+		}
 
 		// construct signature array
 		unset($params['signature']);
