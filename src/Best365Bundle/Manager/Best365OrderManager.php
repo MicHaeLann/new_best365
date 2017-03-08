@@ -60,25 +60,10 @@ class Best365OrderManager
 
 	public function createEpaymentOrder($arr)
 	{
+		$json = json_encode($arr);
 		$order = new EpaymentOrder();
-		$order->setIncrementId($arr['increment_id']);
-		$order->setMerchantId($arr['merchant_id']);
-		$order->setGrandtotal($arr['grandtotal']);
-		$order->setReceiptAmount($arr['receipt_amount']);
-		$order->setCurrency($arr['currency']);
-		$order->setSubject($arr['subject']);
-		$order->setDescription($arr['describe']);
-		$order->setService($arr['service']);
 		$order->setTradeNo($arr['trade_no']);
-		$order->setNotifyTime(new \DateTime($arr['notify_time']));
-		$order->setCreatedAt(new \DateTime($arr['created_at']));
-		$order->setGmtPayment(new \DateTime($arr['gmt_payment']));
-		$order->setTradeStatus($arr['trade_status']);
-		$order->setPaymentChannels($arr['payment_channels']);
-		$order->setBuyerPaymentAccount($arr['buyer_payment_account']);
-		$order->setSignature($arr['signature']);
-		$order->setSignType($arr['sign_type']);
-
+		$order->setParams($json);
 		$this->em->persist($order);
 		$this->em->flush();
 	}
