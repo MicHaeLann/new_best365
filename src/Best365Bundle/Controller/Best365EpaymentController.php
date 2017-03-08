@@ -37,20 +37,20 @@ class Best365EpaymentController extends Controller
 	 */
 	public function paymentAction(Request $request)
 	{
-		$logger = $this->get('logger');
+		// initialize response
 		$response = new Response('fail');
+
+		// generate signature
 		$arr = $this->getRequestArray($request);
 		$sig = $this->get('best365.manager.epayment')
 			->generateSignature($arr, $this->container->getParameter('merchant_key'));
 
 		// store request data
 		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
-		$signature = $request->request->get('signature') ? $request->request->get('signature') : '861d94a96b122ea55ebc081af05e5af6';
-		$sign_type = $request->request->get('sign_type') ? $request->request->get('sign_type') : 'MD5';
+		$signature = $request->request->get('signature');
+		$sign_type = $request->request->get('sign_type');
 		if (empty($epayment_order)) {
 			$this->insertEpaymentOrder($arr, $signature, $sign_type);
-		} else {
-			$logger->critical('trade_no: '. $arr['trade_no']);
 		}
 
 		// check if signature match
@@ -65,7 +65,7 @@ class Best365EpaymentController extends Controller
 			if (!empty($order)) {
 				$response = new Response('success');
 
-				if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid") {
+				if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $arr['trade_status'] == 'TRADE_SUCCESS') {
 					// update payment status
 					$stateLineStack = $this
 						->get('elcodi.order_payment_states_machine_manager')
@@ -104,12 +104,7 @@ class Best365EpaymentController extends Controller
 	private function getRequestArray($request)
 	{
 		// get all parameters in request
-		$logger = $this->get('logger');
 		$params = $request->request->all();
-
-		foreach ($params as $k => $v) {
-			$logger->critical('-----------' . $k . ' : '.$v);
-		}
 
 		// construct signature array
 		unset($params['signature']);
