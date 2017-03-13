@@ -6,6 +6,7 @@ use LogicException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 use Elcodi\Store\LanguageBundle\Controller\LanguageController;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
@@ -24,6 +25,8 @@ class Best365LanguageController extends LanguageController
     /**
      * Language navigator
      *
+	 * @param Request $request The current request
+	 *
      * @return Response Response
      *
      * @throws LogicException No languages available
@@ -34,7 +37,7 @@ class Best365LanguageController extends LanguageController
      *      methods = {"GET"}
      * )
      */
-    public function navAction()
+    public function navigationAction(Request $request)
     {
         $languages = $this
             ->get('elcodi.repository.language')
@@ -52,12 +55,15 @@ class Best365LanguageController extends LanguageController
             ->get('request_stack')
             ->getMasterRequest();
 
+		$params = $request->query->all();
+
         return $this->render(
             'Best365Bundle:Layout:_language.nav.html.twig',
             [
                 'request'      => $masterRequest,
                 'languages'    => $languages,
                 'activeLocale' => $masterRequest->getLocale(),
+				'params' 	   => $params
             ]
         );
     }

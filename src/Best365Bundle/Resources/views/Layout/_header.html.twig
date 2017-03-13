@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				{{ render(url('best365_store_language_nav')) }}
+				{{ render(url('best365_store_language_nav', app.request.query.all)) }}
 				{{ render(url('best365_store_currency_nav')) }}
 			</ul>
 			{{ render(url('best365_store_user_nav')) }}
