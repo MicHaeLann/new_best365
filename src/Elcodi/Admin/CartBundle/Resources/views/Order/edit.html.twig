@@ -161,7 +161,7 @@
                     <h3 class="fw-n"><i class="icon-truck"></i> {{ 'admin.order.field.carrier'|trans }}{{ order.shippingMethod.carrierName }} ( {{ order.shippingAmount|print_convert_money() }} )</h3>
                     {# TODO: Extract carrier_name from the shown order #}
                     <label class="form-control">{{ "admin.order.details.tracking_num"|trans }}</label>
-                    <input class="form-control" type="text" maxlength="255" name="tracking_num" value="{{ order.trackingNum }}" {% if order.trackingNum|length > 0 %} disabled {% endif %} />
+                    <input class="form-control" type="text" maxlength="255" name="tracking_num" value="{{ order.trackingNum }}" />
                 </div>
             </div>
         </div>
