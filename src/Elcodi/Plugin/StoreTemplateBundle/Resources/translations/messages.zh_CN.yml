@@ -197,6 +197,10 @@ template:
             month: 月
             security_code: '安全码'
             year: 年
+        pages:
+            membership:
+                point: 积分
+                strategy: 折扣
         product:
             nav:
                 home: 首页

@@ -1,0 +1,31 @@
+{% extends "@Best365/Layout/_layout.html.twig" %}
+
+{% block content %}
+    <h3 class="main-theme-font">{{ page.title }}</h3>
+    <div class="sub-theme-font margin-top-30">
+        <table class="table">
+            <thead>
+                <tr class="success">
+                    <th></th>
+                    {% for config in membership %}
+                        <th>{{ config.name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{{ 'template.store_template_bundle.pages.membership.point'|trans }}</th>
+                    {% for config in membership %}
+                        <td>{{ config.point }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>{{ 'template.store_template_bundle.pages.membership.strategy'|trans }}</th>
+                    {% for config in membership %}
+                        <td>{{ config.strategy }}%</td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

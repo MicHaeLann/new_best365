@@ -197,6 +197,10 @@ template:
             month: Month
             security_code: 'Security Code'
             year: Year
+        pages:
+            membership:
+                point: Point
+                strategy: Discount
         product:
             nav:
                 home: Best365
