@@ -317,6 +317,13 @@
 	min-height: 300px;
 }
 
+.product-item-with-cart
+{
+	margin: 0 5% 5%;
+	border: 1px solid #ededed;
+	min-height: 330px;
+}
+
 .product-item:hover
 {
 	border: 1px solid #5cb85c;
@@ -603,6 +610,13 @@
 	padding-right: 40px;
 }
 
+.promotion-padding-with-cart
+{
+	padding-top: 30px;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
 .promotion-product-title
 {
 	font-size: 11px;
@@ -781,5 +795,12 @@ a
 	overflow: hidden;
 	white-space: nowrap;
 	max-width: 100%;
+}
+
+.product-list-padding
+{
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 

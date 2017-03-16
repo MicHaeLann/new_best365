@@ -1,27 +1,38 @@
 {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
 {% set productName = item|purchasable_name %}
 <div class="col-sm-3 padding-0">
-    <div class="product-item align-center">
+    <div class="align-center product-item{% if app.user %}-with-cart{% endif %}">
         {% block pin_image %}
-            <div class="product-img-min-height">
-                <a href="{{ productRoute }}">
-                    {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                    {% set validImage = item|valid_image %}
-                    <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                        'width': 250,
-                        'height': 250,
-                        'type': 5
-                    }) : '//placehold.it/250x250'  }}" alt="{{ productName }}" />
-                </a>
-            </div>
+            <a href="{{ productRoute }}">
+                {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+                {% set validImage = item|valid_image %}
+                <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                    'width': 250,
+                    'height': 250,
+                    'type': 5
+                }) : '//placehold.it/250x250'  }}" alt="{{ productName }}" />
+            </a>
         {% endblock %}
         {% block pin_title %}
-            <div class="sub-theme-font font-12">
-                <a href="{{ productRoute }}" class="product-title-link">{{ productName }}</a>
+            <div class="sub-theme-font font-12 margin-top-10">
+                <a href="{{ productRoute }}" class="product-title-link no-wrap">{{ productName }}</a>
             </div>
         {% endblock %}
-        <div class="main-theme-font font-18 margin-top-10">
+        <div class="main-theme-font font-18">
             {{ item.price|print_convert_money_with_strategy(strategy) }}
         </div>
+        {% if app.user %}
+            <div class="align-center margin-top-10">
+                {% if item.stock > 0 %}
+                    <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
+                        {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+                    </a>
+                {% else %}
+                    <a class="btn btn-warning" href="#">
+                        {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
+                    </a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 </div>
