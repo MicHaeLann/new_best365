@@ -27,6 +27,11 @@ class PurchasableExt
      */
     private $barcode;
 
+	/**
+	 * @var int
+	 */
+	private $fixedPrice;
+
 
     /**
      * Get id
@@ -109,5 +114,29 @@ class PurchasableExt
     {
         return $this->barcode;
     }
+
+	/**
+	 * Set fixedPrice
+	 *
+	 * @param string $fixedPrice
+	 *
+	 * @return PurchasableExt
+	 */
+	public function setFixedPrice($fixedPrice)
+	{
+		$this->fixedPrice = $fixedPrice;
+
+		return $this;
+	}
+
+	/**
+	 * Get fixedPrice
+	 *
+	 * @return int
+	 */
+	public function getFixedPrice()
+	{
+		return $this->fixedPrice;
+	}
 }
 

@@ -128,6 +128,11 @@ class PurchasableManager
 		// update tag data
 		$purchasable_ext->setTag($request->get('tag'));
 		$purchasable_ext->setBarcode($request->get('barcode'));
+		if ($request->get('fixedPrice')) {
+			$purchasable_ext->setFixedPrice(1);
+		} else {
+			$purchasable_ext->setFixedPrice(0);
+		}
 		$this->em->persist($purchasable_ext);
 		$this->em->flush();
 	}

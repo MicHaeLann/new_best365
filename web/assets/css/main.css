@@ -314,14 +314,12 @@
 {
 	margin: 0 5% 5%;
 	border: 1px solid #ededed;
-	min-height: 300px;
 }
 
 .product-item-with-cart
 {
 	margin: 0 5% 5%;
 	border: 1px solid #ededed;
-	min-height: 330px;
 }
 
 .product-item:hover
@@ -802,5 +800,16 @@ a
 	padding-top: 20px;
 	padding-left: 20px;
 	padding-right: 20px;
+}
+
+body { padding-top: 70px; }
+
+.u-flyer{
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	position: fixed;
+	z-index: 9999;
 }
 

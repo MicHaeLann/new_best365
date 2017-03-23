@@ -18,4 +18,7 @@ Best365Bundle\Entity\PurchasableExt:
         barcode:
             type: string
             length: 255
+        fixedPrice:
+            type: integer
+            column: fixed_price
     lifecycleCallbacks: {  }

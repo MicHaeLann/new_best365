@@ -96,6 +96,10 @@
                 </div>
                 <div class="col-2-3">
                     <div class="box pb-n">
+                        <div style="margin-bottom: 20px">
+                            <input type="checkbox" name="fixedPrice" value="1" {% if ext.fixedPrice %}checked{% endif %} />
+                            <span>Fixed Price</span>
+                        </div>
                         <ol class="grid">
                             <li class="col-1-2">
                                 {{
