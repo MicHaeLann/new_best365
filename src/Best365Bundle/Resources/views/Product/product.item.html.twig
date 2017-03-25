@@ -1,5 +1,8 @@
 {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
 {% set productName = item|purchasable_name %}
+{% if item.fixedPrice %}
+    {% set strategy = 100 %}
+{% endif %}
 <div class="col-sm-3 padding-0">
     <div class="align-center product-item{% if app.user %}-with-cart{% endif %}">
         {% block pin_image %}
@@ -18,15 +21,18 @@
                 <a href="{{ productRoute }}" class="product-title-link no-wrap">{{ productName }}</a>
             </div>
         {% endblock %}
-        <div class="main-theme-font font-18">
+        <div class="main-theme-font font-18 {% if not app.user %} margin-bottom-20 {% endif %}">
             {{ item.price|print_convert_money_with_strategy(strategy) }}
         </div>
         {% if app.user %}
-            <div class="align-center margin-top-10">
+            <div class="align-center margin-top-10 margin-bottom-20">
                 {% if item.stock > 0 %}
-                    <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
+                    <a id="add-cart-{{ item.id }}" class="btn btn-success" href="javascript:void(0)">
                         {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
                     </a>
+                    {#<a id="add-cart" class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">#}
+                        {#{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}#}
+                    {#</a>#}
                 {% else %}
                     <a class="btn btn-warning" href="#">
                         {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
