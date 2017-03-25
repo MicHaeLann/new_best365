@@ -1,0 +1,35 @@
+<div class="promotion-item-top promotion-item-right promotion-padding{% if app.user %}-with-cart{% endif %}">
+    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+    {% set productName = item|purchasable_name %}
+    {% if item.fixedPrice %}
+        {% set strategy = 100 %}
+    {% endif %}
+    <a href="{{ productRoute }}" target="_blank">
+        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+        {% set validImage = item|valid_image %}
+        <img class="max-width-full" src="{{ validImage ? validImage|resize({
+            'width': 120,
+            'height': 120,
+            'type': 5
+        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
+    </a>
+    <div class="promotion-product-title margin-top-10">
+        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
+    </div>
+    <div class="main-theme-font align-center">
+        {{ item.price|print_convert_money_with_strategy(strategy) }}
+    </div>
+    {% if app.user %}
+        <div class="align-center margin-top-10">
+            {% if item.stock > 0 %}
+                <a id="add-cart-{{ item.id }}" class="btn btn-success" href="javascript:void(0)">
+                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+                </a>
+            {% else %}
+                <a class="btn btn-warning" href="#">
+                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
