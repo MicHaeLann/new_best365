@@ -156,11 +156,8 @@ class Money implements \JsonSerializable
     public function add(Money $other)
     {
         $this->assertSameCurrency($this, $other);
-
         $value = $this->amount + $other->getAmount();
-
         $this->assertIsInteger($value);
-
         return $this->newMoney($value);
     }
 

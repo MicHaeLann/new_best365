@@ -26,6 +26,7 @@ use Elcodi\Component\Cart\Transformer\CartOrderTransformer;
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
  *      path = "/best365/checkout",
+ *      options={"expose"=true}
  * )
  */
 class Best365CheckoutController extends CheckoutController
@@ -115,14 +116,46 @@ class Best365CheckoutController extends CheckoutController
 					->toArray($address);
 		}
 
-		// subtract shipping amount
+		// calculate cart amount in terms of fixed price, and membership strategy
 		$cart = $this
 			->get('elcodi.wrapper.cart')
 			->get();
+		if ($cart->getTotalItemNumber() > 0) {
+			$total = '';
+			foreach ($cart->getCartLines() as &$line) {
+				// calculate purchasable amount
+				$line->getPurchasable();
+				$ext = $this->get('best365.manager.purchasable')
+					->getProductExt($line->getPurchasable());
+				$fixed_price = 0;
+				if (!empty($ext)) {
+					$fixed_price = $ext->getFixedPrice();
+				}
+				$line->getPurchasable()->fixedPrice = $fixed_price;
+				if (!$fixed_price) {
+					$line_amount = $line->getAmount()->multiply($membership->getStrategy() / 100);
+				} else {
+					$line_amount = $line->getAmount();
+				}
+
+				if ($total == '') {
+					$total = $line_amount;
+				} else {
+					// convert money if not match
+					if ($line_amount->getCurrency() != $total->getCurrency()) {
+						$line_amount = $this->get('elcodi.converter.currency')
+							->convertMoney($line_amount, $total->getCurrency());
+					}
+					$total = $total->add($line_amount);
+				}
+			}
+			$cart->setAmount($total);
+		}
+
+		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
 			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
 		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
-
 
 		$shippingMethods = $this
 			->get('elcodi.wrapper.shipping_methods')
@@ -141,19 +174,19 @@ class Best365CheckoutController extends CheckoutController
 	}
 
 	/**
- * Saves the billing and delivery address and redirects to the next page
- *
- * @param Request $request The current request
- *
- * @return Response
- *
- * @Route(
- *      path = "/shipping/save",
- *      name = "best365_store_save_shipping",
- *      methods = {"POST"}
- * )
- *
- */
+	 * Saves the billing and delivery address and redirects to the next page
+	 *
+	 * @param Request $request The current request
+	 *
+	 * @return Response
+	 *
+	 * @Route(
+	 *      path = "/shipping/save",
+	 *      name = "best365_store_save_shipping",
+	 *      methods = {"POST"}
+	 * )
+	 *
+	 */
 	public function saveShippingAction(Request $request)
 	{
 		$shipping_method = $request
@@ -221,13 +254,16 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.wrapper.cart')
 			->get();
 		$cart->setShippingMethod($shipping_method);
+		$shipping_price = $this->get('elcodi.converter.currency')
+			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
+		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
 
 		$cartObjectManager = $this
 			->get('elcodi.object_manager.cart');
 		$cartObjectManager->persist($cart);
 		$cartObjectManager->flush();
 
-		return $this->saveOrder($payment_method);
+		return $this->saveOrder($cart, $payment_method);
 
 		// temporarily transfer payment only, may change later
 //		$redirection_url = ($address)
@@ -242,24 +278,14 @@ class Best365CheckoutController extends CheckoutController
 	/**
 	 * Saves order
 	 *
+	 * @param CartInterface $cart
+	 * @param $payment_method
+	 *
 	 * @return Response
 	 *
-	 * @Route(
-	 *      path = "/finish",
-	 *      name = "best365_store_checkout_finish",
-	 *      methods = {"GET", "POST"}
-	 * )
-	 *
 	 */
-	private function saveOrder($payment_method)
+	private function saveOrder($cart, $payment_method)
 	{
-		$cart = $this
-			->get('elcodi.wrapper.cart')
-			->get();
-		$shipping_price = $this->get('elcodi.converter.currency')
-			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
-		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
-
 		// get strategy
 		$customer = $this
 			->get('elcodi.wrapper.customer')
@@ -268,8 +294,6 @@ class Best365CheckoutController extends CheckoutController
 		$membership = $this->get('best365.manager.customer')
 			->getCustomerMembership($customer);
 
-		// reset cart amount according to strategy
-		$cart->setAmount($cart->getAmount()->multiply($membership->getStrategy() / 100));
 
 		// generate order
 		$this->get('best365.manager.payment')
@@ -282,23 +306,58 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.wrapper.shipping_methods')
 			->getOneById($cart, $cart->getShippingMethod());
 
-		// reset shipping amount and amount
+		// reset shipping amount
 		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight/1000);
 		$shipping_amount = $this->get('elcodi.converter.currency')
 			->convertMoney($shipping_amount, $cart->getAmount()->getCurrency());
 		$order = $cart->getOrder();
 		$order->setShippingAmount($shipping_amount);
-		$order->setAmount($cart->getAmount()->add($shipping_amount));
 
-		// set item info
+		// reset order item info
+		$total = '';
 		foreach ($order->getOrderLines() as &$line) {
-			$line->setAmount($line->getAmount()->multiply($membership->getStrategy() / 100));
-			$line->setPurchasableAmount($line->getPurchasableAmount()->multiply($membership->getStrategy() / 100));
+			// get product info
+			$purchasable = $line->getPurchasable();
+			$ext = $this->get('best365.manager.purchasable')
+				->getProductExt($purchasable);
+			$fixed_price = 0;
+			if (!empty($ext)) {
+				$fixed_price = $ext->getFixedPrice();
+			}
+
+			// reset unit price and line amount
+			$unit_price = $line->getPurchasableAmount();
+			$line_amount = $line->getAmount();
+			if (!$fixed_price) {
+				// reset unit price
+				$unit_price = $unit_price->multiply($membership->getStrategy() / 100);
+
+				// reset line amount
+				$line_amount = $line_amount->multiply($membership->getStrategy() / 100);
+			}
+			$line->setPurchasableAmount($unit_price);
+			$line->setAmount($line_amount);
+
+			if ($total == '') {
+				$total = $line_amount;
+			} else {
+				// convert money if not match
+				if ($line_amount->getCurrency() != $total->getCurrency()) {
+					$line_amount = $this->get('elcodi.converter.currency')
+						->convertMoney($line_amount, $total->getCurrency());
+				}
+				$total = $total->add($line_amount);
+			}
 		}
+
+		// reset item total
+		$order->setPurchasableAmount($total);
+
+		// reset order total price
+		$order->setAmount($order->getPurchasableAmount()->add($shipping_amount));
 
 		$orderObjectManager = $this
 			->get('elcodi.object_manager.order');
-		$order->setPurchasableAmount($order->getPurchasableAmount()->multiply($membership->getStrategy() / 100));
 		$orderObjectManager->persist($order);
 		$orderObjectManager->flush();
 

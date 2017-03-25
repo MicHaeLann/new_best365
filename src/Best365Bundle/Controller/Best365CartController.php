@@ -23,6 +23,7 @@ use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
  *      path = "/best365/cart",
+ *      options={"expose"=true}
  * )
  */
 class Best365CartController extends CartController
@@ -38,7 +39,8 @@ class Best365CartController extends CartController
 	 * @Route(
 	 *      path = "",
 	 *      name = "best365_store_cart_view",
-	 *      methods = {"GET"}
+	 *      methods = {"GET"},
+	 *
 	 * )
 	 *
 	 * @AnnotationEntity(
@@ -65,18 +67,38 @@ class Best365CartController extends CartController
 		$membership = $this->get('best365.manager.customer')
 			->getCustomerMembership($customer);
 
-		// fixing cart amount bug
-		$total = '';
-		foreach ($cart->getCartLines() as $line) {
-			if ($total == '') {
-				$total = $line->getAmount();
-			} else {
-				$total->add($line->getAmount());
+		// fixing cart amount bug, and calculate amount according to fixed price and membership
+		if ($cart->getTotalItemNumber() > 0) {
+			$total = '';
+			foreach ($cart->getCartLines() as &$line) {
+				// calculate purchasable amount
+				$line->getPurchasable();
+				$ext = $this->get('best365.manager.purchasable')
+					->getProductExt($line->getPurchasable());
+				$fixed_price = 0;
+				if (!empty($ext)) {
+					$fixed_price = $ext->getFixedPrice();
+				}
+				$line->getPurchasable()->fixedPrice = $fixed_price;
+				if (!$fixed_price) {
+					$line_amount = $line->getAmount()->multiply($membership->getStrategy() / 100);
+				} else {
+					$line_amount = $line->getAmount();
+				}
+
+				if ($total == '') {
+					$total = $line_amount;
+				} else {
+					// convert money if not match
+					if ($line_amount->getCurrency() != $total->getCurrency()) {
+						$line_amount = $this->get('elcodi.converter.currency')
+							->convertMoney($line_amount, $total->getCurrency());
+					}
+					$total = $total->add($line_amount);
+				}
 			}
+			$cart->setAmount($total);
 		}
-
-		$cart->setAmount($total);
-
 
 		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
@@ -175,18 +197,6 @@ class Best365CartController extends CartController
 				->flush();
 		}
 
-		// fixing cart amount bug
-		$total = '';
-		foreach ($cart->getCartLines() as $line) {
-			if ($total == '') {
-				$total = $line->getAmount();
-			} else {
-				$total->add($line->getAmount());
-			}
-		}
-
-		$cart->setAmount($total);
-
 		return $this->redirect(
 			$this->generateUrl('best365_store_cart_view')
 		);
@@ -243,7 +253,8 @@ class Best365CartController extends CartController
 	 *          "id": "\d+",
 	 *     		"quantity": "\d+"
 	 *      },
-	 *      methods = {"GET", "POST"}
+	 *      methods = {"GET", "POST"},
+	 *      options={"expose"=true}
 	 * )
 	 *
 	 * @AnnotationEntity(
@@ -273,20 +284,59 @@ class Best365CartController extends CartController
 				(int) $quantity
 			);
 
-		// fixing cart amount bug
-		$total = '';
-		foreach ($cart->getCartLines() as $line) {
-			if ($total == '') {
-				$total = $line->getAmount();
-			} else {
-				$total->add($line->getAmount());
-			}
-		}
-
-		$cart->setAmount($total);
-
 		return $this->redirect(
 			$this->generateUrl('best365_store_cart_view')
 		);
 	}
+	/**
+	 * Adds product into cart
+	 *
+	 * @param CartInterface $cart    	Cart
+	 * @param integer       $id      	Purchasable Id
+	 * @param integer		$quantity	Purchasable Quantity
+	 *
+	 * @return Response res
+	 *
+	 * @Route(
+	 *      path = "/add/{id}/{quantity}",
+	 *      name = "best365_store_cart_add_product",
+	 *      requirements = {
+	 *          "id": "\d+",
+	 *     		"quantity": "\d+"
+	 *      },
+	 *      methods = {"GET"},
+	 *      options={"expose"=true}
+	 * )
+	 *
+	 * @AnnotationEntity(
+	 *      class = {
+	 *          "factory" = "elcodi.wrapper.cart",
+	 *          "method" = "get",
+	 *          "static" = false,
+	 *      },
+	 *      name = "cart"
+	 * )
+	 */
+	public function addProductAction(CartInterface $cart, $id, $quantity)
+	{
+		$res = new Response('failed');
+		$purchasable = $this
+			->get('elcodi.repository.purchasable')
+			->find($id);
+
+		if ($purchasable instanceof PurchasableInterface) {
+			$this
+				->get('elcodi.manager.cart')
+				->addPurchasable(
+					$cart,
+					$purchasable,
+					(int) $quantity
+				);
+
+			$res = new Response('success');
+		}
+
+		return $res;
+	}
+
 }

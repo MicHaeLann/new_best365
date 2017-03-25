@@ -20,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  *
  * @Route(
  *      path = "/best365/product",
+ *      options={"expose"=true}
  * )
  */
 class Best365ProductController extends PurchasableController
@@ -69,9 +70,18 @@ class Best365ProductController extends PurchasableController
 		// get collection by ids
 		$collection = array();
 		foreach ($ids as $id) {
-			$collection[] = $this
+			$product =  $this
 			->get('elcodi.repository.purchasable')
 			->find($id);
+
+			$ext = $this->get('best365.manager.purchasable')
+				->getProductExt($product);
+			$fixed_price = 0;
+			if (!empty($ext)) {
+				$fixed_price = $ext->getFixedPrice();
+			}
+			$product->fixedPrice = $fixed_price;
+			$collection[] = $product;
 		}
 
 		return $this->render(

@@ -21,6 +21,7 @@ use Elcodi\Store\ProductBundle\Controller\CategoryController;
  *
  * @Route(
  *      path = "/best365/category",
+ *      options={"expose"=true}
  * )
  */
 
@@ -78,6 +79,17 @@ class Best365CategoryController extends CategoryController
 			$categoryRepository->getChildrenCategories($category)
 		);
 		$purchasables = $purchasableRepository->getAllEnabledFromCategories($categories);
+
+		// get fixed price
+		foreach ($purchasables as &$purchasable) {
+			$purchasable_ext = $this->get('best365.manager.purchasable')
+				->getProductExt($purchasable);
+			$fixed_price = 0;
+			if (!empty($purchasable_ext)) {
+				$fixed_price = $purchasable_ext->getFixedPrice();
+			}
+			$purchasable->fixedPrice = $fixed_price;
+		}
 
 		// store category tree
 		$categories = $this

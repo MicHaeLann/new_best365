@@ -53,12 +53,22 @@
                                 <td>
                                     {{ form_row(line.quantity, {'attr': {'class': 'unit-display'}}) }}
                                 </td>
-                                <td>
-                                    {{ purchasablePrice|print_convert_money_with_strategy(strategy) }}
-                                </td>
-                                <td>
-                                    {{ lineObject.amount|print_convert_money_with_strategy(strategy) }}
-                                </td>
+                                {% if purchasable.fixedPrice %}
+                                    <td>
+                                        {{ purchasablePrice|print_convert_money() }}
+                                    </td>
+                                    <td>
+                                        {{ lineObject.amount|print_convert_money() }}
+                                    </td>
+                                {% else %}
+                                    <td>
+                                        {{ purchasablePrice|print_convert_money_with_strategy(strategy) }}
+                                    </td>
+                                    <td>
+                                        {{ lineObject.amount|print_convert_money_with_strategy(strategy) }}
+                                    </td>
+                                {% endif %}
+
                                 <td>
                                     <a href="{{ url('best365_store_cartline_remove', { id: lineObject.id }) }}" class="btn btn-danger btn-xs">
                                         <span class="glyphicon glyphicon-trash"></span>
@@ -70,7 +80,7 @@
                     </table>
                     <p class="align-right">
                         {{ 'template.store_template_bundle.cart.view.total'|trans }}
-                        {{ cart.amount|print_convert_money_with_strategy(strategy) }}
+                        {{ cart.amount|print_convert_money() }}
                     </p>
                 </div>
 

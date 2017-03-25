@@ -36,7 +36,8 @@ class Best365HomeController extends HomeController
 	 * @Route(
 	 *      path = "/",
 	 *      name = "best365_store_homepage",
-	 *      methods = {"GET"}
+	 *      methods = {"GET"},
+	 *      options={"expose"=true}
 	 * )
 	 */
 	public function homeAction()
@@ -121,6 +122,18 @@ class Best365HomeController extends HomeController
 					$current_trends[] = $trending;
 				}
 			}
+
+			// get fixed price
+			foreach ($purchasables as &$purchasable) {
+				$purchasable_ext = $this->get('best365.manager.purchasable')
+					->getProductExt($purchasable);
+				$fixed_price = 0;
+				if (!empty($purchasable_ext)) {
+					$fixed_price = $purchasable_ext->getFixedPrice();
+				}
+				$purchasable->fixedPrice = $fixed_price;
+			}
+
 			$item = new \stdClass();
 			$item->category = $category;
 			$item->products = $purchasables;
@@ -131,6 +144,7 @@ class Best365HomeController extends HomeController
 		// manufacturer
 		$manufacturers = $this->get('elcodi.repository.manufacturer')
 			->findBy(array('enabled' => 1), array('name' => 'ASC'));
+
 
 		return $this->render(
 			'Best365Bundle:Home:home.html.twig',
