@@ -18,256 +18,28 @@
             <img src="{{ asset('assets/img/promotion_' ~ products.category.id ~ '.png') }}" height="400" />
         </a>
     </div>
-    <div class="col-sm-8  padding-0">
+    <div class="col-sm-8 padding-0">
         <div class="col-sm-6">
             <div class="row">
-                <div class="col-sm-6 promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
-                    {% set item = products.products[0] %}
-                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                    {% set productName = item|purchasable_name %}
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/120x120'  }}" alt="{{ productName }}" />
-                    </a>
-                    <div class="promotion-product-title margin-top-10">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                    <div class="align-center margin-top-10">
-                        {% if item.stock > 0 %}
-                            <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                            </a>
-                        {% else %}
-                            <a class="btn btn-warning" href="#">
-                                {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                            </a>
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                </div>
-                <div class="col-sm-6  promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
-                    {% set item = products.products[1] %}
-                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                    {% set productName = item|purchasable_name %}
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-                    </a>
-                    <div class="promotion-product-title margin-top-10">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                        <div class="align-center margin-top-10">
-                            {% if item.stock > 0 %}
-                                <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
-                            {% else %}
-                                <a class="btn btn-warning" href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
+                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[0]} %}
+                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[1]} %}
             </div>
             <div class="row promotion-item-bottom">
-                {% set item = products.products[2] %}
-                {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                {% set productName = item|purchasable_name %}
-                <div class="col-sm-6 promotion-bottom-title-padding">
-                    <div class="promotion-product-title">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                        <div class="align-center margin-top-10">
-                            {% if item.stock > 0 %}
-                                <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
-                            {% else %}
-                                <a class="btn btn-warning" href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="col-sm-6 promotion-bottom-image-padding">
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-                    </a>
-                </div>
+                {% include "@Best365/Home/product.cell.bottom.html.twig" with {"item": products.products[2]} %}
             </div>
         </div>
         <div class="col-sm-6">
             <div class="row">
-                <div class="col-sm-6 promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
-                    {% set item = products.products[3] %}
-                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                    {% set productName = item|purchasable_name %}
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-                    </a>
-                    <div class="promotion-product-title margin-top-10">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                        <div class="align-center margin-top-10">
-                            {% if item.stock > 0 %}
-                                <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
-                            {% else %}
-                                <a class="btn btn-warning" href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="col-sm-6  promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
-                    {% set item = products.products[4] %}
-                    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                    {% set productName = item|purchasable_name %}
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-                    </a>
-                    <div class="promotion-product-title margin-top-10">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                        <div class="align-center margin-top-10">
-                            {% if item.stock > 0 %}
-                                <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
-                            {% else %}
-                                <a class="btn btn-warning" href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
+                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[3]} %}
+                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[4]} %}
             </div>
             <div class="row promotion-item-bottom">
-                {% set item = products.products[5] %}
-                {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-                {% set productName = item|purchasable_name %}
-                <div class="col-sm-6 promotion-bottom-title-padding">
-                    <div class="promotion-product-title">
-                        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-                    </div>
-                    <div class="main-theme-font align-center">
-                        {{ item.price|print_convert_money_with_strategy(strategy) }}
-                    </div>
-                    {% if app.user %}
-                        <div class="align-center margin-top-10">
-                            {% if item.stock > 0 %}
-                                <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
-                            {% else %}
-                                <a class="btn btn-warning" href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="col-sm-6 promotion-bottom-image-padding">
-                    <a href="{{ productRoute }}" target="_blank">
-                        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                        {% set validImage = item|valid_image %}
-                        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                            'width': 120,
-                            'height': 120,
-                            'type': 5
-                        }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-                    </a>
-                </div>
+                {% include "@Best365/Home/product.cell.bottom.html.twig" with {"item": products.products[5]} %}
             </div>
         </div>
     </div>
-    <div class="col-sm-2  padding-0">
-        <div class="promotion-item-top promotion-item-right promotion-padding{% if app.user %}-with-cart{% endif %}">
-            {% set item = products.products[6] %}
-            {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
-            {% set productName = item|purchasable_name %}
-            <a href="{{ productRoute }}" target="_blank">
-                {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-                {% set validImage = item|valid_image %}
-                <img class="max-width-full" src="{{ validImage ? validImage|resize({
-                    'width': 120,
-                    'height': 120,
-                    'type': 5
-                }) : '//placehold.it/372x291'  }}" alt="{{ productName }}" />
-            </a>
-            <div class="promotion-product-title margin-top-10">
-                <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
-            </div>
-            <div class="main-theme-font align-center">
-                {{ item.price|print_convert_money_with_strategy(strategy) }}
-            </div>
-            {% if app.user %}
-                <div class="align-center margin-top-10">
-                    {% if item.stock > 0 %}
-                        <a class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">
-                            {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                        </a>
-                    {% else %}
-                        <a class="btn btn-warning" href="#">
-                            {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                        </a>
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
+    <div class="col-sm-2 padding-0">
+        {% include "@Best365/Home/product.cell.right.html.twig" with {"item": products.products[6]} %}
         <div class="promotion-item-bottom promotion-item-right padding-top-15 padding-left-30">
             <div class="theme-font font-18">{{ 'template.store_template_bundle.product.trending'|trans }}</div>
             {% for trending in products.trends %}
