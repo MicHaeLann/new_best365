@@ -6,22 +6,13 @@ parameters:
     database_port: null
     database_name: bamboo
     database_user: root
-    database_password: 123456
-
-#    mailer_transport: smtp
-#    mailer_host: 127.0.0.1
-#    mailer_user: null
-#    mailer_password: null
-#    mailer_port: null
-
-
+    database_password: bestfullhealth
     mailer_transport: gmail
     mailer_encryption: ssl
     mailer_auth_mode: login
     mailer_host: smtp.gmail.com
     mailer_user: 'fullhealth365@gmail.com'
     mailer_password: "bestfullhealth"
-
     secret: 4acbc300e57d46cb58ac0c629945c17b727f99c8
     use_assetic_controller: false
     debug_toolbar: true
@@ -35,7 +26,8 @@ parameters:
     bamboo_admin_prefix: admin
     bamboo_api_prefix: api
     bamboo_store_firewall: store_area
-
     merchant_id: 'af54f0607d474924898465b256b1ff7f'
     merchant_key: '03391775'
     qrcode_url: 'http://www.kiwifast.com/api/v1/info/pay'
+    efs_url: 'http://www.efspost.com/tool/track?s='
+

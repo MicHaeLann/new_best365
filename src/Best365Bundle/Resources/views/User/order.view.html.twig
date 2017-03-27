@@ -20,7 +20,7 @@
             {% if "#{order.paymentStateLineStack.lastStateLine.name}" == "upaid" and not thanks and order.ref|length == 13 %}
                 {{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }}
             {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "paid" and order.trackingNum %}
-                {{ 'template.store_template_bundle.order.list.tracking_num'|trans }} : {{ order.trackingNum }}
+                {{ 'template.store_template_bundle.order.list.tracking_num'|trans }} : <a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ order.trackingNum }}">{{ order.trackingNum }}</a>
             {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "unpaid" and order.ref|length > 13 %}
                 <p>{{ 'template.store_template_bundle.order.item.wechat'|trans }}</p>
                 <div id="qr-{{ order.id }}">

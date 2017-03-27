@@ -27,7 +27,7 @@
 	</td>
 	<td>
 		{% if "#{item.paymentStateLineStack.lastStateLine.name}" == "paid" %}
-			{{ item.trackingNum }}
+			<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ item.trackingNum }}">{{ item.trackingNum }}</a>
 		{% elseif item.ref|length == 13 %}
 			{{ item.ref }}
 		{% else %}
