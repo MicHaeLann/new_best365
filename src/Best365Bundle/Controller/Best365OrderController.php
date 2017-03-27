@@ -85,6 +85,11 @@ class Best365OrderController extends OrderController
         // reference and tracking number
 		$this->get('best365.manager.order')
 			->getRecord($order);
+        $tracking_nums = array();
+        if (!empty($order->trackingNum)) {
+			$tracking_nums = explode(',', $order->trackingNum);
+		}
+        $order->trackingNum = $tracking_nums;
 
         return $this->render(
             'Best365Bundle:User:order.view.html.twig',
@@ -117,6 +122,12 @@ class Best365OrderController extends OrderController
 		foreach ($orders as &$order) {
 			$this->get('best365.manager.order')
 				->getRecord($order);
+
+			$tracking_nums = array();
+			if (!empty($order->trackingNum)) {
+				$tracking_nums = explode(',', $order->trackingNum);
+			}
+			$order->trackingNum = $tracking_nums;
 		}
         return $this->render(
             'Best365Bundle:User:list.html.twig',
