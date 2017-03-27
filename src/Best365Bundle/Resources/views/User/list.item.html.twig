@@ -27,13 +27,10 @@
 	</td>
 	<td>
 		{% if "#{item.paymentStateLineStack.lastStateLine.name}" == "paid" %}
-			{% set i = 0 %}
 			{% for number in item.trackingNum  %}
-				{% if i > 0 %}
-					,
-				{% endif %}
-				<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
-				{% set i = i + 1 %}
+				<p>
+					<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
+				</p>
 			{% endfor %}
 		{% elseif item.ref|length == 13 %}
 			{{ item.ref }}
