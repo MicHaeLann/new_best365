@@ -17,6 +17,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
  *      path = "/best365/order",
+ *      options={"expose"=true}
  * )
  */
 class Best365OrderController extends OrderController

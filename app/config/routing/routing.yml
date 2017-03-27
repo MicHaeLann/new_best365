@@ -62,3 +62,6 @@ elcodi_custom_routes:
 #
 best365_store_user:
     resource: "best365_routing.yml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

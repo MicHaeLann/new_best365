@@ -23,6 +23,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * @Security("has_role('ROLE_CUSTOMER')")
  * @Route(
  *      path = "/best365/user/address",
+ *      options={"expose"=true}
  * )
  */
 class Best365AddressController extends AddressController

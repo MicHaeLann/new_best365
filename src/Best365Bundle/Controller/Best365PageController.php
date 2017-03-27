@@ -7,7 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 /**
  * Class Best365PageController
  * @package Best365Bundle\Controller
- * @Route("/best365/page")
+ * @Route(
+ *     path = "/best365/page",
+ *	   options={"expose"=true}
+ * )
  */
 class Best365PageController extends Controller
 {

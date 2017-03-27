@@ -18,6 +18,7 @@ use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
  *
  * @Route(
  *      path = "/best365/epayment",
+ *      options={"expose"=true}
  * )
  */
 class Best365EpaymentController extends Controller

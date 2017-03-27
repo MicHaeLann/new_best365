@@ -18,6 +18,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  * Class Best365UserController
  * @Route(
  *      path = "/best365/user",
+ *      options={"expose"=true}
  * )
  */
 
