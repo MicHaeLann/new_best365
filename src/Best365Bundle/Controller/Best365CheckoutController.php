@@ -65,6 +65,11 @@ class Best365CheckoutController extends CheckoutController
 	 */
 	public function shippingAction(AddressInterface $address, FormView $formView, $isValid)
 	{
+		// get currency
+		$currency = $this
+			->get('elcodi.wrapper.currency')
+			->get();
+
 		// get strategy
 		$customer = $this
 			->get('elcodi.wrapper.customer')
@@ -168,7 +173,8 @@ class Best365CheckoutController extends CheckoutController
 				'shipping_methods'      => $shippingMethods,
 				'addresses' => $addressesFormatted,
 				'form'      => $formView,
-				'strategy' => $membership->getStrategy()
+				'strategy' => $membership->getStrategy(),
+				'activeCurrency' => $currency
 			]
 		);
 	}
