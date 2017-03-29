@@ -94,8 +94,7 @@ class Best365PaymentManager
 	{
 		// get all parameters in request
 		$params = $request->request->all();
-		$arr = '{"merchant_id":"af54f0607d474924898465b256b1ff7f","increment_id":"96","grandtotal":"0.05","receipt_amount":"0.05","currency":"CNY","trade_no":"4008722001201703274804554623","service":"create_scan_code","rate":"4.8601","notify_time":"2017-03-27 10:49:43","created_at":"2017-03-27 10:49:02","gmt_payment":"2017-03-27 10:49:03","payment_channels":"WECHAT","subject":"Best365","openid":"o4FhqwHgCi1ttWmsVFlKZuPGoMzw","describe":"Best365","trade_status":"TRADE_SUCCESS","signature":"8d5803a6ad65ec3e7dd2b87836d22ee2","sign_type":"MD5"}';
-		$params = json_decode($arr, true);
+		
 		// construct signature array
 		unset($params['signature']);
 		unset($params['sign_type']);
