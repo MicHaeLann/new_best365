@@ -306,7 +306,7 @@ class Best365CheckoutController extends CheckoutController
 			->generateOrder();
 
 		// update order shipping amount(not persisted in cart)
-		$cart_weight = $cart->getWeight() < 1000 ? 1000 : $cart->getWeight();
+		$cart_weight = $cart->getWeight() < 1000 && $cart->getWeight() > 0 ? 1000 : $cart->getWeight();
 
 		$shipping_method = $this
 			->get('elcodi.wrapper.shipping_methods')
