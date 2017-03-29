@@ -21,7 +21,7 @@ function getShippingPrice()
     var weight = $("#cart-weight").val();
 
     // set weight min 1000
-    if (weight < 1000) {
+    if (weight < 1000 && weight > 0) {
         weight = 1000;
     }
 
