@@ -3,7 +3,6 @@
 namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\OrderExt;
-use Best365Bundle\Entity\EpaymentOrder;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 
@@ -57,15 +56,4 @@ class Best365OrderManager
 		$this->em->persist($order_ext);
 		$this->em->flush();
 	}
-
-	public function createEpaymentOrder($arr)
-	{
-		$json = json_encode($arr);
-		$order = new EpaymentOrder();
-		$order->setTradeNo($arr['trade_no']);
-		$order->setParams($json);
-		$this->em->persist($order);
-		$this->em->flush();
-	}
-
 }
