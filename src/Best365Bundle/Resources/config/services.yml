@@ -35,6 +35,7 @@ services:
             - "@paymentsuite.freepayment.method_factory"
             - "@paymentsuite.bridge"
             - "@paymentsuite.event_dispatcher"
+            - '@doctrine.orm.entity_manager'
 
     best365.manager.event:
         class: Best365Bundle\Manager\EventManager
@@ -50,8 +51,3 @@ services:
         class: Best365Bundle\Manager\TrendsManager
         arguments:
             - '@doctrine.orm.entity_manager'
-
-    best365.manager.epayment:
-            class: Best365Bundle\Manager\Best365EpaymentManager
-            arguments:
-                - '@doctrine.orm.entity_manager'

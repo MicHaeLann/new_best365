@@ -30,4 +30,7 @@ parameters:
     merchant_key: '03391775'
     qrcode_url: 'http://www.kiwifast.com/api/v1/info/pay'
     efs_url: 'http://www.efspost.com/tool/track?s='
-
+    paymark_username: 101884
+    paymark_password: 'dfc57fhad'
+    paymark_account_id: 622006
+    paymark_request_url: 'https://demo.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest'

@@ -2,7 +2,6 @@
 
 namespace Best365Bundle\Controller;
 
-use Best365Bundle\Entity\EpaymentOrder;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as AnnotationEntity;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,13 +13,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
 
 /**
- * Epayment controllers
+ * Payment controllers
  *
  * @Route(
- *      path = "/best365/epayment",
+ *      path = "/best365/payment",
  * )
  */
-class Best365EpaymentController extends Controller
+class Best365PaymentController extends Controller
 {
 	/**
 	 * Epayment
@@ -29,28 +28,33 @@ class Best365EpaymentController extends Controller
 	 * @return Response Response
 	 *
 	 * @Route(
-	 *      path = "",
+	 *      path = "/epayment",
 	 *      name = "best365_store_epayment",
 	 *      methods = {"GET", "POST"}
 	 * )
 	 *
 	 */
-	public function paymentAction(Request $request)
+	public function epaymentAction(Request $request)
 	{
 		// initialize response
 		$response = new Response('fail');
 
 		// generate signature
-		$arr = $this->getRequestArray($request);
-		$sig = $this->get('best365.manager.epayment')
-			->generateSignature($arr, $this->container->getParameter('merchant_key'));
+		$arr = $this->get('best365.manager.payment')
+			->getEpaymentRequestArray($request);
+		$sig = $this->get('best365.manager.payment')
+			->generateEpaymentSignature($arr, $this->container->getParameter('merchant_key'));
 
 		// store request data
-		$epayment_order = $this->get('best365.manager.epayment')->getEpaymentOrder($arr['trade_no']);
+		$epayment_order = $this->get('best365.manager.payment')
+			->getPaymentGateway($arr['increment_id'], 1);
 		$signature = $request->request->get('signature');
 		$sign_type = $request->request->get('sign_type');
 		if (empty($epayment_order)) {
-			$this->insertEpaymentOrder($arr, $signature, $sign_type);
+			$arr['signature'] = $signature;
+			$arr['sign_type'] = $sign_type;
+			$this->get('best365.manager.payment')
+				->addPaymentGateway($arr['increment_id'], 1, $arr);
 		}
 
 		// check if signature match
@@ -101,25 +105,22 @@ class Best365EpaymentController extends Controller
 		return $response;
 	}
 
-	private function getRequestArray($request)
+
+	/**
+	 * Paymark
+	 *
+	 * @param Request $request The current request
+	 * @return Response Response
+	 *
+	 * @Route(
+	 *      path = "/paymark",
+	 *      name = "best365_store_paymark",
+	 *      methods = {"GET", "POST"}
+	 * )
+	 *
+	 */
+	public function paymarkAction()
 	{
-		// get all parameters in request
-		$params = $request->request->all();
 
-		// construct signature array
-		unset($params['signature']);
-		unset($params['sign_type']);
-
-		return $params;
-	}
-
-	private function insertEpaymentOrder($arr, $signature, $sign_type)
-	{
-		// construct data
-		$arr['signature'] = $signature;
-		$arr['sign_type'] = $sign_type;
-
-		// insert data
-		$this->get('best365.manager.order')->createEpaymentOrder($arr);
 	}
 }

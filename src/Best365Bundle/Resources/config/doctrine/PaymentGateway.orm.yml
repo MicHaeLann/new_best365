@@ -1,0 +1,18 @@
+Best365Bundle\Entity\PaymentGateway:
+    type: entity
+    table: payment_gateway
+    repositoryClass: Best365Bundle\Repository\PaymentGatewayRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        oid:
+            type: integer
+        gateway:
+            type: integer
+        params:
+            type: text
+    lifecycleCallbacks: {  }
