@@ -17,7 +17,7 @@
             {{ 'template.store_template_bundle.order.view.order'|trans }} #{{ order.id }} ( {{ "common.order.states.#{order.paymentStateLineStack.lastStateLine.name}"|trans }} )
         </p>
         <div class="main-theme-font">
-            {% if "#{order.paymentStateLineStack.lastStateLine.name}" == "upaid" and not thanks and order.ref|length == 13 %}
+            {% if "#{order.paymentStateLineStack.lastStateLine.name}" == "unpaid" and order.ref|length == 13 and not thanks %}
                 {{ 'template.store_template_bundle.order.item.reference'|trans }} : {{ order.ref }}
             {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "paid" and order.trackingNum %}
                 {% set i = 0 %}
