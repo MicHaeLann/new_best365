@@ -278,7 +278,7 @@ class Best365OrderManager
 		$reference = '';
 		if ($payment_method == 'transfer') {
 			$reference = uniqid();
-			//$success = true;
+			$success = true;
 		} elseif ($payment_method == 'online_banking') {
 			$response = $this->best365PaymentManager->getOnlineBankingUrl($order);
 			if (strtoupper($response['tag']) != 'ERROR') {
@@ -297,7 +297,9 @@ class Best365OrderManager
 		$this->createExtRecord($order_id, $reference);
 
 		// remove order
-		$this->removeOrder($order);
+		if (!$success) {
+			$this->removeOrder($order);
+		}
 
 		$result = new \stdClass();
 		$result->success = $success;
@@ -351,6 +353,10 @@ class Best365OrderManager
 		return $total;
 	}
 
+	/**
+	 * Remove order when error
+	 * @param $order
+	 */
 	public function removeOrder($order)
 	{
 		// restore stock and move item back to cart
