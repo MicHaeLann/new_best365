@@ -59,6 +59,7 @@ class Best365CartController extends CartController
 	 */
 	public function viewAction(FormView $formView, CartInterface $cart)
 	{
+//		ladybug_dump($cart);exit;
 		// get strategy
 		$customer = $this
 			->get('elcodi.wrapper.customer')

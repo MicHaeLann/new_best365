@@ -27,6 +27,11 @@ class OrderExt
      */
     private $trackingNum;
 
+    /**
+     * @var int
+     */
+    private $valid;
+
 
     /**
      * Get id
@@ -108,6 +113,30 @@ class OrderExt
     public function getTrackingNum()
     {
         return $this->trackingNum;
+    }
+
+    /**
+     * Set valid
+     *
+     * @param integer $valid
+     *
+     * @return OrderExt
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+
+        return $this;
+    }
+
+    /**
+     * Get valid
+     *
+     * @return int
+     */
+    public function getValid()
+    {
+        return $this->valid;
     }
 }
 

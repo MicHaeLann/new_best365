@@ -19,4 +19,6 @@ Best365Bundle\Entity\OrderExt:
             type: string
             length: 255
             column: tracking_num
+        valid:
+            type: integer
     lifecycleCallbacks: {  }

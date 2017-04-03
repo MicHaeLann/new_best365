@@ -27,14 +27,33 @@ services:
     best365.manager.order:
         class: Best365Bundle\Manager\Best365OrderManager
         arguments:
+            - "@paymentsuite.freepayment.method_factory"
+            - "@paymentsuite.bridge"
+            - "@paymentsuite.event_dispatcher"
+            - '@elcodi.object_manager.order'
+            - '@elcodi.wrapper.customer'
+            - '@elcodi.wrapper.shipping_methods'
+            - "@elcodi.converter.currency"
+            - '@best365.manager.customer'
+            - '@best365.manager.purchasable'
+            - '@best365.manager.payment'
+            - '@best365.manager.cart'
             - '@doctrine.orm.entity_manager'
 
     best365.manager.payment:
         class: Best365Bundle\Manager\Best365PaymentManager
         arguments:
-            - "@paymentsuite.freepayment.method_factory"
-            - "@paymentsuite.bridge"
-            - "@paymentsuite.event_dispatcher"
+            - "%epayment_merchant_id%"
+            - "%epayment_merchant_key%"
+            - "%epayment_qrcode_url%"
+            - "%paymark_username%"
+            - "%paymark_password%"
+            - "%paymark_account_id%"
+            - "%paymark_request_url%"
+            - "@router"
+            - "@elcodi.wrapper.currency"
+            - "@elcodi.converter.currency"
+            - "@elcodi.repository.currency"
             - '@doctrine.orm.entity_manager'
 
     best365.manager.event:
@@ -51,3 +70,9 @@ services:
         class: Best365Bundle\Manager\TrendsManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    best365.manager.cart:
+        class: Best365Bundle\Manager\Best365CartManager
+        arguments:
+            - '@elcodi.manager.cart'
+            - '@elcodi.wrapper.cart'

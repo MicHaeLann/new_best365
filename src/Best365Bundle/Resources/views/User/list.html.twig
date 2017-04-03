@@ -10,6 +10,12 @@
 {% set start = perPage * (page - 1) %}
 {% set end = perPage * page - 1 %}
 <div class="col-xs-10">
+    {% if error %}
+		<div class="alert alert-danger">
+			<p>{{ 'template.store_template_bundle.order.view.error'|trans }}</p>
+		</div>
+        {{ elcodi_hook("store.order_thanks") }}
+    {% endif %}
 	<p class="page-title">
 		{% if app.request.attributes.get('_route') == "best365_store_order_list" %}
 			{{ 'template.store_template_bundle.order.list.orders'|trans }}

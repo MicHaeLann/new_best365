@@ -11,7 +11,7 @@
 					<a href="{{ url("best365_store_user") }}" class="list-group-item list-group-item-action {% if app.request.attributes.get('_route') == "best365_store_user_edit" or app.request.attributes.get('_route') == "best365_store_user" %}list-group-item-success{% endif %}">
 						{{ "template.store_template_bundle.user.home.profile"|trans }}
 					</a>
-					<a href="{{ url("best365_store_order_list") }}" class="list-group-item list-group-item-action {% if app.request.attributes.get('_route') == "best365_store_order_list" or app.request.attributes.get('_route') == "best365_store_order_view" or app.request.attributes.get('_route') == "best365_store_order_thanks" or app.request.attributes.get('_route') == "best365_store_order_thanks_transfer" %}list-group-item-success{% endif %}">
+					<a href="{{ url("best365_store_order_list") }}" class="list-group-item list-group-item-action {% if app.request.attributes.get('_route') == "best365_store_order_list" or app.request.attributes.get('_route') == "best365_store_order_view" or app.request.attributes.get('_route') == "best365_store_order_thanks" or app.request.attributes.get('_route') == "best365_store_order_thanks_transfer" or app.request.attributes.get('_route') == "best365_store_order_list_error" %}list-group-item-success{% endif %}">
 						{{ "template.store_template_bundle.user.home.my_orders"|trans }}
 					</a>
 					<a href="{{ url("best365_store_address_list") }}" class="list-group-item  list-group-item-action {% if app.request.attributes.get('_route') == "best365_store_address_list" or app.request.attributes.get('_route') == "best365_store_address_edit" or app.request.attributes.get('_route') == "best365_store_address_new" %}list-group-item-success{% endif %}">

@@ -109,30 +109,45 @@ class Best365OrderController extends OrderController
      * @Route(
      *      path = "s",
      *      name = "best365_store_order_list",
-     *      methods = {"GET"}
+     *      methods = {"GET"},
+	 *      defaults = {
+	 *          "error": false
+	 *      },
      * )
+	 * @Route(
+	 *      path = "s/error",
+	 *      name = "best365_store_order_list_error",
+	 *      methods = {"GET"},
+	 *      defaults = {
+	 *          "error": true
+	 *      },
+	 * )
      */
-    public function listAction()
+    public function listOrderAction($error)
     {
         $orders = $this
             ->get('elcodi.wrapper.customer')
             ->get()
             ->getOrders();
 
-		foreach ($orders as &$order) {
+		foreach ($orders as $k => &$order) {
 			$this->get('best365.manager.order')
 				->getRecord($order);
-
-			$tracking_nums = array();
-			if (!empty($order->trackingNum)) {
-				$tracking_nums = explode(',', $order->trackingNum);
+			if ($order->valid) {
+				$tracking_nums = array();
+				if (!empty($order->trackingNum)) {
+					$tracking_nums = explode(',', $order->trackingNum);
+				}
+				$order->trackingNum = $tracking_nums;
+			} else {
+				unset($orders[$k]);
 			}
-			$order->trackingNum = $tracking_nums;
 		}
         return $this->render(
             'Best365Bundle:User:list.html.twig',
             [
-                'orders' => $orders
+                'orders' => $orders,
+				'error' => $error
             ]
         );
     }

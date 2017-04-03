@@ -85,6 +85,10 @@ class Best365PaymentController extends Controller
 					$order_manager->persist($order);
 					$order_manager->flush();
 
+					// set order valid
+					$this->get('best365.manager.order')
+						->updateExtRecord($order, '', 1);
+
 					// add points
 					$currency = $this->get('elcodi.wrapper.currency')
 						->get();
@@ -119,8 +123,68 @@ class Best365PaymentController extends Controller
 	 * )
 	 *
 	 */
-	public function paymarkAction()
+	public function paymarkAction(Request $request)
 	{
+		$success = false;
+		$params = $request->request->all();
 
+		// add request record
+		$order_id = $request->request->get('Particular');
+		$paymark_order = $this->get('best365.manager.payment')
+			->getPaymentGateway($order_id, 2);
+		if (empty($paymark_order)) {
+			$this->get('best365.manager.payment')
+				->addPaymentGateway($order_id, 2, $params);
+		}
+
+		// set order valid
+		foreach ($params as $k => $v) {
+			if (strtolower($k) == 'Status' && strtolower($v) == 'successful') {
+				$success = true;
+				break;
+			}
+		}
+
+		$order = $this
+			->get('elcodi.repository.order')
+			->find($order_id);
+
+		if (!empty($order)) {
+			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
+				// update payment status
+				$stateLineStack = $this
+					->get('elcodi.order_payment_states_machine_manager')
+					->transition(
+						$order,
+						$order->getPaymentStateLineStack(),
+						"pay",
+						''
+					);
+				$order->setPaymentStateLineStack($stateLineStack);
+
+				$order_manager = $this->get('elcodi.object_manager.order');
+				$order_manager->persist($order);
+				$order_manager->flush();
+
+				// set order valid
+				$this->get('best365.manager.order')
+					->updateExtRecord($order, '', 1);
+
+				// add points
+				$currency = $this->get('elcodi.wrapper.currency')
+					->get();
+				$nzd = $this->get('elcodi.converter.currency')
+					->convertMoney(
+						$order->getPurchasableAmount(),
+						$currency
+					);
+				$points = floor($nzd->getAmount() / 100 * 10);
+
+				// add points to customer
+				$this->get('best365.manager.customer')
+					->updatePoints($order->getCustomer(), $points);
+
+			}
+		}
 	}
 }

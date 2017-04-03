@@ -4,85 +4,100 @@ namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\PaymentGateway;
 use Doctrine\ORM\EntityManager;
-use PaymentSuite\FreePaymentBundle\Services\FreePaymentMethodFactory;
-use PaymentSuite\PaymentCoreBundle\Services\Interfaces\PaymentBridgeInterface;
-use PaymentSuite\PaymentCoreBundle\Services\PaymentEventDispatcher;
+use Elcodi\Component\Currency\Repository\CurrencyRepository;
+use Elcodi\Component\Currency\Services\CurrencyConverter;
+use Elcodi\Component\Currency\Wrapper\CurrencyWrapper;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
 class Best365PaymentManager
 {
+	/**
+	 * @var Epayment
+	 */
+	private $epayment;
 
+	/**
+	 * @var Paymark
+	 */
+	private $paymark;
+
+	/**
+	 * @var Router
+	 */
+	private $router;
+
+	/**
+	 * @var CurrencyWrapper
+	 */
+	private $currencyWrapper;
+
+	/**
+	 * @var CurrencyConverter
+	 */
+	private $currencyConverter;
+
+	/**
+	 * @var CurrencyRepository
+	 */
+	private $currencyRepository;
+
+	/**
+	 * @var EntityManager
+	 */
 	private $em;
-	/**
-	 * @var FreePaymentMethodFactory
-	 *
-	 * PaymentMethodInterface factory
-	 */
-	private $methodFactory;
 
-	/**
-	 * @var PaymentBridgeInterface
-	 *
-	 * Payment bridge interface
-	 */
-	private $paymentBridge;
-
-	/**
-	 * @var PaymentEventDispatcher
-	 *
-	 * Payment event dispatcher
-	 */
-	private $paymentEventDispatcher;
 
 	/**
 	 * Construct method for free payment manager.
 	 *
-	 * @param FreePaymentMethodFactory $methodFactory          PaymentMethodInterface factory
-	 * @param PaymentBridgeInterface   $paymentBridge          Payment Bridge
-	 * @param PaymentEventDispatcher   $paymentEventDispatcher Event Dispatcher
+	 * @param Parameter 			   $epayment_merchant_id   Epayment Merchant ID
+	 * @param Parameter				   $epayment_merchant_key  Epayment Merchant Key
+	 * @param Parameter				   $epayment_qrcode_url	   Epayment QRCode Request Url
+	 * @param Parameter				   $paymark_username	   Paymark User Name
+	 * @param Parameter				   $paymark_password	   Paymark User Password
+	 * @param Parameter				   $paymark_account_id	   Paymark Account ID
+	 * @param Parameter				   $paymark_request_url	   Paymark Gateway Request Url
+	 * @param Router				   $router				   Router
+	 * @param CurrencyWrapper		   $currencyWrapper		   Currency Wrapper
+	 * @param CurrencyConverter		   $currencyConverter	   Currency Converter
+	 * @param CurrencyRepository	   $currencyRepository	   Currency Repository
 	 * @param EntityManager			   $em					   Entity Manager
 	 */
 	public function __construct(
-		FreePaymentMethodFactory $methodFactory,
-		PaymentBridgeInterface $paymentBridge,
-		PaymentEventDispatcher $paymentEventDispatcher,
+		$epayment_merchant_id,
+		$epayment_merchant_key,
+		$epayment_qrcode_url,
+		$paymark_username,
+		$paymark_password,
+		$paymark_account_id,
+		$paymark_request_url,
+		Router $router,
+		CurrencyWrapper $currencyWrapper,
+		CurrencyConverter $currencyConverter,
+		CurrencyRepository $currencyRepository,
 		EntityManager $em
 	)
 	{
+		// initialise epayment
+		$this->epayment = new \stdClass();
+		$this->epayment->merchant_id = $epayment_merchant_id;
+		$this->epayment->merchant_key = $epayment_merchant_key;
+		$this->epayment->request_url = $epayment_qrcode_url;
+
+		// initialise paymark
+		$this->paymark = new \stdClass();
+		$this->paymark->username = $paymark_username;
+		$this->paymark->password = $paymark_password;
+		$this->paymark->account_id = $paymark_account_id;
+		$this->paymark->request_url = $paymark_request_url;
+
+		$this->router = $router;
+		$this->currencyWrapper = $currencyWrapper;
+		$this->currencyConverter = $currencyConverter;
+		$this->currencyRepository = $currencyRepository;
 		$this->em = $em;
-		$this->methodFactory = $methodFactory;
-		$this->paymentBridge = $paymentBridge;
-		$this->paymentEventDispatcher = $paymentEventDispatcher;
-	}
-
-	public function generateOrder()
-	{
-		$paymentMethod = $this
-			->methodFactory
-			->create();
-
-		/**
-		 * At this point, order must be created given a card, and placed in
-		 * PaymentBridge.
-		 *
-		 * So, $this->paymentBridge->getOrder() must return an object
-		 */
-		$this
-			->paymentEventDispatcher
-			->notifyPaymentOrderLoad(
-				$this->paymentBridge,
-				$paymentMethod
-			);
-
-		/**
-		 * Order exists right here.
-		 */
-		$this
-			->paymentEventDispatcher
-			->notifyPaymentOrderCreated(
-				$this->paymentBridge,
-				$paymentMethod
-			);
 	}
 
 	/**
@@ -154,5 +169,95 @@ class Best365PaymentManager
 		$gateway_data->setParams($json);
 		$this->em->persist($gateway_data);
 		$this->em->flush();
+	}
+
+	/**
+	 * Get Epayment QRCode
+	 * @param $order
+	 * @return mixed
+	 */
+	public function getEpaymentQrcode($order)
+	{
+		// get CNY
+		$cny = $this->currencyRepository->findOneBy(['enabled' => true, 'iso' => 'CNY']);
+
+		// convert to cny
+		$grandtotal = $this->currencyConverter
+			->convertMoney($order->getAmount(), $cny);
+		$amount = $grandtotal->getAmount() / 100;
+//		$amount = 0.05;
+		$return_url = '';
+		$notify_url = $this->router->generate('best365_store_epayment',  array(), UrlGeneratorInterface::ABSOLUTE_URL);
+
+		$arr = array(
+			'merchant_id' => $this->epayment->merchant_id,
+			'increment_id' => $order->getId(),
+			'grandtotal' => $amount,
+			'currency' => 'CNY',
+			'return_url' => $return_url,
+			'notify_url' => $notify_url,
+			'subject' => 'Best365',
+			'describe' => 'Best365',
+			'service' => 'create_scan_code'
+		);
+
+		$signature = $this->generateEpaymentSignature($arr, $this->epayment->merchant_key);
+
+		$arr['signature'] = $signature;
+		$arr['sign_type'] = 'MD5';
+		$str = '';
+		foreach ($arr as $k => $v) {
+			$str .= '&' . $k . '=' . $v;
+		}
+		ltrim($str, '&');
+
+		$url = $this->epayment->request_url . '?' . $str;
+
+		// send request to get qrcode
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$content  = curl_exec($ch);
+		curl_close($ch);
+		return $content;
+	}
+
+	/**
+	 * Get paymark online banking request url
+	 * @param $order
+	 * @return mixed
+	 */
+	public function getOnlineBankingUrl($order)
+	{
+		// convert money to nzd
+		$nzd = $this->currencyRepository->findOneBy(array('enabled' => true, 'iso' => 'NZD'));
+		$amount = $this->currencyConverter->convertMoney($order->getAmount(), $nzd);
+
+		// initialise post parameter
+		$fields = array(
+			'username' => $this->paymark->username,
+			'password' => $this->paymark->password,
+			'cmd' => '_xclick',
+			'account_id' => $this->paymark->account_id,
+			'amount' => $amount->getAmount() / 100,
+			'return_url' => $this->router->generate('best365_store_paymark', array(), UrlGeneratorInterface::ABSOLUTE_URL), //post request
+			'particular' => $order->getId()
+		);
+		$str = '';
+		foreach ($fields as $k => $v) {
+			$str .= '&' . $k . '=' . $v;
+		}
+		ltrim($str, '&');
+
+		$url = $this->paymark->request_url;
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
+		$content  = curl_exec($ch);
+		curl_close($ch);
+		$p = xml_parser_create();
+		xml_parse_into_struct($p, $content, $vals, $index);
+		xml_parser_free($p);
+		return $vals[0];
 	}
 }

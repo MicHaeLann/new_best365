@@ -121,6 +121,7 @@ template:
             payment:
                 transfer: Transfer
                 wechat: Wechat
+                online_banking: Online Banking
                 back: Back
                 bankwire: 'Bank wire'
                 continue: Continue
@@ -190,6 +191,7 @@ template:
                 status: 'Status:'
                 reference: 'Please include your reference when transfer funds to us. Your reference is '
                 thanks: ' Thank you for your order! We are going to work to send you as fast as possible.'
+                error: 'We are sorry that the order is invalid.'
                 total: Total
         payment:
             credit_card_numbers: 'Credit card numbers'

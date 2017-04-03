@@ -169,4 +169,17 @@ class PurchasableManager
 
 		return $purchasable;
 	}
+
+	/**
+	 * Update product stock
+	 * @param $id
+	 * @param $stock
+	 */
+	public function updateProductStock($id, $stock)
+	{
+		$purchasable = $this->pr->find($id);
+		$purchasable->setStock($stock);
+		$this->em->persist($purchasable);
+		$this->em->flush();
+	}
 }

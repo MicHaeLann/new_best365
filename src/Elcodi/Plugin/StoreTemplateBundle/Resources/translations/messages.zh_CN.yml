@@ -121,6 +121,7 @@ template:
             payment:
                 transfer: 转帐
                 wechat: 微信
+                online_banking: 网银
                 back: 返回
                 bankwire: 'Bank wire'
                 continue: 继续
@@ -190,6 +191,7 @@ template:
                 status: '状态：'
                 reference: '转账时请在备注中添加附注。您的附注是 '
                 thanks: ' 感谢您在本网站购物！我们会尽快派送您的包裹。'
+                error: '订单创建失败。'
                 total: 总计
         payment:
             credit_card_numbers: '信用卡号'
