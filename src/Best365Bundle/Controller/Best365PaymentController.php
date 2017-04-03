@@ -139,7 +139,7 @@ class Best365PaymentController extends Controller
 
 		// set order valid
 		foreach ($params as $k => $v) {
-			if (strtolower($k) == 'Status' && strtolower($v) == 'successful') {
+			if (strtolower($k) == 'status' && strtolower($v) == 'successful') {
 				$success = true;
 				break;
 			}
