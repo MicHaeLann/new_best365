@@ -6,12 +6,14 @@ parameters:
     database_port: null
     database_name: bamboo
     database_user: root
-    database_password: 123456
+#    database_password: 123456
+    database_password: bestfullhealth
     mailer_transport: gmail
     mailer_encryption: ssl
     mailer_auth_mode: login
     mailer_host: smtp.gmail.com
-    mailer_user: 'fullhealth365@gmail.com'
+#    mailer_user: 'fullhealth365@gmail.com'
+    mailer_user: 'service.best365@gmail.com'
     mailer_password: "bestfullhealth"
     secret: 4acbc300e57d46cb58ac0c629945c17b727f99c8
     use_assetic_controller: false
