@@ -43,7 +43,7 @@ class Best365PaymentController extends Controller
 		$arr = $this->get('best365.manager.payment')
 			->getEpaymentRequestArray($request);
 		$sig = $this->get('best365.manager.payment')
-			->generateEpaymentSignature($arr, $this->container->getParameter('merchant_key'));
+			->generateEpaymentSignature($arr, $this->container->getParameter('epayment_merchant_key'));
 
 		// store request data
 		$epayment_order = $this->get('best365.manager.payment')
