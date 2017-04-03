@@ -13,9 +13,6 @@
                     </label>
                     <div class="col-sm-8">
                         <select name="payment_method" class="form-control payment-max-width">
-                            <option value="transfer">
-                                {{ 'template.store_template_bundle.checkout.payment.transfer'|trans }}
-                            </option>
                             <option value="wechat"{% if activeCurrency.iso == 'CNY' %} selected {% endif %}>
                                 {{ 'template.store_template_bundle.checkout.payment.wechat'|trans }}
                             </option>
