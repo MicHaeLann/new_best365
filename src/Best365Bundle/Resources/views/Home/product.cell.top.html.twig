@@ -22,7 +22,7 @@
     {% if app.user %}
         <div class="align-center margin-top-10">
             {% if item.stock > 0 %}
-                <a class="btn btn-success" href="javascript:void(0)">
+                <a id="add-cart-{{ item.id }}" class="btn btn-success" href="javascript:void(0)">
                     {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
                 </a>
             {% else %}
