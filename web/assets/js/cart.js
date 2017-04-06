@@ -9,7 +9,7 @@ $(function() {
             amount = $("#cart-quantity").val();
         }
 
-        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_purchasable', {id: id, quantity: amount});
+        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_product', {id: id, quantity: amount});
         console.log(url);
         // var url = 'http://localhost/michael/new_best365/web/app_dev.php/best365/cart/add/'+id+'/'+amount;
         $.ajax({
