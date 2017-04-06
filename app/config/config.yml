@@ -57,9 +57,10 @@ twig:
         store: "@elcodi.store"
         store_tracker: "@elcodi.store_tracker"
         elcodi_languages: "@elcodi.languages_with_master_promoted"
-        merchant_id: '%merchant_id%'
-        key: '%merchant_key%'
-        qrcode_url: '%qrcode_url%'
+        epayment_merchant_id: '%epayment_merchant_id%'
+        epayment_merchant_key: '%epayment_merchant_key%'
+        epayment_qrcode_url: '%epayment_qrcode_url%'
+        efs_url: '%efs_url%'
 
     form:
         resources: ['bootstrap_3_layout.html.twig']
