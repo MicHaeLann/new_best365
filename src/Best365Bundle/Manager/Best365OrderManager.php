@@ -278,7 +278,7 @@ class Best365OrderManager
 		$reference = '';
 		if ($payment_method == 'transfer') {
 			$reference = uniqid();
-			$success = true;
+//			$success = true;
 		} elseif ($payment_method == 'online_banking') {
 			$response = $this->best365PaymentManager->getOnlineBankingUrl($order);
 			if (strtoupper($response['tag']) != 'ERROR') {
@@ -369,7 +369,7 @@ class Best365OrderManager
 		// set order invalid
 		$this->updateExtRecord($order, '', 0);
 
-		// add order item to cart
-//		$this->best365CartManager->recoverCartByOrder($order);
+		// return item to cart
+		$this->best365CartManager->recoverCartByOrder($order);
 	}
 }

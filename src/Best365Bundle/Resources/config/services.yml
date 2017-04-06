@@ -76,3 +76,5 @@ services:
         arguments:
             - '@elcodi.manager.cart'
             - '@elcodi.wrapper.cart'
+            - '@elcodi.factory.cart'
+            - '@elcodi.event_dispatcher.cart'
