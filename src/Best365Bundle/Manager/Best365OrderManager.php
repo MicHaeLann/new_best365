@@ -278,7 +278,7 @@ class Best365OrderManager
 		$reference = '';
 		if ($payment_method == 'transfer') {
 			$reference = uniqid();
-//			$success = true;
+			$success = true;
 		} elseif ($payment_method == 'online_banking') {
 			$response = $this->best365PaymentManager->getOnlineBankingUrl($order);
 			if (strtoupper($response['tag']) != 'ERROR') {
