@@ -21,6 +21,7 @@ $(function() {
                     $("#cart-amount").html(parseInt(display) + amount);
                     console.log(parseInt(display) + amount);
                 } else {
+                    console.log(result);
                     alert('failed to add product to cart.');
                 }
             },
