@@ -175,6 +175,7 @@ class AppKernel extends Kernel
              * Rest server
              */
             new FOS\RestBundle\FOSRestBundle(),
+			new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
             /**
              * Bundle Generator

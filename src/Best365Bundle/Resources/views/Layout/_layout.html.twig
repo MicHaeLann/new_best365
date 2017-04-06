@@ -40,11 +40,28 @@
 {% endblock body %}
 
 {% block foot_script %}
-<script src="{{ asset('assets/js/jquery-3.0.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/search.js') }}"></script>
-<script src="{{ asset('assets/js/checkout.js') }}"></script>
-<script src="{{ asset('assets/js/product.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-3.0.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.qrcode.min.js') }}"></script>
-<script src="{{ asset('assets/js/order.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.fly.min.js') }}"></script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ asset('/js/fos_js_routes.js') }}"></script>
+{% if app.request.attributes.get('_route') != "best365_store_login" and
+        app.request.attributes.get('_route') != "best365_store_register" and
+        app.request.attributes.get('_route') != "best365_store_password_remember" and
+        app.request.attributes.get('_route') != "best365_store_password_recover" %}
+    <script src="{{ asset('assets/js/search.js') }}"></script>
+{% endif %}
+{% if app.request.attributes.get('_route') == "best365_store_checkout_shipping" %}
+    <script src="{{ asset('assets/js/checkout.js') }}"></script>
+{% endif %}
+{% if app.request.attributes.get('_route') == "best365_store_product_view" %}
+    <script src="{{ asset('assets/js/product.js') }}"></script>
+{% endif %}
+{% if app.request.attributes.get('_route') == "best365_store_order_view" or
+        app.request.attributes.get('_route') == "best365_store_order_thanks"  or
+        app.request.attributes.get('_route') == "best365_store_order_list"%}
+    <script src="{{ asset('assets/js/order.js') }}"></script>
+{% endif %}
+<script src="{{ asset('assets/js/cart.js') }}"></script>
 {% endblock foot_script %}

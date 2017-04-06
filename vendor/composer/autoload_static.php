@@ -108,6 +108,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'Gregwar\\Captcha\\' => 16,
             'Gregwar\\CaptchaBundle\\' => 22,
         ),
+        'F' => 
+        array (
+            'FOS\\JsRoutingBundle\\' => 20,
+        ),
         'E' => 
         array (
             'Elcodi\\' => 7,
@@ -320,6 +324,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         'Gregwar\\CaptchaBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/gregwar/captcha-bundle',
+        ),
+        'FOS\\JsRoutingBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/friendsofsymfony/jsrouting-bundle',
         ),
         'Elcodi\\' => 
         array (

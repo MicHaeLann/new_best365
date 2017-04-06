@@ -16,6 +16,7 @@ use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
  *
  * @Route(
  *      path = "/best365/language",
+ *      options={"expose"=true}
  * )
  */
 class Best365LanguageController extends LanguageController
