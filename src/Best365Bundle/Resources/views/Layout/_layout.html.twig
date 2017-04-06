@@ -40,10 +40,9 @@
 {% endblock body %}
 
 {% block foot_script %}
-<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-3.0.0.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.qrcode.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.fly.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script src="{{ asset('/js/fos_js_routes.js') }}"></script>
 {% if app.request.attributes.get('_route') != "best365_store_login" and
