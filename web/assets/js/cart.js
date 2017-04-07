@@ -1,4 +1,5 @@
 $(function() {
+    var label = $("#cart-label");
     $("a[id^='add-cart']").click(function(event){
         var id = this.id.substring(9);
         var display = $("#cart-amount").html();
@@ -10,7 +11,6 @@ $(function() {
         }
 
         var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_product', {id: id, quantity: amount});
-        console.log(url);
         // var url = 'http://localhost/michael/new_best365/web/app_dev.php/best365/cart/add/'+id+'/'+amount;
         $.ajax({
             url: url,
@@ -18,8 +18,11 @@ $(function() {
             success: function(result){
                 if (result == 'success') {
                     // update cart amount display
-                    $("#cart-amount").html(parseInt(display) + amount);
-                    console.log(parseInt(display) + amount);
+                    label.fadeOut();
+                    setTimeout(function() {
+                        $("#cart-amount").html(parseInt(display) + amount);
+                    }, 500);
+                    label.fadeIn();
                 } else {
                     console.log(result);
                     alert('failed to add product to cart.');
