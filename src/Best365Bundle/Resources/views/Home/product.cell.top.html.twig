@@ -1,9 +1,6 @@
 <div class="col-sm-6 promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
     {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
     {% set productName = item|purchasable_name %}
-    {% if item.fixedPrice %}
-        {% set strategy = 100 %}
-    {% endif %}
     <a href="{{ productRoute }}" target="_blank">
         {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
         {% set validImage = item|valid_image %}
@@ -17,7 +14,7 @@
         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
     </div>
     <div class="main-theme-font align-center">
-        {{ item.price|print_convert_money_with_strategy(strategy) }}
+        {{ item.price|print_convert_money() }}
     </div>
     {% if app.user %}
         <div class="align-center margin-top-10">

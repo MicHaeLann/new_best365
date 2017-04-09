@@ -244,7 +244,6 @@ class Best365OrderManager
 	{
 		// get strategy
 		$customer = $this->customerWrapper->get();
-		$membership = $this->best365CustomerManager->getCustomerMembership($customer);
 
 		// generate order
 		$this->generateOrder();
@@ -260,11 +259,8 @@ class Best365OrderManager
 		$order = $cart->getOrder();
 		$order->setShippingAmount($shipping_amount);
 
-		// reset item info
-		$total = $this->resetOrderLine($order, $membership);
-
-		// reset item total
-		$order->setPurchasableAmount($total);
+		// reset order info
+		$this->regenerateOrder($order);
 
 		// reset order total price
 		$order->setAmount($order->getPurchasableAmount()->add($shipping_amount));
@@ -309,48 +305,41 @@ class Best365OrderManager
 	}
 
 	/**
-	 * Reset order item info
+	 * Reset order info
 	 * @param $order
-	 * @param $membership
-	 * @return string
 	 */
-	private function resetOrderLine(&$order, $membership)
+	private function regenerateOrder(&$order)
 	{
-		// reset order item info
 		$total = '';
 		foreach ($order->getOrderLines() as &$line) {
 			// get product info
-			$purchasable = $line->getPurchasable();
-			$ext = $this->purchasableManager->getProductExt($purchasable);
-			$fixed_price = 0;
-			if (!empty($ext)) {
-				$fixed_price = $ext->getFixedPrice();
-			}
+			$purchasable = $this
+				->purchasableManager
+				->getProduct($line->getPurchasable()->getId());
 
-			// reset unit price and line amount
-			$unit_price = $line->getPurchasableAmount();
-			$line_amount = $line->getAmount();
-			if (!$fixed_price) {
-				// reset unit price
-				$unit_price = $unit_price->multiply($membership->getStrategy() / 100);
+			// update purchasable price
+			$line->setPurchasableAmount($purchasable->getPrice());
+			$line->getPurchasable()->setPrice($purchasable->getPrice());
 
-				// reset line amount
-				$line_amount = $line_amount->multiply($membership->getStrategy() / 100);
-			}
-			$line->setPurchasableAmount($unit_price);
-			$line->setAmount($line_amount);
+
+			// set line amount
+			$line->setAmount($purchasable->getPrice()->multiply($line->getQuantity()));
 
 			if ($total == '') {
-				$total = $line_amount;
+				$total = $line->getAmount();
 			} else {
+				$line_amount = $line->getAmount();
+
 				// convert money if not match
 				if ($line_amount->getCurrency() != $total->getCurrency()) {
-					$line_amount = $this->currencyConverter->convertMoney($line_amount, $total->getCurrency());
+					$line_amount = $this->currencyConverter
+						->convertMoney($line_amount, $total->getCurrency());
 				}
 				$total = $total->add($line_amount);
 			}
 		}
-		return $total;
+
+		$order->setPurchasableAmount($total);
 	}
 
 	/**

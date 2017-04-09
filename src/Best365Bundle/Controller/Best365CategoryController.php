@@ -57,19 +57,6 @@ class Best365CategoryController extends CategoryController
 	 */
 	public function listAction(CategoryInterface $category)
 	{
-		// get strategy
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		if (!empty($customer->getId())) {
-			$membership = $this->get('best365.manager.customer')
-				->getCustomerMembership($customer);
-			$strategy = $membership->getStrategy();
-		} else {
-			$strategy = 100;
-		}
-
 		// get purchasables
 		$categoryRepository = $this->get('elcodi.repository.category');
 		$purchasableRepository = $this->get('elcodi.repository.purchasable');
@@ -80,15 +67,9 @@ class Best365CategoryController extends CategoryController
 		);
 		$purchasables = $purchasableRepository->getAllEnabledFromCategories($categories);
 
-		// get fixed price
 		foreach ($purchasables as &$purchasable) {
-			$purchasable_ext = $this->get('best365.manager.purchasable')
-				->getProductExt($purchasable);
-			$fixed_price = 0;
-			if (!empty($purchasable_ext)) {
-				$fixed_price = $purchasable_ext->getFixedPrice();
-			}
-			$purchasable->fixedPrice = $fixed_price;
+			$purchasable = $this->get('best365.manager.purchasable')
+				->getProduct($purchasable->getId());
 		}
 
 		// store category tree
@@ -114,8 +95,7 @@ class Best365CategoryController extends CategoryController
 			'Best365Bundle:Product:product.list.html.twig',
 			[
 				'categories' => $category_tree,
-				'purchasables' => $purchasables,
-				'strategy' => $strategy
+				'purchasables' => $purchasables
 			]
 		);
 	}

@@ -52,19 +52,10 @@ class Best365HomeController extends HomeController
 			->get('best365.manager.event')
 			->getEvent();
 
-		// profile
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		if (!empty($customer->getId())) {
-			$membership = $this->get('best365.manager.customer')
-				->getCustomerMembership($customer);
-			$strategy = $membership->getStrategy();
-		} else {
-			$strategy = 100;
-		}
-
+//		// profile
+//		$customer = $this
+//			->get('elcodi.wrapper.customer')
+//			->get();
 
 		// locale
 		$locale = $this
@@ -123,15 +114,9 @@ class Best365HomeController extends HomeController
 				}
 			}
 
-			// get fixed price
 			foreach ($purchasables as &$purchasable) {
-				$purchasable_ext = $this->get('best365.manager.purchasable')
-					->getProductExt($purchasable);
-				$fixed_price = 0;
-				if (!empty($purchasable_ext)) {
-					$fixed_price = $purchasable_ext->getFixedPrice();
-				}
-				$purchasable->fixedPrice = $fixed_price;
+				$purchasable = $this->get('best365.manager.purchasable')
+					->getProduct($purchasable->getId());
 			}
 
 			$item = new \stdClass();
@@ -151,10 +136,9 @@ class Best365HomeController extends HomeController
 			[
 				'categories' => $categories,
 				'events' => $events,
-				'customer' => $customer,
+//				'customer' => $customer,
 				'products' => $list,
-				'manufacturers' => $manufacturers,
-				'strategy' => $strategy
+				'manufacturers' => $manufacturers
 			]
 		);
 	}

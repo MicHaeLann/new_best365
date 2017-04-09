@@ -41,11 +41,7 @@
                                 {{ purchasable.name }}
                         </div>
                         <div class="row main-theme-font font-18 margin-top-10">
-                            {% if purchasable_ext.fixedPrice %}
-                                {{ purchasable.price|print_convert_money() }}
-                            {% else %}
-                                {{ purchasable.price|print_convert_money_with_strategy(strategy) }}
-                            {% endif %}
+                            {{ purchasable.price|print_convert_money() }}
                         </div>
                         <div class="row margin-top-10">
                             <span class="stock-container">

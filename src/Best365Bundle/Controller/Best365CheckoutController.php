@@ -70,19 +70,10 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.wrapper.currency')
 			->get();
 
-		// get strategy
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
-
 		if ($isValid) {
 			// User is adding a new address
 			$best365_address = $this->get('best365.manager.address')
 				->generateAddress($address);
-
 
 			$addressManager = $this->get('elcodi.object_manager.address');
 			$addressManager->persist($best365_address);
@@ -120,42 +111,12 @@ class Best365CheckoutController extends CheckoutController
 				$addressFormatter
 					->toArray($address);
 		}
-
-		// calculate cart amount in terms of fixed price, and membership strategy
 		$cart = $this
-			->get('elcodi.wrapper.cart')
-			->get();
-		if ($cart->getTotalItemNumber() > 0) {
-			$total = '';
-			foreach ($cart->getCartLines() as &$line) {
-				// calculate purchasable amount
-				$line->getPurchasable();
-				$ext = $this->get('best365.manager.purchasable')
-					->getProductExt($line->getPurchasable());
-				$fixed_price = 0;
-				if (!empty($ext)) {
-					$fixed_price = $ext->getFixedPrice();
-				}
-				$line->getPurchasable()->fixedPrice = $fixed_price;
-				if (!$fixed_price) {
-					$line_amount = $line->getAmount()->multiply($membership->getStrategy() / 100);
-				} else {
-					$line_amount = $line->getAmount();
-				}
-
-				if ($total == '') {
-					$total = $line_amount;
-				} else {
-					// convert money if not match
-					if ($line_amount->getCurrency() != $total->getCurrency()) {
-						$line_amount = $this->get('elcodi.converter.currency')
-							->convertMoney($line_amount, $total->getCurrency());
-					}
-					$total = $total->add($line_amount);
-				}
-			}
-			$cart->setAmount($total);
-		}
+			->get('best365.manager.cart')
+			->regenerate($this
+				->get('elcodi.wrapper.cart')
+				->get()
+			);
 
 		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
@@ -173,7 +134,6 @@ class Best365CheckoutController extends CheckoutController
 				'shipping_methods'      => $shippingMethods,
 				'addresses' => $addressesFormatted,
 				'form'      => $formView,
-				'strategy' => $membership->getStrategy(),
 				'activeCurrency' => $currency
 			]
 		);
@@ -257,8 +217,11 @@ class Best365CheckoutController extends CheckoutController
 
 		// set shipping method
 		$cart = $this
-			->get('elcodi.wrapper.cart')
-			->get();
+			->get('best365.manager.cart')
+			->regenerate($this
+				->get('elcodi.wrapper.cart')
+				->get()
+			);
 		$cart->setShippingMethod($shipping_method);
 		$shipping_price = $this->get('elcodi.converter.currency')
 			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());

@@ -7,7 +7,9 @@ use Elcodi\Component\Cart\EventDispatcher\CartEventDispatcher;
 use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Services\CartManager;
 use Elcodi\Component\Cart\Wrapper\CartWrapper;
+use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\User\Entity\Customer;
+use Best365Bundle\Manager\PurchasableManager;
 
 class Best365CartManager
 {
@@ -32,23 +34,39 @@ class Best365CartManager
 	private $cartEventDispatcher;
 
 	/**
+	 * @var PurchasableManager
+	 */
+	private $purchasableManager;
+
+	/**
+	 * @var CurrencyConverter
+	 */
+	private $currencyConverter;
+
+	/**
 	 * Best365CartManager constructor.
 	 * @param CartManager $cartManager
 	 * @param CartWrapper $cartWrapper
 	 * @param CartFactory $cartFactory
 	 * @param CartEventDispatcher $cartEventDispatcher
+	 * @param \Best365Bundle\Manager\PurchasableManager $purchasableManager
+	 * @param CurrencyConverter $currencyConverter
 	 */
 	public function __construct(
 		CartManager $cartManager,
 		CartWrapper $cartWrapper,
 		CartFactory $cartFactory,
-		CartEventDispatcher $cartEventDispatcher
+		CartEventDispatcher $cartEventDispatcher,
+		PurchasableManager $purchasableManager,
+		CurrencyConverter $currencyConverter
 	)
 	{
 		$this->cartManager = $cartManager;
 		$this->cartWrapper = $cartWrapper;
 		$this->cartFactory = $cartFactory;
 		$this->cartEventDispatcher = $cartEventDispatcher;
+		$this->purchasableManager = $purchasableManager;
+		$this->currencyConverter = $currencyConverter;
 	}
 
 	/**
@@ -71,5 +89,41 @@ class Best365CartManager
 		foreach($order->getOrderLines() as $line) {
 			$this->cartManager->addPurchasable($cart, $line->getPurchasable(), $line->getQuantity());
 		}
+	}
+
+	public function regenerate($cart)
+	{
+		if ($cart->getTotalItemNumber() > 0) {
+			$total = '';
+			foreach ($cart->getCartLines() as &$line) {
+				// get purchasable
+				$purchasable = $this->purchasableManager
+					->getProduct($line->getPurchasable()->getId());
+
+				// update purchasable price
+				$line->setPurchasableAmount($purchasable->getPrice());
+				$line->getPurchasable()->setPrice($purchasable->getPrice());
+
+
+				// set line amount
+				$line->setAmount($purchasable->getPrice()->multiply($line->getQuantity()));
+
+				if ($total == '') {
+					$total = $line->getAmount();
+				} else {
+					$line_amount = $line->getAmount();
+
+					// convert money if not match
+					if ($line_amount->getCurrency() != $total->getCurrency()) {
+						$line_amount = $this->currencyConverter
+							->convertMoney($line_amount, $total->getCurrency());
+					}
+					$total = $total->add($line_amount);
+				}
+			}
+			$cart->setAmount($total);
+		}
+
+		return $cart;
 	}
 }

@@ -59,47 +59,8 @@ class Best365CartController extends CartController
 	 */
 	public function viewAction(FormView $formView, CartInterface $cart)
 	{
-//		ladybug_dump($cart);exit;
-		// get strategy
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		$membership = $this->get('best365.manager.customer')
-			->getCustomerMembership($customer);
-
-		// fixing cart amount bug, and calculate amount according to fixed price and membership
-		if ($cart->getTotalItemNumber() > 0) {
-			$total = '';
-			foreach ($cart->getCartLines() as &$line) {
-				// calculate purchasable amount
-				$line->getPurchasable();
-				$ext = $this->get('best365.manager.purchasable')
-					->getProductExt($line->getPurchasable());
-				$fixed_price = 0;
-				if (!empty($ext)) {
-					$fixed_price = $ext->getFixedPrice();
-				}
-				$line->getPurchasable()->fixedPrice = $fixed_price;
-				if (!$fixed_price) {
-					$line_amount = $line->getAmount()->multiply($membership->getStrategy() / 100);
-				} else {
-					$line_amount = $line->getAmount();
-				}
-
-				if ($total == '') {
-					$total = $line_amount;
-				} else {
-					// convert money if not match
-					if ($line_amount->getCurrency() != $total->getCurrency()) {
-						$line_amount = $this->get('elcodi.converter.currency')
-							->convertMoney($line_amount, $total->getCurrency());
-					}
-					$total = $total->add($line_amount);
-				}
-			}
-			$cart->setAmount($total);
-		}
+		$cart = $this->get('best365.manager.cart')
+			->regenerate($cart);
 
 		// subtract shipping amount
 		$shipping_price = $this->get('elcodi.converter.currency')
@@ -110,8 +71,7 @@ class Best365CartController extends CartController
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
 				'cart'		=> $cart,
-				'form'		=> $formView,
-				'strategy'	=> $membership->getStrategy()
+				'form'		=> $formView
 			]
 		);
 	}

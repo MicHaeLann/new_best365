@@ -1,8 +1,6 @@
 {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
 {% set productName = item|purchasable_name %}
-{% if item.fixedPrice %}
-    {% set strategy = 100 %}
-{% endif %}
+
 <div class="col-sm-3 padding-0">
     <div class="align-center product-item{% if app.user %}-with-cart{% endif %}">
         {% block pin_image %}
@@ -22,7 +20,7 @@
             </div>
         {% endblock %}
         <div class="main-theme-font font-18 {% if not app.user %} margin-bottom-20 {% endif %}">
-            {{ item.price|print_convert_money_with_strategy(strategy) }}
+            {{ item.price|print_convert_money() }}
         </div>
         {% if app.user %}
             <div class="align-center margin-top-10 margin-bottom-20">

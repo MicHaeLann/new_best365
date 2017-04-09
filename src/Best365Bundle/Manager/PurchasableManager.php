@@ -3,6 +3,8 @@
 namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\PurchasableExt;
+use Elcodi\Component\Currency\Repository\CurrencyRepository;
+use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -19,12 +21,25 @@ class PurchasableManager
 
 	private $mm;
 
-	public function __construct(EntityManager $em, PurchasableRepository $pr, CustomerWrapper $cw, MembershipManager $mm)
+	private $cc;
+
+	private $cr;
+
+	public function __construct(
+		EntityManager $em,
+		PurchasableRepository $pr,
+		CustomerWrapper $cw,
+		MembershipManager $mm,
+		CurrencyConverter $cc,
+		CurrencyRepository $cr
+	)
 	{
 		$this->em = $em;
 		$this->pr = $pr;
 		$this->cw = $cw;
 		$this->mm = $mm;
+		$this->cc = $cc;
+		$this->cr = $cr;
 	}
 
 	/**
@@ -144,29 +159,29 @@ class PurchasableManager
 	 */
 	public function getProduct($id)
 	{
-		// get customer info
-		$customer = $this->cw->get();
+		$purchasable = $this->pr->find($id);
+		$purchasable_ext = $this->getProductExt($purchasable);
 
-		if (!empty($customer->getId())) {
+		// if not fixed, set membership price to product price
+		if (!empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
+			$customer = $this->cw->get();
 			$membership = $this->em
 				->getRepository('Best365Bundle\Entity\CustomerMembership')
 				->findOneByCustomerId($customer->getId())
 				->getMembership();
-			$cfg = $this->mm->get($membership);
-			$strategy = $cfg->getStrategy();
-		} else {
-			$strategy = 100;
+
+			$product_price = $this->getProductMembershipPrice($id, $membership);
+			// if price currency not match, convert to purchasable price currency
+			if (!empty($product_price) && $product_price->getPriceCurrencyIso() != $purchasable->getPrice()->getCurrency()->getIso()) {
+				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => $product_price->getPriceCurrencyIso()));
+				$price = \Elcodi\Component\Currency\Entity\Money::create(
+					$product_price->getPrice(),
+					$currency
+				);
+				$convert_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
+				$purchasable->setPrice($convert_price);
+			}
 		}
-
-		$purchasable = $this->pr->find($id);
-
-		// refresh data to prevent nesting strategy
-//		$this->em->refresh($purchasable);
-		$purchasable->setPrice($purchasable->getPrice()->multiply($strategy / 100));
-
-		// fetch data from database but not cache to prevent nesting membership strategy
-		$this->em->detach($purchasable);
-
 		return $purchasable;
 	}
 
@@ -181,5 +196,14 @@ class PurchasableManager
 		$purchasable->setStock($stock);
 		$this->em->persist($purchasable);
 		$this->em->flush();
+	}
+
+	private function getProductMembershipPrice($pid, $mid)
+	{
+		$record = $this->em
+			->getRepository('Best365Bundle\Entity\PurchasablePrice')
+			->findOneBy(array('pid' => $pid, 'mid' =>$mid));
+
+		return $record;
 	}
 }

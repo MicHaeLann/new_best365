@@ -81,6 +81,13 @@ class MappingCompilerPass extends AbstractMappingCompilerPass
 				'@Best365Bundle/Resources/config/doctrine/PaymentGateway.orm.yml',
 				true
 			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\PurchasablePrice',
+				'@Best365Bundle/Resources/config/doctrine/PurchasablePrice.orm.yml',
+				true
+			)
 //			->addEntityMapping(
 //				$container,
 //				'default',

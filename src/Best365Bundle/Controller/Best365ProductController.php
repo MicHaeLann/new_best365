@@ -39,19 +39,6 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function searchAction()
 	{
-		// get strategy
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		if (!empty($customer->getId())) {
-			$membership = $this->get('best365.manager.customer')
-				->getCustomerMembership($customer);
-			$strategy = $membership->getStrategy();
-		} else {
-			$strategy = 100;
-		}
-
 		// find by key word
 		$tag_ids = $this->get('best365.manager.purchasable')->getResult($this->get('request'));
 
@@ -71,16 +58,9 @@ class Best365ProductController extends PurchasableController
 		$collection = array();
 		foreach ($ids as $id) {
 			$product =  $this
-			->get('elcodi.repository.purchasable')
-			->find($id);
+			->get('best365.manager.purchasable')
+			->getProduct($id);
 
-			$ext = $this->get('best365.manager.purchasable')
-				->getProductExt($product);
-			$fixed_price = 0;
-			if (!empty($ext)) {
-				$fixed_price = $ext->getFixedPrice();
-			}
-			$product->fixedPrice = $fixed_price;
 			$collection[] = $product;
 		}
 
@@ -89,7 +69,6 @@ class Best365ProductController extends PurchasableController
 			[
 				'searching' => $name,
 				'purchasables' => $collection,
-				'strategy' => $strategy
 			]
 		);
 	}
@@ -111,22 +90,9 @@ class Best365ProductController extends PurchasableController
 	 */
 	public function detailAction($id)
 	{
-		// get strategy
-		$customer = $this
-			->get('elcodi.wrapper.customer')
-			->get();
-
-		if (!empty($customer->getId())) {
-			$membership = $this->get('best365.manager.customer')
-				->getCustomerMembership($customer);
-			$strategy = $membership->getStrategy();
-		} else {
-			$strategy = 100;
-		}
-
 		// get product
-		$purchasable = $this->get('elcodi.repository.purchasable')
-			->find($id);
+		$purchasable = $this->get('best365.manager.purchasable')
+			->getProduct($id);
 
 		// get product ext
 		$purchasable_ext = $this
@@ -168,8 +134,7 @@ class Best365ProductController extends PurchasableController
 			'purchasable' => $purchasable,
 			'purchasable_ext' => $purchasable_ext,
 			'categories' => $categories,
-			'useStock'    => $useStock,
-			'strategy' => $strategy
+			'useStock'    => $useStock
 			]
 		);
 	}

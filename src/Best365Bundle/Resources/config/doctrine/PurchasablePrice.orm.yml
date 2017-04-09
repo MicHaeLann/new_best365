@@ -1,0 +1,22 @@
+Best365Bundle\Entity\PurchasablePrice:
+    type: entity
+    table: purchasable_price
+    repositoryClass: Best365Bundle\Repository\PurchasablePriceRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        pid:
+            type: integer
+        mid:
+            type: integer
+        price:
+            type: integer
+        priceCurrencyIso:
+            type: string
+            length: 255
+            column: price_currency_iso
+    lifecycleCallbacks: {  }

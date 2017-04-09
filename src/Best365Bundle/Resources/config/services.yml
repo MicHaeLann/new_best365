@@ -20,6 +20,8 @@ services:
             - '@elcodi.repository.purchasable'
             - '@elcodi.wrapper.customer'
             - '@best365.manager.membership'
+            - '@elcodi.converter.currency'
+            - "@elcodi.repository.currency"
 
     best365.manager.address:
         class: Best365Bundle\Manager\Best365AddressManager
@@ -78,3 +80,5 @@ services:
             - '@elcodi.wrapper.cart'
             - '@elcodi.factory.cart'
             - '@elcodi.event_dispatcher.cart'
+            - '@best365.manager.purchasable'
+            - "@elcodi.converter.currency"
