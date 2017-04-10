@@ -730,7 +730,8 @@ admin:
             pricing:
                 description: '设置产品不含税及快递的价格。'
                 title: 价格
-            membership_pricing: '设置产品会员价格。'
+            membership_pricing:
+                description: '设置产品会员价格。'
                 title: 会员价格
             sku:
                 description: 'SKU用于区分产品。每个SKU只与一个产品关联'
