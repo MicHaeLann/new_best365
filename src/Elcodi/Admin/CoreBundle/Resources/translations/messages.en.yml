@@ -731,6 +731,10 @@ admin:
             pricing:
                 description: 'Set the price for your product, without including taxes nor shipping. Also you can set an offer price.'
                 title: Pricing
+
+            membership_pricing:
+                description: 'Set the membership price for the product.'
+                title: Membership Pricing
             sku:
                 description: 'SKU is an identifier that allows to identify the products. Each SKU it''s related to just one product.'
                 title: SKU

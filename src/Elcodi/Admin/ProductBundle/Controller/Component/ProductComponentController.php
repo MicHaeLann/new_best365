@@ -154,13 +154,43 @@ class ProductComponentController extends AbstractAdminController
             ->getUseStock();
 
 		// get ext info
-		$ext = $this->get('best365.manager.purchasable')->getProductExt($product);
+		$ext = $this
+			->get('best365.manager.purchasable')
+			->getProductExt($product);
+
+		// get price info
+		$price = array();
+		$membership = $this
+			->get('best365.manager.membership')
+			->getList();
+
+		// initialise display
+		foreach ($membership as $cfg) {
+			$price[$cfg->getId()]['id'] = $cfg->getId();
+			$price[$cfg->getId()]['name'] = $cfg->getName();
+			$price[$cfg->getId()]['price'] = '0.00';
+			$price[$cfg->getId()]['iso'] = 'NZD';
+		}
+
+		$membership_price = $this
+			->get('best365.manager.purchasable')
+			->getProductPrice($product->getId());
+		foreach ($membership_price as $cfg) {
+			$price[$cfg->getId()]['price'] = number_format($cfg->getPrice() / 100, 2);
+			$price[$cfg->getId()]['iso'] = $cfg->getPriceCurrencyIso();
+		}
+
+		$currency = $this
+			->get('elcodi.repository.currency')
+			->findBy(array('enabled' => true));
 
         return [
             'product'  => $product,
             'form'     => $formView,
             'useStock' => $useStock,
-			'ext' => $ext
+			'ext' => $ext,
+			'price'=> $price,
+			'currency' => $currency
         ];
     }
 }

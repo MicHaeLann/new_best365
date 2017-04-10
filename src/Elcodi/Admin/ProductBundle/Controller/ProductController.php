@@ -171,6 +171,10 @@ class ProductController extends AbstractAdminController
 			// update ext info
 			$this->get('best365.manager.purchasable')->updateProductExt($product, $this->get('request'));
 
+			// update price info
+			$this->get('best365.manager.purchasable')->updateProductPrice($product, $this->get('request'));
+
+//
             $this->addFlash(
                 'success',
                 $this

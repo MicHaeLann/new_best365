@@ -3,6 +3,7 @@
 namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\PurchasableExt;
+use Best365Bundle\Entity\PurchasablePrice;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
@@ -152,6 +153,30 @@ class PurchasableManager
 		$this->em->flush();
 	}
 
+	public function updateProductPrice(ProductInterface $product, Request $request)
+	{
+		foreach ($request->get('price') as $mid => $price) {
+			$purchasable_price = $this->em
+				->getRepository('Best365Bundle\Entity\PurchasablePrice')
+				->findOneBy(array('pid' => $product->getId(), 'mid' => $mid));
+
+			// init price data if empty
+			if (empty($purchasable_price)) {
+				$purchasable_price = new PurchasablePrice();
+				$purchasable_price->setPid($product->getId());
+				$purchasable_price->setMid($mid);
+			}
+
+			// update price
+			$purchasable_price->setPrice($price['price'] * 100);
+			$purchasable_price->setPriceCurrencyIso($price['iso']);
+
+			$this->em->persist($purchasable_price);
+			$this->em->flush();
+
+		}
+	}
+
 	/**
 	 * get product info
 	 * @param $id
@@ -203,6 +228,15 @@ class PurchasableManager
 		$record = $this->em
 			->getRepository('Best365Bundle\Entity\PurchasablePrice')
 			->findOneBy(array('pid' => $pid, 'mid' =>$mid));
+
+		return $record;
+	}
+
+	public function getProductPrice($pid)
+	{
+		$record = $this->em
+			->getRepository('Best365Bundle\Entity\PurchasablePrice')
+			->findBy(array('pid' => $pid));
 
 		return $record;
 	}
