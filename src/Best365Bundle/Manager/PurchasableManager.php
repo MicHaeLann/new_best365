@@ -186,28 +186,28 @@ class PurchasableManager
 	{
 		$purchasable = $this->pr->find($id);
 		$purchasable_ext = $this->getProductExt($purchasable);
+		$customer = $this->cw->get();
 
 		// if not fixed, set membership price to product price
-		if (!empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
-			$customer = $this->cw->get();
-			if (!empty($customer)) {
-				$membership = $this->em
-					->getRepository('Best365Bundle\Entity\CustomerMembership')
-					->findOneByCustomerId($customer->getId())
-					->getMembership();
+		if (!empty($customer->getId()) && !empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
+			echo 1111;exit;
+			$membership = $this->em
+				->getRepository('Best365Bundle\Entity\CustomerMembership')
+				->findOneByCustomerId($customer->getId())
+				->getMembership();
 
-				$product_price = $this->getProductMembershipPrice($id, $membership);
-				// if price currency not match, convert to purchasable price currency
-				if (!empty($product_price) && $product_price->getPriceCurrencyIso() != $purchasable->getPrice()->getCurrency()->getIso()) {
-					$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => $product_price->getPriceCurrencyIso()));
-					$price = \Elcodi\Component\Currency\Entity\Money::create(
-						$product_price->getPrice(),
-						$currency
-					);
-					$convert_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
-					$purchasable->setPrice($convert_price);
-				}
+			$product_price = $this->getProductMembershipPrice($id, $membership);
+			// if price currency not match, convert to purchasable price currency
+			if (!empty($product_price) && $product_price->getPriceCurrencyIso() != $purchasable->getPrice()->getCurrency()->getIso()) {
+				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => $product_price->getPriceCurrencyIso()));
+				$price = \Elcodi\Component\Currency\Entity\Money::create(
+					$product_price->getPrice(),
+					$currency
+				);
+				$convert_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
+				$purchasable->setPrice($convert_price);
 			}
+
 		}
 		return $purchasable;
 	}
