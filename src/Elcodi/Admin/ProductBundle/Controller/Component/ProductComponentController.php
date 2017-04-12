@@ -175,15 +175,16 @@ class ProductComponentController extends AbstractAdminController
 		$membership_price = $this
 			->get('best365.manager.purchasable')
 			->getProductPrice($product->getId());
+
 		foreach ($membership_price as $cfg) {
-			$price[$cfg->getId()]['price'] = number_format($cfg->getPrice() / 100, 2);
-			$price[$cfg->getId()]['iso'] = $cfg->getPriceCurrencyIso();
+			$price[$cfg->getMid()]['price'] = number_format($cfg->getPrice() / 100, 2);
+			$price[$cfg->getMid()]['iso'] = $cfg->getPriceCurrencyIso();
 		}
 
 		$currency = $this
 			->get('elcodi.repository.currency')
 			->findBy(array('enabled' => true));
-
+		
         return [
             'product'  => $product,
             'form'     => $formView,
