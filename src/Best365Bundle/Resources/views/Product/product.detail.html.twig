@@ -81,22 +81,29 @@
                             <hr>
                         </div>
                         <div class="row">
-                            <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
-                            {% if not useStock or purchasable.stock > 0 %}
-                                <a id="add-cart-{{ purchasable.id }}" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
-                                   class="btn btn-success margin-left-10"
-                                   data-test="add-product-{{ purchasable.id }}-to-cart"
-                                   href="javascript:void(0)">
-                                    {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                </a>
+                            {% if app.user %}
+                                <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
+                                {% if not useStock or purchasable.stock > 0 %}
+                                    <a id="add-cart-{{ purchasable.id }}" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
+                                       class="btn btn-success margin-left-10"
+                                       data-test="add-product-{{ purchasable.id }}-to-cart"
+                                       href="javascript:void(0)">
+                                        {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+                                    </a>
+                                {% else %}
+                                    <a title="{{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}"
+                                       class="btn btn-warning margin-left-10"
+                                       href="#">
+                                        {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
+                                    </a>
+                                {% endif %}
                             {% else %}
-                                <a title="{{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}"
-                                   class="btn btn-warning margin-left-10"
-                                   href="#">
-                                    {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                </a>
+                                <p class="main-theme-font">
+                                    {{ 'template.store_template_bundle.product.view_item.not_login'|trans }}
+                                </p>
                             {% endif %}
                         </div>
+
                     </div>
                 </div>
                 <h4 class="product-description-label">{{ 'template.store_template_bundle.product.view_item.description'|trans }}</h4>

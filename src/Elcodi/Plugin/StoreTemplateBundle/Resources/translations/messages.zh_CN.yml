@@ -227,6 +227,7 @@ template:
                 product: 商品
                 stock: 库存
                 usually_dispatched_24_hours: '24小时内派送'
+                not_login: '请先登录。'
             trending: '热门搜索'
             more: '更多'
         purchasable_pack:

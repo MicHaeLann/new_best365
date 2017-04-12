@@ -190,7 +190,6 @@ class PurchasableManager
 
 		// if not fixed, set membership price to product price
 		if (!empty($customer->getId()) && !empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
-			echo 1111;exit;
 			$membership = $this->em
 				->getRepository('Best365Bundle\Entity\CustomerMembership')
 				->findOneByCustomerId($customer->getId())

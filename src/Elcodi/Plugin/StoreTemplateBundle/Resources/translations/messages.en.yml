@@ -227,6 +227,7 @@ template:
                 product: Product
                 stock: Stock
                 usually_dispatched_24_hours: 'Usually dispatched within 24 hours'
+                not_login: Please login first.
             trending: 'Hot Searches'
             more: 'More'
         purchasable_pack:
