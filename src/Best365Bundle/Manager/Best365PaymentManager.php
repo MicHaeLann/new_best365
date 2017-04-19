@@ -317,6 +317,7 @@ class Best365PaymentManager
 		$response = curl_exec($ch);
 		curl_close($ch);
 		$json = json_decode($response, true);
+		ladybug_dump($json);exit;
 
 		return $json;
 	}
