@@ -229,13 +229,12 @@ class Best365PaymentController extends Controller
 			$success = true;
 		}
 
-		var_dump($success);exit;
 		$order = $this
 			->get('elcodi.repository.order')
 			->find($order_id);
 
 		$url = $this->generateUrl('best365_store_order_list_error');
-
+		ladybug_dump($order);exit;
 		if (!empty($order)) {
 			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
 				// update payment status
