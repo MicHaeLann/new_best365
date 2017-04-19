@@ -13,8 +13,8 @@
                     </label>
                     <div class="col-sm-8">
                         <select name="payment_method" class="form-control payment-max-width">
-                            <option value="online_banking"{% if activeCurrency.iso == 'NZD' %} selected {% endif %}>
-                                {{ 'template.store_template_bundle.checkout.payment.online_banking'|trans }}
+                            <option value="poli"{% if activeCurrency.iso == 'NZD' %} selected {% endif %}>
+                                {{ 'template.store_template_bundle.checkout.payment.poli'|trans }}
                             </option>
                             <option value="wechat"{% if activeCurrency.iso == 'CNY' %} selected {% endif %}>
                                 {{ 'template.store_template_bundle.checkout.payment.wechat'|trans }}

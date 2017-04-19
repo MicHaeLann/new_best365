@@ -24,6 +24,11 @@ class Best365PaymentManager
 	private $paymark;
 
 	/**
+	 * @var POLi
+	 */
+	private $poli;
+
+	/**
 	 * @var Router
 	 */
 	private $router;
@@ -59,6 +64,11 @@ class Best365PaymentManager
 	 * @param Parameter				   $paymark_password	   Paymark User Password
 	 * @param Parameter				   $paymark_account_id	   Paymark Account ID
 	 * @param Parameter				   $paymark_request_url	   Paymark Gateway Request Url
+	 * @param Parameter				   $poli_crt	   		   POLi Certificates Direction
+	 * @param Parameter				   $poli_merchant_code	   POLi Merchant Code
+	 * @param Parameter				   $poli_auth_code	   	   POLi Authentication Code
+	 * @param Parameter				   $poli_initiate_api	   POLi Initiate Transaction API Url
+	 * @param Parameter				   $poli_transaction_api    POLi Get Transaction API Url
 	 * @param Router				   $router				   Router
 	 * @param CurrencyWrapper		   $currencyWrapper		   Currency Wrapper
 	 * @param CurrencyConverter		   $currencyConverter	   Currency Converter
@@ -73,6 +83,11 @@ class Best365PaymentManager
 		$paymark_password,
 		$paymark_account_id,
 		$paymark_request_url,
+		$poli_crt,
+        $poli_merchant_code,
+		$poli_auth_code,
+        $poli_initiate_api,
+		$poli_tranaction_api,
 		Router $router,
 		CurrencyWrapper $currencyWrapper,
 		CurrencyConverter $currencyConverter,
@@ -92,6 +107,14 @@ class Best365PaymentManager
 		$this->paymark->password = $paymark_password;
 		$this->paymark->account_id = $paymark_account_id;
 		$this->paymark->request_url = $paymark_request_url;
+
+		// initialise poli
+		$this->poli = new \stdClass();
+		$this->poli->crt = $poli_crt;
+		$this->poli->merchant_code = $poli_merchant_code;
+		$this->poli->auth_code = $poli_auth_code;
+		$this->poli->initiate_api = $poli_initiate_api;
+		$this->poli->transaction_api = $poli_tranaction_api;
 
 		$this->router = $router;
 		$this->currencyWrapper = $currencyWrapper;
@@ -259,5 +282,74 @@ class Best365PaymentManager
 		xml_parse_into_struct($p, $content, $vals, $index);
 		xml_parser_free($p);
 		return $vals[0];
+	}
+
+	public function getPoliInitiateUrl($order)
+	{
+		// convert money to nzd
+		$nzd = $this->currencyRepository->findOneBy(array('enabled' => true, 'iso' => 'NZD'));
+		$amount = $this->currencyConverter->convertMoney($order->getAmount(), $nzd);
+
+		$json_builder = '{
+		  "Amount":' . $amount->getAmount() / 100 . ',
+		  "CurrencyCode":"NZD",
+		  "MerchantReference":' . $order->getId() . ',
+		  "MerchantHomepageURL": "https://www.best365.co.nz",
+		  "SuccessURL": '.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
+		  "FailureURL": '.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
+		  "CancellationURL": '.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
+		  "NotificationURL":  '.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL).'
+		}';
+
+//		$json_builder = '{
+//		  "Amount":' . $amount->getAmount() / 100 . ',
+//		  "CurrencyCode":"NZD",
+//		  "MerchantReference":' . $order->getId() . ',
+//		  "MerchantHomepageURL": "https://www.best365.co.nz",
+//		  "SuccessURL": "https://www.baidu.com",
+//		  "FailureURL": "https://www.google.co.nz",
+//		  "CancellationURL": "https://www.google.hk",
+//		  "NotificationURL":  "https://www.google.co.uk"
+//		}';
+		$auth = base64_encode($this->poli->merchant_code . ':' . $this->poli->auth_code);
+		$header = array();
+		$header[] = 'Content-Type: application/json';
+		$header[] = 'Authorization: Basic '.$auth;
+		$ch = curl_init($this->poli->initiate_api);
+		curl_setopt($ch, CURLOPT_CAINFO, $this->poli->crt);
+		curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $json_builder);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$response = curl_exec($ch);
+		curl_close($ch);
+		$json = json_decode($response, true);
+
+		return $json;
+	}
+
+	public function getPoliTransaction($token)
+	{
+		$auth = base64_encode($this->poli->merchant_code . ':' . $this->poli->auth_code);
+		$header = array();
+		$header[] = 'Authorization: Basic '.$auth;
+
+		$ch = curl_init($this->poli->transaction_api . urlencode($token));
+		curl_setopt($ch, CURLOPT_CAINFO, $this->poli->crt);
+		curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_POST, 0);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$response = curl_exec($ch);
+		curl_close ($ch);
+		$json = json_decode($response, true);
+		ladybug_dump($json);exit;
+
+		return $json;
 	}
 }

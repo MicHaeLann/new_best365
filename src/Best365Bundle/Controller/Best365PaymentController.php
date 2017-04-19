@@ -193,4 +193,88 @@ class Best365PaymentController extends Controller
 
 		return $this->redirect($url);
 	}
+
+	/**
+	 * POLi
+	 *
+	 * @param Request $request The current request
+	 * @return Response Response
+	 *
+	 * @Route(
+	 *      path = "/poli",
+	 *      name = "best365_store_poli",
+	 *      methods = {"GET", "POST"}
+	 * )
+	 *
+	 */
+	public function poliAction(Request $request)
+	{
+		$success = false;
+
+		$token = $request->request->get('Token');
+		$transaction = $this->get('best365.manager.payment')
+			->getPoliTransaction($token);
+
+		// add request record
+		$order_id = $request->request->get('MerchantReference');
+		$paymark_order = $this->get('best365.manager.payment')
+			->getPaymentGateway($order_id, 3);
+		if (empty($paymark_order)) {
+			$this->get('best365.manager.payment')
+				->addPaymentGateway($order_id, 3, $transaction);
+		}
+
+		// set order valid
+		if ($transaction['TransactionStatusCode'] == 'Completed') {
+			$success = true;
+		}
+
+		$order = $this
+			->get('elcodi.repository.order')
+			->find($order_id);
+
+		$url = $this->generateUrl('best365_store_order_list_error');
+
+		if (!empty($order)) {
+			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
+				// update payment status
+				$stateLineStack = $this
+					->get('elcodi.order_payment_states_machine_manager')
+					->transition(
+						$order,
+						$order->getPaymentStateLineStack(),
+						"pay",
+						''
+					);
+				$order->setPaymentStateLineStack($stateLineStack);
+
+				$order_manager = $this->get('elcodi.object_manager.order');
+				$order_manager->persist($order);
+				$order_manager->flush();
+
+				// set order valid
+				$this->get('best365.manager.order')
+					->updateExtRecord($order, '', 1);
+
+				// add points
+				$currency = $this->get('elcodi.wrapper.currency')
+					->get();
+				$nzd = $this->get('elcodi.converter.currency')
+					->convertMoney(
+						$order->getPurchasableAmount(),
+						$currency
+					);
+				$points = floor($nzd->getAmount() / 100 * 10);
+
+				// add points to customer
+				$this->get('best365.manager.customer')
+					->updatePoints($order->getCustomer(), $points);
+
+				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
+
+			}
+		}
+
+		return $this->redirect($url);
+	}
 }

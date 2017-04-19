@@ -235,9 +235,9 @@ class Best365CheckoutController extends CheckoutController
 		$result = $this->get('best365.manager.order')
 			->saveOrder($cart, $payment_method);
 
-		if ($result->success && $payment_method == 'online_banking') {
-			$url = $result->paymark['value'];
-		}elseif ($result->success && $payment_method == 'transfer') {
+		if ($result->success && $payment_method == 'poli') {
+			$url = $result->payment['NavigateURL'];
+		} elseif ($result->success && $payment_method == 'transfer') {
 			$url = $this->generateUrl('best365_store_order_thanks_transfer', array('id' => $result->order->getId()));
 		} elseif ($result->success && $payment_method == 'wechat') {
 			$url = $this->generateUrl('best365_store_order_thanks', array('id' => $result->order->getId()));

@@ -275,9 +275,9 @@ class Best365OrderManager
 		if ($payment_method == 'transfer') {
 			$reference = uniqid();
 			$success = true;
-		} elseif ($payment_method == 'online_banking') {
-			$response = $this->best365PaymentManager->getOnlineBankingUrl($order);
-			if (strtoupper($response['tag']) != 'ERROR') {
+		} elseif ($payment_method == 'poli') {
+			$response = $this->best365PaymentManager->getPoliInitiateUrl($order);
+			if ($response['Success']) {
 				$success = true;
 			}
 		} else {
@@ -300,7 +300,7 @@ class Best365OrderManager
 		$result = new \stdClass();
 		$result->success = $success;
 		$result->order = $order;
-		$result->paymark = isset($response) ? $response : '';
+		$result->payment = isset($response) ? $response : '';
 		return $result;
 	}
 
