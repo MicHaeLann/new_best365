@@ -121,7 +121,7 @@ template:
             payment:
                 transfer: 转帐
                 wechat: 微信
-                online_banking: POLi Pay
+                poli: POLi Pay
                 back: 返回
                 bankwire: 'Bank wire'
                 continue: 继续

@@ -295,22 +295,12 @@ class Best365PaymentManager
 		  "CurrencyCode":"NZD",
 		  "MerchantReference":' . $order->getId() . ',
 		  "MerchantHomepageURL": "https://www.best365.co.nz",
-		  "SuccessURL": '.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
-		  "FailureURL": '.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
-		  "CancellationURL": '.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL).',
-		  "NotificationURL":  '.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL).'
+		  "SuccessURL": "'.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "FailureURL": "'.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "CancellationURL": "'.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "NotificationURL":  "'.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '"
 		}';
 
-//		$json_builder = '{
-//		  "Amount":' . $amount->getAmount() / 100 . ',
-//		  "CurrencyCode":"NZD",
-//		  "MerchantReference":' . $order->getId() . ',
-//		  "MerchantHomepageURL": "https://www.best365.co.nz",
-//		  "SuccessURL": "https://www.baidu.com",
-//		  "FailureURL": "https://www.google.co.nz",
-//		  "CancellationURL": "https://www.google.hk",
-//		  "NotificationURL":  "https://www.google.co.uk"
-//		}';
 		$auth = base64_encode($this->poli->merchant_code . ':' . $this->poli->auth_code);
 		$header = array();
 		$header[] = 'Content-Type: application/json';
