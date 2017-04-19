@@ -121,8 +121,7 @@ template:
             payment:
                 transfer: Transfer
                 wechat: Wechat
-                online_banking: Online Banking
-                poli: POLi
+                online_banking: POLi
                 back: Back
                 bankwire: 'Bank wire'
                 continue: Continue
