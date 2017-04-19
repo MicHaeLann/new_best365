@@ -57,6 +57,8 @@ class Best365PaymentController extends Controller
 				->addPaymentGateway($arr['increment_id'], 1, $arr);
 		}
 
+		$valid = 0;
+
 		// check if signature match
 		if ($sig == $signature) {
 			$order_id = $arr['increment_id'];
@@ -86,8 +88,7 @@ class Best365PaymentController extends Controller
 					$order_manager->flush();
 
 					// set order valid
-					$this->get('best365.manager.order')
-						->updateExtRecord($order, '', 1);
+					$valid = 1;
 
 					// add points
 					$currency = $this->get('elcodi.wrapper.currency')
@@ -105,6 +106,9 @@ class Best365PaymentController extends Controller
 				}
 			}
 		}
+
+		$this->get('best365.manager.order')
+			->updateExtRecord($order, '', $valid);
 
 		return $response;
 	}
@@ -150,6 +154,7 @@ class Best365PaymentController extends Controller
 			->find($order_id);
 
 		$url = $this->generateUrl('best365_store_order_list_error');
+		$valid = 0;
 
 		if (!empty($order)) {
 			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
@@ -169,8 +174,7 @@ class Best365PaymentController extends Controller
 				$order_manager->flush();
 
 				// set order valid
-				$this->get('best365.manager.order')
-					->updateExtRecord($order, '', 1);
+				$valid = 1;
 
 				// add points
 				$currency = $this->get('elcodi.wrapper.currency')
@@ -190,6 +194,8 @@ class Best365PaymentController extends Controller
 
 			}
 		}
+		$this->get('best365.manager.order')
+			->updateExtRecord($order, '', $valid);
 
 		return $this->redirect($url);
 	}
@@ -234,6 +240,8 @@ class Best365PaymentController extends Controller
 			->find($order_id);
 
 		$url = $this->generateUrl('best365_store_order_list_error');
+		$valid = 0;
+
 		if (!empty($order)) {
 			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
 				// update payment status
@@ -252,8 +260,7 @@ class Best365PaymentController extends Controller
 				$order_manager->flush();
 
 				// set order valid
-				$this->get('best365.manager.order')
-					->updateExtRecord($order, '', 1);
+				$valid = 1;
 
 				// add points
 				$currency = $this->get('elcodi.wrapper.currency')
@@ -273,6 +280,8 @@ class Best365PaymentController extends Controller
 				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
 			}
 		}
+		$this->get('best365.manager.order')
+			->updateExtRecord($order, '', $valid);
 
 		return $this->redirect($url);
 	}
