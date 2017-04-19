@@ -234,7 +234,6 @@ class Best365PaymentController extends Controller
 			->find($order_id);
 
 		$url = $this->generateUrl('best365_store_order_list_error');
-		ladybug_dump($order->getPaymentStateLineStack()->getLastStateLine()->getName());exit;
 		if (!empty($order)) {
 			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
 				// update payment status
