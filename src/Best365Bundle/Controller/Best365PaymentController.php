@@ -268,9 +268,9 @@ class Best365PaymentController extends Controller
 				// add points to customer
 				$this->get('best365.manager.customer')
 					->updatePoints($order->getCustomer(), $points);
-
 				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
-
+			} elseif ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "paid") {
+				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
 			}
 		}
 
