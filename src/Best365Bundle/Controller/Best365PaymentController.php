@@ -210,13 +210,12 @@ class Best365PaymentController extends Controller
 	public function poliAction(Request $request)
 	{
 		$success = false;
-
-		$token = $request->request->get('Token');
+		$token = $request->request->get('Token') ? $request->request->get('Token') : $request->query->get('token');
 		$transaction = $this->get('best365.manager.payment')
 			->getPoliTransaction($token);
 
 		// add request record
-		$order_id = $request->request->get('MerchantReference');
+		$order_id = $transaction['MerchantReference'];
 		$paymark_order = $this->get('best365.manager.payment')
 			->getPaymentGateway($order_id, 3);
 		if (empty($paymark_order)) {
