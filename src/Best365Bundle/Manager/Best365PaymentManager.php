@@ -301,9 +301,19 @@ class Best365PaymentManager
 		  "NotificationURL":  "' . $this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '"
 		}';
 
-		ladybug_dump($this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL));
-		ladybug_dump($this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL));
-		ladybug_dump($json_builder);
+		$json_builder = '{
+		  "Amount": "' . $amount->getAmount() / 100 . '",
+		  "CurrencyCode": "NZD",
+		  "MerchantReference": "' . $order->getId() . '",
+		  "MerchantHomepageURL": "https://www.best365.co.nz",
+		  "SuccessURL": "https://www.baidu.com",
+		  "FailureURL": "https://www.google.co.nz",
+		  "CancellationURL": "https://www.google.hk",
+		  "NotificationURL":  "https://www.google.co.uk"
+		}';
+//		ladybug_dump($this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL));
+//		ladybug_dump($this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL));
+//		ladybug_dump($json_builder);
 
 		$auth = base64_encode($this->poli->merchant_code . ':' . $this->poli->auth_code);
 		$header = array();
@@ -321,7 +331,7 @@ class Best365PaymentManager
 		$response = curl_exec($ch);
 		curl_close($ch);
 		$json = json_decode($response, true);
-		ladybug_dump($json);exit;
+//		ladybug_dump($json);exit;
 
 		return $json;
 	}
