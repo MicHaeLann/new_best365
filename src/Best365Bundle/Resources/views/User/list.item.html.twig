@@ -34,7 +34,7 @@
 			{% endfor %}
 		{% elseif item.ref|length == 13 %}
 			{{ item.ref }}
-		{% else %}
+		{% elseif item.ref|length > 0 %}
 			<div id="qr-{{ item.id }}">
 				<input type="hidden" value="{{ item.ref }}" id="ref-{{ item.id }}" />
 			</div>
