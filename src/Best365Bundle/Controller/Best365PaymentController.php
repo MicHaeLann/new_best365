@@ -216,14 +216,13 @@ class Best365PaymentController extends Controller
 
 		// add request record
 		$order_id = $transaction['MerchantReference'];
-		ladybug_dump($order_id);exit;
 		$paymark_order = $this->get('best365.manager.payment')
 			->getPaymentGateway($order_id, 3);
 		if (empty($paymark_order)) {
 			$this->get('best365.manager.payment')
 				->addPaymentGateway($order_id, 3, $transaction);
 		}
-
+		ladybug_dump($transaction);exit;
 		// set order valid
 		if ($transaction['TransactionStatusCode'] == 'Completed') {
 			$success = true;
