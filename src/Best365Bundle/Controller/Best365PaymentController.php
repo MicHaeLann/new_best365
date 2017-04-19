@@ -222,12 +222,14 @@ class Best365PaymentController extends Controller
 			$this->get('best365.manager.payment')
 				->addPaymentGateway($order_id, 3, $transaction);
 		}
-		var_dump($transaction['TransactionStatusCode']);exit;
+
+
 		// set order valid
 		if ($transaction['TransactionStatusCode'] == 'Completed') {
 			$success = true;
 		}
 
+		var_dump($success);exit;
 		$order = $this
 			->get('elcodi.repository.order')
 			->find($order_id);
