@@ -222,9 +222,9 @@ class Best365PaymentController extends Controller
 			$this->get('best365.manager.payment')
 				->addPaymentGateway($order_id, 3, $transaction);
 		}
-		ladybug_dump($transaction);exit;
 		// set order valid
 		if ($transaction['TransactionStatusCode'] == 'Completed') {
+			echo 1111;
 			$success = true;
 		}
 
