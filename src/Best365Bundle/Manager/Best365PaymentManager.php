@@ -291,15 +291,19 @@ class Best365PaymentManager
 		$amount = $this->currencyConverter->convertMoney($order->getAmount(), $nzd);
 
 		$json_builder = '{
-		  "Amount":' . $amount->getAmount() / 100 . ',
-		  "CurrencyCode":"NZD",
-		  "MerchantReference":' . $order->getId() . ',
+		  "Amount": "' . $amount->getAmount() / 100 . '",
+		  "CurrencyCode": "NZD",
+		  "MerchantReference": "' . $order->getId() . '",
 		  "MerchantHomepageURL": "https://www.best365.co.nz",
-		  "SuccessURL": "'.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
-		  "FailureURL": "'.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
-		  "CancellationURL": "'.$this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
-		  "NotificationURL":  "'.$this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '"
+		  "SuccessURL": "' . $this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "FailureURL": "' . $this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "CancellationURL": "' . $this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '",
+		  "NotificationURL":  "' . $this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL) . '"
 		}';
+
+		ladybug_dump($this->router->generate('best365_store_order_list_error', array(), UrlGeneratorInterface::ABSOLUTE_URL));
+		ladybug_dump($this->router->generate('best365_store_poli', array(), UrlGeneratorInterface::ABSOLUTE_URL));
+		ladybug_dump($json_builder);
 
 		$auth = base64_encode($this->poli->merchant_code . ':' . $this->poli->auth_code);
 		$header = array();
