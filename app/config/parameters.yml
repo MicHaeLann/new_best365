@@ -36,7 +36,7 @@ parameters:
     paymark_account_id: 622006
     paymark_request_url: 'https://demo.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest'
 #    poli_crt: '/Users/michael/Downloads/ca-bundle.crt'
-    poli_crt: '/data/new_best365/ssl/ca-bundle.crt'
+    poli_crt: '/data/ssl/ca-bundle.crt'
     poli_merchant_code: 'SS64006555'
     poli_auth_code: 'zP3@udTN$t!YA'
     poli_initiate_api: 'https://poliapi.apac.paywithpoli.com/api/Transaction/Initiate'
