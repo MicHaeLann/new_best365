@@ -70,6 +70,11 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.wrapper.currency')
 			->get();
 
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
 		if ($isValid) {
 			// User is adding a new address
 			$best365_address = $this->get('best365.manager.address')
@@ -134,7 +139,8 @@ class Best365CheckoutController extends CheckoutController
 				'shipping_methods'      => $shippingMethods,
 				'addresses' => $addressesFormatted,
 				'form'      => $formView,
-				'activeCurrency' => $currency
+				'activeCurrency' => $currency,
+				'activeLocale' => $active_locale
 			]
 		);
 	}

@@ -80,7 +80,11 @@
                         <select name="address" class="form-control">
                             {% for address in addresses %}
                                 <option value="{{ address.id }}">
-                                    {{ address.recipientName }} {{ address.recipientSurname }}, {{ address.address }}
+                                    {% if activeLocale == 'zh-CN' %}
+                                        {{ address.recipientSurname }}{{ address.recipientName }}, {{ address.address }}
+                                    {% else %}
+                                        {{ address.recipientName }} {{ address.recipientSurname }}, {{ address.address }}
+                                    {% endif %}
                                 </option>
                             {% endfor %}
                         </select>
