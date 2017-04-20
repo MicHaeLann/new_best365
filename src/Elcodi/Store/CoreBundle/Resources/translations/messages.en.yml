@@ -23,7 +23,7 @@ store:
                 phone:
                     label: Phone
                 postalcode:
-                    label: Postalcode
+                    label: Postalcode(optional)
                 province:
                     label: Province
                 recipientName:

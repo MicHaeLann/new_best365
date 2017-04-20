@@ -23,7 +23,7 @@ store:
                 phone:
                     label: 电话
                 postalcode:
-                    label: 邮编
+                    label: 邮编（可选）
                 province:
                     label: 省
                 recipientName:
