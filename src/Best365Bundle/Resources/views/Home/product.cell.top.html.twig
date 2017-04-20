@@ -1,15 +1,17 @@
 <div class="col-sm-6 promotion-item-top promotion-padding{% if app.user %}-with-cart{% endif %}">
     {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
     {% set productName = item|purchasable_name %}
-    <a href="{{ productRoute }}" target="_blank">
-        {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
-        {% set validImage = item|valid_image %}
-        <img class="max-width-full" src="{{ validImage ? validImage|resize({
-            'width': 120,
-            'height': 120,
-            'type': 5
-        }) : '//placehold.it/120x120'  }}" alt="{{ productName }}" />
-    </a>
+    <div class="promotion-image-padding">
+        <a href="{{ productRoute }}" target="_blank">
+            {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+            {% set validImage = item|valid_image %}
+            <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                'width': 120,
+                'height': 120,
+                'type': 5
+            }) : '//placehold.it/120x120'  }}" alt="{{ productName }}" />
+        </a>
+    </div>
     <div class="promotion-product-title margin-top-10">
         <a href="{{ productRoute }}" target="_blank" class="sub-theme-link no-wrap">{{ productName }}</a>
     </div>
