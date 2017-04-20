@@ -231,19 +231,23 @@ class Best365CheckoutController extends CheckoutController
 			->get('elcodi.object_manager.cart');
 		$cartObjectManager->persist($cart);
 		$cartObjectManager->flush();
-
-		$result = $this->get('best365.manager.order')
-			->saveOrder($cart, $payment_method);
-
-		if ($result->success && $payment_method == 'poli') {
-			$url = $result->payment['NavigateURL'];
-		} elseif ($result->success && $payment_method == 'transfer') {
-			$url = $this->generateUrl('best365_store_order_thanks_transfer', array('id' => $result->order->getId()));
-		} elseif ($result->success && $payment_method == 'wechat') {
-			$url = $this->generateUrl('best365_store_order_thanks', array('id' => $result->order->getId()));
+		
+		if ($cart->getTotalItemNumber() > 0) {
+			$result = $this->get('best365.manager.order')
+				->saveOrder($cart, $payment_method);
+			if ($result->success && $payment_method == 'poli') {
+				$url = $result->payment['NavigateURL'];
+			} elseif ($result->success && $payment_method == 'transfer') {
+				$url = $this->generateUrl('best365_store_order_thanks_transfer', array('id' => $result->order->getId()));
+			} elseif ($result->success && $payment_method == 'wechat') {
+				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $result->order->getId()));
+			} else {
+				$url = $this->generateUrl('best365_store_order_list_error');
+			}
 		} else {
-			$url = $this->generateUrl('best365_store_order_list_error');
+			$url = $this->generateUrl('best365_store_cart_view');
 		}
+
 		return $this->redirect($url);
 	}
 }
