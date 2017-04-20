@@ -22,6 +22,9 @@ class Best365AddressManager
 	{
 		$address->setName('DEFAULT NAME')
 			->setMobile('000000000');
+		if (empty($address->getPostalcode())) {
+			$address->setPostalcode('000000');
+		}
 
 		return $address;
 	}
