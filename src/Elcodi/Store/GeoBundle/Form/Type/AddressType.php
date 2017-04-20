@@ -82,7 +82,7 @@ class AddressType extends AbstractType
                 'label'    => 'store.address.form.fields.addressMore.label',
             ])
             ->add('postalcode', 'text', [
-                'required' => true,
+                'required' => false,
                 'label'    => 'store.address.form.fields.postalcode.label',
             ])
             ->add('phone', 'text', [
