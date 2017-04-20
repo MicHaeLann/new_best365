@@ -56,7 +56,7 @@ template:
                 no_addresses: '当前没有地址'
             new:
                 address:
-                    example: '例：xx街x号'
+                    example: '例：xx省xx市xx区xx街x号'
                 address_more:
                     example: '例：xx公司'
                 cancel: 取消
@@ -67,7 +67,7 @@ template:
                 name:
                     example: '例：默认地址'
                 phone:
-                    example: '例：935 555 555'
+                    example: '例：13012353342'
                 postalcode:
                     example: '例：08080'
                 recipient:
