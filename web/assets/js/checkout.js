@@ -2,17 +2,19 @@ $( document ).ready(function() {
     display();
 });
 
-$("#add_new").click(function(event) {
+$("#add-new").click(function(event) {
     event.preventDefault();
-    var state = $("#new_address").css('display');
+    var state = $("#new-address").css('display');
     if (state == 'none') {
-        $("#new_address").show();
+        $("#new-address").show();
+        changeIcon(false);
     } else {
-        $("#new_address").hide();
+        $("#new-address").hide();
+        changeIcon(true);
     }
 });
 
-$("#shipping_method").change(function() {
+$("#shipping-method").change(function() {
     display();
 });
 
@@ -26,7 +28,7 @@ function getShippingPrice()
     }
 
     // get unit price
-    var id = $("#shipping_method").val() + '_price';
+    var id = $("#shipping-method").val() + '-price';
     var val = $("#" + id).val();
 
     var total = val.replace(/[^0-9\.]+/g,"") * weight / 1000;
@@ -42,7 +44,7 @@ function getSubtotal()
 function getPrice(price)
 {
     // get currency
-    var id = $("#shipping_method").val() + '_price';
+    var id = $("#shipping-method").val() + '-price';
     var val = $("#" + id).val();
 
     return val.replace(/[0-9\.]+/g,"") +  price;
@@ -57,5 +59,19 @@ function display()
     $("#shipping-price").html(getPrice(shipping));
     $("#total-price").html(getPrice(total));
 }
+
+function changeIcon(init)
+{
+    var icon = $("#add-new-icon");
+    if (init) {
+        icon.removeClass('glyphicon-minus-sign');
+        icon.addClass('glyphicon-plus-sign');
+    } else {
+        icon.removeClass('glyphicon-plus-sign');
+        icon.addClass('glyphicon-minus-sign');
+    }
+}
+
+
 
 

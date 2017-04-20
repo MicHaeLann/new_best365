@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michael
- * Date: 1/11/16
- * Time: 2:29 PM
- */
 
 namespace Best365Bundle\Manager;
-
 
 use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
 

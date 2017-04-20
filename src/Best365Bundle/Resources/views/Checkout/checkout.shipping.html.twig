@@ -30,7 +30,7 @@
                         {{ 'template.store_template_bundle.shipping.carrier'|trans }}
                     </label>
                     <div class="col-sm-8">
-                        <select id="shipping_method" name="shipping_method" class="form-control carrier-max-width">
+                        <select id="shipping-method" name="shipping-method" class="form-control carrier-max-width">
                             {% for shipping_method in shipping_methods %}
                                 <option value="{{ shipping_method.id }}">
                                     {{ shipping_method.name }}
@@ -38,7 +38,7 @@
                             {% endfor %}
                         </select>
                         {% for shipping_method in shipping_methods  %}
-                            <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}_price" />
+                            <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}-price" />
                         {% endfor %}
                         <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
                     </div>
@@ -85,8 +85,8 @@
                             {% endfor %}
                         </select>
                         <div class="align-right margin-top-10">
-                            <a id="add_new" href="" class="main-theme-link">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
+                            <a id="add-new" href="" class="main-theme-link">
+                                <span id="add-new-icon" class="glyphicon glyphicon-plus-sign"></span>
                                 {{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}
                             </a>
                         </div>
@@ -102,7 +102,7 @@
                 </button>
             </form>
         </div>
-        <div id="new_address" class="margin-top-30 row collapse padding-right-30">
+        <div id="new-address" class="margin-top-30 row collapse padding-right-30">
             <hr>
             <div class="padding-0-30">
                 <p class="page-title">
