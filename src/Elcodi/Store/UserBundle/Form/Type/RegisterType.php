@@ -70,9 +70,13 @@ class RegisterType extends AbstractType
                 'label'    => 'store.user.form.fields.lastname.label',
             ])
             ->add('email', 'email', [
-                'required' => true,
+                'required' => false,
                 'label'    => 'store.user.form.fields.email.label',
             ])
+			->add('phone', 'text', [
+				'required' => false,
+				'label'    => 'store.user.form.fields.phone.label',
+			])
             ->add('password', 'repeated', [
                 'type'           => 'password',
                 'first_options'  => [

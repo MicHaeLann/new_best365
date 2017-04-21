@@ -163,11 +163,11 @@ class Best365CheckoutController extends CheckoutController
 	{
 		$shipping_method = $request
 			->request
-			->get('shipping_method', false);
+			->get('shipping-method', false);
 
 		$payment_method = $request
 			->request
-			->get('payment_method', false);
+			->get('payment-method', false);
 
 		$address = $request
 			->request

@@ -87,6 +87,8 @@ store:
             fields:
                 email:
                     label: Email
+                phone:
+                    label: Mobile
                 firstname:
                     label: Firstname
                 lastname:

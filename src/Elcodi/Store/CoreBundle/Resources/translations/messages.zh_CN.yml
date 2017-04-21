@@ -86,7 +86,9 @@ store:
         form:
             fields:
                 email:
-                    label: 邮件
+                    label: 邮箱
+                phone:
+                    label: 手机
                 firstname:
                     label: 名
                 lastname:
