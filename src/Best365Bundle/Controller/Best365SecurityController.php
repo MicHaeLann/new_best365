@@ -101,26 +101,43 @@ class Best365SecurityController extends SecurityController
      */
     public function registerAction(CustomerInterface $customer, FormView $registerFormView, $isValid)
     {
+    	$missing = false;
+    	$unique = true;
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
         if ($authorizationChecker->isGranted('ROLE_CUSTOMER')) {
             return $this->redirectToRoute('best365_store_homepage');
         }
-        
+
         // register user if form validation match
         if ($isValid) {
-            $customerManager = $this->get('elcodi.object_manager.customer');
-            $customerManager->persist($customer);
-            $customerManager->flush($customer);
+        	if ((!empty($customer->getEmail()) || !empty($customer->getPhone()))
+				&& (intval($customer->getPhone()) == $customer->getPhone())) {
+        		if (empty($customer->getEmail())) {
+        			$customer->setEmail($this->container->getParameter('mailer_user'));
+				}
 
-            $this
-                ->get('elcodi.manager.customer')
-                ->register($customer);
+				$exists = $this->get('best365.manager.customer')
+					->customerExists($customer->getPhone(), $customer->getEmail());
+        		if ($exists) {
+					$unique = false;
+				} else {
+					$customerManager = $this->get('elcodi.object_manager.customer');
+					$customerManager->persist($customer);
+					$customerManager->flush($customer);
 
-			// initialize customer membership
-			$this->get('best365.manager.customer')->initializeMembership($customer);
+					$this
+						->get('elcodi.manager.customer')
+						->register($customer);
 
-            return $this->redirectToRoute('best365_store_homepage');
+					// initialize customer membership
+					$this->get('best365.manager.customer')->initializeMembership($customer);
+
+					return $this->redirectToRoute('best365_store_homepage');
+				}
+			} else {
+				$missing = true;
+			}
         }
 
 		$active_locale = $this
@@ -132,7 +149,9 @@ class Best365SecurityController extends SecurityController
             'Best365Bundle:User:user.register.html.twig',
             [
                 'form' => $registerFormView,
-				'activeLocale' => $active_locale
+				'activeLocale' => $active_locale,
+				'missing' => $missing,
+				'unique' => $unique
             ]
         );
     }
