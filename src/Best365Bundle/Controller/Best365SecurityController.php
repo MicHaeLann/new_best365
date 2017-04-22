@@ -101,8 +101,6 @@ class Best365SecurityController extends SecurityController
      */
     public function registerAction(CustomerInterface $customer, FormView $registerFormView, $isValid)
     {
-    	$missing = false;
-    	$unique = true;
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
         if ($authorizationChecker->isGranted('ROLE_CUSTOMER')) {
@@ -111,33 +109,18 @@ class Best365SecurityController extends SecurityController
 
         // register user if form validation match
         if ($isValid) {
-        	if ((!empty($customer->getEmail()) || !empty($customer->getPhone()))
-				&& (intval($customer->getPhone()) == $customer->getPhone())) {
-        		if (empty($customer->getEmail())) {
-        			$customer->setEmail($this->container->getParameter('mailer_user'));
-				}
+			$customerManager = $this->get('elcodi.object_manager.customer');
+			$customerManager->persist($customer);
+			$customerManager->flush($customer);
 
-				$exists = $this->get('best365.manager.customer')
-					->customerExists($customer->getPhone(), $customer->getEmail());
-        		if ($exists) {
-					$unique = false;
-				} else {
-					$customerManager = $this->get('elcodi.object_manager.customer');
-					$customerManager->persist($customer);
-					$customerManager->flush($customer);
+			$this
+				->get('elcodi.manager.customer')
+				->register($customer);
 
-					$this
-						->get('elcodi.manager.customer')
-						->register($customer);
+			// initialize customer membership
+			$this->get('best365.manager.customer')->initializeMembership($customer);
 
-					// initialize customer membership
-					$this->get('best365.manager.customer')->initializeMembership($customer);
-
-					return $this->redirectToRoute('best365_store_homepage');
-				}
-			} else {
-				$missing = true;
-			}
+			return $this->redirectToRoute('best365_store_homepage');
         }
 
 		$active_locale = $this
@@ -150,8 +133,6 @@ class Best365SecurityController extends SecurityController
             [
                 'form' => $registerFormView,
 				'activeLocale' => $active_locale,
-				'missing' => $missing,
-				'unique' => $unique
             ]
         );
     }

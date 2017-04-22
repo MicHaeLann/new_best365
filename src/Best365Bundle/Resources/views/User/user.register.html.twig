@@ -3,22 +3,11 @@
 {% block prefooter %}
 <div class="row login-content-container">
     <p class="login-title">
-        {{ "template.store_template_bundle.user.register.register"|trans }}
+        {{ "template.store_template_bundle.user.login.create_new_account"|trans }}
     </p>
-    {% if missing or not unique %}
-        <div class="alert alert-danger">
-            <p>
-                {% if missing %}
-                    {{ 'template.store_template_bundle.user.register.missing_phone_or_email'|trans }}
-                {% elseif not unique %}
-                    {{ 'template.store_template_bundle.user.register.not_unique'|trans }}
-                {% endif %}
-            </p>
-        </div>
-    {% endif %}
     {{ form_start(form) }}
-    {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255 } }) }}
     {{ form_row(form.email, { "attr": { "class": "form-control", "length": 255 } }) }}
+    {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255 } }) }}
     {% if activeLocale == "zh-CN" %}
         {{ form_row(form.lastName, { "attr": { "class": "form-control", "length": 255 } }) }}
         {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}

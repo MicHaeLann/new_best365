@@ -256,10 +256,6 @@ template:
                 login_with_social: 'Login with your social accounts'
                 unregistered: 'New to Best365?'
                 registered: 'Already have an account?'
-            register:
-                missing_phone_or_email: 'Please enter phone or email.'
-                not_unique: 'Email/Phone Exists.'
-                register: Mobile/Email Sign Up
             nav:
                 create_new_account: 'Create new account'
                 login: Login

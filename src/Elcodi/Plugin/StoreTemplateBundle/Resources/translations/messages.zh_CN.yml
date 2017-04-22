@@ -256,10 +256,6 @@ template:
                 login_with_social: '第三方登录'
                 unregistered: '第一次光顾我们？'
                 registered: '已有账号？'
-            register:
-                register: 手机／邮箱注册
-                not_unique: '手机／邮箱已存在。'
-                missing_phone_or_email: '请输入邮箱或电话注册。'
             nav:
                 create_new_account: '注册'
                 login: 登录
