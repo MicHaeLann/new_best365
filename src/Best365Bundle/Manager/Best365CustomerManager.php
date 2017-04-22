@@ -11,6 +11,7 @@ namespace Best365Bundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Best365Bundle\Entity\CustomerMembership;
 use Elcodi\Component\User\Entity\Customer;
+use Elcodi\Component\User\Repository\CustomerRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class Best365CustomerManager
@@ -19,9 +20,15 @@ class Best365CustomerManager
 
 	private $membership;
 
-	public function __construct(EntityManager $em)
+	private $cr;
+
+	private $mail_user;
+
+	public function __construct(EntityManager $em, CustomerRepository $cr, $mail_user)
 	{
 		$this->em = $em;
+		$this->cr = $cr;
+		$this->mail_user = $mail_user;
 
 		$this->membership = $this->em
 			->getRepository('Best365Bundle\Entity\Membership')
@@ -160,5 +167,21 @@ class Best365CustomerManager
 
 		$this->em->persist($customer_membership);
 		$this->em->flush();
+	}
+	public function customerExists($phone, $email)
+	{
+		$exists = false;
+		$phone = $this->cr->findByPhone(array('phone' => $phone));
+		if ($email == $this->mail_user) {
+			if (!empty($phone)) {
+				$exists = true;
+			}
+		} else {
+			$email = $this->cr->findByEmail(array('email' => $email));
+			if (!empty($email) || !empty($phone)) {
+				$exists = true;
+			}
+		}
+		return $exists;
 	}
 }

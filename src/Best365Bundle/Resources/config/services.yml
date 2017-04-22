@@ -12,6 +12,8 @@ services:
         class: Best365Bundle\Manager\Best365CustomerManager
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@elcodi.repository.customer'
+            - '%mailer_user%'
 
     best365.manager.purchasable:
         class: Best365Bundle\Manager\PurchasableManager
