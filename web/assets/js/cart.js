@@ -36,4 +36,53 @@ $(function() {
             }
         });
     });
+
+    $("input[id^='quantity-']").change(function(){
+        var lid = this.id.substring(9);
+        var amount = $(this).val();
+        if (amount <= 0) {
+            amount = 1;
+        }
+        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_update_line', {lid: lid, quantity: amount});
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result){
+                if (result == 'success') {
+                    var display = $("#cart-amount").html();
+                    // update cart amount display
+                    label.fadeOut();
+                    setTimeout(function() {
+                        $("#cart-amount").html(amount);
+                    }, 500);
+                    label.fadeIn();
+
+                    // update line amount
+                    var unitPrice = $("#unit-price-" + lid).html().trim();
+                    var price = unitPrice.replace(/[^\d.]/g, '');
+                    var index = unitPrice.indexOf(price);
+                    var linePrice = unitPrice.substring(0, index) + price * amount;
+                    $("#line-price-"+lid).html(linePrice);
+
+                    // update cart amount
+                    var cartPrice = 0;
+                    $("span[id^='line-price-']").each(function() {
+                        console.log($(this).html());
+                        cartPrice += parseFloat($(this).html().replace(/[^\d.]/g, ''));
+                    });
+                    $("#cart-price").html(unitPrice.substring(0, index) + cartPrice);
+
+                } else {
+                    alert('failed to add product to cart.');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+                alert('failed to add product to cart.');
+            }
+        });
+
+    })
 });

@@ -81,9 +81,6 @@ class CartType extends AbstractType
                 'required' => true,
                 'label'    => false,
             ])
-            ->add('update', 'submit', [
-                'label' => 'Update basket',
-            ])
             ->setAction(
                 $this
                     ->router

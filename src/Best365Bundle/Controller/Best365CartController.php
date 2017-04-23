@@ -2,6 +2,7 @@
 
 namespace Best365Bundle\Controller;
 
+use Elcodi\Component\Cart\Entity\CartLine;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as AnnotationEntity;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -284,7 +285,6 @@ class Best365CartController extends CartController
 		$purchasable = $this
 			->get('elcodi.repository.purchasable')
 			->find($id);
-
 		if ($purchasable instanceof PurchasableInterface) {
 			$this
 				->get('elcodi.manager.cart')
@@ -296,6 +296,52 @@ class Best365CartController extends CartController
 
 			$res = new Response('success');
 		}
+
+		return $res;
+	}
+
+	/**
+	 * Update cart line data
+	 *
+	 * @param CartInterface $cart    	Cart
+	 * @param integer       $lid      	Cart line Id
+	 * @param integer		$quantity	Purchasable Quantity
+	 *
+	 * @return Response res
+	 *
+	 * @Route(
+	 *      path = "/update/{lid}/{quantity}",
+	 *      name = "best365_store_cart_update_line",
+	 *      requirements = {
+	 *          "lid": "\d+",
+	 *     		"quantity": "\d+"
+	 *      },
+	 *      methods = {"GET"},
+	 *      options={"expose"=true}
+	 * )
+	 *
+	 * @AnnotationEntity(
+	 *      class = {
+	 *          "factory" = "elcodi.wrapper.cart",
+	 *          "method" = "get",
+	 *          "static" = false,
+	 *      },
+	 *      name = "cart"
+	 * )
+	 */
+	public function updateLineAction(CartInterface $cart, $lid, $quantity)
+	{
+		$res = new Response('failed');
+		foreach ($cart->getCartLines() as $v) {
+			if ($v->getId() == $lid) {
+				$cartLine = $v;
+				break;
+			}
+		}
+
+		$this->get('elcodi.manager.cart')
+			->setCartLineQuantity($cartLine, (int) $quantity);
+		$res = new Response('success');
 
 		return $res;
 	}
