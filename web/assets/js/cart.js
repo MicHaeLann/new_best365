@@ -61,7 +61,7 @@ $(function() {
                     var unitPrice = $("#unit-price-" + lid).html().trim();
                     var price = unitPrice.replace(/[^\d.]/g, '');
                     var index = unitPrice.indexOf(price);
-                    var linePrice = unitPrice.substring(0, index) + price * amount;
+                    var linePrice = unitPrice.substring(0, index) + (price * amount).toFixed(2);
                     $("#line-price-"+lid).html(linePrice);
 
                     // update cart amount
@@ -70,7 +70,7 @@ $(function() {
                         console.log($(this).html());
                         cartPrice += parseFloat($(this).html().replace(/[^\d.]/g, ''));
                     });
-                    $("#cart-price").html(unitPrice.substring(0, index) + cartPrice);
+                    $("#cart-price").html(unitPrice.substring(0, index) + cartPrice.toFixed(2));
 
                 } else {
                     alert('failed to add product to cart.');
