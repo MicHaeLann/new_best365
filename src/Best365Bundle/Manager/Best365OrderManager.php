@@ -254,7 +254,7 @@ class Best365OrderManager
 		$shipping_method = $this->shippingWrapper->getOneById($cart, $cart->getShippingMethod());
 
 		// reset shipping amount
-		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight/1000);
+		$shipping_amount = $shipping_method->getPrice()->multiply(ceil($cart_weight / 100) / 10);
 		$shipping_amount = $this->currencyConverter->convertMoney($shipping_amount, $cart->getAmount()->getCurrency());
 		$order = $cart->getOrder();
 		$order->setShippingAmount($shipping_amount);

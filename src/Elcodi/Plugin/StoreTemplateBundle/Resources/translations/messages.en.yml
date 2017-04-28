@@ -109,7 +109,13 @@ template:
             view:
                 category: Category
         checkout:
+            summary:
+                summary: Summary
+                delivery: Delivery Information
+                payment: Payment Information
+                checkout: Payment Method
             address:
+                address: Address
                 add_new_address: 'Add new address'
                 payment: Payment
                 select_address: 'Select delivery and billing address'

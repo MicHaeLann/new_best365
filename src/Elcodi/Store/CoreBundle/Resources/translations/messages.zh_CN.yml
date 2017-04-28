@@ -33,7 +33,9 @@ store:
                 send:
                     label: '保存'
                 state:
-                    label: 省
+                    label: 省份
+                region:
+                    label: 地区
         save:
             response_ok: '地址已保存'
         select_address_type: '选择 %1 地址'

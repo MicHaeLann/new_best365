@@ -8,6 +8,7 @@ use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Services\CartManager;
 use Elcodi\Component\Cart\Wrapper\CartWrapper;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
+use Elcodi\Component\Shipping\Wrapper\ShippingWrapper;
 use Elcodi\Component\User\Entity\Customer;
 use Best365Bundle\Manager\PurchasableManager;
 
@@ -44,6 +45,11 @@ class Best365CartManager
 	private $currencyConverter;
 
 	/**
+	 * @var ShippingWrapper
+	 */
+	private $shippingWrapper;
+
+	/**
 	 * Best365CartManager constructor.
 	 * @param CartManager $cartManager
 	 * @param CartWrapper $cartWrapper
@@ -51,6 +57,7 @@ class Best365CartManager
 	 * @param CartEventDispatcher $cartEventDispatcher
 	 * @param \Best365Bundle\Manager\PurchasableManager $purchasableManager
 	 * @param CurrencyConverter $currencyConverter
+	 * @param ShippingWrapper $shippingWrapper
 	 */
 	public function __construct(
 		CartManager $cartManager,
@@ -58,7 +65,8 @@ class Best365CartManager
 		CartFactory $cartFactory,
 		CartEventDispatcher $cartEventDispatcher,
 		PurchasableManager $purchasableManager,
-		CurrencyConverter $currencyConverter
+		CurrencyConverter $currencyConverter,
+		ShippingWrapper $shippingWrapper
 	)
 	{
 		$this->cartManager = $cartManager;
@@ -67,6 +75,7 @@ class Best365CartManager
 		$this->cartEventDispatcher = $cartEventDispatcher;
 		$this->purchasableManager = $purchasableManager;
 		$this->currencyConverter = $currencyConverter;
+		$this->shippingWrapper = $shippingWrapper;
 	}
 
 	/**
@@ -107,7 +116,6 @@ class Best365CartManager
 
 				// set line amount
 				$line->setAmount($purchasable->getPrice()->multiply($line->getQuantity()));
-
 				if ($total == '') {
 					$total = $line->getAmount();
 				} else {
@@ -121,9 +129,8 @@ class Best365CartManager
 					$total = $total->add($line_amount);
 				}
 			}
-			$cart->setAmount($total);
+			$cart->setPurchasableAmount($total);
 		}
-
 		return $cart;
 	}
 }

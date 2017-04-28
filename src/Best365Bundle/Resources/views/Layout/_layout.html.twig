@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}" />
     <!-- External Font assets -->
     <link href="//fonts.googleapis.com/css?family=Bree+Serif" rel="stylesheet" type="text/css" />
 {% endblock head_style %}
@@ -41,8 +41,9 @@
 
 {% block foot_script %}
 <script src="{{ asset('assets/js/jquery-3.0.0.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.qrcode.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.qrcode.min.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 {#<script src="{{ asset('/js/fos_js_routes.js') }}"></script>#}
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -51,9 +52,6 @@
         app.request.attributes.get('_route') != "best365_store_password_remember" and
         app.request.attributes.get('_route') != "best365_store_password_recover" %}
     <script src="{{ asset('assets/js/search.js') }}"></script>
-{% endif %}
-{% if app.request.attributes.get('_route') == "best365_store_checkout_shipping" %}
-    <script src="{{ asset('assets/js/checkout.js') }}"></script>
 {% endif %}
 {% if app.request.attributes.get('_route') == "best365_store_product_view" %}
     <script src="{{ asset('assets/js/product.js') }}"></script>

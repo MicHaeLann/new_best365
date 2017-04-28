@@ -2,110 +2,179 @@
 
 {% block content %}
     <div class="container">
-        <div class="row padding-0-30">
-            <p class="page-title">{{ 'template.store_template_bundle.cart.view.title'|trans }}</p>
-            {% if cart.totalItemNumber > 0 %}
-                {{ form_start(form, {'action': path('best365_store_cart_update') }) }}
-                <div id="cart-display">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th colspan="2">
-                                {{ 'template.store_template_bundle.cart.item.item'|trans }}
-                            </th>
-                            <th>
-                                {{ 'template.store_template_bundle.cart.item.units'|trans }}
-                            </th>
-                            <th>
-                                {{ 'template.store_template_bundle.cart.item.price'|trans }}
-                            </th>
-                            <th>
-                                {{ 'template.store_template_bundle.cart.item.total'|trans }}
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for line in form.cartLines %}
-                            {% set lineObject = line.vars.data %}
-                            {% set purchasable = lineObject.purchasable %}
-                            {% set masterPurchasable = purchasable.product ?: purchasable %}
-                            {% set purchasableRouteName = 'best365_store_product_view' %}
-                            {% set purchasableRoute = url(purchasableRouteName, { id: masterPurchasable.id }) %}
-                            {% set purchasableName = purchasable|purchasable_name %}
-                            {% set validImage = purchasable|valid_image %}
-                            {% set purchasablePrice = purchasable.resolvedPrice %}
+        <input type="hidden" id="cart-item-number" value="{{ cart.totalItemNumber }}" />
+        {% if cart.totalItemNumber == 0 %}
+            <div class="empty-page" data-test="empty-cart">
+                <h4>
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                    {{ "template.store_template_bundle.cart.view.your_cart_is_empty"|trans}}
+                </h4>
+                <a class="btn btn-success" href="{{ url('best365_store_homepage') }}">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    {{ 'template.store_template_bundle.cart.view.continue_shopping'|trans }}
+                </a>
+            </div>
+        {% else %}
+            <div id="cart-display" class="col-sm-9">
+                <p class="page-title">{{ 'template.store_template_bundle.cart.view.title'|trans }}</p>
+                <table class="table margin-top-20">
+                    <tbody>
+                        {% for line in cart.cartLines %}
                             <tr>
-                                <td>
-                                    <a href="{{ purchasableRoute }}">
-                                        <img src="{{ validImage ? validImage|resize({
-                                            width: 100,
-                                            height: 100,
-                                            type: 5 }) : '//placehold.it/100x100'
-                                        }}" alt="{{ purchasableName }}" class="product-thumbnail" />
-                                    </a>
+                                {% set purchasable = line.purchasable %}
+                                {% set purchasable = purchasable.product ?: purchasable %}
+                                {% set purchasableRoute = url('best365_store_product_view', { id: purchasable.id }) %}
+                                {% set productName = purchasable|purchasable_name %}
+                                {% set validImage = purchasable|valid_image %}
+                                <td class="max-w">
+                                    <img src="{{ validImage ? validImage|resize({
+                                        width: 150,
+                                        height: 150,
+                                        type: 5 }) : '//placehold.it/150x150'
+                                    }}" alt="{{ product.name }}" />
                                 </td>
                                 <td>
-                                    <a href="{{ purchasableRoute }}" class="sub-theme-link">{{ purchasableName }}</a>
+                                    <div>
+                                        <a href="{{ purchasableRoute }}" class="main-theme-link bold">{{ productName }}</a>
+                                    </div>
+                                    <div class="margin-top-15">
+                                        <input type="number" id="quantity-{{ line.id }}" class="unit-display form-control" min="1" value="{{ line.quantity }}" />
+                                        <span class="stock-container margin-left-15">
+                                            {% if line.quantity <= purchasable.stock %}
+                                                <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+                                                {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
+                                            {% else %}
+                                                <span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                                                {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="margin-top-15">
+                                        <span id="unit-price-{{ line.id }}" class="sub-theme-font">
+                                            {{ line.purchasableAmount|print_convert_money() }}
+                                        </span>
+                                    </div>
+                                    <div class="margin-top-15">
+                                        <a href="{{ url('best365_store_cartline_remove', { id: line.id }) }}" class="main-theme-link">
+                                            {{ 'template.store_template_bundle.cart.item.remove'|trans }}
+                                        </a>
+                                    </div>
+                                    <input type="hidden" id="weight-{{ line.id }}" value="{{ purchasable.weight }}" />
                                 </td>
                                 <td>
-                                    {{ form_row(line.quantity, {'id': 'quantity-'~lineObject.id, 'min': 1,'attr': {'class': 'unit-display', 'min': 1,'id': 'form_person_edit' }}) }}
-                                </td>
-                                <td>
-                                    <span id="unit-price-{{ lineObject.id }}">
-                                        {{ purchasablePrice|print_convert_money() }}
+                                    <span id="line-price-{{ line.id }}" class="main-theme-font bold font-18">
+                                        {{ line.amount|print_convert_money() }}
                                     </span>
-                                </td>
-                                <td>
-                                    <span id="line-price-{{ lineObject.id }}">
-                                        {{ lineObject.amount|print_convert_money() }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ url('best365_store_cartline_remove', { id: lineObject.id }) }}" class="btn btn-danger btn-xs">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
-                        </tbody>
-                    </table>
-                    <p class="align-right">
-                        {{ 'template.store_template_bundle.cart.view.total'|trans }}
-                        <span id="cart-price">
-                            {{ cart.amount|print_convert_money() }}
-                        </span>
-                    </p>
-                </div>
 
-                <div id="cart-actions">
-                    <a class="float-left btn btn-success" href="{{ url('best365_store_homepage') }}">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        {{ 'template.store_template_bundle.cart.view.continue_shopping'|trans }}
-                    </a>
-                    <a class="float-right btn btn-success margin-left-10" href="{{ url('best365_store_checkout_shipping') }}" data-test="checkout-button">
-                        {{ 'template.store_template_bundle.cart.view.checkout'|trans }} &nbsp;
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-                    <a class="float-right btn btn-info" href="{{ url('best365_store_cart_empty') }}" data-test="do-empty-cart">
-                        {{ 'template.store_template_bundle.cart.view.empty_basket'|trans }}
-                    </a>
-                </div>
-                {{ form_end(form) }}
-            {% else %}
-                <div class="empty-page" data-test="empty-cart">
-                    <h4>
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                        {{ "template.store_template_bundle.cart.view.your_cart_is_empty"|trans}}
-                    </h4>
-                    <a class="btn btn-success" href="{{ url('best365_store_homepage') }}">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        {{ 'template.store_template_bundle.cart.view.continue_shopping'|trans }}
-                    </a>
-                </div>
-            {% endif %}
-        </div>
+                    </tbody>
+                </table>
+                <a class="float-right btn btn-success" href="{{ url('best365_store_cart_empty') }}" data-test="do-empty-cart">
+                    {{ 'template.store_template_bundle.cart.view.empty_basket'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-3 checkout-bg">
+                <form method="post" action="{{ url('best365_store_save_shipping') }}">
+                    <p class="font-18 bold">
+                        {{ 'template.store_template_bundle.checkout.summary.summary'|trans }}
+                    </p>
+                    <hr class="checkout-hr">
+                    <p class="bold">
+                        {{ 'template.store_template_bundle.checkout.summary.delivery'|trans }}
+                    </p>
+                    <div>
+                        <p class="float-left">
+                            {{ 'template.store_template_bundle.checkout.address.address'|trans }}
+                        </p>
+                        <div class="float-right">
+                            <a id="new-address" class="main-theme-link" href="javascript:void(0)">
+                                {{ 'template.store_template_bundle.checkout.address.add_new_address'|trans }}
+                            </a>
+                        </div>
+                        <select name="address" class="form-control">
+                            {% for address in addresses %}
+                                <option value="{{ address.id }}">
+                                    {% if address.locale == 'cn' %}
+                                        {% set addr =  address.city.country ~ address.city.state ~ address.address%}
+                                    {% else %}
+                                        {% set addr =  address.address ~ ', ' ~ address.city.state ~ ', ' ~ address.city.country%}
+                                    {% endif %}
+                                    {% if activeLocale == 'zh-CN' %}
+                                        {{ address.recipientSurname }}{{ address.recipientName }}, {{ addr }}, {{ address.phone }}
+                                    {% else %}
+                                        {{ address.recipientName }} {{ address.recipientSurname }}, {{ addr }}, {{ address.phone }}
+                                    {% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="margin-top-10">
+                        <p>
+                            {{ 'template.store_template_bundle.checkout.payment.shipping_carrier_method'|trans }}
+                        </p>
+                        <select id="shipping-method" name="shipping-method" class="form-control">
+                            {% for shipping_method in shipping_methods %}
+                                <option value="{{ shipping_method.id }}">
+                                    {{ shipping_method.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% for shipping_method in shipping_methods  %}
+                            <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}-price" />
+                        {% endfor %}
+                        <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
+                    </div>
+                    <hr class="checkout-hr margin-top-20">
+                    <p class="bold">
+                        {{ 'template.store_template_bundle.checkout.summary.payment'|trans }}
+                    </p>
+                    <div>
+                    <span class="bold">
+                        <u>{{ 'template.store_template_bundle.shipping.subtotal'|trans }}:</u>
+                    </span>
+                    <span id="cart-price">
+                        {{ cart.amount|print_convert_money() }}
+                    </span>
+                    </div>
+                    <div class="margin-top-10">
+                    <span class="bold">
+                        <u>{{ 'template.store_template_bundle.shipping.carrier'|trans }}:</u>
+                    </span>
+                    <span id="carrier-price">
+                    </span>
+                    </div>
+                    <div class="margin-top-10">
+                    <span class="bold">
+                        <u>{{ 'template.store_template_bundle.shipping.total'|trans }}:</u>
+                    </span>
+                    <span id="total-price">
+                    </span>
+                    </div>
+                    <hr class="checkout-hr">
+                    <p class="bold">
+                        {{ 'template.store_template_bundle.checkout.summary.checkout'|trans }}
+                    </p>
+                    <select name="payment-method" class="form-control">
+                        <option value="poli"{% if activeCurrency.iso == 'NZD' %} selected {% endif %}>
+                            {{ 'template.store_template_bundle.checkout.payment.poli'|trans }}
+                        </option>
+                        <option value="wechat"{% if activeCurrency.iso == 'CNY' %} selected {% endif %}>
+                            {{ 'template.store_template_bundle.checkout.payment.wechat'|trans }}
+                        </option>
+                        <option value="transfer">
+                            {{ 'template.store_template_bundle.checkout.payment.transfer'|trans }}
+                        </option>
+                    </select>
+                    <button type="submit" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
+                        {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
+                    </button>
+                </form>
+            </div>
+            <div id="edit-address" class="container" title="{{ 'template.store_template_bundle.address.edit.add_new_address'|trans }}" style="overflow: auto">
+                {% include '@Best365/User/address.item.html.twig' with { form: form, cart: true } %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

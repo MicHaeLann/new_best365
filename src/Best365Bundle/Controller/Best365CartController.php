@@ -3,6 +3,7 @@
 namespace Best365Bundle\Controller;
 
 use Elcodi\Component\Cart\Entity\CartLine;
+use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as AnnotationEntity;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,15 +33,17 @@ class Best365CartController extends CartController
 	/**
 	 * Cart view
 	 *
-	 * @param FormView      $formView Form view
-	 * @param CartInterface $cart     Cart
+	 * @param AddressInterface  $address 	Address
+	 * @param CartInterface 	$cart     	Cart
+	 * @param FormView      	$formView 	Form view
+	 * @param boolean       	$isValid  	If the processed form is valid
 	 *
 	 * @return Response Response
 	 *
 	 * @Route(
 	 *      path = "",
 	 *      name = "best365_store_cart_view",
-	 *      methods = {"GET"},
+	 *      methods = {"GET", "POST"},
 	 *
 	 * )
 	 *
@@ -52,27 +55,88 @@ class Best365CartController extends CartController
 	 *      },
 	 *      name = "cart"
 	 * )
+	 *
+	 * @AnnotationEntity(
+	 *      class = {
+	 *          "factory" = "elcodi.factory.address",
+	 *          "method" = "create",
+	 *          "static" = false
+	 *      },
+	 *      name = "address",
+	 *      persist = false
+	 * )
+	 *
 	 * @AnnotationForm(
-	 *      class = "store_cart_form_type_cart",
-	 *      name  = "formView",
-	 *      entity = "cart",
+	 *      class         = "store_geo_form_type_address",
+	 *      name          = "formView",
+	 *      entity        = "address",
+	 *      handleRequest = true,
+	 *      validate      = "isValid"
 	 * )
 	 */
-	public function viewAction(FormView $formView, CartInterface $cart)
+	public function viewCartAction(AddressInterface $address, CartInterface $cart, FormView $formView, $isValid)
 	{
+		if ($isValid) {
+			// User is adding a new address
+			$best365_address = $this->get('best365.manager.address')
+				->generateAddress($address);
+
+			$addressManager = $this->get('elcodi.object_manager.address');
+			$addressManager->persist($best365_address);
+			$addressManager->flush();
+
+			$this
+				->get('elcodi.wrapper.customer')
+				->get()
+				->addAddress($best365_address);
+
+			$this->get('elcodi.object_manager.customer')
+				->flush();
+
+			$translator = $this->get('translator');
+			$this->addFlash(
+				'success', $translator
+				->trans('store.address.save.response_ok')
+			);
+
+			return $this->redirect(
+				$this->generateUrl('best365_store_cart_view')
+			);
+		}
+
+		// get shipping methods
 		$cart = $this->get('best365.manager.cart')
 			->regenerate($cart);
 
-		// subtract shipping amount
-		$shipping_price = $this->get('elcodi.converter.currency')
-			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
-		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
+		$shippingMethods = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->get($cart);
+
+		// set amount
+		$cart->setAmount($cart->getPurchasableAmount());
+
+		// get delivery info
+		$addresses = $this
+			->get('elcodi.wrapper.customer')
+			->get()
+			->getAddresses();
+
+		$addressesFormatted = [];
+		foreach ($addresses as $address) {
+			$address = $this
+				->get('elcodi.formatter.address')
+				->toArray($address);
+			$address['locale'] = mb_strlen($address['address'], 'utf8') != strlen($address['address']) ? 'cn' : 'en';
+			$addressesFormatted[] = $address;
+		}
 
 		return $this->render(
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
-				'cart'		=> $cart,
-				'form'		=> $formView
+				'cart'					=> $cart,
+				'addresses' 			=> $addressesFormatted,
+				'shipping_methods'      => $shippingMethods,
+				'form'					=> $formView
 			]
 		);
 	}

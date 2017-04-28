@@ -223,15 +223,12 @@ class Best365CheckoutController extends CheckoutController
 
 		// set shipping method
 		$cart = $this
-			->get('best365.manager.cart')
-			->regenerate($this
-				->get('elcodi.wrapper.cart')
-				->get()
-			);
+			->get('elcodi.wrapper.cart')
+			->get();
 		$cart->setShippingMethod($shipping_method);
-		$shipping_price = $this->get('elcodi.converter.currency')
-			->convertMoney($cart->getShippingAmount(), $cart->getAmount()->getCurrency());
-		$cart->setAmount($cart->getAmount()->subtract($shipping_price));
+		$cart = $this
+			->get('best365.manager.cart')
+			->regenerate($cart);
 
 		$cartObjectManager = $this
 			->get('elcodi.object_manager.cart');

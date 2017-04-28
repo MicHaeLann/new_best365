@@ -34,6 +34,8 @@ store:
                     label: 'Save address'
                 state:
                     label: State
+                region:
+                    label: Region
         save:
             response_ok: 'Address saved'
         select_address_type: 'Select a %1 address'

@@ -15,7 +15,7 @@ function locationSelectors() {
                 $.ajax(selectorsUrl, {
                     success: function (response) {
                         $(container).replaceWith(response);
-
+                        console.log(optionSelected.parent());
                         if (undefined != optionSelected.parent().data('max-type')) {
                             document.getElementById('store_geo_form_type_address_city').value = optionSelectedValue;
                         }

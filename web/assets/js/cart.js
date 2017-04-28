@@ -1,5 +1,60 @@
 $(function() {
     var label = $("#cart-label");
+    var url = $(location).attr('href');
+    var index = url.indexOf('cart');
+    if (index > 0 && $("#cart-item-number").val() > 0) {
+        // add new address
+        $("#edit-address").dialog({
+            autoOpen: false,
+            width: 350,
+            height: 400,
+            // open: function(event, ui) {
+            //     $(".ui-dialog-titlebar-close", ui.dialog | ui);
+            // }
+
+        });
+
+        $("#new-address").click(function(){
+            $("#edit-address").dialog("open");
+            return false;
+        })
+
+        setOrderInfo();
+    }
+
+    function setOrderInfo()
+    {
+        // get cart weight
+        var weight = 0;
+        $("input[id^='weight-']").each(function() {
+            var index = this.id.lastIndexOf('-');
+            var lid = this.id.substring(index + 1);
+            var amount = $("#quantity-" + lid).val();
+            weight = weight + parseInt($(this).val() * amount);
+        })
+
+        // set minimum weight 1kg
+        if (weight < 1000 && weight > 0) {
+            weight = 1000;
+        }
+
+        // ceiling weight to 0.1kg
+        weight = Math.ceil(weight / 100) / 10;
+
+        // set delivery fee display
+        var id = $("#shipping-method").val() + '-price';
+        var shippingPrice = $("#" + id).val();
+        var deliveryFee = shippingPrice.replace(/[^0-9\.]+/g,"") * weight;
+        var deliveryFeeDisplay = shippingPrice.replace(/[0-9\.]+/g,"") +  deliveryFee.toFixed(2);
+        $("#carrier-price").html(deliveryFeeDisplay);
+
+        // set order total price
+        var subtotal = $("#cart-price").html().replace(/[^0-9\.]+/g,"");
+        var total = parseFloat(subtotal) + deliveryFee;
+        var totalDisplay = shippingPrice.replace(/[0-9\.]+/g,"") + total.toFixed(2);
+        $("#total-price").html(totalDisplay);
+    }
+
     $("a[id^='add-cart']").click(function(event){
         var id = this.id.substring(9);
         var display = $("#cart-amount").html();
@@ -37,7 +92,9 @@ $(function() {
         });
     });
 
-    $("input[id^='quantity-']").change(function(){
+    $("input[id^='quantity-']").keypress(function(event){
+        event.preventDefault();
+    }).change(function(){
         var lid = this.id.substring(9);
         var amount = $(this).val();
         if (amount <= 0) {
@@ -53,7 +110,11 @@ $(function() {
                     // update cart amount display
                     label.fadeOut();
                     setTimeout(function() {
-                        $("#cart-amount").html(amount);
+                        var cartAmount = 0;
+                        $("input[id^='quantity-']").each(function() {
+                            cartAmount = cartAmount + parseInt($(this).val());
+                        })
+                        $("#cart-amount").html(cartAmount);
                     }, 500);
                     label.fadeIn();
 
@@ -67,10 +128,12 @@ $(function() {
                     // update cart amount
                     var cartPrice = 0;
                     $("span[id^='line-price-']").each(function() {
-                        console.log($(this).html());
                         cartPrice += parseFloat($(this).html().replace(/[^\d.]/g, ''));
                     });
                     $("#cart-price").html(unitPrice.substring(0, index) + cartPrice.toFixed(2));
+
+                    // update order info
+                    setOrderInfo();
 
                 } else {
                     alert('failed to add product to cart.');
@@ -83,6 +146,5 @@ $(function() {
                 alert('failed to add product to cart.');
             }
         });
-
     })
 });

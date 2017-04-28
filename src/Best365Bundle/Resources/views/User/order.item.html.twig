@@ -1,10 +1,7 @@
 {% set purchasable = line.purchasable %}
-{% set purchasable = purchasable.product ?: purchasable %}
-{% set purchasableRouteName = purchasable.products ? 'store_purchasable_pack_view' : 'best365_store_product_view' %}
-{% set purchasableRoute = url(purchasableRouteName, { slug: purchasable.slug, id: purchasable.id }) %}
+{% set purchasableRoute = url('best365_store_product_view', { id: purchasable.id }) %}
 {% set productName = purchasable|purchasable_name %}
 {% set validImage = purchasable|valid_image %}
-
 <tr>
     <td>
         <img src="{{ validImage ? validImage|resize({
