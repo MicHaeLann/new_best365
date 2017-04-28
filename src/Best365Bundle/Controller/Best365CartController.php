@@ -76,6 +76,12 @@ class Best365CartController extends CartController
 	 */
 	public function viewCartAction(AddressInterface $address, CartInterface $cart, FormView $formView, $isValid)
 	{
+		$active_locale = $this
+			->get('request_stack')
+			->getMasterRequest()
+			->getLocale();
+
+
 		if ($isValid) {
 			// User is adding a new address
 			$best365_address = $this->get('best365.manager.address')
@@ -136,7 +142,8 @@ class Best365CartController extends CartController
 				'cart'					=> $cart,
 				'addresses' 			=> $addressesFormatted,
 				'shipping_methods'      => $shippingMethods,
-				'form'					=> $formView
+				'form'					=> $formView,
+				'activeLocale'			=> $active_locale
 			]
 		);
 	}
