@@ -2,25 +2,18 @@ $(function() {
     var label = $("#cart-label");
 
     if ($(location).attr('href').indexOf('cart') > 0 && $("#cart-item-number").val() > 0) {
-        console.log(1111);
-        debugger;
         // add new address
         $("#edit-address").dialog({
             autoOpen: false,
             width: 350,
             height: 400
         });
-        console.log('initialize dialog');
-        debugger;
 
         $("#new-address").click(function(event){
             console.log(1122);
             event.preventDefault();
             $("#edit-address").dialog("open");
         })
-        console.log('add click event');
-        debugger;
-
         setOrderInfo();
 
     }
@@ -149,5 +142,9 @@ $(function() {
                 alert('failed to add product to cart.');
             }
         });
+    })
+
+    $("#shipping-method").change(function(event) {
+        setOrderInfo();
     })
 });
