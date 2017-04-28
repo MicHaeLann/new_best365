@@ -15,7 +15,4 @@
 {% else %}
     {% include '@Best365/User/address.item.html.twig' with {'form' : form, 'cart': cart} %}
 {% endif %}
-{% javascripts '@StoreGeoBundle/Resources/public/js/LocationSelectors.js' %}
-<script src="{{ asset_url }}"></script>
-{% endjavascripts %}
 {% endblock %}

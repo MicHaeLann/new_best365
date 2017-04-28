@@ -1,25 +1,28 @@
 $(function() {
     var label = $("#cart-label");
-    var url = $(location).attr('href');
-    var index = url.indexOf('cart');
-    if (index > 0 && $("#cart-item-number").val() > 0) {
+
+    if ($(location).attr('href').indexOf('cart') > 0 && $("#cart-item-number").val() > 0) {
+        console.log(1111);
+        debugger;
         // add new address
         $("#edit-address").dialog({
             autoOpen: false,
             width: 350,
-            height: 400,
-            // open: function(event, ui) {
-            //     $(".ui-dialog-titlebar-close", ui.dialog | ui);
-            // }
-
+            height: 400
         });
+        console.log('initialize dialog');
+        debugger;
 
-        $("#new-address").click(function(){
+        $("#new-address").click(function(event){
+            console.log(1122);
+            event.preventDefault();
             $("#edit-address").dialog("open");
-            return false;
         })
+        console.log('add click event');
+        debugger;
 
         setOrderInfo();
+
     }
 
     function setOrderInfo()
