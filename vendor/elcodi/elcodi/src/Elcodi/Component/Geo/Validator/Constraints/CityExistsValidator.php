@@ -69,7 +69,7 @@ class CityExistsValidator extends ConstraintValidator
 
         if (
             !($location instanceof LocationData) ||
-            'city' != $location->getType()
+            'state' != $location->getType()
         ) {
             $this
                 ->context

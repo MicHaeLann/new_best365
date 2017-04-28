@@ -3,9 +3,11 @@
 namespace Best365Bundle\Manager;
 
 use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
+use Elcodi\Component\Geo\Repository\LocationRepository;
 
 class Best365AddressManager
 {
+
 	/**
 	 * generate address
 	 * @param AddressInterface $address

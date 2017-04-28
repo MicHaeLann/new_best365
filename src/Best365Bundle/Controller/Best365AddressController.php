@@ -37,6 +37,15 @@ class Best365AddressController extends AddressController
      */
     const CHECKOUT_SOURCE = 'checkout';
 
+	/**
+	 * This is the max location type that we allow to select.
+	 *
+	 * @var string
+	 */
+	protected $maxLocationType = 'state';
+
+
+
     /**
      * List addresses page
      *
@@ -59,9 +68,9 @@ class Best365AddressController extends AddressController
 
         $addressesFormatted = [];
         foreach ($addresses as $address) {
-            $addressesFormatted[] =
-                $addressFormatter
-                    ->toArray($address);
+        	$address = $addressFormatter->toArray($address);
+        	$address['locale'] = mb_strlen($address['address'], 'utf8') != strlen($address['address']) ? 'cn' : 'en';
+            $addressesFormatted[] = $address;
         }
 
 		$active_locale = $this
@@ -235,7 +244,6 @@ class Best365AddressController extends AddressController
                 $this->generateUrl($redirectUrl)
             );
         }
-
 		$active_locale = $this
 			->get('request_stack')
 			->getMasterRequest()
@@ -302,4 +310,38 @@ class Best365AddressController extends AddressController
             $this->generateUrl($redirectUrl)
         );
     }
+
+	/**
+	 * Show the city selectors
+	 *
+	 * @param string $locationId The location id
+	 *
+	 * @return Response
+	 *
+	 * @Route(
+	 *      path = "/selectors/{locationId}",
+	 *      name = "best365_location_selectors",
+	 *      methods = {"GET"},
+	 *      defaults={
+	 *          "locationId"   = null
+	 *      }
+	 * )
+	 */
+	public function showCitySelectorAction($locationId)
+	{
+		$selects = $this
+			->get('elcodi_store.form.location_selector_builder')
+			->getSelects(
+				$locationId,
+				$this->maxLocationType
+			);
+
+		return $this->render(
+			'Best365Bundle:User:location.selector.html.twig',
+			[
+				'selects'         => $selects,
+				'maxLocationType' => $this->maxLocationType,
+			]
+		);
+	}
 }

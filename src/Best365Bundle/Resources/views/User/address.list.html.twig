@@ -19,9 +19,6 @@
 				{{ 'template.store_template_bundle.address.item.address'|trans }}
 			</td>
 			<td>
-				{{ 'template.store_template_bundle.address.item.postal_code'|trans }}
-			</td>
-			<td>
 				{{ 'store.address.form.fields.phone.label'|trans }}
 			</td>
 			<td>
@@ -39,10 +36,11 @@
 						{% endif %}
 					</td>
 					<td style="max-width: 300px;word-wrap: break-word;">
-						{{ address.address }}
-					</td>
-					<td>
-						{{ address.postalCode }}
+						{% if address.locale == 'cn' %}
+							{{ address.city.country }}{{ address.city.state }}{{ address.address }}
+						{% else %}
+                            {{ address.address }}, {{ address.city.state }}, {{ address.city.country }}
+						{% endif %}
 					</td>
 					<td>
 						{{ address.phone }}

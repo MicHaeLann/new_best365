@@ -1,6 +1,7 @@
 {% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
+{% if not cart %}
 <div class="col-sm-10">
 	<p class="page-title">
 		{% if app.request.attributes.get('_route') == "best365_store_address_new" %}
@@ -11,4 +12,10 @@
 	</p>
 	{% include '@Best365/User/address.item.html.twig' with {'form' : form} %}
 </div>
+{% else %}
+    {% include '@Best365/User/address.item.html.twig' with {'form' : form, 'cart': cart} %}
+{% endif %}
+{% javascripts '@StoreGeoBundle/Resources/public/js/LocationSelectors.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
 {% endblock %}
