@@ -80,6 +80,9 @@ class Best365CartController extends CartController
 			->get('request_stack')
 			->getMasterRequest()
 			->getLocale();
+		$currency = $this
+			->get('elcodi.wrapper.currency')
+			->get();
 
 
 		if ($isValid) {
@@ -143,7 +146,8 @@ class Best365CartController extends CartController
 				'addresses' 			=> $addressesFormatted,
 				'shipping_methods'      => $shippingMethods,
 				'form'					=> $formView,
-				'activeLocale'			=> $active_locale
+				'activeLocale'			=> $active_locale,
+				'activeCurrency'		=> $currency
 			]
 		);
 	}
