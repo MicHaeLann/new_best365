@@ -22,7 +22,6 @@
                         {% for line in cart.cartLines %}
                             <tr>
                                 {% set purchasable = line.purchasable %}
-                                {% set purchasable = purchasable.product ?: purchasable %}
                                 {% set purchasableRoute = url('best365_store_product_view', { id: purchasable.id }) %}
                                 {% set productName = purchasable|purchasable_name %}
                                 {% set validImage = purchasable|valid_image %}
@@ -38,8 +37,11 @@
                                         <a href="{{ purchasableRoute }}" class="main-theme-link bold">{{ productName }}</a>
                                     </div>
                                     <div class="margin-top-15">
+                                        <input type="hidden" id="stock-{{ line.id  }}" value="{{ purchasable.stock }}" />
+                                        <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
+                                        <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                                         <input type="number" id="quantity-{{ line.id }}" class="unit-display form-control" min="1" value="{{ line.quantity }}" />
-                                        <span class="stock-container margin-left-15">
+                                        <span id="stock-label" class="stock-container margin-left-15">
                                             {% if line.quantity <= purchasable.stock %}
                                                 <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                                                 {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
@@ -167,7 +169,7 @@
                             {{ 'template.store_template_bundle.checkout.payment.transfer'|trans }}
                         </option>
                     </select>
-                    <button type="submit" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
+                    <button type="submit" id="payment" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
                         {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
                     </button>
                 </form>

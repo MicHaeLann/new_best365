@@ -1,52 +1,28 @@
-<div class="row margin-top-30">
+<div class="row margin-top-30 promotion-title-border">
     <div class="promotion-title float-left">
-        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}"  class="category-font">
+        <a href="{{ url('best365_store_category_purchasables_list', { id: category.category.id }) }}"  class="category-font">
             <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
-            {{ products.category.name }}
+            {{ category.category.name }}
         </a>
     </div>
     <div class="float-right">
-        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}"  class="category-font">
+        <a href="{{ url('best365_store_category_purchasables_list', { id: category.category.id }) }}"  class="category-font">
             {{ 'template.store_template_bundle.product.more'|trans }}
             <i class="fa fa-angle-right" aria-hidden="true"></i>
         </a>
     </div>
 </div>
-<div class="row promotion-cell">
-    <div class="col-sm-2 padding-0">
-        <a href="{{ url('best365_store_category_purchasables_list', { id: products.category.id }) }}">
-            <img src="{{ asset('assets/img/promotion_' ~ products.category.id ~ '.png') }}" height="400" />
-        </a>
+{% set currentColumn = 1 %}
+{% for item in category.products %}
+    {% if currentColumn == 1 %}
+        <div class="row">
+    {% endif %}
+    <div class="col-sm-5ths margin-top-15 margin-bottom-10">
+        {% include "@Best365/Layout/_products.item.html.twig" with { "item": item} %}
     </div>
-    <div class="col-sm-8 padding-0">
-        <div class="col-sm-6">
-            <div class="row">
-                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[0]} %}
-                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[1]} %}
-            </div>
-            <div class="row promotion-item-bottom">
-                {% include "@Best365/Home/product.cell.bottom.html.twig" with {"item": products.products[2]} %}
-            </div>
+    {% set currentColumn = currentColumn + 1 %}
+    {% if currentColumn > 5 or loop.last %}
         </div>
-        <div class="col-sm-6">
-            <div class="row">
-                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[3]} %}
-                {% include "@Best365/Home/product.cell.top.html.twig" with {"item": products.products[4]} %}
-            </div>
-            <div class="row promotion-item-bottom">
-                {% include "@Best365/Home/product.cell.bottom.html.twig" with {"item": products.products[5]} %}
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-2 padding-0">
-        {% include "@Best365/Home/product.cell.right.html.twig" with {"item": products.products[6]} %}
-        <div class="promotion-item-bottom promotion-item-right padding-top-15 padding-left-30">
-            <div class="theme-font font-18">{{ 'template.store_template_bundle.product.trending'|trans }}</div>
-            {% for trending in products.trends %}
-                <a href="{{ url('best365_store_product_search', { field: trending.trends }) }}" class="trends-item">
-                    {{ trending.trends }}
-                </a>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+        {% set currentColumn = 1 %}
+    {% endif %}
+{% endfor %}

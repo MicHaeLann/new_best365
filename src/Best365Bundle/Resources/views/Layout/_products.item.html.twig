@@ -1,0 +1,45 @@
+<div class="promotion-item">
+    {% set productRoute = url('best365_store_product_view', { 'id': item.id }) %}
+    {% set productName = item|purchasable_name %}
+    <div class="promotion-item-image-padding">
+        <a href="{{ productRoute }}" target="_blank">
+            {% if product.inOffer %}<span class="product-badge">{{ 'template.store_template_bundle.product.item.offer'|trans }}</span> {% endif %}
+            {% set validImage = item|valid_image %}
+            <img class="max-width-full" src="{{ validImage ? validImage|resize({
+                'width': 180,
+                'height': 180,
+                'type': 5
+            }) : '//placehold.it/120x120'  }}" alt="{{ productName }}" />
+        </a>
+    </div>
+    <div class="promotion-item-product-title margin-top-10">
+        <a href="{{ productRoute }}" target="_blank" class="sub-theme-link">{{ productName }}</a>
+        {#<a href="{{ productRoute }}" target="_blank" class="sub-theme-link">阿税立法精神的；fleas；到了放假啊；老师的风景；拉什科肌肤的啦手机发；累计收到；了放假拉萨附近；啦手机发；阿斯顿发了撒娇的；法律界阿斯顿；了放假哒；了放假；阿里斯顿肌肤；啦手机地方；阿警方；啦手机丢了；封建时代；了放假啊；老师放假啊了；省的肌肤；了的肌肤啦手机发；啦手机了放假哒睡了；放假啊；lsdjflasj</a>#}
+    </div>
+    <div class="margin-top-5">
+        <div class="promotion-item-product-price main-theme-font">
+            {{ item.price|print_convert_money() }}
+        </div>
+        <div class="promotion-item-original-price sub-theme-font margin-top-5">
+            {{ item.original_price|print_convert_money() }}
+        </div>
+    </div>
+    <div class="promotion-item-product-stock margin-top-30">
+        <span class="stock-container">
+        <input type="hidden" id="stock-{{ item.id }}" value="{{ item.stock }}" />
+        {% if item.stock > 0 %}
+            <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+            {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
+        {% else %}
+            <span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>
+            {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
+        {% endif %}
+        </span>
+    </div>
+    <div class="promotion-item-add-cart">
+        <a id="add-cart-{{ item.id }}" class="btn btn-success full-width" href="javascript:void(0)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+        </a>
+    </div>
+</div>

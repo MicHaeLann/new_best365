@@ -6,6 +6,7 @@ use Best365Bundle\Entity\PurchasableExt;
 use Best365Bundle\Entity\PurchasablePrice;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
+use Elcodi\Component\Product\Entity\Interfaces\CategoryInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -187,6 +188,7 @@ class PurchasableManager
 		$purchasable = $this->pr->find($id);
 		$purchasable_ext = $this->getProductExt($purchasable);
 		$customer = $this->cw->get();
+		$original_price = $purchasable->getPrice();
 
 		// if not fixed, set membership price to product price
 		if (!empty($customer->getId()) && !empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
@@ -208,6 +210,7 @@ class PurchasableManager
 			}
 
 		}
+		$purchasable->original_price = $original_price;
 		return $purchasable;
 	}
 
@@ -240,5 +243,12 @@ class PurchasableManager
 			->findBy(array('pid' => $pid));
 
 		return $record;
+	}
+
+
+	public function getHomepageFormula(CategoryInterface $category)
+	{
+		$formula = $this->pr->getAllEnabledFromCategories(array($category));
+		return $formula;
 	}
 }
