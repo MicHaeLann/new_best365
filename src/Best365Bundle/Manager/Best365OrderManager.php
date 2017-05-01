@@ -242,9 +242,6 @@ class Best365OrderManager
 	 */
 	public function saveOrder($cart, $payment_method)
 	{
-		// get strategy
-		$customer = $this->customerWrapper->get();
-
 		// generate order
 		$this->generateOrder();
 
@@ -254,9 +251,9 @@ class Best365OrderManager
 		$shipping_method = $this->shippingWrapper->getOneById($cart, $cart->getShippingMethod());
 
 		// reset shipping amount
-		$shipping_amount = $shipping_method->getPrice()->multiply(ceil($cart_weight / 100) / 10);
-		$shipping_amount = $this->currencyConverter->convertMoney($shipping_amount, $cart->getAmount()->getCurrency());
 		$order = $cart->getOrder();
+		$shipping_amount = $shipping_method->getPrice()->multiply(ceil($cart_weight / 100) / 10);
+		$shipping_amount = $this->currencyConverter->convertMoney($shipping_amount, $order->getPurchasableAmount()->getCurrency());
 		$order->setShippingAmount($shipping_amount);
 
 		// reset order info
