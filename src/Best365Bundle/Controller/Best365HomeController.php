@@ -52,91 +52,58 @@ class Best365HomeController extends HomeController
 			->get('best365.manager.event')
 			->getEvent();
 
-//		// profile
-//		$customer = $this
-//			->get('elcodi.wrapper.customer')
-//			->get();
+		// get bestselling
+		$sellings = array();
+		$bestsellings = $this
+			->get('best365.manager.bestselling')
+			->getBestselling(10);
 
-		// locale
-		$locale = $this
-			->get('request_stack')
-			->getMasterRequest()
-			->getLocale();
-
-		// products(category->product)
-		$promotions = $this
-			->get('elcodi.repository.purchasable')
-			->getHomePurchasables(200, false);
-
-		// initialize cid array
-		foreach ($categories as $category) {
-			$cids[$category['entity']['id']] = array();
+		foreach ($bestsellings as $bestselling) {
+			$purchasable = $this
+				->get('best365.manager.purchasable')
+				->getProduct($bestselling->getPid());
+			$sellings[] = $purchasable;
 		}
 
-		foreach ($promotions as $promotion) {
-			$parent_category = $promotion->getPrincipalCategory()->getParent();
-			if (empty($parent_category)) {
-				$parent_category = $promotion->getPrincipalCategory();
-			}
-			$cids[$parent_category->getId()][] = $promotion;
-		}
-		ksort($cids);
-		
-		// used to fill $cids when short of data, at least 1 not empty required
-		foreach ($cids as $v) {
-			if (!empty($v)) {
-				$const = $v;
-				break;
-			}
-		}
-		foreach ($cids as &$v) {
-			if (empty($v)) {
-				$v = $const;
-			}
-
-			if (count($v) < 7) {
-				$v[1] = $v[2] = $v[3] = $v[4] = $v[5] = $v[6] = $v[0];
-			}
-		}
-
+		// get products
 		$list = array();
-		foreach ($cids as $cid => $purchasables) {
+		$home_categories = $this
+			->get('best365.manager.category')
+			->getHomepageCategory();
+		foreach ($home_categories as $category) {
+			$item = new \stdClass();
 			$category = $this
 				->get('elcodi.repository.category')
-				->find($cid);
-			$current_trends = array();
-			$trends = $this
-				->get('best365.manager.trends')
-				->getTrends($cid);
-			foreach ($trends as $trending) {
-				if ($trending->getIso() == $locale) {
-					$current_trends[] = $trending;
+				->find($category->getCid());
+			$item->category = $category;
+
+			$products = array();
+			$purchasables = $this
+				->get('elcodi.repository.purchasable')
+				->getAllEnabledFromCategories([$category]);
+			foreach ($purchasables as &$purchasable) {
+				if ($purchasable->getShowInHome()) {
+					$purchasable = $this
+						->get('best365.manager.purchasable')
+						->getProduct($purchasable->getId());
+					$products[] = $purchasable;
 				}
 			}
-
-			foreach ($purchasables as &$purchasable) {
-				$purchasable = $this->get('best365.manager.purchasable')
-					->getProduct($purchasable->getId());
-			}
-
-			$item = new \stdClass();
-			$item->category = $category;
-			$item->products = $purchasables;
-			$item->trends = $current_trends;
+			$item->products = $products;
 			$list[] = $item;
 		}
 
 		// manufacturer
-		$manufacturers = $this->get('elcodi.repository.manufacturer')
+		$manufacturers = $this
+			->get('elcodi.repository.manufacturer')
 			->findBy(array('enabled' => 1), array('name' => 'ASC'));
-
 
 		return $this->render(
 			'Best365Bundle:Home:home.html.twig',
 			[
 				'categories' => $categories,
 				'events' => $events,
-//				'customer' => $customer,
+				'bestselling' => $sellings,
 				'products' => $list,
 				'manufacturers' => $manufacturers
 			]

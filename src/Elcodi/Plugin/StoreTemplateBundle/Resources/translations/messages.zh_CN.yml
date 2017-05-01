@@ -8,6 +8,7 @@ template:
     store_template_bundle:
         home:
             brands: 品牌专区
+            bestsellings: 热销商品
         search:
             search_place_holder: 搜索...
             searching: 搜索条件
@@ -223,7 +224,7 @@ template:
                 sold_out: 断货
                 tag: 功效
                 manufacturer: 品牌
-                add_to_cart: 加入购物车
+                add_to_cart: 添加至购物车
                 delivery: 派送
                 description: 商品介绍
                 in_stock: 商品库存充足，可以邮寄!

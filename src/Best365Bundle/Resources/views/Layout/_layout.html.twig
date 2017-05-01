@@ -53,9 +53,6 @@
         app.request.attributes.get('_route') != "best365_store_password_recover" %}
     <script src="{{ asset('assets/js/search.js') }}"></script>
 {% endif %}
-{% if app.request.attributes.get('_route') == "best365_store_product_view" %}
-    <script src="{{ asset('assets/js/product.js') }}"></script>
-{% endif %}
 {% if app.request.attributes.get('_route') == "best365_store_order_view" or
         app.request.attributes.get('_route') == "best365_store_order_thanks"  or
         app.request.attributes.get('_route') == "best365_store_order_list"%}

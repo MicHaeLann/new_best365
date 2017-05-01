@@ -40,11 +40,21 @@
                         <div class="row font-25">
                                 {{ purchasable.name }}
                         </div>
-                        <div class="row main-theme-font font-18 margin-top-10">
-                            {{ purchasable.price|print_convert_money() }}
+                        <div class="row margin-top-10">
+                            <span class="sub-theme-font font-12 original-price">
+                                {{ purchasable.original_price|print_convert_money() }}
+                            </span>
                         </div>
                         <div class="row margin-top-10">
-                            <span class="stock-container">
+                            <span class="main-theme-font font-18">
+                                {{ purchasable.price|print_convert_money() }}
+                            </span>
+                        </div>
+
+                        <div class="row margin-top-10">
+                            <span id="stock-label" class="stock-container">
+                                <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
+                                <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                                 {% if purchasable.stock > 0 %}
                                     <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                                     {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
@@ -81,27 +91,17 @@
                             <hr>
                         </div>
                         <div class="row">
-                            {% if app.user %}
-                                <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
-                                {% if not useStock or purchasable.stock > 0 %}
-                                    <a id="add-cart-{{ purchasable.id }}" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
-                                       class="btn btn-success margin-left-10"
-                                       data-test="add-product-{{ purchasable.id }}-to-cart"
-                                       href="javascript:void(0)">
-                                        {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
-                                    </a>
-                                {% else %}
-                                    <a title="{{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}"
-                                       class="btn btn-warning margin-left-10"
-                                       href="#">
-                                        {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}
-                                    </a>
-                                {% endif %}
-                            {% else %}
-                                <p class="main-theme-font">
-                                    {{ 'template.store_template_bundle.product.view_item.not_login'|trans }}
-                                </p>
-                            {% endif %}
+                            <input type="hidden" id="purchasable-stock" value="{{ purchasable.stock }}" />
+                            <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
+                            <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
+                            <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
+                            <a id="add-cart-{{ purchasable.id }}" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
+                               class="btn btn-success margin-left-10"
+                               data-test="add-product-{{ purchasable.id }}-to-cart"
+                               href="javascript:void(0)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
+                            </a>
                         </div>
 
                     </div>

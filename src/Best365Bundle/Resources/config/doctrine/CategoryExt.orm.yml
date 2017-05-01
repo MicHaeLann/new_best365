@@ -1,0 +1,17 @@
+Best365Bundle\Entity\CategoryExt:
+    type: entity
+    table: category_ext
+    repositoryClass: Best365Bundle\Repository\CategoryExtRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        cid:
+            type: integer
+        showInHome:
+            type: integer
+            column: show_in_home
+    lifecycleCallbacks: {  }

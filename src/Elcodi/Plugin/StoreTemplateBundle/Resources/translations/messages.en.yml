@@ -8,6 +8,7 @@ template:
     store_template_bundle:
         home:
             brands: Our Brand
+            bestsellings: Bestsellings
         search:
             search_place_holder: 'Search for...'
             searching: 'Searching'

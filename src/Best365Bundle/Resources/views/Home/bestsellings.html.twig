@@ -1,0 +1,22 @@
+<div class="row margin-top-30 promotion-title-border">
+    <div class="promotion-title">
+        <span class="category-font">
+            <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+            {{ 'template.store_template_bundle.home.bestsellings'|trans }}
+        </span>
+    </div>
+</div>
+{% set currentColumn = 1 %}
+{% for item in bestsellings %}
+    {% if currentColumn == 1 %}
+        <div class="row">
+    {% endif %}
+    <div class="col-sm-5ths margin-top-15 margin-bottom-10">
+        {% include "@Best365/Layout/_products.item.html.twig" with { "item": item} %}
+    </div>
+    {% set currentColumn = currentColumn + 1 %}
+    {% if currentColumn > 5 or loop.last %}
+        </div>
+        {% set currentColumn = 1 %}
+    {% endif %}
+{% endfor %}

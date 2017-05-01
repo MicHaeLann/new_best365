@@ -1,0 +1,14 @@
+Best365Bundle\Entity\Bestselling:
+    type: entity
+    table: null
+    repositoryClass: Best365Bundle\Repository\BestsellingRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        pid:
+            type: integer
+    lifecycleCallbacks: {  }

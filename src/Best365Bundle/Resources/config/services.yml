@@ -88,3 +88,13 @@ services:
             - '@best365.manager.purchasable'
             - "@elcodi.converter.currency"
             - '@elcodi.wrapper.shipping_methods'
+
+    best365.manager.category:
+        class: Best365Bundle\Manager\Best365CategoryManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    best365.manager.bestselling:
+        class: Best365Bundle\Manager\Best365BestsellingManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
