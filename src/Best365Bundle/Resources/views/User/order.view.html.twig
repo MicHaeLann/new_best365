@@ -8,7 +8,7 @@
                 <p><strong>{{ 'template.store_template_bundle.order.view.congratulations'|trans }}</strong></p>
                 <p>{{ 'template.store_template_bundle.order.view.thanks'|trans }}</p>
                 {% if transfer %}
-                <p>{{ 'template.store_template_bundle.order.view.reference'|trans }} <strong>{{ order.ref }}</strong></p>
+                <p>{{ 'template.store_template_bundle.order.view.reference'|trans }}</p>
                 {% endif %}
             </div>
             {{ elcodi_hook("store.order_thanks") }}
