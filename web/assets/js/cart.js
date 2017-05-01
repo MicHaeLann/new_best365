@@ -119,20 +119,22 @@ $(function() {
         if (amount <= 0) {
             amount = 1;
         }
-        if (amount > parseInt($("#stock-" + lid).val())) {
+        var stock = $("#stock-" + lid).val();
+        console.log(stock);
+        if (amount > parseInt(stock)) {
             // change msg to sold out
             var msg = $("#sold-out-msg").val();
             $("#stock-label").html(
-                '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>' + msg
+                '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span> ' + msg
             );
 
             // disable checkout button
             $("#payment").addClass('disabled');
         } else {
             // change msg back to in stock
-            var msg = $("#sold-out-msg").val();
+            var msg = $("#in-stock-msg").val();
             $("#stock-label").html(
-                '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>' + msg
+                '<span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span> ' + msg
             );
 
             // remove checkout button disable class
