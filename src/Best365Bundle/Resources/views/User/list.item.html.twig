@@ -32,7 +32,7 @@
 					<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
 				</p>
 			{% endfor %}
-		{% elseif item.ref|length == 13 %}
+		{% elseif item.ref|length < 13 %}
 			{{ item.ref }}
 		{% elseif item.ref|length > 0 %}
 			<div id="qr-{{ item.id }}">
