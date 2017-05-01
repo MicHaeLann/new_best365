@@ -55,38 +55,61 @@ $(function() {
         var id = this.id.substring(9);
         var display = $("#cart-amount").html();
 
-        //send request to server
-        var amount = 1;
-        if ($("#cart-quantity") && $("#cart-quantity").val() > 1) {
-            amount = $("#cart-quantity").val();
-        }
+        // send request to server if logined in and stock > 0
+        if (!display && display !== 0) {
+            var url = Routing.generate('zh-CN__RG__' + 'best365_store_login');
+            window.location.replace(url);
+        } else if ($("#stock-" + id).val() > 0) {
+            //send request to server
+            var amount = 1;
+            if ($("#cart-quantity") && $("#cart-quantity").val() > 1) {
+                amount = $("#cart-quantity").val();
+            }
 
-        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_product', {id: id, quantity: amount});
-        // var url = 'http://localhost/michael/new_best365/web/app_dev.php/best365/cart/add/'+id+'/'+amount;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(result){
-                if (result == 'success') {
-                    // update cart amount display
-                    label.fadeOut();
-                    setTimeout(function() {
-                        $("#cart-amount").html(parseInt(display) + amount);
-                    }, 500);
-                    label.fadeIn();
-                } else {
-                    console.log(result);
+            var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_product', {id: id, quantity: amount});
+            // var url = 'http://localhost/michael/new_best365/web/app_dev.php/best365/cart/add/'+id+'/'+amount;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result){
+                    if (result == 'success') {
+                        // update cart amount display
+                        label.fadeOut();
+                        setTimeout(function() {
+                            $("#cart-amount").html(parseInt(display) + amount);
+                        }, 500);
+                        label.fadeIn();
+                    } else {
+                        console.log(result);
+                        alert('failed to add product to cart.');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                     alert('failed to add product to cart.');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                alert('failed to add product to cart.');
-            }
-        });
+            });
+        }
     });
+    $("#cart-quantity").keypress(function(event) {
+        event.preventDefault();
+    }).change(function() {
+        var amount = $(this).val();
+        var stock = $("#purchasable-stock").val();
+
+        // check stock
+        if (amount > stock) {
+            var msg = $("#sold-out-msg").val();
+            $("#stock-label").html('<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span> ' + msg);
+            $("a[id^='add-cart-']").addClass('diabled');
+        } else {
+            var msg = $("#in-stock-msg").val();
+            $("#stock-label").html('<span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span> ' + msg);
+            $("a[id^='add-cart-']").addClass('diabled');
+        }
+    })
 
     $("input[id^='quantity-']").keypress(function(event){
         event.preventDefault();
@@ -96,52 +119,74 @@ $(function() {
         if (amount <= 0) {
             amount = 1;
         }
-        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_update_line', {lid: lid, quantity: amount});
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(result){
-                if (result == 'success') {
-                    var display = $("#cart-amount").html();
-                    // update cart amount display
-                    label.fadeOut();
-                    setTimeout(function() {
-                        var cartAmount = 0;
-                        $("input[id^='quantity-']").each(function() {
-                            cartAmount = cartAmount + parseInt($(this).val());
-                        })
-                        $("#cart-amount").html(cartAmount);
-                    }, 500);
-                    label.fadeIn();
+        if (amount > parseInt($("#stock-" + lid).val())) {
+            // change msg to sold out
+            var msg = $("#sold-out-msg").val();
+            $("#stock-label").html(
+                '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>' + msg
+            );
 
-                    // update line amount
-                    var unitPrice = $("#unit-price-" + lid).html().trim();
-                    var price = unitPrice.replace(/[^\d.]/g, '');
-                    var index = unitPrice.indexOf(price);
-                    var linePrice = unitPrice.substring(0, index) + (price * amount).toFixed(2);
-                    $("#line-price-"+lid).html(linePrice);
+            // disable checkout button
+            $("#payment").addClass('disabled');
+        } else {
+            // change msg back to in stock
+            var msg = $("#sold-out-msg").val();
+            $("#stock-label").html(
+                '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>' + msg
+            );
 
-                    // update cart amount
-                    var cartPrice = 0;
-                    $("span[id^='line-price-']").each(function() {
-                        cartPrice += parseFloat($(this).html().replace(/[^\d.]/g, ''));
-                    });
-                    $("#cart-price").html(unitPrice.substring(0, index) + cartPrice.toFixed(2));
+            // remove checkout button disable class
+            $("#payment").removeClass('disabled');
 
-                    // update order info
-                    setOrderInfo();
 
-                } else {
+            // send request to server
+            var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_update_line', {lid: lid, quantity: amount});
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(result){
+                    if (result == 'success') {
+                        var display = $("#cart-amount").html();
+                        // update cart amount display
+                        label.fadeOut();
+                        setTimeout(function() {
+                            var cartAmount = 0;
+                            $("input[id^='quantity-']").each(function() {
+                                cartAmount = cartAmount + parseInt($(this).val());
+                            })
+                            $("#cart-amount").html(cartAmount);
+                        }, 500);
+                        label.fadeIn();
+
+                        // update line amount
+                        var unitPrice = $("#unit-price-" + lid).html().trim();
+                        var price = unitPrice.replace(/[^\d.]/g, '');
+                        var index = unitPrice.indexOf(price);
+                        var linePrice = unitPrice.substring(0, index) + (price * amount).toFixed(2);
+                        $("#line-price-"+lid).html(linePrice);
+
+                        // update cart amount
+                        var cartPrice = 0;
+                        $("span[id^='line-price-']").each(function() {
+                            cartPrice += parseFloat($(this).html().replace(/[^\d.]/g, ''));
+                        });
+                        $("#cart-price").html(unitPrice.substring(0, index) + cartPrice.toFixed(2));
+
+                        // update order info
+                        setOrderInfo();
+
+                    } else {
+                        alert('failed to add product to cart.');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                     alert('failed to add product to cart.');
                 }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-                alert('failed to add product to cart.');
-            }
-        });
+            });
+        }
     })
 
     $("#shipping-method").change(function(event) {
