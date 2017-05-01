@@ -1,6 +1,6 @@
 Best365Bundle\Entity\Bestselling:
     type: entity
-    table: null
+    table: bestselling
     repositoryClass: Best365Bundle\Repository\BestsellingRepository
     id:
         id:
