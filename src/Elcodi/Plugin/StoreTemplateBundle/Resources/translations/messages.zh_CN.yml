@@ -23,6 +23,10 @@ template:
                 selector: 货币
                 CNY: 人民币
                 NZD: 纽币
+            service:
+                selector: 客服咨询
+                wechat: 客服微信:
+                email: 客服邮箱:
         greeting:
             greeting: 'Hi, '
             guest: 你好
@@ -196,7 +200,7 @@ template:
                 order: 订单
                 shipping: 快递
                 status: 状态：
-                reference: 转账时请在备注中添加附注。您的附注是
+                reference: 转账时请在备注中添加订单号作为附注。
                 thanks: 感谢您在本网站购物！我们会尽快派送您的包裹。
                 error: 订单创建失败。
                 total: 总计

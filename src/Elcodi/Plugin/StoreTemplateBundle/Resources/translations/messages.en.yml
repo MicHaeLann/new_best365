@@ -23,6 +23,10 @@ template:
                 selector: Currency
                 CNY: RMB
                 NZD: NZD
+            service:
+                selector: Customer Service
+                wechat: Wechat:
+                email: Email:
         greeting:
             greeting: 'Hi, '
             guest: 'Guest'
@@ -196,7 +200,7 @@ template:
                 order: Order
                 shipping: 'Shipping:'
                 status: 'Status:'
-                reference: 'Please include your reference when transfer funds to us. Your reference is '
+                reference: 'Please include your order number as reference when transfer funds to us.'
                 thanks: ' Thank you for your order! We are going to work to send you as fast as possible.'
                 error: 'We are sorry that the order is invalid.'
                 total: Total
