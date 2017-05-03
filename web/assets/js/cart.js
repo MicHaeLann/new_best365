@@ -62,7 +62,7 @@ $(function() {
         } else if ($("#stock-" + id).val() > 0) {
             //send request to server
             var amount = 1;
-            if ($("#cart-quantity") && $("#cart-quantity").val() > 1) {
+            if ($("#cart-quantity") && parseInt($("#cart-quantity").val()) > 1) {
                 amount = $("#cart-quantity").val();
             }
 
@@ -96,18 +96,19 @@ $(function() {
     $("#cart-quantity").keypress(function(event) {
         event.preventDefault();
     }).change(function() {
+        var href = $(location).attr('href');
+        var index = href.lastIndexOf('/');
+        var id = href.substring(index + 1);
         var amount = $(this).val();
-        var stock = $("#purchasable-stock").val();
+        var stock = $("#stock-" + id).val();
 
         // check stock
-        if (amount > stock) {
+        if (parseInt(amount) > parseInt(stock)) {
             var msg = $("#sold-out-msg").val();
             $("#stock-label").html('<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span> ' + msg);
-            $("a[id^='add-cart-']").addClass('diabled');
         } else {
             var msg = $("#in-stock-msg").val();
             $("#stock-label").html('<span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span> ' + msg);
-            $("a[id^='add-cart-']").addClass('diabled');
         }
     })
 

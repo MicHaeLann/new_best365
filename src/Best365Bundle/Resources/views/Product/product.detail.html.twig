@@ -91,7 +91,7 @@
                             <hr>
                         </div>
                         <div class="row">
-                            <input type="hidden" id="purchasable-stock" value="{{ purchasable.stock }}" />
+                            <input type="hidden" id="stock-{{ purchasable.id }}" value="{{ purchasable.stock }}" />
                             <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
                             <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                             <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
