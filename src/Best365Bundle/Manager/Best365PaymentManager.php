@@ -232,7 +232,7 @@ class Best365PaymentManager
 		foreach ($arr as $k => $v) {
 			$str .= '&' . $k . '=' . $v;
 		}
-		ltrim($str, '&');
+		$str = ltrim($str, '&');
 
 		$url = $this->epayment->request_url . '?' . $str;
 
