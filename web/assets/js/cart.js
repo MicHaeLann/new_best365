@@ -217,5 +217,7 @@ $(function() {
                 console.log(errorThrown);
             }
         });
+
+        setOrderInfo();
     })
 });
