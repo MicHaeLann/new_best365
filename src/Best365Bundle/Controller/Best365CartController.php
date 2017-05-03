@@ -80,10 +80,6 @@ class Best365CartController extends CartController
 			->get('request_stack')
 			->getMasterRequest()
 			->getLocale();
-		$currency = $this
-			->get('elcodi.wrapper.currency')
-			->get();
-
 
 		if ($isValid) {
 			// User is adding a new address
@@ -117,9 +113,34 @@ class Best365CartController extends CartController
 		$cart = $this->get('best365.manager.cart')
 			->regenerate($cart);
 
-		$shippingMethods = $this
-			->get('elcodi.wrapper.shipping_methods')
-			->get($cart);
+		// get sample address
+		$addresses = $this
+			->get('elcodi.wrapper.customer')
+			->get()
+			->getAddresses();
+		$sample_address = array();
+		foreach ($addresses as $address) {
+			if (strpos($address->getCity(), 'CN') !== false && !array_key_exists('cn', $sample_address)) {
+				$sample_address['cn'] = $address;
+			} elseif (strpos($address->getCity(), 'NZ') !== false && !array_key_exists('nz', $sample_address)) {
+				$sample_address['nz'] = $address;
+			}
+		}
+		$cn_shipping = array();
+		if (array_key_exists('cn', $sample_address)) {
+			$cart->setDeliveryAddress($sample_address['cn']);
+			$cn_shipping = $this
+				->get('elcodi.wrapper.shipping_methods')
+				->get($cart);
+		}
+		$nz_shipping = array();
+		if (array_key_exists('nz', $sample_address)) {
+			$cart->setDeliveryAddress($sample_address['nz']);
+			$nz_shipping = $this
+				->get('elcodi.wrapper.shipping_methods')
+				->get($cart);
+		}
+		$shippingMethods = array_merge($nz_shipping, $cn_shipping);
 
 		// set amount
 		$cart->setAmount($cart->getPurchasableAmount());
@@ -146,8 +167,7 @@ class Best365CartController extends CartController
 				'addresses' 			=> $addressesFormatted,
 				'shipping_methods'      => $shippingMethods,
 				'form'					=> $formView,
-				'activeLocale'			=> $active_locale,
-				'activeCurrency'		=> $currency
+				'activeLocale'			=> $active_locale
 			]
 		);
 	}
@@ -419,6 +439,55 @@ class Best365CartController extends CartController
 		$res = new Response('success');
 
 		return $res;
+	}
+
+	/**
+	 * Get Delivery Option
+	 *
+	 * @param CartInterface 	$cart     	Cart
+	 * @param integer       	$aid  		Address id
+	 *
+	 * @return Response Response
+	 *
+	 * @Route(
+	 *      path = "/delivery/{aid}",
+	 *      name = "best365_store_cart_delivery",
+	 *      methods = {"GET"},
+	 *
+	 * )
+	 *
+	 * @AnnotationEntity(
+	 *      class = {
+	 *          "factory" = "elcodi.wrapper.cart",
+	 *          "method" = "get",
+	 *          "static" = false,
+	 *      },
+	 *      name = "cart"
+	 * )
+	 *
+	 */
+	public function getDeliveryOptionAction(CartInterface $cart, $aid)
+	{
+		$customer = $this->getUser();
+		$address = $this
+			->get('elcodi.repository.customer')
+			->findAddress(
+				$customer->getId(),
+				$aid
+			);
+		$cart->setDeliveryAddress($address);
+		$shippingMethods = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->get($cart);
+
+		$methods = array();
+		foreach ($shippingMethods as $shippingMethod) {
+			$methods[] = $this
+				->get('best365.manager.shipping')
+				->getShippingMethodArray($shippingMethod);
+		}
+
+		return new Response(json_encode($methods));
 	}
 
 }
