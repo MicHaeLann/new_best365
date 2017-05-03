@@ -98,3 +98,6 @@ services:
         class: Best365Bundle\Manager\Best365BestsellingManager
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    best365.manager.shipping:
+        class: Best365Bundle\Manager\Best365ShippingManager

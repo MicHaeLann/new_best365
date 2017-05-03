@@ -192,7 +192,30 @@ $(function() {
         }
     })
 
-    $("#shipping-method").change(function(event) {
+    $("#shipping-method").change(function() {
         setOrderInfo();
+    })
+
+    $("#shipping-address").change(function () {
+        var aid = $(this).val();
+        var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_delivery', {aid: aid});
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(result){
+                var json = JSON.parse(result);
+                console.log(json);
+                var optionsAsString = "";
+                for (var i = 0; i < json.length; i++) {
+                    optionsAsString += "<option value='" + json[i].id + "'>" + json[i].name + "</option>";
+                }
+                $("#shipping-method").find('option').remove().end().append($(optionsAsString));
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
     })
 });
