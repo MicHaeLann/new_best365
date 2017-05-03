@@ -1,0 +1,25 @@
+<p class="bold">
+    {{ 'template.store_template_bundle.checkout.summary.payment'|trans }}
+</p>
+<div>
+    <span class="bold">
+        <u>{{ 'template.store_template_bundle.shipping.subtotal'|trans }}:</u>
+    </span>
+    <span id="cart-price">
+        {{ cart.amount|print_convert_money() }}
+    </span>
+</div>
+<div class="margin-top-10">
+    <span class="bold">
+        <u>{{ 'template.store_template_bundle.shipping.carrier'|trans }}:</u>
+    </span>
+    <span id="carrier-price">
+    </span>
+</div>
+<div class="margin-top-10">
+    <span class="bold">
+        <u>{{ 'template.store_template_bundle.shipping.total'|trans }}:</u>
+    </span>
+    <span id="total-price">
+    </span>
+</div>

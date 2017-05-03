@@ -86,89 +86,12 @@
                     <p class="bold">
                         {{ 'template.store_template_bundle.checkout.summary.delivery'|trans }}
                     </p>
-                    <div>
-                        <p class="float-left">
-                            {{ 'template.store_template_bundle.checkout.address.address'|trans }}
-                        </p>
-                        <div class="float-right">
-                            <a id="new-address" class="main-theme-link" href="javascript:void(0)">
-                                {{ 'template.store_template_bundle.checkout.address.add_new_address'|trans }}
-                            </a>
-                        </div>
-                        <select name="address" class="form-control">
-                            {% for address in addresses %}
-                                <option value="{{ address.id }}">
-                                    {% if address.locale == 'cn' %}
-                                        {% set addr =  address.city.country ~ address.city.state ~ address.address%}
-                                    {% else %}
-                                        {% set addr =  address.address ~ ', ' ~ address.city.state ~ ', ' ~ address.city.country%}
-                                    {% endif %}
-                                    {% if activeLocale == 'zh-CN' %}
-                                        {{ address.recipientSurname }}{{ address.recipientName }}, {{ addr }}, {{ address.phone }}
-                                    {% else %}
-                                        {{ address.recipientName }} {{ address.recipientSurname }}, {{ addr }}, {{ address.phone }}
-                                    {% endif %}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="margin-top-10">
-                        <p>
-                            {{ 'template.store_template_bundle.checkout.payment.shipping_carrier_method'|trans }}
-                        </p>
-                        <select id="shipping-method" name="shipping-method" class="form-control">
-                            {% for shipping_method in shipping_methods %}
-                                <option value="{{ shipping_method.id }}">
-                                    {{ shipping_method.name }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                        {% for shipping_method in shipping_methods  %}
-                            <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}-price" />
-                        {% endfor %}
-                        <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
-                    </div>
+                    {% include '@Best365/Cart/address.options.html.twig' with {'addresses' : addresses} %}
+                    {% include '@Best365/Cart/delivery.options.html.twig' with {'shipping_methods' : shipping_methods} %}
                     <hr class="checkout-hr margin-top-20">
-                    <p class="bold">
-                        {{ 'template.store_template_bundle.checkout.summary.payment'|trans }}
-                    </p>
-                    <div>
-                    <span class="bold">
-                        <u>{{ 'template.store_template_bundle.shipping.subtotal'|trans }}:</u>
-                    </span>
-                    <span id="cart-price">
-                        {{ cart.amount|print_convert_money() }}
-                    </span>
-                    </div>
-                    <div class="margin-top-10">
-                    <span class="bold">
-                        <u>{{ 'template.store_template_bundle.shipping.carrier'|trans }}:</u>
-                    </span>
-                    <span id="carrier-price">
-                    </span>
-                    </div>
-                    <div class="margin-top-10">
-                    <span class="bold">
-                        <u>{{ 'template.store_template_bundle.shipping.total'|trans }}:</u>
-                    </span>
-                    <span id="total-price">
-                    </span>
-                    </div>
+                    {% include '@Best365/Cart/checkout.info.html.twig' with {'cart' : cart} %}
                     <hr class="checkout-hr">
-                    <p class="bold">
-                        {{ 'template.store_template_bundle.checkout.summary.checkout'|trans }}
-                    </p>
-                    <select name="payment-method" class="form-control">
-                        <option value="poli"{% if activeCurrency.iso == 'NZD' %} selected {% endif %}>
-                            {{ 'template.store_template_bundle.checkout.payment.poli'|trans }}
-                        </option>
-                        <option value="wechat"{% if activeCurrency.iso == 'CNY' %} selected {% endif %}>
-                            {{ 'template.store_template_bundle.checkout.payment.wechat'|trans }}
-                        </option>
-                        <option value="transfer">
-                            {{ 'template.store_template_bundle.checkout.payment.transfer'|trans }}
-                        </option>
-                    </select>
+                    {% include '@Best365/Cart/payment.options.html.twig' %}
                     <button type="submit" id="payment" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
                         {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
                     </button>

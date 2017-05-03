@@ -1,0 +1,26 @@
+<div>
+    <p class="float-left">
+        {{ 'template.store_template_bundle.checkout.address.address'|trans }}
+    </p>
+    <div class="float-right">
+        <a id="new-address" class="main-theme-link" href="javascript:void(0)">
+            {{ 'template.store_template_bundle.checkout.address.add_new_address'|trans }}
+        </a>
+    </div>
+    <select id="shipping-address" name="address" class="form-control">
+        {% for address in addresses %}
+            <option value="{{ address.id }}">
+                {% if address.locale == 'cn' %}
+                    {% set addr =  address.city.country ~ address.city.state ~ address.address%}
+                {% else %}
+                    {% set addr =  address.address ~ ', ' ~ address.city.state ~ ', ' ~ address.city.country%}
+                {% endif %}
+                {% if activeLocale == 'zh-CN' %}
+                    {{ address.recipientSurname }}{{ address.recipientName }}, {{ addr }}, {{ address.phone }}
+                {% else %}
+                    {{ address.recipientName }} {{ address.recipientSurname }}, {{ addr }}, {{ address.phone }}
+                {% endif %}
+            </option>
+        {% endfor %}
+    </select>
+</div>
