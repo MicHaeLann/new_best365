@@ -173,9 +173,8 @@ class PurchasableManager
 			$purchasable_price->setPriceCurrencyIso($price['iso']);
 
 			$this->em->persist($purchasable_price);
-			$this->em->flush();
-
 		}
+		$this->em->flush();
 	}
 
 	/**
