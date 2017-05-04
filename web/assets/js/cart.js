@@ -91,8 +91,11 @@ $(function() {
             });
         }
     });
-    $("#cart-quantity").keypress(function(event) {
-        event.preventDefault();
+    $("#cart-quantity").keyup(function(event) {
+        var quantity = this.value;
+        if (!$(this).val() || parseInt(quantity) <= 0) {
+            $(this).val(1);
+        }
     }).change(function() {
         var href = $(location).attr('href');
         var index = href.lastIndexOf('/');
@@ -110,8 +113,11 @@ $(function() {
         }
     })
 
-    $("input[id^='quantity-']").keypress(function(event){
-        event.preventDefault();
+    $("input[id^='quantity-']").keyup(function(event){
+        var quantity = this.value;
+        if (!$(this).val() || parseInt(quantity) <= 0) {
+            $(this).val(1);
+        }
     }).change(function(){
         var lid = this.id.substring(9);
         var amount = $(this).val();
