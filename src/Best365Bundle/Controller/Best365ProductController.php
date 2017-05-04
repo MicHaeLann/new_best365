@@ -144,7 +144,7 @@ class Best365ProductController extends PurchasableController
 	 * @param $name
 	 * @return array
 	 */
-	public function getPurchasableByName($name)
+	private function getPurchasableByName($name)
 	{
 		$ids = array();
 
@@ -165,7 +165,7 @@ class Best365ProductController extends PurchasableController
 	 * @param $name
 	 * @return array
 	 */
-	public function getPurchasableByManufacturerName($name)
+	private function getPurchasableByManufacturerName($name)
 	{
 		$ids = $mids = array();
 
@@ -199,7 +199,7 @@ class Best365ProductController extends PurchasableController
 	 * @param Purchasable $purchasable
 	 * @return Object $tree
 	 */
-	public function getCategoryTree(Purchasable $purchasable)
+	private function getCategoryTree(Purchasable $purchasable)
 	{
 		// store category tree
 		$categories = $this
