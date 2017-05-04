@@ -121,7 +121,7 @@ template:
                 checkout: 支付方式
             address:
                 address: 地址
-                add_new_address: 使用其他地址
+                add_new_address: 使用新地址
                 payment: 支付
                 select_address: 地址
             back: 返回
