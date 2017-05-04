@@ -140,7 +140,7 @@ class Best365CartController extends CartController
 				->get('elcodi.wrapper.shipping_methods')
 				->get($cart);
 		}
-		$shippingMethods = array_merge($nz_shipping, $cn_shipping);
+		$shippingMethods = array_merge($cn_shipping, $nz_shipping);
 
 		// set amount
 		$cart->setAmount($cart->getPurchasableAmount());
