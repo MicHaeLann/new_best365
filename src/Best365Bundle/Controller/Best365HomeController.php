@@ -56,7 +56,7 @@ class Best365HomeController extends HomeController
 		$sellings = array();
 		$bestsellings = $this
 			->get('best365.manager.bestselling')
-			->getBestselling(10);
+			->getBestselling();
 
 		foreach ($bestsellings as $bestselling) {
 			$purchasable = $this

@@ -12,12 +12,20 @@ class Best365BestsellingManager
 		$this->em = $em;
 	}
 
-	public function getBestselling($amount)
+	public function getBestselling($amount = 0)
 	{
-		$bestselling = $this
-			->em
-			->getRepository('Best365Bundle\Entity\Bestselling')
-			->findBy(array(), array(), $amount);
+		if ($amount == 0) {
+			$bestselling = $this
+				->em
+				->getRepository('Best365Bundle\Entity\Bestselling')
+				->findAll();
+		} else {
+			$bestselling = $this
+				->em
+				->getRepository('Best365Bundle\Entity\Bestselling')
+				->findBy(array(), array(), $amount);
+		}
+
 		return $bestselling;
 	}
 }
