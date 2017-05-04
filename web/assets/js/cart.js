@@ -10,7 +10,6 @@ $(function() {
         });
 
         $("#new-address").click(function(event){
-            console.log(1122);
             event.preventDefault();
             $("#edit-address").dialog("open");
         })
@@ -80,7 +79,6 @@ $(function() {
                         }, 500);
                         label.fadeIn();
                     } else {
-                        console.log(result);
                         alert('failed to add product to cart.');
                     }
                 },
@@ -121,7 +119,6 @@ $(function() {
             amount = 1;
         }
         var stock = $("#stock-" + lid).val();
-        console.log(stock);
         if (amount > parseInt(stock)) {
             // change msg to sold out
             var msg = $("#sold-out-msg").val();
@@ -204,12 +201,15 @@ $(function() {
             type: 'GET',
             success: function(result){
                 var json = JSON.parse(result);
-                console.log(json);
                 var optionsAsString = "";
                 for (var i = 0; i < json.length; i++) {
                     optionsAsString += "<option value='" + json[i].id + "'>" + json[i].name + "</option>";
+                    if (i == 0) {
+                        var first = json[i].id;
+                    }
                 }
                 $("#shipping-method").find('option').remove().end().append($(optionsAsString));
+                setOrderInfo();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log(jqXHR);
@@ -217,7 +217,5 @@ $(function() {
                 console.log(errorThrown);
             }
         });
-
-        setOrderInfo();
     })
 });
