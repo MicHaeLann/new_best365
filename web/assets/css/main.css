@@ -209,7 +209,7 @@
 {
 	display: table;
 	white-space: nowrap;
-	color: #888;
+	color: #666;
 	font-weight: normal;
 }
 
@@ -359,12 +359,12 @@
 {
 	font-size: 15px;
 	margin-left: 15px;
-	color: #888;
+	color: #666;
 }
 
 .product-title-link, .promotion-product-title-link
 {
-	color: #888;
+	color: #666;
 }
 
 .product-title-link:hover, .promotion-product-title-link:hover
@@ -497,7 +497,7 @@
 .footer-image-item-description
 {
 	font-size: 12px;
-	color: #888;
+	color: #666;
 }
 
 .footer-content
@@ -556,12 +556,12 @@
 .category-child-font
 {
 	font-size: 11px;
-	color: #888;
+	color: #666;
 }
 
 .category-child-font:hover
 {
-	color: #888;
+	color: #666;
 }
 
 .event-chevron-background
@@ -638,7 +638,7 @@
 .promotion-product-title
 {
 	font-size: 11px;
-	color: #888;
+	color: #666;
 }
 
 .promotion-product-price
@@ -683,7 +683,7 @@ a
 	font-size: 12px;
 	border: 1px solid #ccc;
 	background-color: white;
-	color: #888;
+	color: #666;
 	margin: 5px;
 	text-align: center;
 	vertical-align: middle;
@@ -708,7 +708,7 @@ a
 
 .sub-theme-font, .sub-theme-font:hover
 {
-	color: #888
+	color: #666
 }
 
 .sold-out-font
@@ -718,7 +718,7 @@ a
 
 .sub-theme-link
 {
-	color: #888;
+	color: #666;
 }
 
 .main-theme-link, .main-theme-link:hover, .sub-theme-link:hover, .main-theme-link:visited, .sub-theme-link:visited
@@ -902,7 +902,7 @@ body { padding-top: 70px; }
 	padding-left: 15px;
 	padding-right: 15px;
 	font-size: 12px;
-	color: #888;
+	color: #666;
 	line-height: 1.5em;
 	height: 4.5em;
 	overflow: hidden;
