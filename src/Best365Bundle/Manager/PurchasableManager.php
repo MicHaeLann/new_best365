@@ -197,18 +197,22 @@ class PurchasableManager
 				->getMembership();
 
 			$product_price = $this->getProductMembershipPrice($id, $membership);
+			$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => $product_price->getPriceCurrencyIso()));
+			$membership_price = \Elcodi\Component\Currency\Entity\Money::create(
+				$product_price->getPrice(),
+				$currency
+			);
+
 			// if price currency not match, convert to purchasable price currency
 			if (!empty($product_price) && $product_price->getPriceCurrencyIso() != $purchasable->getPrice()->getCurrency()->getIso()) {
-				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => $product_price->getPriceCurrencyIso()));
 				$price = \Elcodi\Component\Currency\Entity\Money::create(
 					$product_price->getPrice(),
 					$currency
 				);
-				$convert_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
-				$purchasable->setPrice($convert_price);
+				$membership_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
 			}
-
 		}
+		$purchasable->setPrice($membership_price);
 		$purchasable->original_price = $original_price;
 		return $purchasable;
 	}
