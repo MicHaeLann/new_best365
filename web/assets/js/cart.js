@@ -36,6 +36,15 @@ $(function() {
         // ceiling weight to 0.1kg
         weight = Math.ceil(weight / 100) / 10;
 
+        // if fastway selected
+        if ($("#shipping-method").val() == 'custom-shipping-method-8') {
+            console.log('------------------');
+            console.log(weight);
+            weight = Math.ceil(weight / 5);
+            console.log(weight);
+            console.log('------------------');
+        }
+
         // set delivery fee display
         var id = $("#shipping-method").val() + '-price';
         var shippingPrice = $("#" + id).val();

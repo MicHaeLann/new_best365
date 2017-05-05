@@ -211,8 +211,9 @@ class PurchasableManager
 				);
 				$membership_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
 			}
+			$purchasable->setPrice($membership_price);
 		}
-		$purchasable->setPrice($membership_price);
+
 		$purchasable->original_price = $original_price;
 		return $purchasable;
 	}
