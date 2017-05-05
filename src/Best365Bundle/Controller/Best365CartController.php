@@ -120,27 +120,39 @@ class Best365CartController extends CartController
 			->getAddresses();
 		$sample_address = array();
 		foreach ($addresses as $address) {
+			if (!isset($default_address)) {
+				$default_address = $address;
+			}
 			if (strpos($address->getCity(), 'CN') !== false && !array_key_exists('cn', $sample_address)) {
 				$sample_address['cn'] = $address;
 			} elseif (strpos($address->getCity(), 'NZ') !== false && !array_key_exists('nz', $sample_address)) {
 				$sample_address['nz'] = $address;
 			}
 		}
-		$cn_shipping = array();
+
+		// carriers
+		$cn_carriers = array();
 		if (array_key_exists('cn', $sample_address)) {
 			$cart->setDeliveryAddress($sample_address['cn']);
-			$cn_shipping = $this
+			$cn_carriers = $this
 				->get('elcodi.wrapper.shipping_methods')
 				->get($cart);
 		}
-		$nz_shipping = array();
+		$nz_carriers = array();
 		if (array_key_exists('nz', $sample_address)) {
 			$cart->setDeliveryAddress($sample_address['nz']);
-			$nz_shipping = $this
+			$nz_carriers = $this
 				->get('elcodi.wrapper.shipping_methods')
 				->get($cart);
 		}
-		$shippingMethods = array_merge($cn_shipping, $nz_shipping);
+		$carriers = array_merge($cn_carriers, $nz_carriers);
+
+		// shipping methods
+		$cart->setDeliveryAddress($default_address);
+		$shippingMethods = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->get($cart);
+
 
 		// set amount
 		$cart->setAmount($cart->getPurchasableAmount());
@@ -165,6 +177,7 @@ class Best365CartController extends CartController
 			[
 				'cart'					=> $cart,
 				'addresses' 			=> $addressesFormatted,
+				'carriers'				=> $carriers,
 				'shipping_methods'      => $shippingMethods,
 				'form'					=> $formView,
 				'activeLocale'			=> $active_locale

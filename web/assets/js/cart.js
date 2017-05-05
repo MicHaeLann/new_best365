@@ -42,8 +42,17 @@ $(function() {
         }
 
         // set delivery fee display
-        var id = $("#shipping-method").val() + '-price';
-        var shippingPrice = $("#" + id).val();
+        var chars = $("#shipping-method").val().split('-');
+        var dataId = '';
+        for (var i = 0; i < chars.length; i++) {
+            if (dataId.length > 0 && i < chars.length - 1) {
+                chars[i] = ucfirst(chars[i]);
+            } else if (i == chars.length - 1) {
+                chars[i] = '-' + chars[i];
+            }
+            dataId = dataId + chars[i];
+        }
+        var shippingPrice = $("#shipping-method").data(dataId);
         var deliveryFee = shippingPrice.replace(/[^0-9\.]+/g,"") * weight;
         var deliveryFeeDisplay = shippingPrice.replace(/[0-9\.]+/g,"") +  deliveryFee.toFixed(2);
         $("#carrier-price").html(deliveryFeeDisplay);
@@ -53,6 +62,10 @@ $(function() {
         var total = parseFloat(subtotal) + deliveryFee;
         var totalDisplay = shippingPrice.replace(/[0-9\.]+/g,"") + total.toFixed(2);
         $("#total-price").html(totalDisplay);
+    }
+
+    function ucfirst(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     $("a[id^='add-cart']").click(function(event){

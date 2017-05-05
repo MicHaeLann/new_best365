@@ -2,15 +2,13 @@
     <p>
         {{ 'template.store_template_bundle.checkout.payment.shipping_carrier_method'|trans }}
     </p>
-    <select id="shipping-method" name="shipping-method" class="form-control">
+    <select id="shipping-method" name="shipping-method" class="form-control"
+            {% for carrier in carriers %} data-{{ carrier.id }}="{{ carrier.price|print_convert_money() }}"{% endfor %}">
         {% for shipping_method in shipping_methods %}
             <option value="{{ shipping_method.id }}">
                 {{ shipping_method.name }}
             </option>
         {% endfor %}
     </select>
-    {% for shipping_method in shipping_methods  %}
-        <input type="hidden" value="{{ shipping_method.price|print_convert_money() }}" id="{{ shipping_method.id }}-price" />
-    {% endfor %}
     <input type="hidden" id="cart-weight" value="{{ cart.weight }}" />
 </div>
