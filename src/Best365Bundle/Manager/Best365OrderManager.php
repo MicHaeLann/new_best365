@@ -252,7 +252,11 @@ class Best365OrderManager
 
 		// reset shipping amount
 		$order = $cart->getOrder();
-		$shipping_amount = $shipping_method->getPrice()->multiply(ceil($cart_weight / 100) / 10);
+		$cart_weight = ceil($cart_weight / 100) / 10;
+		if ($shipping_method->getId() == "custom-shipping-method-8") {
+			$cart_weight = ceil($cart_weight / 5);
+		}
+		$shipping_amount = $shipping_method->getPrice()->multiply($cart_weight);
 		$shipping_amount = $this->currencyConverter->convertMoney($shipping_amount, $order->getPurchasableAmount()->getCurrency());
 		$order->setShippingAmount($shipping_amount);
 

@@ -38,11 +38,7 @@ $(function() {
 
         // if fastway selected
         if ($("#shipping-method").val() == 'custom-shipping-method-8') {
-            console.log('------------------');
-            console.log(weight);
             weight = Math.ceil(weight / 5);
-            console.log(weight);
-            console.log('------------------');
         }
 
         // set delivery fee display
