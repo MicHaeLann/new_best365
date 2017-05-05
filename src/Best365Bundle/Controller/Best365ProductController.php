@@ -45,10 +45,14 @@ class Best365ProductController extends PurchasableController
 
 		// find by name
 		$name = $this->get('request')->get('field');
-		$name_ids = $this->getPurchasableByName($name);
+		$name_ids = $this
+			->get('best365.manager.purchasable')
+			->getPurchasableByName($name);
 
 		// find by manufacturer
-		$manufacturer_ids = $this->getPurchasableByManufacturerName($name);
+		$manufacturer_ids = $this
+			->get('best365.manager.purchasable')
+			->getPurchasableByManufacturerName($name);
 
 		// merge ids
 		$ids = array_unique(array_merge($name_ids, $tag_ids));
@@ -126,7 +130,9 @@ class Best365ProductController extends PurchasableController
 			->getUseStock();
 
 		// build category tree
-		$categories = $this->getCategoryTree($purchasable);
+		$categories = $this
+			->get('best365.manager.category')
+			->getCategoryTree($purchasable);
 
 		return $this->render(
 			'Best365Bundle:Product:product.detail.html.twig',
@@ -137,87 +143,5 @@ class Best365ProductController extends PurchasableController
 			'useStock'    => $useStock
 			]
 		);
-	}
-
-	/**
-	 * get product by name
-	 * @param $name
-	 * @return array
-	 */
-	private function getPurchasableByName($name)
-	{
-		$ids = array();
-
-		$purchasable = $this
-			->get('elcodi.repository.purchasable')
-			->findBy(array('enabled' => 1));
-		foreach($purchasable as $product) {
-			if (strpos(strtolower($product->getName()), strtolower($name)) !== false) {
-				$ids[] = $product->getId();
-			}
-		}
-
-		return $ids;
-	}
-
-	/**
-	 * get product by manufacturer
-	 * @param $name
-	 * @return array
-	 */
-	private function getPurchasableByManufacturerName($name)
-	{
-		$ids = $mids = array();
-
-		// get manufacturer
-		$manufacturers = $this
-			->get('elcodi.repository.manufacturer')
-			->findBy(array('enabled' => 1));
-		foreach ($manufacturers as $manufacturer) {
-			if (strpos(strtolower($manufacturer->getName()), strtolower($name)) !== false) {
-				$mids[] = $manufacturer->getId();
-			}
-		}
-
-		// get product
-		$purchasables = $this
-			->get('elcodi.repository.purchasable')
-			->findby(array('enabled' => 1));
-
-		foreach ($purchasables as $product) {
-			$manufacturer = $product->getManufacturer();
-			if (!empty($manufacturer) && in_array($manufacturer->getId(), $mids)) {
-				$ids[] = $product->getId();
-			}
-		}
-
-		return $ids;
-	}
-
-	/**
-	 * get category tree
-	 * @param Purchasable $purchasable
-	 * @return Object $tree
-	 */
-	private function getCategoryTree(Purchasable $purchasable)
-	{
-		// store category tree
-		$categories = $this
-			->get('elcodi_store.store_category_tree')
-			->load();
-
-		// product category
-		$principal_category = $purchasable->getPrincipalCategory();
-		$parent_category = $principal_category->getParent();
-
-		if (empty($parent_category)) {
-			$parent_category = $principal_category;
-		}
-
-	 	foreach ($categories as $category) {
-	 		if ($category['entity']['id'] == $parent_category->getId()) {
-				return $category;
-			}
-		}
 	}
 }

@@ -22,6 +22,7 @@ services:
             - '@best365.manager.membership'
             - '@elcodi.converter.currency'
             - "@elcodi.repository.currency"
+            - "@elcodi.repository.manufacturer"
 
     best365.manager.address:
         class: Best365Bundle\Manager\Best365AddressManager
@@ -93,6 +94,7 @@ services:
         class: Best365Bundle\Manager\Best365CategoryManager
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@elcodi_store.store_category_tree'
 
     best365.manager.bestselling:
         class: Best365Bundle\Manager\Best365BestsellingManager

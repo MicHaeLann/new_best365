@@ -8,6 +8,8 @@ use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\Product\Entity\Interfaces\CategoryInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
+use Elcodi\Component\Product\Repository\ManufacturerRepository;
+use Proxies\__CG__\Elcodi\Component\Product\Entity\Manufacturer;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Product\Repository\PurchasableRepository;
@@ -27,13 +29,16 @@ class PurchasableManager
 
 	private $cr;
 
+	private $mr;
+
 	public function __construct(
 		EntityManager $em,
 		PurchasableRepository $pr,
 		CustomerWrapper $cw,
 		MembershipManager $mm,
 		CurrencyConverter $cc,
-		CurrencyRepository $cr
+		CurrencyRepository $cr,
+		ManufacturerRepository $mr
 	)
 	{
 		$this->em = $em;
@@ -42,6 +47,7 @@ class PurchasableManager
 		$this->mm = $mm;
 		$this->cc = $cc;
 		$this->cr = $cr;
+		$this->mr = $mr;
 	}
 
 	/**
@@ -256,5 +262,60 @@ class PurchasableManager
 	{
 		$formula = $this->pr->getAllEnabledFromCategories(array($category));
 		return $formula;
+	}
+
+	/**
+	 * get product by name
+	 * @param $name
+	 * @return array
+	 */
+	public function getPurchasableByName($name)
+	{
+		$ids = array();
+
+		$purchasable = $this
+			->pr
+			->findBy(array('enabled' => 1));
+		foreach($purchasable as $product) {
+			if (strpos(strtolower($product->getName()), strtolower($name)) !== false) {
+				$ids[] = $product->getId();
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * get product by manufacturer
+	 * @param $name
+	 * @return array
+	 */
+	public function getPurchasableByManufacturerName($name)
+	{
+		$ids = $mids = array();
+
+		// get manufacturer
+		$manufacturers = $this
+			->mr
+			->findBy(array('enabled' => 1));
+		foreach ($manufacturers as $manufacturer) {
+			if (strpos(strtolower($manufacturer->getName()), strtolower($name)) !== false) {
+				$mids[] = $manufacturer->getId();
+			}
+		}
+
+		// get product
+		$purchasables = $this
+			->pr
+			->findby(array('enabled' => 1));
+
+		foreach ($purchasables as $product) {
+			$manufacturer = $product->getManufacturer();
+			if (!empty($manufacturer) && in_array($manufacturer->getId(), $mids)) {
+				$ids[] = $product->getId();
+			}
+		}
+
+		return $ids;
 	}
 }
