@@ -162,7 +162,7 @@ template:
             secure_store: 安全购物
             secure_store_description: 为您提供最安心的购物体验。
             customer_service: 客户服务
-            customer_service_description: 7*24小时贴心服务。
+            customer_service_description: 为您提供最贴心的服务。
         header:
             menu: 菜单
         order:

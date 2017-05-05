@@ -162,7 +162,7 @@ template:
             secure_store: 'Secure Store'
             secure_store_description: 'Safe as houses.'
             customer_service: 'Customer Friendly'
-            customer_service_description: '7*24 thoughtful customer service.'
+            customer_service_description: The most thoughtful service for you.'
         header:
             menu: Menu
         order:
