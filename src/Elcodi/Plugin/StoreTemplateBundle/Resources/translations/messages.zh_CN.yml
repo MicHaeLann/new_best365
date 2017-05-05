@@ -267,6 +267,7 @@ template:
                 login_with_social: 第三方登录
                 unregistered: 第一次光顾我们？
                 registered: 已有账号？
+                email: '为保障您的账户安全，请使用真实邮箱注册以方便密码找回。'
             nav:
                 create_new_account: 注册
                 login: 登录

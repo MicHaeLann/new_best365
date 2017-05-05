@@ -267,6 +267,7 @@ template:
                 login_with_social: 'Login with your social accounts'
                 unregistered: 'New to Best365?'
                 registered: 'Already have an account?'
+                email: 'Please provide real email to prevent security issue.'
             nav:
                 create_new_account: 'Create new account'
                 login: Login

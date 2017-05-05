@@ -5,8 +5,11 @@
     <p class="login-title">
         {{ "template.store_template_bundle.user.login.create_new_account"|trans }}
     </p>
+    <p class="font-11 sub-theme-font">
+        {{ "template.store_template_bundle.user.login.email"|trans }}
+    </p>
     {{ form_start(form) }}
-    {{ form_row(form.email, { "attr": { "class": "form-control", "length": 255 } }) }}
+    {{ form_row(form.email, { "attr": {"class": "form-control", "length": 255} }) }}
     {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255 } }) }}
     {% if activeLocale == "zh-CN" %}
         {{ form_row(form.lastName, { "attr": { "class": "form-control", "length": 255 } }) }}
@@ -17,7 +20,6 @@
     {% endif %}
     {{ form_row(form.password.first, { "attr": { "class": "form-control"} }) }}
     {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
-
     {{ form_row( form.send, { "attr": { "class": "btn btn-success full-width" } }) }}
     {{ form_end(form) }}
     <h6 class="unregistered-title">
