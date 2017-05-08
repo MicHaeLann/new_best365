@@ -1,0 +1,15 @@
+<div class="col-sm-3 checkout-bg">
+    <form method="post" action="{{ url('best365_store_save_shipping') }}">
+        <p class="font-18 bold">
+            {{ 'template.store_template_bundle.checkout.summary.summary'|trans }}
+        </p>
+        <hr class="checkout-hr">
+        {% include '@Best365/Cart/delivery.info.html.twig' with {'addresses' : addresses, 'shipping_methods': shipping_methods } %}
+        {% include '@Best365/Cart/checkout.info.html.twig' with {'cart' : cart} %}
+        <hr class="checkout-hr">
+        {% include '@Best365/Cart/payment.options.html.twig' %}
+        <button type="submit" id="payment" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
+            {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
+        </button>
+    </form>
+</div>

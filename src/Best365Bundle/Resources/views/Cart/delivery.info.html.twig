@@ -1,0 +1,6 @@
+<p class="bold">
+    {{ 'template.store_template_bundle.checkout.summary.delivery'|trans }}
+</p>
+{% include '@Best365/Cart/delivery.addresses.html.twig' with {'addresses' : addresses} %}
+{% include '@Best365/Cart/delivery.carriers.html.twig' with {'shipping_methods' : shipping_methods} %}
+<hr class="checkout-hr margin-top-20">
