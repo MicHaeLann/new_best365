@@ -4,7 +4,7 @@
 			{{ 'template.store_template_bundle.order.list.order_number'|trans }}{{ item.id }}
 		</a>
 	</td>
-	<td>
+	<td width="40%">
 		{% for line in item.orderLines %}
 			{% set purchasable = line.purchasable %}
 			{% set purchasable = purchasable.product ?: purchasable %}
