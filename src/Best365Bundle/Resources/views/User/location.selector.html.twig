@@ -4,7 +4,6 @@
             {% set fieldType = 'store.address.form.fields.' ~ select.type ~ '.label' %}
             <label for="{{ select.type }}">{{ fieldType|trans  }}</label>
             <select{% if select.type == maxLocationType %} data-max-type{% endif %} class="form-control">
-                <option class="form-control">Select one</option>
                 {% for key, value in select.options %}
                     <option value="{{ key }}"{% if key == select.selected %} selected{% endif %}>
                         {{ value }}
