@@ -37,9 +37,9 @@
 					</td>
 					<td style="max-width: 300px;word-wrap: break-word;">
 						{% if address.locale == 'cn' %}
-							{{ address.city.country }}{{ address.city.state }}{{ address.address }}
+							{{ address.city.country }}{{ address.city.state }}{{ address.city.city }}{{ address.address }}
 						{% else %}
-                            {{ address.address }}, {{ address.city.state }}, {{ address.city.country }}
+                            {{ address.address }}, {{ address.city.city }}, {{ address.city.country }}
 						{% endif %}
 					</td>
 					<td>

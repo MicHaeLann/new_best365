@@ -11,9 +11,9 @@
         {% for address in addresses %}
             <option value="{{ address.id }}">
                 {% if address.locale == 'cn' %}
-                    {% set addr =  address.city.country ~ address.city.state ~ address.address%}
+                    {% set addr =  address.city.country ~ address.city.state ~ address.city.city ~address.address%}
                 {% else %}
-                    {% set addr =  address.address ~ ', ' ~ address.city.state ~ ', ' ~ address.city.country%}
+                    {% set addr =  address.address ~ ', ' ~ address.city.city ~ ', ' ~ address.city.country%}
                 {% endif %}
                 {% if activeLocale == 'zh-CN' %}
                     {{ address.recipientSurname }}{{ address.recipientName }}, {{ addr }}, {{ address.phone }}

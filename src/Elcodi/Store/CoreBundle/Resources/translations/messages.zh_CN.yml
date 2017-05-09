@@ -33,7 +33,7 @@ store:
                 send:
                     label: '保存'
                 state:
-                    label: 省份
+                    label: 地区
                 region:
                     label: 地区
         save:

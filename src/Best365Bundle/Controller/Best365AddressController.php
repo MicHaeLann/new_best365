@@ -42,7 +42,7 @@ class Best365AddressController extends AddressController
 	 *
 	 * @var string
 	 */
-	protected $maxLocationType = 'state';
+	protected $maxLocationType = 'city';
 
 
 

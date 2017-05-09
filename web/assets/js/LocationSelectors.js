@@ -11,7 +11,14 @@ function locationSelectors() {
                 optionSelectedValue  = optionSelected.val(),
                 selectorsUrl = $(container).data('url') + '/' + optionSelectedValue;
 
-            if(optionSelectedValue) {
+            if (optionSelectedValue == 'CN_beijing' ||
+                optionSelectedValue == 'CN_shanghai' ||
+                optionSelectedValue == 'CN_chongqing' ||
+                optionSelectedValue == 'CN_tianjin'
+            ) {
+                document.getElementById('store_geo_form_type_address_city').value = optionSelectedValue;
+                bindSelector(container);
+            } else if(optionSelectedValue) {
                 $.ajax(selectorsUrl, {
                     success: function (response) {
                         $(container).replaceWith(response);

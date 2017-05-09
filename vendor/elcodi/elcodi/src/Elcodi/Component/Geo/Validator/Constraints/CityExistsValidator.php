@@ -66,10 +66,11 @@ class CityExistsValidator extends ConstraintValidator
         } catch (EntityNotFoundException $e) {
             $location = null;
         }
-
+        ladybug_dump($location);
+		ladybug_dump(!($location instanceof LocationData));
         if (
             !($location instanceof LocationData) ||
-            'state' != $location->getType()
+            'city' != $location->getType()
         ) {
             $this
                 ->context

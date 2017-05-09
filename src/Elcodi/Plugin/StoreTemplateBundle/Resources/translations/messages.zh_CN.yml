@@ -61,7 +61,7 @@ template:
                 no_addresses: 当前没有地址
             new:
                 address:
-                    example: 例：xx市xx区xx街x号
+                    example: 例：xx区xx街x号
                 address_more:
                     example: 例：xx公司
                 cancel: 取消
