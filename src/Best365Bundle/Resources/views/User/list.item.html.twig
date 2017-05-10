@@ -29,7 +29,15 @@
 		{% if "#{item.paymentStateLineStack.lastStateLine.name}" == "paid" %}
 			{% for number in item.trackingNum  %}
 				<p>
-					<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
+					{% if number|slice(0,2) == 'EF' %}
+						<a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
+					{% elseif number|slice(0,2) == 'ZY' %}
+						<a class="main-theme-link" target="_blank" href="{{ qexpress_url }}{{ number }}">{{ number }}</a>
+					{% elseif number|slice(0,2) == 'MW' %}
+						<a class="main-theme-link" target="_blank" href="{{ milkyway_url }}{{ number }}">{{ number }}</a>
+					{% elseif number matches '/^\\d+$/' %}
+						<a class="main-theme-link" target="_blank" href="{{ ftd_url }}">{{ number }}</a>
+					{% endif %}
 				</p>
 			{% endfor %}
 		{% elseif item.ref|slice(0,6) == 'weixin' %}

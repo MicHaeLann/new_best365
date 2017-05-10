@@ -61,6 +61,9 @@ twig:
         epayment_merchant_key: '%epayment_merchant_key%'
         epayment_qrcode_url: '%epayment_qrcode_url%'
         efs_url: '%efs_url%'
+        qexpress_url: '%qexpress_url%'
+        milkyway_url: '%milkyway_url%'
+        ftd_url: '%ftd_url%'
 
     form:
         resources: ['bootstrap_3_layout.html.twig']
