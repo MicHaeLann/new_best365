@@ -35,8 +35,10 @@
 						<a class="main-theme-link" target="_blank" href="{{ qexpress_url }}{{ number }}">{{ number }}</a>
 					{% elseif number|slice(0,2) == 'MW' %}
 						<a class="main-theme-link" target="_blank" href="{{ milkyway_url }}{{ number }}">{{ number }}</a>
-					{% elseif number matches '/^\\d+$/' %}
+					{% elseif number|slice(0,2) == 'NZ' %}
 						<a class="main-theme-link" target="_blank" href="{{ ftd_url }}">{{ number }}</a>
+					{% elseif number matches '/^\\d+$/' %}
+						<a class="main-theme-link" target="_blank" href="{{ flyway_url }}">{{ number }}</a>
 					{% endif %}
 				</p>
 			{% endfor %}

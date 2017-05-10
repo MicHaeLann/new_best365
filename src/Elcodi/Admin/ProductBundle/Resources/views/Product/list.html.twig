@@ -18,11 +18,17 @@
 
 
 {% block header_actions %}
-
-    <a href="{{ url('admin_product_new') }}" type="button" class="button-primary" data-test="new-product">
-        <i class="icon-plus"></i>
-        <span>{{ 'admin.product.new'|trans }}</span>
-    </a>
+    <form id="list-form" method="post" action="{{ url('admin_product_list') }}">
+        <input name="field" type="text" style="padding: 0.5em 0.5em;border: 1px solid rgba(50, 50, 50, 0.3);background: #fff;border-radius: 2px;box-sizing: border-box" value="{{ field }}" />
+        <a class="button-primary" type="button" onclick="document.getElementById('list-form').submit();return false;">
+            <i class="icon-search"></i>
+            <span>{{ 'admin.product.search'|trans }}</span>
+        </a>
+        <a href="{{ url('admin_product_new') }}" type="button" class="button-primary" data-test="new-product">
+            <i class="icon-plus"></i>
+            <span>{{ 'admin.product.new'|trans }}</span>
+        </a>
+    </form>
 
 {% endblock header_actions %}
 
@@ -34,7 +40,8 @@
             page: page,
             limit: limit,
             orderByField: orderByField,
-            orderByDirection: orderByDirection
+            orderByDirection: orderByDirection,
+            field: field
         }))
     }}
 

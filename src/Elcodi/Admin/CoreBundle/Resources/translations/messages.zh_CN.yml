@@ -713,7 +713,8 @@ admin:
         info:
             variants_before_saving: '保存商品后可添加商品属性'
         list: '产品列表'
-        new: '新建产品'
+        new: '添加产品'
+        search: '查询'
         note: 备注
         plural: 产品
         saved: '产品已保存'

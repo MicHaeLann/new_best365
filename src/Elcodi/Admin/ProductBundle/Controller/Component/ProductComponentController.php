@@ -50,11 +50,12 @@ class ProductComponentController extends AbstractAdminController
      * @param integer             $limit               Limit of items per page
      * @param string              $orderByField        Field to order by
      * @param string              $orderByDirection    Direction to order by
-     *
+	 * @param string              $field		       Search field
+	 *
      * @return array Result
      *
      * @Route(
-     *      path = "s/component/{page}/{limit}/{orderByField}/{orderByDirection}",
+     *      path = "s/component/{page}/{limit}/{orderByField}/{orderByDirection}/{field}",
      *      name = "admin_product_list_component",
      *      requirements = {
      *          "page" = "\d*",
@@ -65,6 +66,7 @@ class ProductComponentController extends AbstractAdminController
      *          "limit" = "50",
      *          "orderByField" = "id",
      *          "orderByDirection" = "DESC",
+	 *     		"field" = ""
      *      },
      *      methods = {"GET"}
      * )
@@ -77,7 +79,10 @@ class ProductComponentController extends AbstractAdminController
      *      limit = "~limit~",
      *      orderBy = {
      *          {"x", "~orderByField~", "~orderByDirection~"}
-     *      }
+     *      },
+	 *      wheres = {
+	 *			{"x", "name", "LIKE", "%~field~%"},
+	 *	 	}
      * )
      */
     public function listComponentAction(
@@ -86,7 +91,8 @@ class ProductComponentController extends AbstractAdminController
         $page,
         $limit,
         $orderByField,
-        $orderByDirection
+        $orderByDirection,
+		$field
     ) {
         return [
             'paginator'        => $paginator,
@@ -96,6 +102,7 @@ class ProductComponentController extends AbstractAdminController
             'orderByDirection' => $orderByDirection,
             'totalPages'       => $paginatorAttributes->getTotalPages(),
             'totalElements'    => $paginatorAttributes->getTotalElements(),
+			'field'			   => $field
         ];
     }
 

@@ -50,6 +50,7 @@ class ProductController extends AbstractAdminController
      * @param integer $limit            Limit of items per page
      * @param string  $orderByField     Field to order by
      * @param string  $orderByDirection Direction to order by
+	 * @param string  $field 			Search Product key word
      *
      * @return array Result
      *
@@ -64,11 +65,11 @@ class ProductController extends AbstractAdminController
      *          "page" = "1",
      *          "limit" = "50",
      *          "orderByField" = "id",
-     *          "orderByDirection" = "DESC",
+     *          "orderByDirection" = "DESC"
      *      },
      * )
      * @Template
-     * @Method({"GET"})
+     * @Method({"GET", "POST"})
      */
     public function listAction(
         $page,
@@ -81,6 +82,7 @@ class ProductController extends AbstractAdminController
             'limit'            => $limit,
             'orderByField'     => $orderByField,
             'orderByDirection' => $orderByDirection,
+			'field'			   => $this->get('request')->request->get('field')
         ];
     }
 

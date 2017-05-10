@@ -715,6 +715,7 @@ admin:
             variants_before_saving: 'You will be able to add variants after saving the product'
         list: 'Product list'
         new: 'New Product'
+        search: 'Search Product'
         note: Notes
         plural: Products
         saved: 'Product saved'
