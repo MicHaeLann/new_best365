@@ -2,7 +2,6 @@
 
 namespace Best365Bundle\Controller;
 
-use Elcodi\Component\Cart\Entity\CartLine;
 use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as AnnotationEntity;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
@@ -11,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Elcodi\Store\CartBundle\Controller\CartController;

@@ -54,8 +54,8 @@ class DoctrineContext extends AbstractElcodiContext
             ->checkDoctrineConnection()
             ->executeCommand('doctrine:database:create')
             ->executeCommand('doctrine:schema:create')
-            ->loadCommonFixtures()
-            ->loadLocationFixtures()
+//            ->loadCommonFixtures()
+//            ->loadLocationFixtures()
             ->executeCommand('elcodi:plugins:load')
             ->executeCommand('assets:install')
             ->executeCommand('assetic:dump');
@@ -156,90 +156,90 @@ class DoctrineContext extends AbstractElcodiContext
         return $this;
     }
 
-    /**
-     * Load common fixtures
-     *
-     * @return $this Self object
-     */
-    private function loadCommonFixtures()
-    {
-        $command =
-            'doctrine:fixtures:load ' .
-            '--fixtures=src/Elcodi/Plugin ' .
-            '--fixtures=src/Elcodi/Fixtures ' .
-            '--env=test ' .
-            '--no-interaction ';
+//    /**
+//     * Load common fixtures
+//     *
+//     * @return $this Self object
+//     */
+//    private function loadCommonFixtures()
+//    {
+//        $command =
+//            'doctrine:fixtures:load ' .
+//            '--fixtures=src/Elcodi/Plugin ' .
+//            '--fixtures=src/Elcodi/Fixtures ' .
+//            '--env=test ' .
+//            '--no-interaction ';
+//
+//        if (!$this->debug) {
+//            $command .= '--quiet ';
+//        }
+//
+//        $input = new StringInput($command);
+//        $this
+//            ->application
+//            ->run($input);
+//
+//        return $this;
+//    }
 
-        if (!$this->debug) {
-            $command .= '--quiet ';
-        }
-
-        $input = new StringInput($command);
-        $this
-            ->application
-            ->run($input);
-
-        return $this;
-    }
-
-    /**
-     * Load location fixtures
-     *
-     * @return $this Self object
-     */
-    private function loadLocationFixtures()
-    {
-        $locationDirector = $this
-            ->getContainer()
-            ->get('elcodi.director.location');
-
-        /**
-         * @var LocationInterface $locationBarcelonaCity
-         */
-        $locationBarcelonaCity = $locationDirector
-            ->create()
-            ->setId('ES_CT_B_Barcelona')
-            ->setName('Barcelona')
-            ->setCode('Barcelona')
-            ->setType('city');
-        $locationDirector->save($locationBarcelonaCity);
-
-        /**
-         * @var LocationInterface $locationBarcelonaProvince
-         */
-        $locationBarcelonaProvince = $locationDirector
-            ->create()
-            ->setId('ES_CT_B')
-            ->setName('Barcelona')
-            ->setCode('B')
-            ->setType('province')
-            ->addChildren($locationBarcelonaCity);
-        $locationDirector->save($locationBarcelonaProvince);
-
-        /**
-         * @var LocationInterface $locationCatalunya
-         */
-        $locationCatalunya = $locationDirector
-            ->create()
-            ->setId('ES_CT')
-            ->setName('Catalunya')
-            ->setCode('CT')
-            ->setType('state')
-            ->addChildren($locationBarcelonaProvince);
-        $locationDirector->save($locationCatalunya);
-
-        /**
-         * @var LocationInterface $locationSpain
-         */
-        $locationSpain = $locationDirector
-            ->create()
-            ->setId('ES')
-            ->setName('Spain')
-            ->setCode('ES')
-            ->setType('country')
-            ->addChildren($locationCatalunya);
-        $locationDirector->save($locationSpain);
-
-        return $this;
-    }
+//    /**
+//     * Load location fixtures
+//     *
+//     * @return $this Self object
+//     */
+//    private function loadLocationFixtures()
+//    {
+//        $locationDirector = $this
+//            ->getContainer()
+//            ->get('elcodi.director.location');
+//
+//        /**
+//         * @var LocationInterface $locationBarcelonaCity
+//         */
+//        $locationBarcelonaCity = $locationDirector
+//            ->create()
+//            ->setId('ES_CT_B_Barcelona')
+//            ->setName('Barcelona')
+//            ->setCode('Barcelona')
+//            ->setType('city');
+//        $locationDirector->save($locationBarcelonaCity);
+//
+//        /**
+//         * @var LocationInterface $locationBarcelonaProvince
+//         */
+//        $locationBarcelonaProvince = $locationDirector
+//            ->create()
+//            ->setId('ES_CT_B')
+//            ->setName('Barcelona')
+//            ->setCode('B')
+//            ->setType('province')
+//            ->addChildren($locationBarcelonaCity);
+//        $locationDirector->save($locationBarcelonaProvince);
+//
+//        /**
+//         * @var LocationInterface $locationCatalunya
+//         */
+//        $locationCatalunya = $locationDirector
+//            ->create()
+//            ->setId('ES_CT')
+//            ->setName('Catalunya')
+//            ->setCode('CT')
+//            ->setType('state')
+//            ->addChildren($locationBarcelonaProvince);
+//        $locationDirector->save($locationCatalunya);
+//
+//        /**
+//         * @var LocationInterface $locationSpain
+//         */
+//        $locationSpain = $locationDirector
+//            ->create()
+//            ->setId('ES')
+//            ->setName('Spain')
+//            ->setCode('ES')
+//            ->setType('country')
+//            ->addChildren($locationCatalunya);
+//        $locationDirector->save($locationSpain);
+//
+//        return $this;
+//    }
 }

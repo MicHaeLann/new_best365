@@ -2,15 +2,10 @@
 
 namespace Best365Bundle\Controller;
 
-use Mmoreram\ControllerExtraBundle\Annotation\Entity as AnnotationEntity;
-use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
 
 /**
  * Payment controllers

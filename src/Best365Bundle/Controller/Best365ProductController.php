@@ -1,19 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michael
- * Date: 25/10/16
- * Time: 3:27 PM
- */
-
 namespace Best365Bundle\Controller;
 
-use Elcodi\Component\Product\Entity\Purchasable;
 use Elcodi\Store\ProductBundle\Controller\PurchasableController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 
 /**
  * Product controllers

@@ -2,9 +2,7 @@
 
 namespace Best365Bundle\Manager;
 
-
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
 class MembershipManager
 {

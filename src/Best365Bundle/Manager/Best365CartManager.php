@@ -2,14 +2,10 @@
 
 namespace Best365Bundle\Manager;
 
-
 use Elcodi\Component\Cart\EventDispatcher\CartEventDispatcher;
 use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Services\CartManager;
-use Elcodi\Component\Cart\Wrapper\CartWrapper;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
-use Elcodi\Component\Shipping\Wrapper\ShippingWrapper;
-use Elcodi\Component\User\Entity\Customer;
 use Best365Bundle\Manager\PurchasableManager;
 
 class Best365CartManager
@@ -18,11 +14,6 @@ class Best365CartManager
 	 * @var CartManager
 	 */
 	private $cartManager;
-
-	/**
-	 * @var CartWrapper
-	 */
-	private $cartWrapper;
 
 	/**
 	 * @var CartFactory
@@ -45,37 +36,26 @@ class Best365CartManager
 	private $currencyConverter;
 
 	/**
-	 * @var ShippingWrapper
-	 */
-	private $shippingWrapper;
-
-	/**
 	 * Best365CartManager constructor.
 	 * @param CartManager $cartManager
-	 * @param CartWrapper $cartWrapper
 	 * @param CartFactory $cartFactory
 	 * @param CartEventDispatcher $cartEventDispatcher
 	 * @param \Best365Bundle\Manager\PurchasableManager $purchasableManager
 	 * @param CurrencyConverter $currencyConverter
-	 * @param ShippingWrapper $shippingWrapper
 	 */
 	public function __construct(
 		CartManager $cartManager,
-		CartWrapper $cartWrapper,
 		CartFactory $cartFactory,
 		CartEventDispatcher $cartEventDispatcher,
 		PurchasableManager $purchasableManager,
-		CurrencyConverter $currencyConverter,
-		ShippingWrapper $shippingWrapper
+		CurrencyConverter $currencyConverter
 	)
 	{
 		$this->cartManager = $cartManager;
-		$this->cartWrapper = $cartWrapper;
 		$this->cartFactory = $cartFactory;
 		$this->cartEventDispatcher = $cartEventDispatcher;
 		$this->purchasableManager = $purchasableManager;
 		$this->currencyConverter = $currencyConverter;
-		$this->shippingWrapper = $shippingWrapper;
 	}
 
 	/**

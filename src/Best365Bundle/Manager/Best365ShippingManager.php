@@ -2,7 +2,6 @@
 
 namespace Best365Bundle\Manager;
 
-
 use Elcodi\Component\Shipping\Entity\ShippingMethod;
 
 class Best365ShippingManager

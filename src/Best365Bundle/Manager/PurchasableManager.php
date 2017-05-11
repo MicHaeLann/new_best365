@@ -9,7 +9,6 @@ use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\Product\Entity\Interfaces\CategoryInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use Elcodi\Component\Product\Repository\ManufacturerRepository;
-use Proxies\__CG__\Elcodi\Component\Product\Entity\Manufacturer;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Product\Repository\PurchasableRepository;
@@ -23,8 +22,6 @@ class PurchasableManager
 
 	private $cw;
 
-	private $mm;
-
 	private $cc;
 
 	private $cr;
@@ -35,7 +32,6 @@ class PurchasableManager
 		EntityManager $em,
 		PurchasableRepository $pr,
 		CustomerWrapper $cw,
-		MembershipManager $mm,
 		CurrencyConverter $cc,
 		CurrencyRepository $cr,
 		ManufacturerRepository $mr
@@ -44,7 +40,6 @@ class PurchasableManager
 		$this->em = $em;
 		$this->pr = $pr;
 		$this->cw = $cw;
-		$this->mm = $mm;
 		$this->cc = $cc;
 		$this->cr = $cr;
 		$this->mr = $mr;

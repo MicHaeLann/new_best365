@@ -8,8 +8,6 @@
 
 namespace Best365Bundle\Controller;
 
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
 use Symfony\Component\Form\FormView;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as FormAnnotation;
@@ -18,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Elcodi\Store\CartBundle\Controller\CheckoutController;
 use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
-use Elcodi\Component\Cart\Transformer\CartOrderTransformer;
 
 /**
  * Class CheckoutController

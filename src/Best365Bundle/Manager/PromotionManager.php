@@ -1,4 +1,5 @@
 <?php
+
 namespace Best365Bundle\Manager;
 
 use Doctrine\ORM\EntityManager;

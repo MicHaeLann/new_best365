@@ -10,7 +10,6 @@ use Elcodi\Component\Currency\Wrapper\CurrencyWrapper;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-
 class Best365PaymentManager
 {
 	/**
@@ -32,11 +31,6 @@ class Best365PaymentManager
 	 * @var Router
 	 */
 	private $router;
-
-	/**
-	 * @var CurrencyWrapper
-	 */
-	private $currencyWrapper;
 
 	/**
 	 * @var CurrencyConverter
@@ -70,7 +64,6 @@ class Best365PaymentManager
 	 * @param Parameter				   $poli_initiate_api	   POLi Initiate Transaction API Url
 	 * @param Parameter				   $poli_transaction_api    POLi Get Transaction API Url
 	 * @param Router				   $router				   Router
-	 * @param CurrencyWrapper		   $currencyWrapper		   Currency Wrapper
 	 * @param CurrencyConverter		   $currencyConverter	   Currency Converter
 	 * @param CurrencyRepository	   $currencyRepository	   Currency Repository
 	 * @param EntityManager			   $em					   Entity Manager
@@ -89,7 +82,6 @@ class Best365PaymentManager
         $poli_initiate_api,
 		$poli_tranaction_api,
 		Router $router,
-		CurrencyWrapper $currencyWrapper,
 		CurrencyConverter $currencyConverter,
 		CurrencyRepository $currencyRepository,
 		EntityManager $em
@@ -117,7 +109,6 @@ class Best365PaymentManager
 		$this->poli->transaction_api = $poli_tranaction_api;
 
 		$this->router = $router;
-		$this->currencyWrapper = $currencyWrapper;
 		$this->currencyConverter = $currencyConverter;
 		$this->currencyRepository = $currencyRepository;
 		$this->em = $em;

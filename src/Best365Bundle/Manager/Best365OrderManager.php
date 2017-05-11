@@ -4,17 +4,14 @@ namespace Best365Bundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
-use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use PaymentSuite\FreePaymentBundle\Services\FreePaymentMethodFactory;
 use PaymentSuite\PaymentCoreBundle\Services\Interfaces\PaymentBridgeInterface;
 use PaymentSuite\PaymentCoreBundle\Services\PaymentEventDispatcher;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\Shipping\Wrapper\ShippingWrapper;
-use Elcodi\Component\User\Wrapper\CustomerWrapper;
 use Best365Bundle\Entity\OrderExt;
 use Best365Bundle\Manager\PurchasableManager;
-
 
 class Best365OrderManager
 {
@@ -29,11 +26,6 @@ class Best365OrderManager
 	private $orderObjectManager;
 
 	/**
-	 * @var CustomerWrapper
-	 */
-	private $customerWrapper;
-
-	/**
 	 * @var ShippingWrapper
 	 */
 	private $shippingWrapper;
@@ -42,11 +34,6 @@ class Best365OrderManager
 	 * @var CurrencyConverter
 	 */
 	private $currencyConverter;
-
-	/**
-	 * @var Best365CustomerManager
-	 */
-	private $best365CustomerManager;
 
 	/**
 	 * @var \Best365Bundle\Manager\PurchasableManager
@@ -90,10 +77,8 @@ class Best365OrderManager
 	 * @param PaymentBridgeInterface $paymentBridge
 	 * @param PaymentEventDispatcher $paymentEventDispatcher
 	 * @param ObjectManager $orderObjectManager
-	 * @param CustomerWrapper $customerWrapper
 	 * @param ShippingWrapper $shipping_wrapper
 	 * @param CurrencyConverter $currencyConverter
-	 * @param Best365CustomerManager $best365CustomerManager
 	 * @param PurchasableManager $purchasableManager
 	 * @param Best365PaymentManager $best365PaymentManager
 	 * @param Best365CartManager $best365CartManager
@@ -105,10 +90,8 @@ class Best365OrderManager
 		PaymentBridgeInterface $paymentBridge,
 		PaymentEventDispatcher $paymentEventDispatcher,
 		ObjectManager $orderObjectManager,
-		CustomerWrapper $customerWrapper,
 		ShippingWrapper	$shipping_wrapper,
 		CurrencyConverter $currencyConverter,
-		Best365CustomerManager $best365CustomerManager,
 		PurchasableManager $purchasableManager,
 		Best365PaymentManager $best365PaymentManager,
 		Best365CartManager $best365CartManager,
@@ -121,10 +104,8 @@ class Best365OrderManager
 
 		$this->orderObjectManager = $orderObjectManager;
 
-		$this->customerWrapper = $customerWrapper;
 		$this->shippingWrapper = $shipping_wrapper;
 		$this->currencyConverter = $currencyConverter;
-		$this->best365CustomerManager = $best365CustomerManager;
 		$this->purchasableManager = $purchasableManager;
 		$this->best365PaymentManager = $best365PaymentManager;
 		$this->best365CartManager = $best365CartManager;
