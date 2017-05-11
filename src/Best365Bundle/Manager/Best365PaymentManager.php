@@ -5,7 +5,6 @@ namespace Best365Bundle\Manager;
 use Best365Bundle\Entity\PaymentGateway;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
-use Elcodi\Component\Cart\Entity\Order;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Symfony\Component\HttpFoundation\Request;
