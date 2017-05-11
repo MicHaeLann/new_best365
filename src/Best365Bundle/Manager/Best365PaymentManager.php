@@ -4,8 +4,11 @@ namespace Best365Bundle\Manager;
 
 use Best365Bundle\Entity\PaymentGateway;
 use Doctrine\ORM\EntityManager;
+use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
+use Elcodi\Component\Cart\Entity\Order;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -118,7 +121,7 @@ class Best365PaymentManager
 	 * @param $request
 	 * @return array
 	 */
-	public function getEpaymentRequestArray($request)
+	public function getEpaymentRequestArray(Request $request)
 	{
 		// get all parameters in request
 		$params = $request->request->all();
@@ -189,7 +192,7 @@ class Best365PaymentManager
 	 * @param $order
 	 * @return mixed
 	 */
-	public function getEpaymentQrcode($order)
+	public function getEpaymentQrcode(OrderInterface $order)
 	{
 		// get CNY
 		$cny = $this->currencyRepository->findOneBy(['enabled' => true, 'iso' => 'CNY']);
@@ -238,7 +241,7 @@ class Best365PaymentManager
 	 * @param $order
 	 * @return mixed
 	 */
-	public function getOnlineBankingUrl($order)
+	public function getOnlineBankingUrl(OrderInterface $order)
 	{
 		// convert money to nzd
 		$nzd = $this->currencyRepository->findOneBy(array('enabled' => true, 'iso' => 'NZD'));
@@ -273,7 +276,7 @@ class Best365PaymentManager
 		return $vals[0];
 	}
 
-	public function getPoliInitiateUrl($order)
+	public function getPoliInitiateUrl(OrderInterface $order)
 	{
 		// convert money to nzd
 		$nzd = $this->currencyRepository->findOneBy(array('enabled' => true, 'iso' => 'NZD'));

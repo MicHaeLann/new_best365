@@ -4,6 +4,7 @@ namespace Best365Bundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
+use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
 use PaymentSuite\FreePaymentBundle\Services\FreePaymentMethodFactory;
 use PaymentSuite\PaymentCoreBundle\Services\Interfaces\PaymentBridgeInterface;
 use PaymentSuite\PaymentCoreBundle\Services\PaymentEventDispatcher;
@@ -221,7 +222,7 @@ class Best365OrderManager
 	 * @return Object $result
 	 *
 	 */
-	public function saveOrder($cart, $payment_method)
+	public function saveOrder(CartInterface $cart, $payment_method)
 	{
 		// generate order
 		$this->generateOrder();
@@ -290,7 +291,7 @@ class Best365OrderManager
 	 * Reset order info
 	 * @param $order
 	 */
-	private function regenerateOrder(&$order)
+	private function regenerateOrder(OrderInterface &$order)
 	{
 		$total = '';
 		foreach ($order->getOrderLines() as &$line) {
@@ -328,7 +329,7 @@ class Best365OrderManager
 	 * Remove order when error
 	 * @param $order
 	 */
-	public function removeOrder($order)
+	public function removeOrder(OrderInterface $order)
 	{
 		// restore stock and move item back to cart
 		foreach ($order->getOrderLines() as $line) {

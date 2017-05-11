@@ -2,6 +2,8 @@
 
 namespace Best365Bundle\Manager;
 
+use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
+use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\Cart\EventDispatcher\CartEventDispatcher;
 use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Services\CartManager;
@@ -62,7 +64,7 @@ class Best365CartManager
 	 * Cart recovery function
 	 * @param $order
 	 */
-	public function recoverCartByOrder($order)
+	public function recoverCartByOrder(OrderInterface $order)
 	{
 		// load cart
 		$cart = $this->cartFactory->create();
@@ -80,7 +82,7 @@ class Best365CartManager
 		}
 	}
 
-	public function regenerate($cart)
+	public function regenerate(CartInterface $cart)
 	{
 		if ($cart->getTotalItemNumber() > 0) {
 			$total = '';
