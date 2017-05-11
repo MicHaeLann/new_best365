@@ -26,7 +26,17 @@
                     {% if i > 0 %}
                         ,
                     {% endif %}
-                    <a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
+                    {% if number|slice(0,2) == 'EF' %}
+                        <a class="main-theme-link" target="_blank" href="{{ efs_url }}{{ number }}">{{ number }}</a>
+                    {% elseif number|slice(0,2) == 'ZY' %}
+                        <a class="main-theme-link" target="_blank" href="{{ qexpress_url }}{{ number }}">{{ number }}</a>
+                    {% elseif number|slice(0,2) == 'MW' %}
+                        <a class="main-theme-link" target="_blank" href="{{ milkyway_url }}{{ number }}">{{ number }}</a>
+                    {% elseif number|slice(0,2) == 'NZ' %}
+                        <a class="main-theme-link" target="_blank" href="{{ ftd_url }}">{{ number }}</a>
+                    {% elseif number matches '/^\\d+$/' %}
+                        <a class="main-theme-link" target="_blank" href="{{ flyway_url }}">{{ number }}</a>
+                    {% endif %}
                     {% set i = i + 1 %}
                 {% endfor %}
             {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "unpaid" and order.ref|slice(0, 6) == 'weixin'  %}

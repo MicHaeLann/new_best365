@@ -64,7 +64,7 @@ twig:
         qexpress_url: '%qexpress_url%'
         milkyway_url: '%milkyway_url%'
         ftd_url: '%ftd_url%'
-
+        flyway_url: '%flyway_url%'
     form:
         resources: ['bootstrap_3_layout.html.twig']
 
