@@ -6,7 +6,6 @@ use Best365Bundle\Entity\PaymentGateway;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
-use Elcodi\Component\Currency\Wrapper\CurrencyWrapper;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
