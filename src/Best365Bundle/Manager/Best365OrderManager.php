@@ -256,7 +256,6 @@ class Best365OrderManager
 		$reference = '';
 		if ($payment_method == 'transfer') {
 			$reference = $order_id;
-//			$reference = uniqid();
 			$success = true;
 		} elseif ($payment_method == 'poli') {
 			$response = $this->best365PaymentManager->getPoliInitiateUrl($order);
