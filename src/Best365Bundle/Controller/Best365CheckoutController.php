@@ -170,53 +170,38 @@ class Best365CheckoutController extends CheckoutController
 			->request
 			->get('address', false);
 
-		$saveCheckoutAddress = function ($addressId, $addressType, $setMethodName) {
-			if ($addressId) {
-				$address = $this
-					->get('elcodi.repository.address')
-					->findOneBy(['id' => $addressId]);
+		// set delivery address
+		$delivery = $this
+			->get('best365.manager.address')
+			->saveCheckoutAddress($address, 'setDeliveryAddress');
+		if (!$delivery) {
+			$translator = $this->get('translator');
+			$type = $translator->trans('store.address.delivery');
+			$this->addFlash(
+				'success',
+				$translator->trans(
+					'store.address.select_address_type',
+					['%1' => $type]
+				)
+			);
+		}
 
-				$customerAddresses = $this
-					->getUser()
-					->getAddresses();
+		// set billing address
+		$billing = $this
+			->get('best365.manager.address')
+			->saveCheckoutAddress($address, 'setBillingAddress');
 
-				if ($customerAddresses->contains($address)) {
-					$cart = $this
-						->get('elcodi.wrapper.cart')
-						->get();
-
-					$cart->$setMethodName($address);
-
-					$cartObjectManager = $this
-						->get('elcodi.object_manager.cart');
-
-					$cartObjectManager->persist($cart);
-					$cartObjectManager->flush();
-				}
-			} else {
-				$translator = $this->get('translator');
-				$type = $translator->trans($addressType);
-				$this->addFlash(
-					'success',
-					$translator->trans(
-						'store.address.select_address_type',
-						['%1' => $type]
-					)
-				);
-			}
-		};
-
-		$saveCheckoutAddress(
-			$address,
-			'store.address.delivery',
-			'setDeliveryAddress'
-		);
-
-		$saveCheckoutAddress(
-			$address,
-			'store.address.billing',
-			'setBillingAddress'
-		);
+		if (!$billing) {
+			$translator = $this->get('translator');
+			$type = $translator->trans('store.address.billing');
+			$this->addFlash(
+				'success',
+				$translator->trans(
+					'store.address.select_address_type',
+					['%1' => $type]
+				)
+			);
+		}
 
 		// set shipping method
 		$cart = $this
