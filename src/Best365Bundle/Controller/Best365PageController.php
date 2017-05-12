@@ -51,8 +51,5 @@ class Best365PageController extends Controller
 				]
 			);
 		}
-
-
-
 	}
 }

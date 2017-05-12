@@ -17,11 +17,6 @@
 					<a href="{{ url("best365_store_address_list") }}" class="list-group-item  list-group-item-action {% if app.request.attributes.get('_route') == "best365_store_address_list" or app.request.attributes.get('_route') == "best365_store_address_edit" or app.request.attributes.get('_route') == "best365_store_address_new" %}list-group-item-success{% endif %}">
 						{{ "template.store_template_bundle.user.home.my_addresses"|trans }}
 					</a>
-					<!--
-                    <a href="#" class="list-group-item">
-                        Watchlist
-                    </a>
-                    -->
 				</div>
 			{% endblock %}
 			{% block userbody%}

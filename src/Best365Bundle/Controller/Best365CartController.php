@@ -500,5 +500,4 @@ class Best365CartController extends CartController
 
 		return new Response(json_encode($methods));
 	}
-
 }

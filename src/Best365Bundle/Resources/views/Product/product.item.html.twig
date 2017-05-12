@@ -28,9 +28,6 @@
                     <a id="add-cart-{{ item.id }}" class="btn btn-success" href="javascript:void(0)">
                         {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
                     </a>
-                    {#<a id="add-cart" class="btn btn-success" href="{{ url('best365_store_cart_add_purchasable', { id: item.id, quantity: 1}) }}">#}
-                        {#{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}#}
-                    {#</a>#}
                 {% else %}
                     <a class="btn btn-warning" href="#">
                         {{ 'template.store_template_bundle.product.view_item.no_stock'|trans }}

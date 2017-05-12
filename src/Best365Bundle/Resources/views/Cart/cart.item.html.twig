@@ -25,14 +25,14 @@
                         <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                         <input type="number" id="quantity-{{ line.id }}" class="unit-display form-control" min="1" value="{{ line.quantity }}" />
                         <span id="stock-label" class="stock-container margin-left-15">
-                                            {% if line.quantity <= purchasable.stock %}
-                                                <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
-                                                {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
-                                            {% else %}
-                                                <span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>
-                                                {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
-                                            {% endif %}
-                                        </span>
+                            {% if line.quantity <= purchasable.stock %}
+                                <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
+                                {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
+                            {% else %}
+                                <span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span>
+                                {{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="margin-top-15">
                                         <span id="unit-price-{{ line.id }}" class="sub-theme-font">
@@ -47,13 +47,12 @@
                     <input type="hidden" id="weight-{{ line.id }}" value="{{ purchasable.weight }}" />
                 </td>
                 <td>
-                                    <span id="line-price-{{ line.id }}" class="main-theme-font bold font-18">
-                                        {{ line.amount|print_convert_money() }}
-                                    </span>
+                    <span id="line-price-{{ line.id }}" class="main-theme-font bold font-18">
+                        {{ line.amount|print_convert_money() }}
+                    </span>
                 </td>
             </tr>
         {% endfor %}
-
         </tbody>
     </table>
     <a class="float-right btn btn-success" href="{{ url('best365_store_cart_empty') }}" data-test="do-empty-cart">

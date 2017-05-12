@@ -16,18 +16,45 @@ use Elcodi\Component\User\Wrapper\CustomerWrapper;
 
 class PurchasableManager
 {
+	/**
+	 * @var EntityManager
+	 */
 	private $em;
 
+	/**
+	 * @var PurchasableRepository
+	 */
 	private $pr;
 
+	/**
+	 * @var CustomerWrapper
+	 */
 	private $cw;
 
+	/**
+	 * @var CurrencyConverter
+	 */
 	private $cc;
 
+	/**
+	 * @var CurrencyRepository
+	 */
 	private $cr;
 
+	/**
+	 * @var ManufacturerRepository
+	 */
 	private $mr;
 
+	/**
+	 * PurchasableManager constructor.
+	 * @param EntityManager $em
+	 * @param PurchasableRepository $pr
+	 * @param CustomerWrapper $cw
+	 * @param CurrencyConverter $cc
+	 * @param CurrencyRepository $cr
+	 * @param ManufacturerRepository $mr
+	 */
 	public function __construct(
 		EntityManager $em,
 		PurchasableRepository $pr,

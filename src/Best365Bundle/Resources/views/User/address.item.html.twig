@@ -18,15 +18,11 @@
         {{ form_row(form.recipientName, { "attr": { "class": "form-control", "length": 255, "placeholder":"template.store_template_bundle.address.new.recipient.example_name"|trans }}) }}
         {{ form_row(form.recipientSurname, { "attr": { "class": "form-control", "length": 255, "placeholder":"template.store_template_bundle.address.new.recipient.example_surname"|trans }}) }}
     {% endif %}
-    {#{{ form_row(form.city, {"value": "ES_an_ca_abiertaslas"}) }}#}
     {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255, "placeholder":"template.store_template_bundle.address.new.phone.example"|trans }}) }}
-
 </div>
 {% if cart %}
     {{ form_widget(form.send, { "attr": { "class": "btn btn-success float-right" } }) }}
 {% else %}
     {{ form_widget(form.send, { "attr": { "class": "btn btn-success margin-top-30" } }) }}
 {% endif %}
-{#<a href="{{ url("best365_store_address_list") }}" class="btn btn-default">{{ "template.store_template_bundle.address.new.cancel"|trans }}</a>#}
 {{ form_end(form) }}
-

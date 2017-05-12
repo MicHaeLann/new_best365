@@ -180,7 +180,6 @@ class Best365PaymentController extends Controller
 				->addPaymentGateway($order_id, 3, $transaction);
 		}
 
-
 		// set order valid
 		if ($transaction['TransactionStatusCode'] == 'Completed') {
 			$success = true;

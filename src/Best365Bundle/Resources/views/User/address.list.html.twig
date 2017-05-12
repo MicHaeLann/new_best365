@@ -12,18 +12,10 @@
 		</div>
 		<table class="table table-striped margin-top-10">
 			<thead>
-			<td>
-				{{ 'template.store_template_bundle.address.item.fullname'|trans }}
-			</td>
-			<td>
-				{{ 'template.store_template_bundle.address.item.address'|trans }}
-			</td>
-			<td>
-				{{ 'store.address.form.fields.phone.label'|trans }}
-			</td>
-			<td>
-				{{ 'template.store_template_bundle.address.item.actions'|trans }}
-			</td>
+				<td>{{ 'template.store_template_bundle.address.item.fullname'|trans }}</td>
+				<td>{{ 'template.store_template_bundle.address.item.address'|trans }}</td>
+				<td>{{ 'store.address.form.fields.phone.label'|trans }}</td>
+				<td>{{ 'template.store_template_bundle.address.item.actions'|trans }}</td>
 			</thead>
 			<tbody>
 			{% for address in addresses %}
@@ -49,7 +41,6 @@
 						<a href="{{ url('best365_store_address_edit', { id:address.id, source:source }) }}" class="btn btn-info btn-xs" data-test="address-{{ address.id }}-edit">
 							<span class="glyphicon glyphicon-pencil"></span>
 						</a>
-
 						<a href="{{ url('best365_store_address_delete',{id:address.id,source:source}) }}" class="btn btn-danger btn-xs" data-test="address-{{ address.id }}-remove">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>

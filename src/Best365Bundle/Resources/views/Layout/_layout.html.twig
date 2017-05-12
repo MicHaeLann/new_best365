@@ -45,7 +45,6 @@
 <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.qrcode.min.js') }}"></script>
 <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-{#<script src="{{ asset('/js/fos_js_routes.js') }}"></script>#}
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% if app.request.attributes.get('_route') != "best365_store_login" and
         app.request.attributes.get('_route') != "best365_store_register" and
@@ -62,8 +61,7 @@
     app.request.attributes.get('_route') == "best365_store_address_edit" or
     app.request.attributes.get('_route') == "best365_store_address_new" %}
     <script src="{{ asset('assets/js/LocationSelectors.js') }}"></script>
-    {#<script src="{{ asset(assets/js/locationSelectors.js) }}"></script>#}
-    {#<script src="{{ asset_url }}"></script>#}
 {% endif %}
 <script src="{{ asset('assets/js/cart.js') }}"></script>
 {% endblock foot_script %}
+
