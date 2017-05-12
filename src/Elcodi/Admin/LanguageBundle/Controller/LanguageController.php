@@ -187,7 +187,6 @@ class LanguageController extends AbstractAdminController
 		$this
             ->get('elcodi.object_manager.store')
             ->flush($store);
-		//$this->flushCache();
 
         return [
             'message' => $translator->trans('admin.language.saved.master'),
