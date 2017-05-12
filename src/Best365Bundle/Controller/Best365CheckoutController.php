@@ -1,21 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michael
- * Date: 31/10/16
- * Time: 1:26 PM
- */
 
 namespace Best365Bundle\Controller;
 
-use Symfony\Component\Form\FormView;
-use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
-use Mmoreram\ControllerExtraBundle\Annotation\Form as FormAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Elcodi\Store\CartBundle\Controller\CheckoutController;
-use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
 
 /**
  * Class CheckoutController
