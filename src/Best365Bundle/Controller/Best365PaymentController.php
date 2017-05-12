@@ -144,53 +144,9 @@ class Best365PaymentController extends Controller
 			}
 		}
 
-		$order = $this
-			->get('elcodi.repository.order')
-			->find($order_id);
-
-		$url = $this->generateUrl('best365_store_order_list_error');
-		$valid = 0;
-
-		if (!empty($order)) {
-			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
-				// update payment status
-				$stateLineStack = $this
-					->get('elcodi.order_payment_states_machine_manager')
-					->transition(
-						$order,
-						$order->getPaymentStateLineStack(),
-						"pay",
-						''
-					);
-				$order->setPaymentStateLineStack($stateLineStack);
-
-				$order_manager = $this->get('elcodi.object_manager.order');
-				$order_manager->persist($order);
-				$order_manager->flush();
-
-				// set order valid
-				$valid = 1;
-
-				// add points
-				$currency = $this->get('elcodi.wrapper.currency')
-					->get();
-				$nzd = $this->get('elcodi.converter.currency')
-					->convertMoney(
-						$order->getPurchasableAmount(),
-						$currency
-					);
-				$points = floor($nzd->getAmount() / 100 * 10);
-
-				// add points to customer
-				$this->get('best365.manager.customer')
-					->updatePoints($order->getCustomer(), $points);
-
-				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
-
-			}
-		}
-		$this->get('best365.manager.order')
-			->updateExtRecord($order, '', $valid);
+		$url = $this
+			->get('best365.manager.order')
+			->payOrder($order_id, $success);
 
 		return $this->redirect($url);
 	}
@@ -230,53 +186,9 @@ class Best365PaymentController extends Controller
 			$success = true;
 		}
 
-		$order = $this
-			->get('elcodi.repository.order')
-			->find($order_id);
-
-		$url = $this->generateUrl('best365_store_order_list_error');
-		$valid = 0;
-
-		if (!empty($order)) {
-			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
-				// update payment status
-				$stateLineStack = $this
-					->get('elcodi.order_payment_states_machine_manager')
-					->transition(
-						$order,
-						$order->getPaymentStateLineStack(),
-						"pay",
-						''
-					);
-				$order->setPaymentStateLineStack($stateLineStack);
-
-				$order_manager = $this->get('elcodi.object_manager.order');
-				$order_manager->persist($order);
-				$order_manager->flush();
-
-				// set order valid
-				$valid = 1;
-
-				// add points
-				$currency = $this->get('elcodi.wrapper.currency')
-					->get();
-				$nzd = $this->get('elcodi.converter.currency')
-					->convertMoney(
-						$order->getPurchasableAmount(),
-						$currency
-					);
-				$points = floor($nzd->getAmount() / 100 * 10);
-
-				// add points to customer
-				$this->get('best365.manager.customer')
-					->updatePoints($order->getCustomer(), $points);
-				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
-			} elseif ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "paid") {
-				$url = $this->generateUrl('best365_store_order_thanks', array('id' => $order_id));
-			}
-		}
-		$this->get('best365.manager.order')
-			->updateExtRecord($order, '', $valid);
+		$url = $this
+			->get('best365.manager.order')
+			->payOrder($order_id, $success);
 
 		return $this->redirect($url);
 	}

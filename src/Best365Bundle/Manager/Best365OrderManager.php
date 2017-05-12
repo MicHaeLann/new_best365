@@ -5,6 +5,9 @@ namespace Best365Bundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
+use Elcodi\Component\Cart\Repository\OrderRepository;
+use Elcodi\Component\Currency\Wrapper\CurrencyWrapper;
+use Elcodi\Component\StateTransitionMachine\Machine\MachineManager;
 use PaymentSuite\FreePaymentBundle\Services\FreePaymentMethodFactory;
 use PaymentSuite\PaymentCoreBundle\Services\Interfaces\PaymentBridgeInterface;
 use PaymentSuite\PaymentCoreBundle\Services\PaymentEventDispatcher;
@@ -13,6 +16,7 @@ use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\Shipping\Wrapper\ShippingWrapper;
 use Best365Bundle\Entity\OrderExt;
 use Best365Bundle\Manager\PurchasableManager;
+use Symfony\Component\Routing\Router;
 
 class Best365OrderManager
 {
@@ -22,9 +26,19 @@ class Best365OrderManager
 	private $em;
 
 	/**
+	 * @var Router
+	 */
+	private $router;
+
+	/**
 	 * @var ObjectManager
 	 */
 	private $orderObjectManager;
+
+	/**
+	 * @var OrderRepository
+	 */
+	private $orderRepository;
 
 	/**
 	 * @var ShippingWrapper
@@ -35,6 +49,11 @@ class Best365OrderManager
 	 * @var CurrencyConverter
 	 */
 	private $currencyConverter;
+
+	/**
+	 * @var CurrencyWrapper
+	 */
+	private $currencyWrapper;
 
 	/**
 	 * @var \Best365Bundle\Manager\PurchasableManager
@@ -50,6 +69,13 @@ class Best365OrderManager
 	 * @var Best365CartManager
 	 */
 	private $best365CartManager;
+
+	private $best365CustomerManager;
+
+	/**
+	 * @var MachineManager
+	 */
+	private $machineManager;
 
 	/**
 	 * @var FreePaymentMethodFactory
@@ -72,31 +98,24 @@ class Best365OrderManager
 	 */
 	private $paymentEventDispatcher;
 
-	/**
-	 * Best365OrderManager constructor.
-	 * @param FreePaymentMethodFactory $methodFactory
-	 * @param PaymentBridgeInterface $paymentBridge
-	 * @param PaymentEventDispatcher $paymentEventDispatcher
-	 * @param ObjectManager $orderObjectManager
-	 * @param ShippingWrapper $shipping_wrapper
-	 * @param CurrencyConverter $currencyConverter
-	 * @param PurchasableManager $purchasableManager
-	 * @param Best365PaymentManager $best365PaymentManager
-	 * @param Best365CartManager $best365CartManager
-	 * @param EntityManager $em
-	 */
+
 	public function __construct
 	(
 		FreePaymentMethodFactory $methodFactory,
 		PaymentBridgeInterface $paymentBridge,
 		PaymentEventDispatcher $paymentEventDispatcher,
 		ObjectManager $orderObjectManager,
+		OrderRepository $orderRepository,
 		ShippingWrapper	$shipping_wrapper,
 		CurrencyConverter $currencyConverter,
+		CurrencyWrapper $currencyWrapper,
 		PurchasableManager $purchasableManager,
 		Best365PaymentManager $best365PaymentManager,
 		Best365CartManager $best365CartManager,
-		EntityManager $em
+		Best365CustomerManager $best365CustomerManager,
+		MachineManager $machineManager,
+		EntityManager $em,
+		Router $router
 	)
 	{
 		$this->methodFactory = $methodFactory;
@@ -104,14 +123,19 @@ class Best365OrderManager
 		$this->paymentEventDispatcher = $paymentEventDispatcher;
 
 		$this->orderObjectManager = $orderObjectManager;
+		$this->orderRepository = $orderRepository;
 
 		$this->shippingWrapper = $shipping_wrapper;
 		$this->currencyConverter = $currencyConverter;
+		$this->currencyWrapper = $currencyWrapper;
 		$this->purchasableManager = $purchasableManager;
 		$this->best365PaymentManager = $best365PaymentManager;
 		$this->best365CartManager = $best365CartManager;
+		$this->best365CustomerManager = $best365CustomerManager;
+		$this->machineManager = $machineManager;
 
 		$this->em = $em;
+		$this->router = $router;
 	}
 
 	/**
@@ -343,5 +367,63 @@ class Best365OrderManager
 
 		// return item to cart
 		$this->best365CartManager->recoverCartByOrder($order);
+	}
+
+	/**
+	 * Do payment to order
+	 * @param $order_id
+	 * @param $success
+	 * @return string
+	 */
+	public function payOrder($order_id, $success)
+	{
+		$order = $this
+			->orderRepository
+			->find($order_id);
+
+		$url = $this->router->generate('best365_store_order_list_error');
+		$valid = 0;
+
+		if (!empty($order)) {
+			if ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "unpaid" && $success) {
+				// update payment status
+				$stateLineStack = $this
+					->machineManager
+					->transition(
+						$order,
+						$order->getPaymentStateLineStack(),
+						"pay",
+						''
+					);
+				$order->setPaymentStateLineStack($stateLineStack);
+
+				$this->orderObjectManager->persist($order);
+				$this->orderObjectManager->flush();
+
+				// set order valid
+				$valid = 1;
+
+				// add points
+				$currency = $this
+					->currencyWrapper
+					->get();
+				$nzd = $this
+					->currencyConverter
+					->convertMoney(
+						$order->getPurchasableAmount(),
+						$currency
+					);
+				$points = floor($nzd->getAmount() / 100 * 10);
+
+				// add points to customer
+				$this->best365CustomerManager->updatePoints($order->getCustomer(), $points);
+				$url = $this->router->generate('best365_store_order_thanks', array('id' => $order_id));
+			} elseif ($order->getPaymentStateLineStack()->getLastStateLine()->getName() == "paid") {
+				$url = $this->router->generate('best365_store_order_thanks', array('id' => $order_id));
+			}
+		}
+		$this->updateExtRecord($order, '', $valid);
+
+		return $url;
 	}
 }

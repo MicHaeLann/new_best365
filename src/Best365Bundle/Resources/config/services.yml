@@ -33,12 +33,17 @@ services:
             - "@paymentsuite.bridge"
             - "@paymentsuite.event_dispatcher"
             - '@elcodi.object_manager.order'
+            - '@elcodi.repository.order'
             - '@elcodi.wrapper.shipping_methods'
             - "@elcodi.converter.currency"
+            - "@elcodi.wrapper.currency"
             - '@best365.manager.purchasable'
             - '@best365.manager.payment'
             - '@best365.manager.cart'
+            - "@best365.manager.customer"
             - '@doctrine.orm.entity_manager'
+            - "@router"
+            - "@elcodi.order_payment_states_machine_manager"
 
     best365.manager.payment:
         class: Best365Bundle\Manager\Best365PaymentManager
