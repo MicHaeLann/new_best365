@@ -2,6 +2,12 @@
 	<div class="container">
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
+				<li>
+					<a href="{{ url('best365_store_homepage') }}">
+						<i class="fa fa-home" aria-hidden="true"></i>
+                        {{ "template.store_template_bundle.nav.homepage.homepage"|trans }}
+					</a>
+				</li>
 				{{ render(url('best365_store_language_nav', app.request.query.all)) }}
 				{{ render(url('best365_store_currency_nav')) }}
 				<li class="dropdown">

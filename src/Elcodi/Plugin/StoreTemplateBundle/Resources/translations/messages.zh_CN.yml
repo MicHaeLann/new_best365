@@ -14,6 +14,8 @@ template:
             searching: 搜索条件
         copy_right: © 2002-2017, Best365.co.nz, Inc. or its affiliates
         nav:
+            homepage:
+                homepage: 首页
             lang:
                 selector: 语言
                 zh-CN: 简体中文
@@ -272,6 +274,8 @@ template:
                 create_new_account: 注册
                 login: 登录
                 cart: 购物车
+                address: 地址
+                order: 订单
                 logout: 登出
             password:
                 password_sent: 密码已发送

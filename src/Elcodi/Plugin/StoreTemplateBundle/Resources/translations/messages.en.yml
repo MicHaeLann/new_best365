@@ -14,6 +14,8 @@ template:
             searching: 'Searching'
         copy_right: '© 2002-2017, Best365.co.nz, Inc. or its affiliates'
         nav:
+            homepage:
+                homepage: Homepage
             lang:
                 selector: Language
                 zh-CN: Simplified Chinese
@@ -272,6 +274,8 @@ template:
                 create_new_account: 'Create new account'
                 login: Login
                 cart: Shopping Cart
+                address: Addresses
+                order: Orders
                 logout: Logout
             password:
                 password_sent: 'Password sent'
