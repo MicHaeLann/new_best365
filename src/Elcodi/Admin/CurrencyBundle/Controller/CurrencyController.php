@@ -134,7 +134,7 @@ class CurrencyController extends AbstractAdminController
         /**
          * We cannot disable the default currency
          */
-        $masterCurrency = $configManager = $this
+        $masterCurrency = $this
             ->get('elcodi.store')
             ->getDefaultCurrency();
 

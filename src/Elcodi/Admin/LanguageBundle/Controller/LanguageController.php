@@ -123,7 +123,7 @@ class LanguageController extends AbstractAdminController
         /**
          * We cannot disable the default locale
          */
-        $masterLanguage = $configManager = $this
+        $masterLanguage = $this
             ->get('elcodi.store')
             ->getDefaultLanguage();
 
