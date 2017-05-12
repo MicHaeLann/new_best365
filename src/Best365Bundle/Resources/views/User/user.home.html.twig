@@ -1,84 +1,82 @@
 {% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
-    <div class="col-sm-10">
-        <p class="page-title">
-            {{ "template.store_template_bundle.user.home.profile"|trans }}
-        </p>
-        <div class="margin-top-30 profile-box">
-            <div class="row padding-25">
-                <div class="col-sm-4">
-                    <span class="font-weight-500">{{ 'store.user.form.fields.email.label'|trans }}</span>
-                </div>
-                <div class="col-sm-8">
-                    {{ customer.email }}
-                </div>
+    <p class="page-title">
+        {{ "template.store_template_bundle.user.home.profile"|trans }}
+    </p>
+    <div class="margin-top-30 profile-box">
+        <div class="row padding-25">
+            <div class="col-sm-4">
+                <span class="font-weight-500">{{ 'store.user.form.fields.email.label'|trans }}</span>
             </div>
-            <hr class="margin-0">
-            <div class="row padding-25">
-                <a href="{{ url('best365_store_user_edit') }}" class="color-black">
-                    <div class="col-sm-4">
-                        <span class="font-weight-500">
-                            {% if activeLocale == "zh-CN" %}
-                                {{ 'store.user.form.fields.lastname.label'|trans }}
-                            {% else %}
-                                {{ 'store.user.form.fields.firstname.label'|trans }}
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="col-sm-7">
+            <div class="col-sm-8">
+                {{ customer.email }}
+            </div>
+        </div>
+        <hr class="margin-0">
+        <div class="row padding-25">
+            <a href="{{ url('best365_store_user_edit') }}" class="color-black">
+                <div class="col-sm-4">
+                    <span class="font-weight-500">
                         {% if activeLocale == "zh-CN" %}
-                            {{ customer.lastName }}
+                            {{ 'store.user.form.fields.lastname.label'|trans }}
                         {% else %}
-                            {{ customer.firstName }}
+                            {{ 'store.user.form.fields.firstname.label'|trans }}
                         {% endif %}
-                    </div>
-                    <div class="col-sm-1">
-                        <i class="fa fa-chevron-right"></i>
-                    </div>
-                </a>
-            </div>
-            <hr class="margin-0">
-            <div class="row padding-25">
-                <a href="{{ url('best365_store_user_edit') }}" class="color-black">
-                    <div class="col-sm-4">
-                        <span class="font-weight-500">
-                            {% if activeLocale == "zh-CN" %}
-                                {{ 'store.user.form.fields.firstname.label'|trans }}
-                            {% else %}
-                                {{ 'store.user.form.fields.lastname.label'|trans }}
-                            {% endif %}
-                        </span>
-                    </div>
-                    <div class="col-sm-7">
+                    </span>
+                </div>
+                <div class="col-sm-7">
+                    {% if activeLocale == "zh-CN" %}
+                        {{ customer.lastName }}
+                    {% else %}
+                        {{ customer.firstName }}
+                    {% endif %}
+                </div>
+                <div class="col-sm-1">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </a>
+        </div>
+        <hr class="margin-0">
+        <div class="row padding-25">
+            <a href="{{ url('best365_store_user_edit') }}" class="color-black">
+                <div class="col-sm-4">
+                    <span class="font-weight-500">
                         {% if activeLocale == "zh-CN" %}
-                            {{ customer.firstName }}
+                            {{ 'store.user.form.fields.firstname.label'|trans }}
                         {% else %}
-                            {{ customer.lastName }}
+                            {{ 'store.user.form.fields.lastname.label'|trans }}
                         {% endif %}
-                    </div>
-                    <div class="col-sm-1">
-                        <i class="fa fa-chevron-right"></i>
-                    </div>
-                </a>
+                    </span>
+                </div>
+                <div class="col-sm-7">
+                    {% if activeLocale == "zh-CN" %}
+                        {{ customer.firstName }}
+                    {% else %}
+                        {{ customer.lastName }}
+                    {% endif %}
+                </div>
+                <div class="col-sm-1">
+                    <i class="fa fa-chevron-right"></i>
+                </div>
+            </a>
+        </div>
+        <hr class="margin-0">
+        <div class="row padding-25">
+            <div class="col-sm-4">
+                <span class="font-weight-500">{{ "template.store_template_bundle.profile.membership"|trans }}</span>
             </div>
-            <hr class="margin-0">
-            <div class="row padding-25">
-                <div class="col-sm-4">
-                    <span class="font-weight-500">{{ "template.store_template_bundle.profile.membership"|trans }}</span>
-                </div>
-                <div class="col-sm-8">
-                    {{ customer.membership }}
-                </div>
+            <div class="col-sm-8">
+                {{ customer.membership }}
             </div>
-            <hr class="margin-0">
-            <div class="row padding-25">
-                <div class="col-sm-4">
-                    <span class="font-weight-500">{{ "template.store_template_bundle.profile.current_point"|trans }}</span>
-                </div>
-                <div class="col-sm-8">
-                    {{ customer.currentPoint }}
-                </div>
+        </div>
+        <hr class="margin-0">
+        <div class="row padding-25">
+            <div class="col-sm-4">
+                <span class="font-weight-500">{{ "template.store_template_bundle.profile.current_point"|trans }}</span>
+            </div>
+            <div class="col-sm-8">
+                {{ customer.currentPoint }}
             </div>
         </div>
     </div>

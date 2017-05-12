@@ -1,53 +1,51 @@
 {% extends "@Best365/User/user.layout.html.twig" %}
 
 {% block userbody %}
-	<div class="col-sm-10">
-		<p class="page-title">
-			{{ 'template.store_template_bundle.address.list.addresses'|trans }}
-		</p>
-		<div class="align-right">
-			<a href="{{ url('best365_store_address_new') }}" class="btn btn-success" data-test="add-address">
-				<span class="glyphicon glyphicon-plus"></span>
-			</a>
-		</div>
-		<table class="table table-striped margin-top-10">
-			<thead>
-				<td>{{ 'template.store_template_bundle.address.item.fullname'|trans }}</td>
-				<td>{{ 'template.store_template_bundle.address.item.address'|trans }}</td>
-				<td>{{ 'store.address.form.fields.phone.label'|trans }}</td>
-				<td>{{ 'template.store_template_bundle.address.item.actions'|trans }}</td>
-			</thead>
-			<tbody>
-			{% for address in addresses %}
-				<tr>
-					<td style="max-width: 80px;word-wrap: break-word;">
-						{% if activeLocale == 'zh-CN' %}
-							{{ address.recipientSurname }}{{ address.recipientName }}
-						{% else %}
-							{{ address.recipientName }} {{ address.recipientSurname }}
-						{% endif %}
-					</td>
-					<td style="max-width: 300px;word-wrap: break-word;">
-						{% if address.locale == 'cn' %}
-							{{ address.city.country }}{{ address.city.state }}{{ address.city.city }}{{ address.address }}
-						{% else %}
-                            {{ address.address }}, {{ address.city.city }}, {{ address.city.country }}
-						{% endif %}
-					</td>
-					<td>
-						{{ address.phone }}
-					</td>
-					<td>
-						<a href="{{ url('best365_store_address_edit', { id:address.id, source:source }) }}" class="btn btn-info btn-xs" data-test="address-{{ address.id }}-edit">
-							<span class="glyphicon glyphicon-pencil"></span>
-						</a>
-						<a href="{{ url('best365_store_address_delete',{id:address.id,source:source}) }}" class="btn btn-danger btn-xs" data-test="address-{{ address.id }}-remove">
-							<span class="glyphicon glyphicon-trash"></span>
-						</a>
-					</td>
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
+	<p class="page-title">
+		{{ 'template.store_template_bundle.address.list.addresses'|trans }}
+	</p>
+	<div class="align-right">
+		<a href="{{ url('best365_store_address_new') }}" class="btn btn-success" data-test="add-address">
+			<span class="glyphicon glyphicon-plus"></span>
+		</a>
 	</div>
+	<table class="table table-striped margin-top-10">
+		<thead>
+			<td>{{ 'template.store_template_bundle.address.item.fullname'|trans }}</td>
+			<td>{{ 'template.store_template_bundle.address.item.address'|trans }}</td>
+			<td>{{ 'store.address.form.fields.phone.label'|trans }}</td>
+			<td>{{ 'template.store_template_bundle.address.item.actions'|trans }}</td>
+		</thead>
+		<tbody>
+		{% for address in addresses %}
+			<tr>
+				<td style="max-width: 80px;word-wrap: break-word;">
+					{% if activeLocale == 'zh-CN' %}
+						{{ address.recipientSurname }}{{ address.recipientName }}
+					{% else %}
+						{{ address.recipientName }} {{ address.recipientSurname }}
+					{% endif %}
+				</td>
+				<td style="max-width: 300px;word-wrap: break-word;">
+					{% if address.locale == 'cn' %}
+						{{ address.city.country }}{{ address.city.state }}{{ address.city.city }}{{ address.address }}
+					{% else %}
+						{{ address.address }}, {{ address.city.city }}, {{ address.city.country }}
+					{% endif %}
+				</td>
+				<td>
+					{{ address.phone }}
+				</td>
+				<td>
+					<a href="{{ url('best365_store_address_edit', { id:address.id, source:source }) }}" class="btn btn-info btn-xs" data-test="address-{{ address.id }}-edit">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</a>
+					<a href="{{ url('best365_store_address_delete',{id:address.id,source:source}) }}" class="btn btn-danger btn-xs" data-test="address-{{ address.id }}-remove">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

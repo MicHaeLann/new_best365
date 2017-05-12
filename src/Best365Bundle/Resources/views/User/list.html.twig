@@ -9,7 +9,6 @@
 {% endif %}
 {% set start = perPage * (page - 1) %}
 {% set end = perPage * page - 1 %}
-<div class="col-xs-10">
     {% if error %}
 		<div class="alert alert-danger">
 			<p>{{ 'template.store_template_bundle.order.view.error'|trans }}</p>
@@ -48,5 +47,4 @@
 	<div id="pagination-footer">
 		{% include "@Best365/Layout/_pagination.footer.html.twig"  with { "line": orders, "perPage": perPage } %}
 	</div>
-</div>
 {% endblock %}
