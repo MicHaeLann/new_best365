@@ -101,6 +101,8 @@ store:
                     label: '重复密码'
                 send:
                     label: 确定
+                cancel:
+                    label: 取消
         profile:
             save:
                 message_ok: '个人信息已保存'

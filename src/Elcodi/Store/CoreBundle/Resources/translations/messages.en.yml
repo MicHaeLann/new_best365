@@ -101,6 +101,8 @@ store:
                     label: 'Repeat password'
                 send:
                     label: Save
+                cancel:
+                    label: Cancel
         profile:
             save:
                 message_ok: 'Profile saved'

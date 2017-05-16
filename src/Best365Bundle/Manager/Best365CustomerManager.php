@@ -5,6 +5,7 @@ namespace Best365Bundle\Manager;
 use Doctrine\ORM\EntityManager;
 use Best365Bundle\Entity\CustomerMembership;
 use Elcodi\Component\User\Entity\Customer;
+use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Best365CustomerManager
@@ -154,5 +155,23 @@ class Best365CustomerManager
 
 		$this->em->persist($customer_membership);
 		$this->em->flush();
+	}
+
+	public function customerMembership(CustomerInterface $customer)
+	{
+		$membership = $this->getCustomerMembership($customer);
+
+		// get customer membership
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+
+		$point = $customer_membership->getCurrentPoint();
+
+		$result = new \stdClass();
+		$result->membership = $membership;
+		$result->current_point = $point;
+
+		return $result;
 	}
 }

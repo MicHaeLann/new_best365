@@ -57,45 +57,6 @@ class Best365UserController extends UserController
     }
 
     /**
-     * User page
-     *
-     * @return Response
-     *
-     * @Security("has_role('ROLE_CUSTOMER')")
-     * @Route(
-     *      path = "",
-     *      name = "best365_store_user",
-     *      methods = {"GET"}
-     * )
-     *
-     * @EntityAnnotation(
-     *      class = {
-     *          "factory" = "elcodi.wrapper.customer",
-     *          "method" = "get",
-     *          "static" = false
-     *      },
-     *      name = "customer",
-     * )
-     */
-    public function homeAction()
-    {
-    	$customer = $this->getUser();
-		$display_customer = $this->get('best365.manager.customer')
-			->buildDisplayCustomer($customer);
-
-		$active_locale = $this
-			->get('request_stack')
-			->getMasterRequest()
-			->getLocale();
-
-		// append customer info to twig
-        return $this->render('Best365Bundle:User:user.home.html.twig', [
-        	'customer' => $display_customer,
-			'activeLocale' => $active_locale
-		]);
-    }
-
-    /**
      * User profile page
      *
      * @param CustomerInterface $customer Customer
@@ -143,6 +104,10 @@ class Best365UserController extends UserController
             );
         }
 
+		$customer_membership = $this
+			->get('best365.manager.customer')
+			->customerMembership($customer);
+
 		$active_locale = $this
 			->get('request_stack')
 			->getMasterRequest()
@@ -152,7 +117,8 @@ class Best365UserController extends UserController
             'Best365Bundle:User:user.edit.html.twig',
             [
                 'form' => $formView,
-				'activeLocale' => $active_locale
+				'activeLocale' => $active_locale,
+				'customerMembership' => $customer_membership
             ]
         );
     }
