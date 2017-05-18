@@ -1,9 +1,11 @@
-<div id="cart-display" class="col-sm-9">
+<div id="cart-display" class="col-sm-9"
+     data-in-stock-msg="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}"
+     data-sold-out-msg="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}">
     <p class="page-title">{{ 'template.store_template_bundle.cart.view.title'|trans }}</p>
     <table class="table margin-top-20">
         <tbody>
         {% for line in cart.cartLines %}
-            <tr>
+            <tr id="item-{{ line.id }}" data-stock="{{ line.purchasable.stock }}" data-weight="{{ line.purchasable.weight }}">
                 {% set purchasable = line.purchasable %}
                 {% set purchasableRoute = url('best365_store_product_view', { id: purchasable.id }) %}
                 {% set productName = purchasable|purchasable_name %}
@@ -20,9 +22,6 @@
                         <a href="{{ purchasableRoute }}" class="main-theme-link bold">{{ productName }}</a>
                     </div>
                     <div class="margin-top-15">
-                        <input type="hidden" id="stock-{{ line.id  }}" value="{{ purchasable.stock }}" />
-                        <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
-                        <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                         <input type="number" id="quantity-{{ line.id }}" class="unit-display form-control" min="1" value="{{ line.quantity }}" />
                         <span id="stock-label" class="stock-container margin-left-15">
                             {% if line.quantity <= purchasable.stock %}
@@ -35,16 +34,15 @@
                         </span>
                     </div>
                     <div class="margin-top-15">
-                                        <span id="unit-price-{{ line.id }}" class="sub-theme-font">
-                                            {{ line.purchasableAmount|print_convert_money() }}
-                                        </span>
+                        <span id="unit-price-{{ line.id }}" class="sub-theme-font">
+                            {{ line.purchasableAmount|print_convert_money() }}
+                        </span>
                     </div>
                     <div class="margin-top-15">
                         <a href="{{ url('best365_store_cartline_remove', { id: line.id }) }}" class="main-theme-link">
                             {{ 'template.store_template_bundle.cart.item.remove'|trans }}
                         </a>
                     </div>
-                    <input type="hidden" id="weight-{{ line.id }}" value="{{ purchasable.weight }}" />
                 </td>
                 <td>
                     <span id="line-price-{{ line.id }}" class="main-theme-font bold font-18">

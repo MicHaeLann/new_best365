@@ -43,8 +43,7 @@
 				</p>
 			{% endfor %}
 		{% elseif item.ref|slice(0,6) == 'weixin' %}
-			<div id="qr-{{ item.id }}">
-				<input type="hidden" value="{{ item.ref }}" id="ref-{{ item.id }}" />
+			<div id="qr-{{ item.id }}" data-ref="{{ item.ref }}">
 			</div>
 		{% endif %}
 	</td>

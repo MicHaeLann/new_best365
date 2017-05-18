@@ -1,7 +1,7 @@
 $(function() {
     var label = $("#cart-label");
 
-    if ($(location).attr('href').indexOf('cart') > 0 && $("#cart-item-number").val() > 0) {
+    if ($(location).attr('href').indexOf('cart') > 0 && $("#cart-container").data('amount') > 0) {
         // add new address
         $("#edit-address").dialog({
             autoOpen: false,
@@ -14,18 +14,18 @@ $(function() {
             $("#edit-address").dialog("open");
         })
         setOrderInfo();
-
     }
 
     function setOrderInfo()
     {
         // get cart weight
         var weight = 0;
-        $("input[id^='weight-']").each(function() {
+        $("tr[id^='item-']").each(function() {
             var index = this.id.lastIndexOf('-');
             var lid = this.id.substring(index + 1);
-            var amount = $("#quantity-" + lid).val();
-            weight = weight + parseInt($(this).val() * amount);
+            var amount = parseInt($("#quantity-" + lid).val());
+            var itemWeight = parseInt($(this).data('weight'));
+            weight = weight + itemWeight * amount;
         })
 
         // set minimum weight 1kg
@@ -71,12 +71,11 @@ $(function() {
     $("a[id^='add-cart']").click(function(event){
         var id = this.id.substring(9);
         var display = $("#cart-amount").html();
-
         // send request to server if logined in and stock > 0
         if (!display && display !== 0) {
             var url = Routing.generate('zh-CN__RG__' + 'best365_store_login');
             window.location.replace(url);
-        } else if ($("#stock-" + id).val() > 0) {
+        } else if ($("#item-" + id).data('stock') > 0) {
             //send request to server
             var amount = 1;
             if ($("#cart-quantity") && parseInt($("#cart-quantity").val()) > 1) {
@@ -93,7 +92,7 @@ $(function() {
                         // update cart amount display
                         label.fadeOut();
                         setTimeout(function() {
-                            $("#cart-amount").html(parseInt(display) + amount);
+                            $("#cart-amount").html(parseInt(display) + parseInt(amount));
                         }, 500);
                         label.fadeIn();
                     } else {
@@ -119,14 +118,14 @@ $(function() {
         var index = href.lastIndexOf('/');
         var id = href.substring(index + 1);
         var amount = $(this).val();
-        var stock = $("#stock-" + id).val();
+        var stock = $("#item-" + id).data('stock');
 
         // check stock
         if (parseInt(amount) > parseInt(stock)) {
-            var msg = $("#sold-out-msg").val();
+            var msg = $("#product-container").data('soldOutMsg');
             $("#stock-label").html('<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span> ' + msg);
         } else {
-            var msg = $("#in-stock-msg").val();
+            var msg = $("#product-container").data('inStockMsg');
             $("#stock-label").html('<span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span> ' + msg);
         }
     })
@@ -142,10 +141,10 @@ $(function() {
         if (amount <= 0) {
             amount = 1;
         }
-        var stock = $("#stock-" + lid).val();
+        var stock = $("#item-" + lid).data('stock');
         if (amount > parseInt(stock)) {
             // change msg to sold out
-            var msg = $("#sold-out-msg").val();
+            var msg = $("#cart-display").data('soldOutMsg');
             $("#stock-label").html(
                 '<span class="sold-out-font"><i class="fa fa-ban" aria-hidden="true"></i></span> ' + msg
             );
@@ -154,7 +153,7 @@ $(function() {
             $("#payment").addClass('disabled');
         } else {
             // change msg back to in stock
-            var msg = $("#in-stock-msg").val();
+            var msg = $("#cart-display").data('inStockMsg');
             $("#stock-label").html(
                 '<span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span> ' + msg
             );

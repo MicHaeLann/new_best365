@@ -1,8 +1,7 @@
 {% extends "@Best365/Layout/_layout.html.twig" %}
 
 {% block content %}
-    <div class="container">
-        <input type="hidden" id="cart-item-number" value="{{ cart.totalItemNumber }}" />
+    <div id="cart-container" class="container" data-amount="{{ cart.totalItemNumber }}">
         {% if cart.totalItemNumber == 0 %}
             {% include '@Best365/Cart/cart.empty.html.twig' %}
         {% else %}

@@ -41,8 +41,7 @@
                 {% endfor %}
             {% elseif "#{order.paymentStateLineStack.lastStateLine.name}" == "unpaid" and order.ref|slice(0, 6) == 'weixin'  %}
                 <p>{{ 'template.store_template_bundle.order.item.wechat'|trans }}</p>
-                <div id="qr-{{ order.id }}">
-                    <input type="hidden" value="{{ order.ref }}" id="ref-{{ order.id }}" />
+                <div id="qr-{{ order.id }}" data-ref="{{ order.ref }}">
                 </div>
             {% endif %}
         </div>

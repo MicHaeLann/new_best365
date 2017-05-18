@@ -5,7 +5,9 @@
             <div class="col-sm-2">
                 {% include "@Best365/Layout/_categories.html.twig" with {"categories": categories} %}
             </div>
-            <div class="col-sm-10">
+            <div id="product-container" class="col-sm-10"
+                 data-in-stock-msg="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}"
+                 data-sold-out-msg="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}">
                 <div id="nav">
                     <a href="{{ url('best365_store_homepage') }}" class="main-theme-link">
                         <span class="glyphicon glyphicon-home"></span> <span>{{ "template.store_template_bundle.product.nav.home"|trans }}</span>
@@ -17,7 +19,7 @@
                     <span class="main-theme-font"> > </span>
                     <strong class="main-theme-font">{{ purchasable.name }}</strong>
                 </div>
-                <div class="row margin-top-10">
+                <div id="item-{{ purchasable.id }}" data-stock="{{ purchasable.stock }}" class="row margin-top-10">
                     {% set productName = purchasable|purchasable_name %}
                     {% set validImage = purchasable|valid_image %}
                     <div class="col-sm-5">
@@ -53,8 +55,6 @@
 
                         <div class="row margin-top-10">
                             <span id="stock-label" class="stock-container">
-                                <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
-                                <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                                 {% if purchasable.stock > 0 %}
                                     <span class="main-theme-font"><i class="fa fa-check-circle-o" aria-hidden="true"></i></span>
                                     {{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}
@@ -91,9 +91,6 @@
                             <hr>
                         </div>
                         <div class="row">
-                            <input type="hidden" id="stock-{{ purchasable.id }}" value="{{ purchasable.stock }}" />
-                            <input type="hidden" id="in-stock-msg" value="{{ 'template.store_template_bundle.product.view_item.in_stock'|trans }}" />
-                            <input type="hidden" id="sold-out-msg" value="{{ 'template.store_template_bundle.product.view_item.sold_out'|trans }}" />
                             <input type="number" id="cart-quantity" name="quantity" class="form-control unit-display" min="1" value="1" />
                             <a id="add-cart-{{ purchasable.id }}" title="{{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}"
                                class="btn btn-success margin-left-10"
@@ -103,7 +100,6 @@
                                 {{ 'template.store_template_bundle.product.view_item.add_to_cart'|trans }}
                             </a>
                         </div>
-
                     </div>
                 </div>
                 <h4 class="product-description-label">{{ 'template.store_template_bundle.product.view_item.description'|trans }}</h4>
