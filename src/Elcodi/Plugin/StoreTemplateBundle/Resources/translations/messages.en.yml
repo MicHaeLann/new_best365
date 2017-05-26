@@ -110,6 +110,8 @@ template:
                 total: Total
                 update_basket: 'Update basket'
                 your_cart_is_empty: 'Your cart is empty'
+                add_cart_success: 'Successfully added to cart.'
+                add_cart_failed: 'Add to cart failed.'
         category:
             nav:
                 new: New

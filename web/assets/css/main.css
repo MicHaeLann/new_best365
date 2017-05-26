@@ -946,3 +946,39 @@ body { padding-top: 70px; }
 	width: 400px;
 }
 
+.notification
+{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	z-index: 101;
+}
+@media (min-width: 768px) {
+	.notification {
+		width: 750px;
+	}
+}
+@media (min-width: 992px) {
+	.notification {
+		width: 970px;
+	}
+}
+@media (min-width: 1200px) {
+	.notification {
+		width: 1170px;
+	}
+}
+
+.notification-text
+{
+	position: relative;
+	left: -50%;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.navbar-z-index
+{
+	z-index: 100;
+}

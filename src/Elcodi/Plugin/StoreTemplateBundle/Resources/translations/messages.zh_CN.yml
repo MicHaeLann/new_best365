@@ -110,6 +110,8 @@ template:
                 total: 总计
                 update_basket: 更新购物车
                 your_cart_is_empty: 购物车内暂时没有商品
+                add_cart_success: 成功添加至购物车
+                add_cart_failed: 添加购物车失败
         category:
             nav:
                 new: 新类别

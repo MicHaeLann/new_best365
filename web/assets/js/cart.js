@@ -89,21 +89,56 @@ $(function() {
                 type: 'GET',
                 success: function(result){
                     if (result == 'success') {
+                        // notification fade in
+                        $("#notification").fadeIn("slow");
+                        $("#notification-text").addClass("alert");
+                        $("#notification-text").addClass("alert-success");
+                        var msg = $("#notification").data('addCartSuccess');
+                        $("#notification-text").html(msg);
+
                         // update cart amount display
                         label.fadeOut();
                         setTimeout(function() {
                             $("#cart-amount").html(parseInt(display) + parseInt(amount));
                         }, 500);
                         label.fadeIn();
+
+                        // notification fade out
+                        setTimeout(function() {
+                            $("#notification").fadeOut("slow");
+                        }, 3e3);
+
+
                     } else {
-                        alert('failed to add product to cart.');
+                        // notification fade in
+                        $("#notification").fadeIn("slow");
+                        $("#notification-text").addClass("alert");
+                        $("#notification-text").addClass("alert-danger");
+                        var msg = $("#notification").data('addCartFailed');
+                        $("#notification-text").html(msg);
+
+                        // notification fade out
+                        setTimeout(function() {
+                            $("#notification").fadeOut("slow");
+                        }, 3e3);
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('failed to add product to cart.');
+
+                    // notification fade in
+                    $("#notification").fadeIn("slow");
+                    $("#notification-text").addClass("alert");
+                    $("#notification-text").addClass("alert-danger");
+                    var msg = $("#notification").data('addCartFailed');
+                    $("#notification-text").html(msg);
+
+                    // notification fade out
+                    setTimeout(function() {
+                        $("#notification").fadeOut("slow");
+                    }, 3e3);
                 }
             });
         }
