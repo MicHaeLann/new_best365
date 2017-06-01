@@ -132,21 +132,33 @@ class Best365CartController extends CartController
 		$cn_carriers = array();
 		if (array_key_exists('cn', $sample_address)) {
 			$cart->setDeliveryAddress($sample_address['cn']);
-			$cn_carriers = $this
-				->get('elcodi.wrapper.shipping_methods')
-				->get($cart);
+		} else {
+			$cn = $this
+				->get('elcodi.repository.customer')
+				->findAddress(3, 38);
+			$cart->setDeliveryAddress($cn);
 		}
+		$cn_carriers = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->get($cart);
 		$nz_carriers = array();
 		if (array_key_exists('nz', $sample_address)) {
 			$cart->setDeliveryAddress($sample_address['nz']);
-			$nz_carriers = $this
-				->get('elcodi.wrapper.shipping_methods')
-				->get($cart);
+		} else {
+			$nz = $this
+				->get('elcodi.repository.customer')
+				->findAddress(3, 33);
+			$cart->setDeliveryAddress($nz);
 		}
+		$nz_carriers = $this
+			->get('elcodi.wrapper.shipping_methods')
+			->get($cart);
 		$carriers = array_merge($cn_carriers, $nz_carriers);
 
 		// shipping methods
-		$cart->setDeliveryAddress($default_address);
+		if (!empty($default_address)) {
+			$cart->setDeliveryAddress($default_address);
+		}
 		$shippingMethods = $this
 			->get('elcodi.wrapper.shipping_methods')
 			->get($cart);
@@ -169,7 +181,6 @@ class Best365CartController extends CartController
 			$address['locale'] = mb_strlen($address['address'], 'utf8') != strlen($address['address']) ? 'cn' : 'en';
 			$addressesFormatted[] = $address;
 		}
-
 		return $this->render(
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[

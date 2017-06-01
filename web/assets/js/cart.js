@@ -14,6 +14,7 @@ $(function() {
             $("#edit-address").dialog("open");
         })
         setOrderInfo();
+        InitiateSubmit();
     }
 
     function setOrderInfo()
@@ -64,6 +65,19 @@ $(function() {
         $("#total-price").html(totalDisplay);
     }
 
+    function InitiateSubmit()
+    {
+        var shippingAddress = $("#shipping-address").val();
+        var shippingMethod = $("#shipping-method").val();
+        var paymentMethod = $("#payment-method").val();
+        if (shippingAddress !== null && shippingMethod !== null && paymentMethod !== null) {
+            var disabled = false;
+        } else {
+            var disabled = true;
+        }
+        $("#payment").prop('disabled', disabled);
+    }
+
     function ucfirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -83,7 +97,6 @@ $(function() {
             }
 
             var url = Routing.generate('zh-CN__RG__' + 'best365_store_cart_add_product', {id: id, quantity: amount});
-            // var url = 'http://localhost/michael/new_best365/web/app_dev.php/best365/cart/add/'+id+'/'+amount;
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -94,7 +107,7 @@ $(function() {
                         $("#notification-text").addClass("alert");
                         $("#notification-text").addClass("alert-success");
                         var msg = $("#notification").data('addCartSuccess');
-                        $("#notification-text").html(msg);
+                        $("#notification-text").html("<i>" + msg + "</i>");
 
                         // update cart amount display
                         label.fadeOut();
@@ -107,8 +120,6 @@ $(function() {
                         setTimeout(function() {
                             $("#notification").fadeOut("slow");
                         }, 3e3);
-
-
                     } else {
                         // notification fade in
                         $("#notification").fadeIn("slow");
