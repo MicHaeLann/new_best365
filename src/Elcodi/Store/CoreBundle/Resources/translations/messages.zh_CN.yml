@@ -106,3 +106,4 @@ store:
         profile:
             save:
                 message_ok: '个人信息已保存'
+                message_error: '抱歉。输入信息错误。'

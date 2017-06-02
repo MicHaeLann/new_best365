@@ -35,6 +35,7 @@ template:
         profile:
             profile: 'Profile'
             customer_service: 'Customer Service'
+            previous_password: 'Previous Password'
             membership: 'Membership'
             current_point: 'Current Point'
         address:

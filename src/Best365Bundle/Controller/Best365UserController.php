@@ -2,6 +2,7 @@
 
 namespace Best365Bundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as FormAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -13,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Elcodi\Store\UserBundle\Controller\UserController;
 use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 use Elcodi\Store\CoreBundle\Controller\Traits\TemplateRenderTrait;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 /**
  * Class Best365UserController
@@ -91,19 +93,45 @@ class Best365UserController extends UserController
     public function editAction(CustomerInterface $customer, FormView $formView, $isValid)
     {
         if ($isValid) {
-            $this
-                ->get('elcodi.object_manager.customer')
-                ->flush($customer);
+        	$em = $this->getDoctrine()->getEntityManager();
+        	$em->detach($customer);
+        	$original = $this
+				->get('elcodi.repository.customer')
+				->find($customer->getId());
+			$previous_pwd = $this->getRequest()->get('previous-password');
+        	if ($original->getPassword() != $customer->getPassword()) {
+				$valid = $this
+					->get('security.encoder_factory')
+					->getEncoder($original)
+					->isPasswordValid($original->getPassword(), $previous_pwd, $original->getSalt());
+				if (empty($previous_pwd) || !$valid) {
+					$message = $this->get('translator')
+						->trans('store.user.profile.save.message_error');
+					$this->addFlash('error', $message);
+				} else {
+					$original->setPassword($customer->getPassword());
+					$this
+						->get('elcodi.object_manager.customer')
+						->flush($original);
+					$message = $this->get('translator')
+						->trans('store.user.profile.save.message_ok');
+					$this->addFlash('success', $message);
+				}
+			} elseif(!empty($previous_pwd)) {
+				$message = $this->get('translator')
+					->trans('store.user.profile.save.message_error');
+				$this->addFlash('error', $message);
+			} else {
+				$original->setPassword($customer->getPassword());
+        		$this
+					->get('elcodi.object_manager.customer')
+					->flush($original);
 
-            $message = $this->get('translator')
-                ->trans('store.user.profile.save.message_ok');
-            $this->addFlash('success', $message);
-
-            return $this->redirect(
-                $this->generateUrl('best365_store_user')
-            );
+				$message = $this->get('translator')
+					->trans('store.user.profile.save.message_ok');
+				$this->addFlash('success', $message);
+			}
         }
-
 		$customer_membership = $this
 			->get('best365.manager.customer')
 			->customerMembership($customer);

@@ -35,6 +35,7 @@ template:
         profile:
             profile: 个人信息
             customer_service: 客服
+            previous_password: 旧密码
             membership: 会员等级
             current_point: 当前积分
         address:

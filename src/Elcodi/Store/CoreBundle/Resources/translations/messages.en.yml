@@ -106,3 +106,4 @@ store:
         profile:
             save:
                 message_ok: 'Profile saved'
+                message_error: 'Oops. Update profile failed.'
