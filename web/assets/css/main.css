@@ -124,6 +124,11 @@
 	padding-top: 8px;
 }
 
+.padding-bottom-15
+{
+	padding-bottom: 15px;
+}
+
 .padding-0
 {
 	padding: 0;
@@ -981,4 +986,12 @@ body { padding-top: 70px; }
 .navbar-z-index
 {
 	z-index: 100;
+}
+
+.navbar-button
+{
+	margin: 0;
+	padding: 15px;
+	font-size: 18px;
+	border: none;
 }

@@ -1,6 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top navbar-z-index">
 	<div class="container">
-		<div class="navbar-collapse collapse">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle navbar-button pull-left" data-toggle="collapse" data-target="#navbar-left" aria-expanded="true" aria-controls="navbar-left">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</button>
+			<button type="button" class="navbar-toggle navbar-button pull-right" data-toggle="collapse" data-target="#navbar-right" aria-expanded="true" aria-controls="navbar-left">
+				<i class="fa fa-user-circle" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div id="navbar-left" class="navbar-collapse collapse navbar-left">
 			<ul class="nav navbar-nav">
 				<li>
 					<a href="{{ url('best365_store_homepage') }}">
@@ -41,7 +49,9 @@
 					</ul>
 				</li>
 			</ul>
-			{{ render(url('best365_store_user_nav')) }}
+		</div>
+		<div id="navbar-right" class="navbar-collapse collapse navbar-right">
+            {{ render(url('best365_store_user_nav')) }}
 		</div>
 	</div>
 </nav>

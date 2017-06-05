@@ -8,9 +8,9 @@
     {% set i = 1 %}
     {% for manufacturer in manufacturers %}
         {% if i % 6 == 1 %}
-        <div class="row margin-top-10 margin-left-0 margin-right-0">
+        <div class="row margin-left-0 margin-right-0">
         {% endif %}
-        <div class="col-sm-2">
+        <div class="col-sm-2 margin-top-10 ">
             <a href="{{ url('best365_store_product_search', { field: manufacturer.name }) }}" class="thumbnail">
                 <img src="{{ manufacturer.getSortedImages.first|resize({ height: 100, width: 100, type: 4 }) }}" class="brand-thumbnail" />
             </a>

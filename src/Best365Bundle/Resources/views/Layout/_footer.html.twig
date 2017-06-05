@@ -9,46 +9,16 @@
 {% else %}
 <footer class="footer">
     <div class="main-theme-border-top sub-theme-border-bottom">
-        <div class="footer-image">
-            <div class="col-sm-4 footer-image-item">
-                <div class="col-sm-2 main-theme-font font-30">
-                    <i class="fa fa-clock-o" aria-hidden="true"></i>
-                </div>
-                <div class="col-sm-10">
-                    <p class="margin-bottom-5 main-theme-font">{{ "template.store_template_bundle.footer.time_saving"|trans }}</p>
-                    <p class="sub-theme-font font-12">{{ "template.store_template_bundle.footer.time_saving_description"|trans }}</p>
-                </div>
-            </div>
-            <div class="col-sm-4 footer-image-item">
-                <div class="col-sm-2 main-theme-font font-30">
-                    <i class="fa fa-lock" aria-hidden="true"></i>
-                </div>
-                <div class="col-sm-10">
-                    <p class="margin-bottom-5 main-theme-font">{{ "template.store_template_bundle.footer.secure_store"|trans }}</p>
-                    <p class="sub-theme-font font-12">{{ "template.store_template_bundle.footer.secure_store_description"|trans }}</p>
-                </div>
-            </div>
-            <div class="col-sm-4 footer-image-item">
-                <div class="col-sm-2 main-theme-font font-30">
-                    <i class="fa fa-heart-o" aria-hidden="true"></i>
-                </div>
-                <div class="col-sm-10">
-                    <p class="margin-bottom-5 main-theme-font">{{ "template.store_template_bundle.footer.customer_service"|trans }}</p>
-                    <p class="sub-theme-font font-12">{{ "template.store_template_bundle.footer.customer_service_description"|trans }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="footer-content padding-top-15">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-3 padding-bottom-15">
                     <a href="{{ url('best365_store_homepage') }}">
-                        <img src="{{ asset('assets/img/logo.png') }}" width="100">
+                        <img src="{{ asset('assets/img/logo.png') }}" width="150">
                     </a>
                 </div>
                 <div class="col-sm-3">
-                    <p>
+                    <p class="bold">
                         {{ "template.store_template_bundle.footer.information"|trans }}
                     </p>
                     <hr class="footer-hr">
@@ -64,7 +34,7 @@
                     </ul>
                 </div>
                 <div class="col-sm-3">
-                    <p>
+                    <p class="bold">
                         {{ 'template.store_template_bundle.footer.follow_us'|trans }}
                     </p>
                     <hr class="footer-hr">
@@ -74,7 +44,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <p>
+                    <p class="bold">
                         {{ 'template.store_template_bundle.footer.contact'|trans }}
                     </p>
                     <hr class="footer-hr">
