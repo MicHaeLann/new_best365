@@ -8,18 +8,21 @@
 
 
 {% macro showNode(node, route) %}
-    <li class="{% if node.isActive(route) %}active{% endif %}{% if node.subnodes|length %}parent{% endif %}" data-test="{{ node.name }}">
-    {% if node.subnodes|length == 0 %}
-        {% set node_url = node.url is iterable
-            ? url(node.url[0], node.url[1])
-            : url(node.url)
-        %}
-        <a href="{{ node_url }}">
-    {% else %}
-        <a href="#{{ node.name|md5 }}" data-fc-modules="toggle">
-            <i class="icon-caret-down fl-r"></i>
-    {% endif %}
-    {% if node.warnings is not null %}<span class="badge{% if node.warnings > 0 %} badge-alert{% endif %}">{{ node.warnings }}</span>{% endif %}
+    {% if app.user.id != 2 or node.name|trans != "Categorization" and node.name|trans != "Settings" and node.name|trans != "Shipping methods" %}
+        <li class="{% if node.isActive(route) %}active{% endif %}{% if node.subnodes|length %}parent{% endif %}" data-test="{{ node.name }}">
+        {% if node.subnodes|length == 0 %}
+            {% set node_url = node.url is iterable
+                ? url(node.url[0], node.url[1])
+                : url(node.url)
+            %}
+            <a href="{{ node_url }}">
+        {% else %}
+                <a href="#{{ node.name|md5 }}" data-fc-modules="toggle">
+                    <i class="icon-caret-down fl-r"></i>
+        {% endif %}
+        {% if node.warnings is not null %}
+            <span class="badge{% if node.warnings > 0 %} badge-alert{% endif %}">{{ node.warnings }}</span>
+        {% endif %}
             <span class="mobile tablet">
                 <i class="icon-{{ node.code|default("folder") }} fz-xl va-m mr-s"></i>
                 <span>{{ node.name|trans }}</span>
@@ -44,7 +47,8 @@
                 </ul>
             {% endif %}
         {% endfor %}
-    </li>
+        </li>
+    {% endif %}
 {% endmacro %}
 
 
