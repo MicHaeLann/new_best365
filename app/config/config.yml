@@ -122,10 +122,21 @@ assetic:
 # Swiftmailer Configuration
 #
 swiftmailer:
-    transport: "%mailer_transport%"
-    host:      "%mailer_host%"
-    username:  "%mailer_user%"
-    password:  "%mailer_password%"
+    default_mailer: gmail
+    mailers:
+        gmail:
+            transport:  "%gmail_transport%"
+            host:       "%gmail_host%"
+            username:   "%gmail_user%"
+            password:   "%gmail_password%"
+        hotmail:
+            transport:  "%hotmail_transport%"
+            host:       "%hotmail_host%"
+            port:       "%hotmail_port%"
+            username:   "%hotmail_user%"
+            password:   "%hotmail_password%"
+            encryption: "%hotmail_encryption%"
+            auth_mode:  "%hotmail_auth_mode%"
 #    spool:     { type: memory }
 
 #
