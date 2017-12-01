@@ -113,7 +113,6 @@ class StoreController extends AbstractAdminController
      */
     public function addressAction(Form $storeAddressType)
     {
-    	echo 1111;
         if ($storeAddressType->isValid()) {
             $this
                 ->saveStoreAndAddFlash(
@@ -186,7 +185,7 @@ class StoreController extends AbstractAdminController
 		$this
             ->get('elcodi.object_manager.store')
             ->flush($store);
-		
+
 		$this
 			->get('elcodi.object_manager.address')
 			->flush($store->getAddress());
