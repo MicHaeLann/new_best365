@@ -11,11 +11,17 @@ function locationSelectors() {
                 optionSelectedValue  = optionSelected.val(),
                 selectorsUrl = $(container).data('url') + '/' + optionSelectedValue;
 
-            if(optionSelectedValue) {
+            if (optionSelectedValue == 'CN_beijing' ||
+                optionSelectedValue == 'CN_shanghai' ||
+                optionSelectedValue == 'CN_chongqing' ||
+                optionSelectedValue == 'CN_tianjin'
+            ) {
+                document.getElementById('store_geo_form_type_address_city').value = optionSelectedValue;
+                bindSelector(container);
+            } else if(optionSelectedValue) {
                 $.ajax(selectorsUrl, {
                     success: function (response) {
                         $(container).replaceWith(response);
-                        console.log(optionSelected.parent().data('max-type'));
                         if (undefined != optionSelected.parent().data('max-type')) {
                             document.getElementById('store_geo_form_type_address_city').value = optionSelectedValue;
                         }
@@ -29,14 +35,4 @@ function locationSelectors() {
     bindSelector('#js-location-selectors');
 }
 
-if(typeof jQuery=='undefined') {
-    var headTag = document.getElementsByTagName("head")[0];
-    var jqTag = document.createElement('script');
-    jqTag.type = 'text/javascript';
-    jqTag.src = '//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js';
-    jqTag.onload = locationSelectors;
-    headTag.appendChild(jqTag);
-} else {
-    console.log(111);
-    locationSelectors();
-}
+locationSelectors();
