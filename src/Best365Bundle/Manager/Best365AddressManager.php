@@ -58,8 +58,14 @@ class Best365AddressManager
 	 */
 	public function generateAddress(AddressInterface $address)
 	{
-		$address->setName('DEFAULT NAME')
-			->setMobile('000000000');
+		if (empty($address->getMobile())) {
+			$address->setMobile('000000000');
+		}
+
+		if (empty($address->getName())) {
+			$address->setName('DEFAULT NAME');
+		}
+
 		if (empty($address->getPostalcode())) {
 			$address->setPostalcode('000000');
 		}
