@@ -108,3 +108,10 @@ services:
 
     best365.manager.shipping:
         class: Best365Bundle\Manager\Best365ShippingManager
+
+    best365.manager.store:
+        class: Best365Bundle\Manager\Best365StoreManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@elcodi.repository.store'
+            - '@elcodi.repository.address'

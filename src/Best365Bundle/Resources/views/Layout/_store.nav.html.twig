@@ -1,0 +1,30 @@
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-commenting" aria-hidden="true"></i>
+        {{ "template.store_template_bundle.nav.service.selector"|trans }}
+        <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu nav-service">
+        <div class="row padding-5">
+            <div class="col-sm-7 padding-top-8 sub-theme-font">
+                <p class="padding-left-10">
+                    {{ "template.store_template_bundle.nav.service.wechat"|trans }}
+                </p>
+                <p class="padding-left-10">
+                    {{ address.mobile }}
+                </p>
+                <hr class="margin-top-10 margin-bottom-10">
+                <p class="padding-left-10">
+                    {{ "template.store_template_bundle.nav.service.email"|trans }}
+                </p>
+                <p class="padding-left-10">
+                    {{ store.email }}
+                </p>
+                <hr class="margin-top-10 margin-bottom-5">
+            </div>
+            <div class="col-sm-5">
+                <img src="{{ asset('assets/img/customer_service_qrcode.png') }}" width="140px" />
+            </div>
+        </div>
+    </ul>
+</li>

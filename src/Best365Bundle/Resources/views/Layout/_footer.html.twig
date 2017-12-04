@@ -48,24 +48,7 @@
                         {{ 'template.store_template_bundle.footer.contact'|trans }}
                     </p>
                     <hr class="footer-hr">
-                    <div class="margin-top-10">
-                        <p>
-                            <span class="glyphicon glyphicon-map-marker"></span>
-                            1/65 Queens Drive, Lower Hutt, 5010
-                        </p>
-                        <p>
-                            <span class="glyphicon glyphicon-phone-alt"></span>
-                            +64 045682758
-                        </p>
-                        <p>
-                            <span class="glyphicon glyphicon-envelope"></span>
-                            service.best365@gmail.com
-                        </p>
-                        <p>
-                            <i class="fa fa-weixin" aria-hidden="true"></i>
-                            0274979425
-                        </p>
-                    </div>
+                    {{ render(url('best365_store_footer')) }}
                 </div>
             </div>
         </div>
