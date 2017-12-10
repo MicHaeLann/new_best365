@@ -56,17 +56,17 @@ class Best365StoreController extends Controller
 	}
 
 	/**
-	 * Store bar in footer position
+	 * Store contact bar in footer position
 	 *
 	 * @return array
 	 *
 	 * @Route(
-	 *      path = "/footer",
-	 *      name = "best365_store_footer",
+	 *      path = "/footer/contact",
+	 *      name = "best365_store_footer_contact",
 	 *      methods = {"GET"}
 	 * )
 	 */
-	public function footerAction()
+	public function contactAction()
 	{
 		$store = $this
 			->get('best365.manager.store')
@@ -77,10 +77,34 @@ class Best365StoreController extends Controller
 			->getStoreAddressInfo();
 
 		return $this->render(
-			'Best365Bundle:Layout:_store.footer.html.twig',
+			'Best365Bundle:Layout:_store.footer.contact.html.twig',
 			[
 				'address' => $address,
 				'store' => $store
+			]
+		);
+	}
+	/**
+	 * Store address bar in footer position
+	 *
+	 * @return array
+	 *
+	 * @Route(
+	 *      path = "/footer/address",
+	 *      name = "best365_store_footer_address",
+	 *      methods = {"GET"}
+	 * )
+	 */
+	public function addressAction()
+	{
+		$address = $this
+			->get('best365.manager.store')
+			->getStoreAddressInfo();
+
+		return $this->render(
+			'Best365Bundle:Layout:_store.footer.address.html.twig',
+			[
+				'address' => $address
 			]
 		);
 	}

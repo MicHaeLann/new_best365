@@ -35,20 +35,17 @@
                 </div>
                 <div class="col-sm-3">
                     <p class="bold">
-                        {{ 'template.store_template_bundle.footer.follow_us'|trans }}
+                        {{ 'template.store_template_bundle.footer.our_address'|trans }}
                     </p>
                     <hr class="footer-hr">
-                    <div class="footer-follow-font">
-                        <i class="fa fa-facebook-square footer-facebook" aria-hidden="true"></i>
-                        <i class="fa fa-twitter-square margin-left-10 footer-twitter" aria-hidden="true"></i>
-                    </div>
+                    {{ render(url('best365_store_footer_address')) }}
                 </div>
                 <div class="col-sm-3">
                     <p class="bold">
                         {{ 'template.store_template_bundle.footer.contact'|trans }}
                     </p>
                     <hr class="footer-hr">
-                    {{ render(url('best365_store_footer')) }}
+                    {{ render(url('best365_store_footer_contact')) }}
                 </div>
             </div>
         </div>

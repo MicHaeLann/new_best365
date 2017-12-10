@@ -157,6 +157,7 @@ template:
                 value: Value
         footer:
             information: 'INFORMATION'
+            our_address: 'OUR ADDRESS'
             follow_us: 'FOLLOW US'
             contact: 'CONTACT'
             latest_news: 'Latests news'

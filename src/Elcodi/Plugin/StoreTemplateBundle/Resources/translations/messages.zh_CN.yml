@@ -157,6 +157,7 @@ template:
                 value: 价格
         footer:
             information: 帮助中心
+            our_address: 实体店地址
             follow_us: 关注我们
             contact: 联系方式
             latest_news: 新闻
