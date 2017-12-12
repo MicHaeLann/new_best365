@@ -158,6 +158,7 @@ class CustomerController extends AbstractAdminController
         if ($isValid) {
             $this->flush($customer);
 			$this->get('best365.manager.customer')->updateMembership($customer, $this->get('request'));
+			$this->get('best365.manager.customer')->updateWechat($customer, $this->get('request')->get('wechat', false));
 
             $this->addFlash(
                 'success',

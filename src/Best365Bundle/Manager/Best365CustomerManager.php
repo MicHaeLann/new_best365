@@ -51,10 +51,21 @@ class Best365CustomerManager
 	}
 
 	/**
+	 * build customer membership and ext
+	 * @param CustomerInterface $customer
+	 * @param Request $request
+	 */
+	public function initialize(CustomerInterface $customer, Request $request)
+	{
+		$this->initializeMembership($customer);
+		$this->initializeExt($customer, $request);
+	}
+
+	/**
 	 * create customer membership
 	 * @param Customer $customer
 	 */
-	public function initializeMembership(Customer $customer)
+	private function initializeMembership(Customer $customer)
 	{
 		$customer_id = $customer->getId();
 
@@ -71,6 +82,25 @@ class Best365CustomerManager
 
 		// add customer membership
 		$this->em->persist($customer_membership);
+		$this->em->flush();
+	}
+
+	/**
+	 * create ext data
+	 * @param CustomerInterface $customer
+	 * @param Request $request
+	 */
+	private function initializeExt(CustomerInterface $customer, Request $request)
+	{
+		$cid = $customer->getId();
+		$wechat = $request->request->get('wechat', false) ? $request->request->get('wechat', false) : '';
+
+		// construct customer membership
+		$ext = new CustomerExt();
+		$ext->setCid($cid)
+			->setWechat($wechat);
+
+		$this->em->persist($ext);
 		$this->em->flush();
 	}
 
@@ -109,24 +139,6 @@ class Best365CustomerManager
 	}
 
 	/**
-	 * get customer membership configuration
-	 * @param Customer $customer
-	 * @return null|object
-	 */
-	public function getCustomerMembership(Customer $customer)
-	{
-		$customer_membership = $this->em
-			->getRepository('Best365Bundle\Entity\CustomerMembership')
-			->findOneByCustomerId($customer->getId());
-
-		$membership = $this->em
-			->getRepository('Best365Bundle\Entity\Membership')
-			->find($customer_membership->getMembership());
-
-		return $membership;
-	}
-
-	/**
 	 * update customer points and membership
 	 * @param Customer $customer
 	 * @param $points
@@ -159,6 +171,26 @@ class Best365CustomerManager
 		$this->em->flush();
 	}
 
+	/**
+	 * update customer wechat
+	 * @param Customer $customer
+	 * @param $wechat
+	 */
+	public function updateWechat(Customer $customer, $wechat)
+	{
+		$ext = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerExt')
+			->findOneByCid($customer->getId());
+		$ext->setWechat($wechat);
+		$this->em->persist($ext);
+		$this->em->flush();
+	}
+
+	/**
+	 * get customer membership
+	 * @param CustomerInterface $customer
+	 * @return \stdClass
+	 */
 	public function customerMembership(CustomerInterface $customer)
 	{
 		$membership = $this->getCustomerMembership($customer);
@@ -177,23 +209,28 @@ class Best365CustomerManager
 		return $result;
 	}
 
-	public function initialize(CustomerInterface $customer, Request $request)
+	/**
+	 * get customer membership configuration
+	 * @param Customer $customer
+	 * @return null|object
+	 */
+	private function getCustomerMembership(Customer $customer)
 	{
-		$this->initializeMembership($customer);
-		$this->initializeExt($customer, $request);
+		$customer_membership = $this->em
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
+
+		$membership = $this->em
+			->getRepository('Best365Bundle\Entity\Membership')
+			->find($customer_membership->getMembership());
+
+		return $membership;
 	}
 
-	public function initializeExt(CustomerInterface $customer, Request $request)
+	public function customerExt(CustomerInterface $customer)
 	{
-		$cid = $customer->getId();
-		$wechat = $request->request->get('wechat', false) ? $request->request->get('wechat', false) : '';
-
-		// construct customer membership
-		$ext = new CustomerExt();
-		$ext->setCid($cid)
-			->setWechat($wechat);
-
-		$this->em->persist($ext);
-		$this->em->flush();
+		return $this->em
+			->getRepository('Best365Bundle\Entity\CustomerExt')
+			->findOneByCid($customer->getId());
 	}
 }

@@ -151,11 +151,13 @@ class CustomerComponentController extends AbstractAdminController
         CustomerInterface $customer
     ) {
     	$membership = $this->get('best365.manager.customer')->buildAdminSelector($customer);
+    	$ext = $this->get('best365.manager.customer')->customerExt($customer);
 
         return [
             'customer' => $customer,
-            'form'     => $formView,
-			'membership' => $membership
+            'form' => $formView,
+			'membership' => $membership,
+			'ext' => $ext
         ];
     }
 }

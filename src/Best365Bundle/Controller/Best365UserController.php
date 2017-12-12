@@ -98,7 +98,7 @@ class Best365UserController extends UserController
         	$original = $this
 				->get('elcodi.repository.customer')
 				->find($customer->getId());
-			$previous_pwd = $this->getRequest()->get('previous-password');
+			$previous_pwd = $this->get('request')->get('previous-password');
         	if ($original->getPassword() != $customer->getPassword()) {
 				$valid = $this
 					->get('security.encoder_factory')
@@ -113,6 +113,7 @@ class Best365UserController extends UserController
 					$this
 						->get('elcodi.object_manager.customer')
 						->flush($original);
+
 					$message = $this->get('translator')
 						->trans('store.user.profile.save.message_ok');
 					$this->addFlash('success', $message);
@@ -127,14 +128,22 @@ class Best365UserController extends UserController
 					->get('elcodi.object_manager.customer')
 					->flush($original);
 
+        		$this
+					->get('best365.manager.customer')
+					->updateWechat($customer, $this->get('request')->get('wechat', false));
+
 				$message = $this->get('translator')
 					->trans('store.user.profile.save.message_ok');
 				$this->addFlash('success', $message);
 			}
         }
-		$customer_membership = $this
+		$membership = $this
 			->get('best365.manager.customer')
 			->customerMembership($customer);
+
+		$ext = $this
+			->get('best365.manager.customer')
+			->customerExt($customer);
 
 		$active_locale = $this
 			->get('request_stack')
@@ -146,7 +155,8 @@ class Best365UserController extends UserController
             [
                 'form' => $formView,
 				'activeLocale' => $active_locale,
-				'customerMembership' => $customer_membership
+				'membership' => $membership,
+				'ext' => $ext
             ]
         );
     }

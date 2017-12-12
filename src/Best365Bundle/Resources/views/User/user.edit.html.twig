@@ -7,6 +7,10 @@
     {{ form_start(form) }}
     <div class="margin-top-30">
         {{ form_row(form.email, { "attr": { "class": "form-control", "readonly": true } }) }}
+        <div class="form-group">
+            <label>Wechat</label>
+            <input type="text" class="form-control" value="{{ ext.wechat }}" name="wechat">
+        </div>
         {% if activeLocale == 'zh-CN' %}
             {{ form_row(form.lastname, { "attr": { "class": "form-control", "length": 255 } }) }}
             {{ form_row(form.firstname, { "attr": { "class": "form-control", "length": 255 } }) }}
@@ -22,11 +26,11 @@
         {{ form_row(form.password.second, { "attr": { "class": "form-control"} }) }}
         <div class="form-group">
             <label>{{ "template.store_template_bundle.profile.membership"|trans }}</label>
-            <input type="text" class="form-control" value="{{ customerMembership.membership.name }}" readonly>
+            <input type="text" class="form-control" value="{{ membership.membership.name }}" readonly>
         </div>
         <div class="form-group">
             <label>{{ "template.store_template_bundle.profile.current_point"|trans }}</label>
-            <input type="text" class="form-control" value="{{ customerMembership.current_point }}" readonly>
+            <input type="text" class="form-control" value="{{ membership.current_point }}" readonly>
         </div>
     </div>
     {{ form_widget(form.send, { 'attr': {'class': 'btn btn-success margin-top-30' } }) }}
