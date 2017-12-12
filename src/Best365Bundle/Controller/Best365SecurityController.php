@@ -100,7 +100,7 @@ class Best365SecurityController extends SecurityController
      *      validate      = "isValid"
      * )
      */
-    public function regAction(CustomerInterface $customer, FormView $registerFormView, $isValid, Request $request)
+    public function registerAction(CustomerInterface $customer, FormView $registerFormView, $isValid)
     {
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
@@ -119,7 +119,7 @@ class Best365SecurityController extends SecurityController
 				->register($customer);
 
 			// initialize customer ext info
-			$this->get('best365.manager.customer')->initialize($customer, $request);
+			$this->get('best365.manager.customer')->initialize($customer, $this->getRequest());
 
 			return $this->redirectToRoute('best365_store_homepage');
         }
