@@ -1,0 +1,17 @@
+Best365Bundle\Entity\CustomerExt:
+    type: entity
+    table: customer_ext
+    repositoryClass: Best365Bundle\Repository\CustomerExtRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        cid:
+            type: integer
+        wechat:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

@@ -2,6 +2,7 @@
 
 namespace Best365Bundle\Manager;
 
+use Best365Bundle\Entity\CustomerExt;
 use Doctrine\ORM\EntityManager;
 use Best365Bundle\Entity\CustomerMembership;
 use Elcodi\Component\User\Entity\Customer;
@@ -32,8 +33,8 @@ class Best365CustomerManager
 	{
 		// get customer membership
 		$customer_membership = $this->em
-									->getRepository('Best365Bundle\Entity\CustomerMembership')
-									->findOneByCustomerId($customer->getId());
+			->getRepository('Best365Bundle\Entity\CustomerMembership')
+			->findOneByCustomerId($customer->getId());
 
 		// create display property
 		$display_customer = new \stdClass();
@@ -64,9 +65,9 @@ class Best365CustomerManager
 		// construct customer membership
 		$customer_membership = new CustomerMembership();
 		$customer_membership->setCustomerId($customer_id)
-							->setCurrentPoint($initialize_current_point)
-							->setTotalPoint($initialize_total_point)
-							->setMembership($initialize_membership->getId());
+			->setCurrentPoint($initialize_current_point)
+			->setTotalPoint($initialize_total_point)
+			->setMembership($initialize_membership->getId());
 
 		// add customer membership
 		$this->em->persist($customer_membership);
@@ -147,7 +148,8 @@ class Best365CustomerManager
 
 		foreach ($membership_list as $cfg) {
 			if ($cfg->getPoint() <= $customer_membership->getTotalPoint() &&
-			$cfg->getPoint() >= $membership->getPoint()) {
+				$cfg->getPoint() >= $membership->getPoint()
+			) {
 				$customer_membership->setMembership($cfg->getId());
 				break;
 			}
@@ -173,5 +175,25 @@ class Best365CustomerManager
 		$result->current_point = $point;
 
 		return $result;
+	}
+
+	public function initialize(CustomerInterface $customer, Request $request)
+	{
+		$this->initializeMembership($customer);
+		$this->initializeExt($customer, $request);
+	}
+
+	public function initializeExt(CustomerInterface $customer, Request $request)
+	{
+		$cid = $customer->getId();
+		$wechat = $request->request->get('wechat', false) ? $request->request->get('wechat', false) : '';
+
+		// construct customer membership
+		$ext = new CustomerExt();
+		$ext->setCid($cid)
+			->setWechat($wechat);
+
+		$this->em->persist($ext);
+		$this->em->flush();
 	}
 }

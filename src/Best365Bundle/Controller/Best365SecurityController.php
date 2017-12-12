@@ -7,6 +7,7 @@ use Mmoreram\ControllerExtraBundle\Annotation\Form as AnnotationForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 
@@ -99,7 +100,7 @@ class Best365SecurityController extends SecurityController
      *      validate      = "isValid"
      * )
      */
-    public function registerAction(CustomerInterface $customer, FormView $registerFormView, $isValid)
+    public function regAction(CustomerInterface $customer, FormView $registerFormView, $isValid, Request $request)
     {
         // If user is already logged, go to redirect url
         $authorizationChecker = $this->get('security.authorization_checker');
@@ -117,8 +118,8 @@ class Best365SecurityController extends SecurityController
 				->get('elcodi.manager.customer')
 				->register($customer);
 
-			// initialize customer membership
-			$this->get('best365.manager.customer')->initializeMembership($customer);
+			// initialize customer ext info
+			$this->get('best365.manager.customer')->initialize($customer, $request);
 
 			return $this->redirectToRoute('best365_store_homepage');
         }

@@ -102,6 +102,13 @@ class MappingCompilerPass extends AbstractMappingCompilerPass
 				'@Best365Bundle/Resources/config/doctrine/Bestselling.orm.yml',
 				true
 			)
+			->addEntityMapping(
+				$container,
+				'default',
+				'Best365Bundle\Entity\CustomerExt',
+				'@Best365Bundle/Resources/config/doctrine/CustomerExt.orm.yml',
+				true
+			)
 		;
 	}
 }
