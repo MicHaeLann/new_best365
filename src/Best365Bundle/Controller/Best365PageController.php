@@ -30,26 +30,15 @@ class Best365PageController extends Controller
 	{
 		$page = $this->get('elcodi.repository.page')
 			->find($id);
-
-		if (strtolower($page->getTitle()) == 'membership' ||
-			strpos($page->getTitle(), '会员') !== false) {
-			$membership = $this->get('best365.manager.membership')
-				->getList();
-
-			return $this->render(
-				'Best365Bundle:Page:membership.view.html.twig',
-				[
-					'page' => $page,
-					'membership' => $membership
-				]
-			);
-		} else {
-			return $this->render(
-				'Best365Bundle:Page:page.view.html.twig',
-				[
-					'page' => $page
-				]
-			);
+		$view = 'Best365Bundle:Page:page.view.html.twig';
+		if ($id == 2) {
+			$view = 'Best365Bundle:Page:about.view.html.twig';
 		}
+		return $this->render(
+			$view,
+			[
+				'page' => $page
+			]
+		);
 	}
 }
