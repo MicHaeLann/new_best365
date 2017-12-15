@@ -8,8 +8,9 @@
     <div class="margin-top-30">
         {{ form_row(form.email, { "attr": { "class": "form-control", "readonly": true } }) }}
         <div class="form-group">
-            <label>Wechat</label>
+            <label>{{ "template.store_template_bundle.profile.wechat"|trans }}</label>
             <input type="text" class="form-control" value="{{ ext.wechat }}" name="wechat">
+            <small class="form-text text-muted">{{ "template.store_template_bundle.profile.wechat_content"|trans }}</small>
         </div>
         {% if activeLocale == 'zh-CN' %}
             {{ form_row(form.lastname, { "attr": { "class": "form-control", "length": 255 } }) }}

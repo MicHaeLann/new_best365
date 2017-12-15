@@ -38,6 +38,8 @@ template:
             previous_password: 'Previous Password'
             membership: 'Membership'
             current_point: 'Current Point'
+            wechat: 'Wechat'
+            wechat_content: 'Wechat helps to improve our customer service.'
         address:
             edit:
                 add_new_address: 'Add new address'

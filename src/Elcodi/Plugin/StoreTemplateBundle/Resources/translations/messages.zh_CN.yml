@@ -38,6 +38,8 @@ template:
             previous_password: 旧密码
             membership: 会员等级
             current_point: 当前积分
+            wechat: 微信
+            wechat_content: 请提供微信以便我们为您更好的服务
         address:
             edit:
                 add_new_address: 添加地址

@@ -12,8 +12,9 @@
     {{ form_row(form.email, { "attr": {"class": "form-control", "length": 255} }) }}
     {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255 } }) }}
     <div class="form-group">
-        <label class="control-label">Wechat</label>
+        <label class="control-label">{{ "template.store_template_bundle.profile.wechat"|trans }}</label>
         <input type="text" class="form-control" name="wechat" />
+        <small class="form-text text-muted">{{ "template.store_template_bundle.profile.wechat_content"|trans }}</small>
     </div>
     {% if activeLocale == "zh-CN" %}
         {{ form_row(form.lastName, { "attr": { "class": "form-control", "length": 255 } }) }}
