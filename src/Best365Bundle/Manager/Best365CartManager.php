@@ -9,6 +9,7 @@ use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Services\CartManager;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Best365Bundle\Manager\PurchasableManager;
+use Elcodi\Component\Product\Entity\Purchasable;
 
 class Best365CartManager
 {
@@ -82,7 +83,7 @@ class Best365CartManager
 		}
 	}
 
-	public function regenerate(CartInterface $cart)
+	public function regenerate(CartInterface $cart, &$check = false)
 	{
 		if ($cart->getTotalItemNumber() > 0) {
 			$total = '';
@@ -91,10 +92,13 @@ class Best365CartManager
 				$purchasable = $this->purchasableManager
 					->getProduct($line->getPurchasable()->getId());
 
+				if (!$check && $purchasable->getPrincipalCategory()->getParent()->getId() == 47) {
+					$check = true;
+				}
+
 				// update purchasable price
 				$line->setPurchasableAmount($purchasable->getPrice());
 				$line->getPurchasable()->setPrice($purchasable->getPrice());
-
 
 				// set line amount
 				$line->setAmount($purchasable->getPrice()->multiply($line->getQuantity()));

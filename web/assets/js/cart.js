@@ -70,7 +70,15 @@ $(function() {
         var shippingAddress = $("#shipping-address").val();
         var shippingMethod = $("#shipping-method").val();
         var paymentMethod = $("#payment-method").val();
-        if (shippingAddress !== null && shippingMethod !== null && paymentMethod !== null) {
+
+        // check if has formula
+        var notice = false;
+        if ($("#notice").prop("checked") == undefined || $("#notice").prop("checked")) {
+            notice = true;
+        }
+        console.log(notice);
+
+        if (shippingAddress !== null && shippingMethod !== null && paymentMethod !== null && notice) {
             var disabled = false;
         } else {
             var disabled = true;
@@ -287,4 +295,8 @@ $(function() {
             }
         });
     })
+
+    $("#notice").change(function () {
+        InitiateSubmit();
+    });
 });

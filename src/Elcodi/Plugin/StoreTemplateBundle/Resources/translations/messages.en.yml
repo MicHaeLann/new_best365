@@ -126,6 +126,8 @@ template:
                 delivery: Delivery Information
                 payment: Payment Information
                 checkout: Payment Method
+                notice: Notice
+                formula: Please upload ID copy later to customer service.
             address:
                 address: Address
                 add_new_address: 'Add new address'

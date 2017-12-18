@@ -107,9 +107,12 @@ class Best365CartController extends CartController
 			);
 		}
 
+		// formula check
+		$formula = false;
+
 		// get shipping methods
 		$cart = $this->get('best365.manager.cart')
-			->regenerate($cart);
+			->regenerate($cart, $formula);
 
 		// get sample address
 		$addresses = $this
@@ -185,6 +188,7 @@ class Best365CartController extends CartController
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
 				'cart'					=> $cart,
+				'formula'				=> true,
 				'addresses' 			=> $addressesFormatted,
 				'carriers'				=> $carriers,
 				'shipping_methods'      => $shippingMethods,

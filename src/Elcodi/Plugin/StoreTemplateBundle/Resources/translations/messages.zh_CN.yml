@@ -126,6 +126,8 @@ template:
                 delivery: 快递信息
                 payment: 订单详细
                 checkout: 支付方式
+                notice: 须知
+                formula: 请稍后上传身份证正反面照片至客服微信
             address:
                 address: 地址
                 add_new_address: 使用新地址

@@ -8,6 +8,7 @@
         {% include '@Best365/Cart/checkout.info.html.twig' with {'cart' : cart} %}
         <hr class="checkout-hr">
         {% include '@Best365/Cart/payment.options.html.twig' %}
+        {% include '@Best365/Cart/notice.html.twig' with {'formula' : formula} %}
         <button type="submit" id="payment" name="payment" class="btn btn-success full-width margin-top-20" data-test="payment-button">
             {{ 'template.store_template_bundle.cart.view.checkout'|trans }}
         </button>
