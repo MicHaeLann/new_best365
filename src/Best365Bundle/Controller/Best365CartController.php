@@ -188,7 +188,7 @@ class Best365CartController extends CartController
 			'Best365Bundle:Cart:cart.view.html.twig',
 			[
 				'cart'					=> $cart,
-				'formula'				=> true,
+				'formula'				=> $formula,
 				'addresses' 			=> $addressesFormatted,
 				'carriers'				=> $carriers,
 				'shipping_methods'      => $shippingMethods,

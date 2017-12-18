@@ -2,6 +2,7 @@
 
 namespace Best365Bundle\Manager;
 
+use Behat\Mink\Exception\Exception;
 use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
 use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\Cart\EventDispatcher\CartEventDispatcher;
@@ -10,6 +11,7 @@ use Elcodi\Component\Cart\Services\CartManager;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Best365Bundle\Manager\PurchasableManager;
 use Elcodi\Component\Product\Entity\Purchasable;
+use Proxies\__CG__\Elcodi\Component\Product\Entity\Category;
 
 class Best365CartManager
 {
@@ -85,6 +87,7 @@ class Best365CartManager
 
 	public function regenerate(CartInterface $cart, &$check = false)
 	{
+		$milk = 47;
 		if ($cart->getTotalItemNumber() > 0) {
 			$total = '';
 			foreach ($cart->getCartLines() as &$line) {
@@ -92,7 +95,9 @@ class Best365CartManager
 				$purchasable = $this->purchasableManager
 					->getProduct($line->getPurchasable()->getId());
 
-				if (!$check && $purchasable->getPrincipalCategory()->getParent()->getId() == 47) {
+				if (!$check &&
+					((!$purchasable->getPrincipalCategory()->isRoot() && $purchasable->getPrincipalCategory()->getParent()->getId() == $milk) ||
+					($purchasable->getPrincipalCategory()->isRoot() && $purchasable->getPrincipalCategory()->getId() == $milk))) {
 					$check = true;
 				}
 
