@@ -215,7 +215,7 @@ class PurchasableManager
 		$purchasable = $this->pr->find($id);
 		$purchasable_ext = $this->getProductExt($purchasable);
 		$customer = $this->cw->get();
-
+		
 		if ($purchasable->getReducedPrice()->getAmount() == 0) {
 			$purchasable->setReducedPrice($purchasable->getPrice());
 		}
@@ -236,14 +236,14 @@ class PurchasableManager
 				);
 
 				// if price currency not match, convert to purchasable price currency
-				if ($product_price->getPriceCurrencyIso() != $purchasable->getPrice()->getCurrency()->getIso()) {
+				if ($product_price->getPriceCurrencyIso() != $purchasable->getReducedPrice()->getCurrency()->getIso()) {
 					$price = \Elcodi\Component\Currency\Entity\Money::create(
 						$product_price->getPrice(),
 						$currency
 					);
-					$membership_price = $this->cc->convertMoney($price, $purchasable->getPrice()->getCurrency());
+					$membership_price = $this->cc->convertMoney($price, $purchasable->getReducedPrice()->getCurrency());
 				}
-				$purchasable->setPrice($membership_price);
+				$purchasable->setReducedPrice($membership_price);
 			}
 		}
 

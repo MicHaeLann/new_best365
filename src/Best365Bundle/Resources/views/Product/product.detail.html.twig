@@ -44,12 +44,12 @@
                         </div>
                         <div class="row margin-top-10">
                             <span class="sub-theme-font font-12 original-price">
-                                {{ purchasable.reducedPrice|print_convert_money() }}
+                                {{ purchasable.price|print_convert_money() }}
                             </span>
                         </div>
                         <div class="row margin-top-10">
                             <span class="main-theme-font font-18">
-                                {{ purchasable.price|print_convert_money() }}
+                                {{ purchasable.reducedPrice|print_convert_money() }}
                             </span>
                         </div>
 

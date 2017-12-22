@@ -17,10 +17,10 @@
     </div>
     <div class="margin-top-5">
         <div class="promotion-item-product-price main-theme-font">
-            {{ item.price|print_convert_money() }}
+            {{ item.reducedPrice|print_convert_money() }}
         </div>
         <div class="promotion-item-original-price sub-theme-font margin-top-5">
-            {{ item.reducedPrice|print_convert_money() }}
+            {{ item.price|print_convert_money() }}
         </div>
     </div>
     <div class="promotion-item-product-stock margin-top-30">

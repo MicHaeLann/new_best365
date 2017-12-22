@@ -96,17 +96,18 @@ class Best365CartManager
 					->getProduct($line->getPurchasable()->getId());
 
 				if (!$check &&
-					((!$purchasable->getPrincipalCategory()->isRoot() && $purchasable->getPrincipalCategory()->getParent()->getId() == $milk) ||
-					($purchasable->getPrincipalCategory()->isRoot() && $purchasable->getPrincipalCategory()->getId() == $milk))) {
+					((!$purchasable->getPrincipalCategory()->isRoot() &&
+							$purchasable->getPrincipalCategory()->getParent()->getId() == $milk) ||
+					($purchasable->getPrincipalCategory()->isRoot() &&
+						$purchasable->getPrincipalCategory()->getId() == $milk))) {
 					$check = true;
 				}
 
 				// update purchasable price
-				$line->setPurchasableAmount($purchasable->getPrice());
-				$line->getPurchasable()->setPrice($purchasable->getPrice());
+				$line->setPurchasableAmount($purchasable->getReducedPrice());
 
 				// set line amount
-				$line->setAmount($purchasable->getPrice()->multiply($line->getQuantity()));
+				$line->setAmount($purchasable->getReducedPrice()->multiply($line->getQuantity()));
 				if ($total == '') {
 					$total = $line->getAmount();
 				} else {
