@@ -215,7 +215,10 @@ class PurchasableManager
 		$purchasable = $this->pr->find($id);
 		$purchasable_ext = $this->getProductExt($purchasable);
 		$customer = $this->cw->get();
-		$original_price = $purchasable->getPrice();
+
+		if ($purchasable->getReducedPrice()->getAmount() == 0) {
+			$purchasable->setReducedPrice($purchasable->getPrice());
+		}
 
 		// if not fixed, set membership price to product price
 		if (!empty($customer->getId()) && !empty($purchasable_ext) && !$purchasable_ext->getFixedPrice()) {
@@ -244,7 +247,6 @@ class PurchasableManager
 			}
 		}
 
-		$purchasable->original_price = $original_price;
 		return $purchasable;
 	}
 
