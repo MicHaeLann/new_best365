@@ -6,6 +6,7 @@ use Best365Bundle\Entity\PurchasableExt;
 use Best365Bundle\Entity\PurchasablePrice;
 use Elcodi\Component\Currency\Repository\CurrencyRepository;
 use Elcodi\Component\Currency\Services\CurrencyConverter;
+use Elcodi\Component\EntityTranslator\Repository\EntityTranslationRepository;
 use Elcodi\Component\Product\Entity\Interfaces\CategoryInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
 use Elcodi\Component\Product\Repository\ManufacturerRepository;
@@ -47,6 +48,11 @@ class PurchasableManager
 	private $mr;
 
 	/**
+	 * @var EntityTranslationRepository
+	 */
+	private $etr;
+
+	/**
 	 * PurchasableManager constructor.
 	 * @param EntityManager $em
 	 * @param PurchasableRepository $pr
@@ -54,6 +60,7 @@ class PurchasableManager
 	 * @param CurrencyConverter $cc
 	 * @param CurrencyRepository $cr
 	 * @param ManufacturerRepository $mr
+	 * @param EntityTranslationRepository $etr
 	 */
 	public function __construct(
 		EntityManager $em,
@@ -61,7 +68,8 @@ class PurchasableManager
 		CustomerWrapper $cw,
 		CurrencyConverter $cc,
 		CurrencyRepository $cr,
-		ManufacturerRepository $mr
+		ManufacturerRepository $mr,
+		EntityTranslationRepository $etr
 	)
 	{
 		$this->em = $em;
@@ -70,6 +78,7 @@ class PurchasableManager
 		$this->cc = $cc;
 		$this->cr = $cr;
 		$this->mr = $mr;
+		$this->etr = $etr;
 	}
 
 	/**
@@ -341,5 +350,54 @@ class PurchasableManager
 		}
 
 		return $ids;
+	}
+
+	public function updateFormula($arr)
+	{
+		$id = $arr[0];
+		$name = $arr[1];
+		$expire = $arr[2];
+		$price = $arr[3];
+
+		if (!empty($id)) {
+			$purchasable = $this->pr->find($id);
+
+			if (!empty($purchasable)) {
+				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => 'nzd'));
+				$reduced_price = \Elcodi\Component\Currency\Entity\Money::create(
+					$price * 100,
+					$currency
+				);
+				$price = \Elcodi\Component\Currency\Entity\Money::create(
+					$price * 100 + 500,
+					$currency
+				);
+				$purchasable->setReducedPrice($reduced_price);
+				$purchasable->setPrice($price);
+				$this->em->persist($purchasable);
+			}
+
+			$translation = $this->etr->findOneBy(array(
+				'entityType' => 'purchasable',
+				'entityId' => $id,
+				'entityField' => 'name',
+				'locale' => 'zh-CN'
+			));
+
+			if (!empty($translation)) {
+				$entity = $translation->getTranslation();
+
+				$pattern = '/(\d+)[.\/](\d+)/';
+				if (strpos($entity, '保质期') == false) {
+					$entity .= ' 保质期' . $expire;
+				} elseif (count(preg_match($pattern, $entity)) > 0) {
+					$entity = preg_replace($pattern, $expire, $entity);
+				}
+				$translation->setTranslation($entity);
+				$this->em->persist($translation);
+			}
+
+			$this->em->flush();
+		}
 	}
 }

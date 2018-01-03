@@ -171,6 +171,11 @@ class AppKernel extends Kernel
              */
             new JMS\SerializerBundle\JMSSerializerBundle(),
 
+			/**
+			 * excel
+			 */
+			new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+
             /**
              * Rest server
              */
