@@ -82,7 +82,6 @@
         "mmoreram/translation-server": "dev-master",
         "phpdocumentor/reflection-docblock": "2.0.4",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
-        "liuggio/excelbundle": "^2.1"
     },
     "replace": {
         "elcodi-templates/template": "dev-master",
