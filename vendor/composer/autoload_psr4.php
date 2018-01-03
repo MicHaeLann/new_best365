@@ -43,6 +43,7 @@ return array(
     'Mmoreram\\Extractor\\' => array($vendorDir . '/mmoreram/extractor/src/Extractor'),
     'Mmoreram\\ControllerExtraBundle\\' => array($vendorDir . '/mmoreram/controller-extra-bundle'),
     'Mmoreram\\CacheFlushBundle\\' => array($vendorDir . '/mmoreram/cache-flush-bundle'),
+    'Liuggio\\ExcelBundle\\' => array($vendorDir . '/liuggio/ExcelBundle'),
     'Knp\\Bundle\\GaufretteBundle\\' => array($vendorDir . '/knplabs/knp-gaufrette-bundle'),
     'JMS\\AopBundle\\' => array($vendorDir . '/jms/aop-bundle'),
     'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),

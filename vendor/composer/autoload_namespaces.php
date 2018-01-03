@@ -19,6 +19,7 @@ return array(
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'PhpCollection' => array($vendorDir . '/phpcollection/phpcollection/src'),
+    'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Ornicar\\GravatarBundle\\' => array($vendorDir . '/ornicar/gravatar-bundle'),
     'Mmoreram\\HttpHeadersBundle' => array($vendorDir . '/mmoreram/http-headers-bundle'),
     'Metadata\\' => array($vendorDir . '/jms/metadata/src'),

@@ -83,6 +83,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'Mmoreram\\ControllerExtraBundle\\' => 31,
             'Mmoreram\\CacheFlushBundle\\' => 26,
         ),
+        'L' => 
+        array (
+            'Liuggio\\ExcelBundle\\' => 20,
+        ),
         'K' => 
         array (
             'Knp\\Bundle\\GaufretteBundle\\' => 27,
@@ -285,6 +289,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
         array (
             0 => __DIR__ . '/..' . '/mmoreram/cache-flush-bundle',
         ),
+        'Liuggio\\ExcelBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/liuggio/ExcelBundle',
+        ),
         'Knp\\Bundle\\GaufretteBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/knplabs/knp-gaufrette-bundle',
@@ -454,6 +462,10 @@ class ComposerStaticInitf3e5f83046d3c2f3f68d6bdd91373127
             'PhpCollection' => 
             array (
                 0 => __DIR__ . '/..' . '/phpcollection/phpcollection/src',
+            ),
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
             ),
         ),
         'O' => 
