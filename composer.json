@@ -81,7 +81,7 @@
         "raulfraile/ladybug-bundle": "^1.0",
         "mmoreram/translation-server": "dev-master",
         "phpdocumentor/reflection-docblock": "2.0.4",
-        "friendsofsymfony/jsrouting-bundle": "^1.6",
+        "friendsofsymfony/jsrouting-bundle": "^1.6"
     },
     "replace": {
         "elcodi-templates/template": "dev-master",
