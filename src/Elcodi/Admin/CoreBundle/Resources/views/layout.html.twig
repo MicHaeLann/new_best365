@@ -36,14 +36,14 @@
             {{ elcodi_hook("admin.body_top") }}
             {% endblock body_top_hook %}
             <header class="section-header">
-                <div class="buttons-group">
-                    {{ elcodi_hook('admin.header_actions', elcodi_context) }}
-                    {% block header_actions '' %}
-                </div>
-                {% block breadcrumb '' %}
-                <div class="buttons-group">
-                    {% block header_sub_actions '' %}
-                </div>
+                    <div class="buttons-group">
+                        {{ elcodi_hook('admin.header_actions', elcodi_context) }}
+                        {% block header_actions '' %}
+                    </div>
+                    <div class="buttons-group" style="clear: right">
+                        {% block header_sub_actions '' %}
+                    </div>
+                    {% block breadcrumb '' %}
             </header>
             <div class="papa-air">
                 {% block content '' %}
