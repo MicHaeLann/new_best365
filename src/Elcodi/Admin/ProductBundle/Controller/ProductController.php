@@ -298,12 +298,23 @@ class ProductController extends AbstractAdminController
 	 * )
 	 * @Method({"POST"})
 	 */
+
+	/**
+	 * Update product by excel
+	 * @param Request $request
+	 * @return RedirectResponse
+	 * @Route(
+	 *      path = "/update",
+	 *      name = "admin_product_update"
+	 * )
+	 * @Method({"POST"})
+	 */
     public function updateAction(Request $request)
 	{
 		$file = $request->files->get('file');
 		$original_name = $file->getClientOriginalName();
 		$directory = realpath($this->container->getParameter('kernel.root_dir') . '/../web/upload/');
-		if (strpos($original_name, 'product')  === false ) {
+		if (strpos($original_name, 'formula')  !== false ) {
 			$file_name = 'formula.xlsx';
 			$file->move($directory, $file_name);
 			$uploaded_file = $directory. '/' . $file_name;
