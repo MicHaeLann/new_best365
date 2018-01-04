@@ -313,16 +313,16 @@ class ProductController extends AbstractAdminController
 			$highestColumn = $sheet->getHighestColumn();
 			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
 			foreach ($data as $collection) {
-				$this->get('best365.manager.purchasable')->updateFormula($collection);
+
+					$this->get('best365.manager.purchasable')->updateFormula($collection);
 			}
-//			$this->addFlash(
-//				'success',
-//				$this
-//					->get('translator')
-//					->trans('admin.product.saved')
-//			);
-//
-			return $this->redirectToRoute('admin_product_list');
+			$this->addFlash(
+				'success',
+				$this
+					->get('translator')
+					->trans('admin.product.saved')
+			);
 		}
+		return $this->redirectToRoute('admin_product_list');
 	}
 }
