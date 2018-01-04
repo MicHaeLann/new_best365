@@ -33,7 +33,7 @@
 {% endblock header_actions %}
 
 {% block header_sub_actions %}
-    <form id="update-form" method="post" action="{{ url('admin_product_update') }}" enctype="multipart/form-data">
+    <form id="update-form" method="post" action="{{ url('admin_product_upload') }}" enctype="multipart/form-data">
         <input type="file" name="file" style="padding: 0.5em 0.5em;border: 1px solid rgba(50, 50, 50, 0.3);background: #fff;border-radius: 2px;box-sizing: border-box" />
         <button class="button-primary" type="submit">
             <i class="icon-search"></i>

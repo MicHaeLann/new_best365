@@ -291,30 +291,22 @@ class ProductController extends AbstractAdminController
 
 	/**
 	 * Update product by excel
+	 *
 	 * @param Request $request
-	 * @Route(
-	 *      path = "/update",
-	 *      name = "admin_product_update"
-	 * )
-	 * @Method({"POST"})
-	 */
-
-	/**
-	 * Update product by excel
-	 * @param Request $request
+	 *
 	 * @return RedirectResponse
 	 * @Route(
-	 *      path = "/update",
-	 *      name = "admin_product_update"
+	 *      path = "/upload",
+	 *      name = "admin_product_upload"
 	 * )
 	 * @Method({"POST"})
 	 */
-    public function updateAction(Request $request)
+    public function uploadAction(Request $request)
 	{
 		$file = $request->files->get('file');
 		$original_name = $file->getClientOriginalName();
 		$directory = realpath($this->container->getParameter('kernel.root_dir') . '/../web/upload/');
-		if (strpos($original_name, 'formula')  !== false ) {
+		if (strpos($original_name, 'formula') !== false ) {
 			$file_name = 'formula.xlsx';
 			$file->move($directory, $file_name);
 			$uploaded_file = $directory. '/' . $file_name;
@@ -324,8 +316,25 @@ class ProductController extends AbstractAdminController
 			$highestColumn = $sheet->getHighestColumn();
 			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
 			foreach ($data as $collection) {
-
-					$this->get('best365.manager.purchasable')->updateFormula($collection);
+				$this->get('best365.manager.purchasable')->updateFormula($collection);
+			}
+			$this->addFlash(
+				'success',
+				$this
+					->get('translator')
+					->trans('admin.product.saved')
+			);
+		} elseif (strpos($original_name, 'product') !== false) {
+			$file_name = 'product.xlsx';
+			$file->move($directory, $file_name);
+			$uploaded_file = $directory. '/' . $file_name;
+			$obj = $this->get('phpexcel')->createPHPExcelObject($uploaded_file);
+			$sheet = $obj->getSheet(0);
+			$highestRow = $sheet->getHighestRow();
+			$highestColumn = $sheet->getHighestColumn();
+			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
+			foreach ($data as $collection) {
+				$this->get('best365.manager.purchasable')->updateProduct($collection);
 			}
 			$this->addFlash(
 				'success',
@@ -334,6 +343,7 @@ class ProductController extends AbstractAdminController
 					->trans('admin.product.saved')
 			);
 		}
+
 		return $this->redirectToRoute('admin_product_list');
 	}
 }
