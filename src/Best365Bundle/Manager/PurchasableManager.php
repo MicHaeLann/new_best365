@@ -589,9 +589,6 @@ class PurchasableManager
 					(string)$enabled,
 					(string)$hot
 				);
-				if ($id == 27) {
-					var_dump($arr);exit;
-				}
 			}
 		}
 
