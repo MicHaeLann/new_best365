@@ -52,6 +52,9 @@ class PurchasableManager
 	 */
 	private $etr;
 
+	private $bm;
+
+
 	/**
 	 * PurchasableManager constructor.
 	 * @param EntityManager $em
@@ -61,6 +64,7 @@ class PurchasableManager
 	 * @param CurrencyRepository $cr
 	 * @param ManufacturerRepository $mr
 	 * @param EntityTranslationRepository $etr
+	 * @param Best365BestsellingManager $bm
 	 */
 	public function __construct(
 		EntityManager $em,
@@ -69,7 +73,8 @@ class PurchasableManager
 		CurrencyConverter $cc,
 		CurrencyRepository $cr,
 		ManufacturerRepository $mr,
-		EntityTranslationRepository $etr
+		EntityTranslationRepository $etr,
+		Best365BestsellingManager $bm
 	)
 	{
 		$this->em = $em;
@@ -79,6 +84,7 @@ class PurchasableManager
 		$this->cr = $cr;
 		$this->mr = $mr;
 		$this->etr = $etr;
+		$this->bm = $bm;
 	}
 
 	/**
@@ -354,27 +360,123 @@ class PurchasableManager
 
 	public function updateFormula($arr)
 	{
-		$id = $arr[0];
-		$name = $arr[1];
-		$expire = $arr[2];
-		$price = $arr[3];
+		foreach ($arr as $v) {
+			$id = $v[0];
+			$name = $v[1];
+			$expire = $v[2];
+			$price = $v[3];
 
-		if (!empty($id)) {
+			if (!empty($id)) {
+				$purchasable = $this->pr->find($id);
+
+				if (!empty($purchasable)) {
+					$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => 'nzd'));
+					$reduced_price = \Elcodi\Component\Currency\Entity\Money::create(
+						$price * 100,
+						$currency
+					);
+					$price = \Elcodi\Component\Currency\Entity\Money::create(
+						$price * 100 + 500,
+						$currency
+					);
+					$purchasable->setReducedPrice($reduced_price);
+					$purchasable->setPrice($price);
+					$this->em->persist($purchasable);
+				}
+
+				$translation = $this->etr->findOneBy(array(
+					'entityType' => 'purchasable',
+					'entityId' => $id,
+					'entityField' => 'name',
+					'locale' => 'zh-CN'
+				));
+
+				if (!empty($translation)) {
+					$entity = $translation->getTranslation();
+
+					$pattern = '/(\d+)[.\/](\d+)/';
+					if (strpos($entity, '保质期') == false) {
+						$entity .= ' 保质期' . $expire;
+					} elseif (count(preg_match($pattern, $entity)) > 0) {
+						$entity = preg_replace($pattern, $expire, $entity);
+					}
+					$translation->setTranslation($entity);
+					$this->em->persist($translation);
+				}
+			}
+		}
+		$this->em->flush();
+	}
+
+	public function updateProduct($arr)
+	{
+		$this->bm->clear();
+		foreach ($arr as $v) {
+			$id = $v[0];
+			$cname = $v[1];
+			$cdes = $v[2];
+			$ename = $v[3];
+			$edes = $v[4];
+			$category = $v[5];
+			$manufacturer = $v[6];
+			$expire = $v[7];
+			$sku = $v[8];
+			$fixed = $v[9];
+			$reduced = $v[10];
+			$price = $v[11];
+			$weight = $v[16];
+			$barcode = $v[17];
+			$stock = $v[18];
+			$tag = $v[19];
+			$enabled = $v[20];
+			$hot = $v[21];
+
 			$purchasable = $this->pr->find($id);
 
+			// update purchasable
 			if (!empty($purchasable)) {
+				$purchasable->setName($ename);
+				$purchasable->setDescription($edes);
+				$purchasable->setSku($sku);
+
 				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => 'nzd'));
-				$reduced_price = \Elcodi\Component\Currency\Entity\Money::create(
-					$price * 100,
-					$currency
-				);
-				$price = \Elcodi\Component\Currency\Entity\Money::create(
-					$price * 100 + 500,
-					$currency
-				);
-				$purchasable->setReducedPrice($reduced_price);
-				$purchasable->setPrice($price);
+				$purchasable->setReducedPrice(\Elcodi\Component\Currency\Entity\Money::create($reduced, $currency));
+				$purchasable->setPrice(\Elcodi\Component\Currency\Entity\Money::create($price, $currency));
+				$purchasable->setWeight($weight);
+				$purchasable->setStock($stock);
+				$purchasable->setEnabled($enabled);
 				$this->em->persist($purchasable);
+			}
+
+			// update purchasable ext
+			$ext = $this->em
+				->getRepository('Best365Bundle\Entity\PurchasableExt')
+				->findOneByPurchasableId($id);
+			if (!empty($ext)) {
+				$ext->setTag($tag);
+				$ext->setBarcode($barcode);
+				$ext->setFixedPrice($fixed);
+				$this->em->persist($ext);
+			}
+
+
+			// update translation
+			$translation = $this->etr->findOneBy(array(
+				'entityType' => 'purchasable',
+				'entityId' => $id,
+				'entityField' => 'description',
+				'locale' => 'zh-CN'
+			));
+			if (!empty($translation)) {
+				$translation->setTranslation($cdes);
+				$this->em->persist($translation);
+			}
+
+			$pattern = '/(\d+)[.\/](\d+)/';
+			if (strpos($cname, '保质期') == false) {
+				$cname .= ' 保质期' . $expire;
+			} elseif (count(preg_match($pattern, $cname)) > 0) {
+				$cname = preg_replace($pattern, $expire, $cname);
 			}
 
 			$translation = $this->etr->findOneBy(array(
@@ -385,19 +487,116 @@ class PurchasableManager
 			));
 
 			if (!empty($translation)) {
-				$entity = $translation->getTranslation();
-
-				$pattern = '/(\d+)[.\/](\d+)/';
-				if (strpos($entity, '保质期') == false) {
-					$entity .= ' 保质期' . $expire;
-				} elseif (count(preg_match($pattern, $entity)) > 0) {
-					$entity = preg_replace($pattern, $expire, $entity);
-				}
-				$translation->setTranslation($entity);
+				$translation->setTranslation($cname);
 				$this->em->persist($translation);
 			}
 
-			$this->em->flush();
+			// add hot
+			if ($hot) {
+				$this->bm->add($id);
+			}
 		}
+
+		$this->em->flush();
+	}
+
+	public function exportProduct()
+	{
+		$arr = array();
+		$arr[] = array(
+			'ID',
+			'CNames/商品名称',
+			'CDescriptions/商品描述',
+			'ENames/商品英文名称',
+			'EDescriptions/商品英文描述',
+			'Category/商品分类',
+			'Manufacturer/商品生产商',
+			'Expires/有效期',
+			'SKU/货号',
+			'Fixed/固定价格',
+			'ReducedPrice/显示价格',
+			'Price/原价',
+			'Membership Price/会员价格',
+			'Membership Price/会员价格',
+			'Membership Price/会员价格',
+			'Membership Price/会员价格',
+			'Weight/商品重量',
+			'Barcode/条形码',
+			'Stock/库存',
+			'Tags/标签',
+			'Enabled/有效',
+			'Hot/热销'
+		);
+
+		$product = $this->all();
+
+		foreach ($product as $v) {
+			$id = $v->getId();
+			if ($id > 23) {
+				$trans = $this->etr->findOneBy(array(
+					'entityType' => 'purchasable',
+					'entityId' => $id,
+					'entityField' => 'name',
+					'locale' => 'zh-CN'
+				));
+				$cname = !empty($trans) ? $trans->getTranslation() : '';
+
+				$trans = $this->etr->findOneBy(array(
+					'entityType' => 'purchasable',
+					'entityId' => $id,
+					'entityField' => 'description',
+					'locale' => 'zh-CN'
+				));
+				$cdescription = !empty($trans) ? $trans->getTranslation() : '';
+
+				$category = !empty($v->getPrincipalCategory()) ? $v->getPrincipalCategory()->getName() : '';
+				$manufacturer = !empty($v->getManufacturer()) ? $v->getManufacturer()->getName() : '';
+
+				$ext = $this->em
+					->getRepository('Best365Bundle\Entity\PurchasableExt')
+					->findOneBy(array(
+						'purchasableId' => $id
+					));
+				$fixed = !empty($ext) ? $ext->getFixedPrice() : '';
+				$barcode = !empty($ext) ? $ext->getBarcode() : '';
+				$tag = !empty($ext) ? $ext->getTag() : '';
+
+				$hot = $this->bm->isHot($id) ? 1 : 0;
+
+				$enabled = $v->isEnabled() ? 1 : 0;
+
+				$arr[] = array(
+					$id,
+					$cname,
+					$cdescription,
+					$v->getName(),
+					$v->getDescription(),
+					$category,
+					$manufacturer,
+					'',
+					$v->getSku(),
+					$fixed,
+					$v->getReducedPrice()->getAmount(),
+					$v->getPrice()->getAmount(),
+					'',
+					'',
+					'',
+					'',
+					$v->getWeight(),
+					$barcode,
+					$v->getStock(),
+					$tag,
+					$enabled,
+					$hot
+				);
+			}
+		}
+
+		return $arr;
+	}
+
+	public function all()
+	{
+		return $this->pr->findAll();
 	}
 }

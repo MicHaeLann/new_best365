@@ -17,6 +17,7 @@
 
 namespace Elcodi\Admin\ProductBundle\Controller;
 
+use Buzz\Message\Response;
 use Mmoreram\ControllerExtraBundle\Annotation\Entity as EntityAnnotation;
 use Mmoreram\ControllerExtraBundle\Annotation\Form as FormAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -30,6 +31,7 @@ use Elcodi\Admin\CoreBundle\Controller\Abstracts\AbstractAdminController;
 use Elcodi\Component\Core\Entity\Interfaces\EnabledInterface;
 use Elcodi\Component\Media\Entity\Interfaces\ImageInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
  * Class Controller for Product
@@ -315,9 +317,7 @@ class ProductController extends AbstractAdminController
 			$highestRow = $sheet->getHighestRow();
 			$highestColumn = $sheet->getHighestColumn();
 			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
-			foreach ($data as $collection) {
-				$this->get('best365.manager.purchasable')->updateFormula($collection);
-			}
+			$this->get('best365.manager.purchasable')->updateFormula($data);
 			$this->addFlash(
 				'success',
 				$this
@@ -333,9 +333,7 @@ class ProductController extends AbstractAdminController
 			$highestRow = $sheet->getHighestRow();
 			$highestColumn = $sheet->getHighestColumn();
 			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
-			foreach ($data as $collection) {
-				$this->get('best365.manager.purchasable')->updateProduct($collection);
-			}
+			$this->get('best365.manager.purchasable')->updateProduct($data);
 			$this->addFlash(
 				'success',
 				$this
@@ -345,5 +343,37 @@ class ProductController extends AbstractAdminController
 		}
 
 		return $this->redirectToRoute('admin_product_list');
+	}
+
+	/**
+	 * export product data
+	 *
+	 * @Route(
+	 *      path = "/export",
+	 *      name = "admin_product_export"
+	 * )
+	 *
+	 * @Method({"GET"})
+	 */
+	public function exportAction()
+	{
+		$obj = $this->get('phpexcel')->createPHPExcelObject();
+		$obj->setActiveSheetIndex(0);
+		$products = $this->get('best365.manager.purchasable')->exportProduct();
+		$obj->getActiveSheet()->FromArray($products, NULL, 'A1');
+
+		$writer = $this->get('phpexcel')->createWriter($obj, 'Excel2007');
+		$response = $this->get('phpexcel')->createStreamedResponse($writer);
+
+		$dispositionHeader = $response->headers->makeDisposition(
+			ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+			'product.xlsx'
+		);
+		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'maxage=1');
+		$response->headers->set('Content-Disposition', $dispositionHeader);
+
+		return $response;
 	}
 }

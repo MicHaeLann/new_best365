@@ -717,6 +717,7 @@ admin:
         new: 'New Product'
         search: 'Search Product'
         update: 'Update'
+        export: 'Export'
         note: Notes
         plural: Products
         saved: 'Product saved'

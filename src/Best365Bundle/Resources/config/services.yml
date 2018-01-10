@@ -23,6 +23,7 @@ services:
             - "@elcodi.repository.currency"
             - "@elcodi.repository.manufacturer"
             - "@elcodi.repository.entity_translation"
+            - "@best365.manager.bestselling"
 
     best365.manager.address:
         class: Best365Bundle\Manager\Best365AddressManager

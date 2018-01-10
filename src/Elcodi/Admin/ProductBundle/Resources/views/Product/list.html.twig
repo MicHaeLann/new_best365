@@ -1,21 +1,16 @@
 {% extends 'AdminCoreBundle::layout.html.twig' %}
 
-
 {% set elcodi_context = {
     entity_type: 'product'
 } %}
 
-
 {% block breadcrumb %}
-
     {% include '@AdminCore/Common/breadcrumb.html.twig' with {
         breadcrumb: [
             { name: 'admin.product.plural'|trans, active: true },
         ],
     } %}
-
 {% endblock breadcrumb %}
-
 
 {% block header_actions %}
     <form id="list-form" method="post" action="{{ url('admin_product_list') }}">
@@ -29,22 +24,21 @@
             <span>{{ 'admin.product.new'|trans }}</span>
         </a>
     </form>
-
 {% endblock header_actions %}
 
 {% block header_sub_actions %}
     <form id="update-form" method="post" action="{{ url('admin_product_upload') }}" enctype="multipart/form-data">
         <input type="file" name="file" style="padding: 0.5em 0.5em;border: 1px solid rgba(50, 50, 50, 0.3);background: #fff;border-radius: 2px;box-sizing: border-box" />
         <button class="button-primary" type="submit">
-            <i class="icon-search"></i>
             <span>{{ 'admin.product.update'|trans }}</span>
         </button>
+        <a href="{{ url('admin_product_export') }}" type="button" class="button-primary" data-test="new-product">
+            <span>{{ 'admin.product.export'|trans }}</span>
+        </a>
     </form>
 {% endblock header_sub_actions %}
 
-
 {% block content %}
-
     {{
         render(url('admin_product_list_component', {
             page: page,
@@ -54,5 +48,4 @@
             field: field
         }))
     }}
-
 {% endblock content %}
