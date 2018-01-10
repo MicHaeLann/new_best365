@@ -557,13 +557,13 @@ class PurchasableManager
 					->findOneBy(array(
 						'purchasableId' => $id
 					));
-				$fixed = !empty($ext) ? $ext->getFixedPrice() : '';
+				$fixed = !empty($ext) ? $ext->getFixedPrice() : '0';
 				$barcode = !empty($ext) ? $ext->getBarcode() : '';
 				$tag = !empty($ext) ? $ext->getTag() : '';
 
-				$hot = $this->bm->isHot($id) ? 1 : 0;
+				$hot = $this->bm->isHot($id) ? '1' : '0';
 
-				$enabled = $v->isEnabled() ? 1 : 0;
+				$enabled = $v->isEnabled() ? '1' : '0';
 
 				$arr[] = array(
 					$id,
