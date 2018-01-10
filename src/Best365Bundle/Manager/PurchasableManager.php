@@ -575,19 +575,19 @@ class PurchasableManager
 					$manufacturer,
 					'',
 					$v->getSku(),
-					(string)$fixed,
-					(string)$v->getReducedPrice()->getAmount(),
-					(string)$v->getPrice()->getAmount(),
+					$fixed,
+					$v->getReducedPrice()->getAmount(),
+					$v->getPrice()->getAmount(),
 					'',
 					'',
 					'',
 					'',
-					(string)$v->getWeight(),
+					$v->getWeight(),
 					$barcode,
-					(string)$v->getStock(),
+					$v->getStock(),
 					$tag,
-					(string)$enabled,
-					(string)$hot
+					$enabled,
+					$hot
 				);
 			}
 		}

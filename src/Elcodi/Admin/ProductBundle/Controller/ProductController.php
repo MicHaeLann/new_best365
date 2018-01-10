@@ -360,7 +360,7 @@ class ProductController extends AbstractAdminController
 		$obj = $this->get('phpexcel')->createPHPExcelObject();
 		$obj->setActiveSheetIndex(0);
 		$products = $this->get('best365.manager.purchasable')->exportProduct();
-		$obj->getActiveSheet()->FromArray($products, NULL, 'A1');
+		$obj->getActiveSheet()->FromArray($products, NULL, 'A1', true);
 
 		$writer = $this->get('phpexcel')->createWriter($obj, 'Excel2007');
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
