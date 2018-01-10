@@ -557,13 +557,13 @@ class PurchasableManager
 					->findOneBy(array(
 						'purchasableId' => $id
 					));
-				$fixed = !empty($ext) ? $ext->getFixedPrice() : '0';
+				$fixed = !empty($ext) ? $ext->getFixedPrice() :0;
 				$barcode = !empty($ext) ? $ext->getBarcode() : '';
 				$tag = !empty($ext) ? $ext->getTag() : '';
 
-				$hot = $this->bm->isHot($id) ? '1' : '0';
+				$hot = $this->bm->isHot($id) ? 1 : 0;
 
-				$enabled = $v->isEnabled() ? '1' : '0';
+				$enabled = $v->isEnabled() ? 1 : 0;
 
 				$arr[] = array(
 					$id,
@@ -575,20 +575,23 @@ class PurchasableManager
 					$manufacturer,
 					'',
 					$v->getSku(),
-					$fixed,
-					$v->getReducedPrice()->getAmount(),
-					$v->getPrice()->getAmount(),
+					(string)$fixed,
+					(string)$v->getReducedPrice()->getAmount(),
+					(string)$v->getPrice()->getAmount(),
 					'',
 					'',
 					'',
 					'',
-					$v->getWeight(),
+					(string)$v->getWeight(),
 					$barcode,
-					$v->getStock(),
+					(string)$v->getStock(),
 					$tag,
-					$enabled,
-					$hot
+					(string)$enabled,
+					(string)$hot
 				);
+				if ($id == 27) {
+					var_dump($arr);exit;
+				}
 			}
 		}
 
