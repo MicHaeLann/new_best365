@@ -421,15 +421,15 @@ class PurchasableManager
 			$manufacturer = $v[6];
 			$expire = $v[7];
 			$sku = $v[8];
-			$fixed = $v[9];
+			$fixed = empty($v[9]) ? 0 : $v[9];
 			$reduced = $v[10];
 			$price = $v[11];
-			$weight = $v[16];
+			$weight = empty($v[16]) ? 0 : $v[16];
 			$barcode = $v[17];
-			$stock = $v[18];
+			$stock = empty($v[18]) ? 0 : $v[18];
 			$tag = $v[19];
-			$enabled = $v[20];
-			$hot = $v[21];
+			$enabled = empty($v[20]) ? 0 : $v[20];
+			$hot = empty($v[21]) ? 0 : $v[21];
 
 			$purchasable = $this->pr->find($id);
 
