@@ -413,21 +413,24 @@ class PurchasableManager
 		$this->bm->clear();
 		foreach ($arr as $v) {
 			$id = $v[0];
-			$cname = $v[1];
-			$cdes = $v[2];
-			$ename = $v[3];
-			$edes = $v[4];
+			if (empty($id)) {
+				continue;
+			}
+			$cname = empty($v[1]) ? '空' : $v[1];
+			$cdes = empty($v[2]) ? '' : $v[2];
+			$ename = empty($v[3]) ? 'empty' : $v[3];
+			$edes = empty($v[4]) ? '' : $v[4];
 			$category = $v[5];
 			$manufacturer = $v[6];
 			$expire = $v[7];
-			$sku = $v[8];
+			$sku = empty($v[8]) ? '' : $v[8];
 			$fixed = empty($v[9]) ? 0 : $v[9];
-			$reduced = $v[10];
-			$price = $v[11];
+			$reduced = empty($v[10]) ? 0 : $v[10];
+			$price = empty($v[11]) ? 0 : $v[11];
 			$weight = empty($v[16]) ? 0 : $v[16];
-			$barcode = $v[17];
+			$barcode = empty($v[17]) ? '' : $v[17];
 			$stock = empty($v[18]) ? 0 : $v[18];
-			$tag = $v[19];
+			$tag = empty($v[19]) ? '' : $v[19];
 			$enabled = empty($v[20]) ? 0 : $v[20];
 			$hot = empty($v[21]) ? 0 : $v[21];
 
