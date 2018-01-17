@@ -478,10 +478,14 @@ class PurchasableManager
 			}
 
 			$pattern = '/(\d+)[.\/](\d+)/';
-			if (strpos($cname, '保质期') == false) {
-				$cname .= ' 保质期' . $expire;
-			} elseif (count(preg_match($pattern, $cname)) > 0) {
-				$cname = preg_replace($pattern, $expire, $cname);
+			preg_match($pattern, $cname, $match);
+
+			if (count($match) > 0) {
+				if (strpos($cname, '保质期') == false) {
+					$cname .= ' 保质期' . $expire;
+				} else {
+					$cname = preg_replace($pattern, $expire, $cname);
+				}
 			}
 
 			$translation = $this->etr->findOneBy(array(
