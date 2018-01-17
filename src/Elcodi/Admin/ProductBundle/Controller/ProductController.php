@@ -178,7 +178,6 @@ class ProductController extends AbstractAdminController
 			// update price info
 			$this->get('best365.manager.purchasable')->updateProductPrice($product, $this->get('request'));
 
-//
             $this->addFlash(
                 'success',
                 $this
@@ -332,7 +331,7 @@ class ProductController extends AbstractAdminController
 			$sheet = $obj->getSheet(0);
 			$highestRow = $sheet->getHighestRow();
 			$highestColumn = $sheet->getHighestColumn();
-			$data = $sheet->rangeToArray('A1:' . $highestColumn . $highestRow, null, true, false);
+			$data = $sheet->rangeToArray('A2:' . $highestColumn . $highestRow, null, true, false);
 			$this->get('best365.manager.purchasable')->updateProduct($data);
 			$this->addFlash(
 				'success',
