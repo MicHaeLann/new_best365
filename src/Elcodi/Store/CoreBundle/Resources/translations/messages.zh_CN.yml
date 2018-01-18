@@ -38,6 +38,7 @@ store:
                     label: 地区
         save:
             response_ok: '地址已保存'
+            response_error: '保存地址失败'
         select_address_type: '选择 %1 地址'
     coupon:
         applied:

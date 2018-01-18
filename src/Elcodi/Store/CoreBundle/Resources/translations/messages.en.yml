@@ -37,7 +37,8 @@ store:
                 region:
                     label: Region
         save:
-            response_ok: 'Address saved'
+            response_ok: 'Address saved.'
+            response_error: 'Oops. We come across a problem when saving address.'
         select_address_type: 'Select a %1 address'
     coupon:
         applied:

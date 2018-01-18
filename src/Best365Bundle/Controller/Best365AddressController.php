@@ -141,6 +141,40 @@ class Best365AddressController extends AddressController
             $this
                 ->get('elcodi.object_manager.customer')
                 ->flush($customer);
+//            $files = array();
+//            foreach($request->files->get('file') as $file) {
+//				$files[] = $file;
+//			}
+//
+//            if (count($files) > 0) {
+//            	if (count($files) > 2) {
+//            		$error = true;
+//				} else {
+//					foreach ($files as $file) {
+//						if (($file->getClientOriginalExtension() != 'png' && $file->getClientOriginalExtension() != 'jpg') ||
+//							$file->getClientSize() > 2097152) {
+//							$error = true;
+//							break;
+//						}
+//					}
+//				}
+//
+//            	if ($error) {
+//					$message = $this
+//						->get('translator')
+//						->trans('store.address.save.response_error');
+//					$this->addFlash('error', $message);
+//					return $this->redirect($this->generateUrl('best365_store_address_list'));
+//				}
+//				$json = $this->forward('elcodi.controller.image_upload:uploadAction')
+//					->getContent();
+//				$response = json_decode($json, true);
+//				if ($response['status'] === 'ok') {
+//					$iids[] = $response['response']['id'];
+//				}
+//
+//				$this->get('best365.manager.address')->saveImage($id, $iids);
+//			}
 
             $message = $this
                 ->get('translator')

@@ -1,4 +1,5 @@
 <div class="padding-25 {% if not cart %}margin-top-30{% endif %}">
+    {#{{ form_start(form, {'multipart' : true}) }}#}
     {{ form_start(form) }}
     {% if form_errors(form) %}
         {{ form_errors(form) }}
@@ -19,6 +20,15 @@
         {{ form_row(form.recipientSurname, { "attr": { "class": "form-control", "length": 255, "placeholder":"template.store_template_bundle.address.new.recipient.example_surname"|trans }}) }}
     {% endif %}
     {{ form_row(form.phone, { "attr": { "class": "form-control", "length": 255, "placeholder":"template.store_template_bundle.address.new.phone.example"|trans }}) }}
+
+    {# ID photo copy #}
+    {#<div class="form-group">#}
+        {#<label>身份证照片(可选)</label>#}
+        {#<p>#}
+            {#<input type="file" class="form-control-file" id="file" name="file[]" multiple>#}
+        {#</p>#}
+        {#<small>需身份证正反面照片(2M以下, jpg或png格式), 仅用于直邮奶粉清关</small>#}
+    {#</div>#}
 </div>
 {% if cart %}
     {{ form_widget(form.send, { "attr": { "class": "btn btn-success float-right" } }) }}

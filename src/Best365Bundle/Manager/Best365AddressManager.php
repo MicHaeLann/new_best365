@@ -2,7 +2,9 @@
 
 namespace Best365Bundle\Manager;
 
+use Best365Bundle\Entity\AddressImage;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManager;
 use Elcodi\Component\Cart\Wrapper\CartWrapper;
 use Elcodi\Component\Geo\Entity\Interfaces\AddressInterface;
 use Elcodi\Component\Geo\Repository\AddressRepository;
@@ -10,6 +12,10 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class Best365AddressManager
 {
+	/**
+	 * @var EntityManager
+	 */
+	private $em;
 
 	/**
 	 * @var AddressRepository
@@ -33,18 +39,21 @@ class Best365AddressManager
 
 	/**
 	 * Best365AddressManager constructor.
+	 * @param EntityManager $em
 	 * @param AddressRepository $addressRepository
 	 * @param TokenStorage $tokenStorage
 	 * @param CartWrapper $cartWrapper
 	 * @param ObjectManager $cartObjectManager
 	 */
 	public function __construct(
+		EntityManager $em,
 		AddressRepository $addressRepository,
 		TokenStorage $tokenStorage,
 		CartWrapper $cartWrapper,
 		ObjectManager $cartObjectManager
 	)
 	{
+		$this->em = $em;
 		$this->addressRepository = $addressRepository;
 		$this->tokenStorage = $tokenStorage;
 		$this->cartWrapper = $cartWrapper;
@@ -109,4 +118,32 @@ class Best365AddressManager
 
 		return $result;
 	}
+
+	/**
+	 * update address image
+	 * @param $aid
+	 * @param $iids
+	 */
+//	public function saveImage($aid, $iids) {
+//		// unlink images
+//		$images = $this
+//			->em
+//			->getRepository('Best365Bundle\Entity\AddressImage')
+//			->findBy(array('aid' => $aid));
+//		if (count($iids) == 2 || count($images) == 2) {
+//			foreach ($images as $image) {
+//				$this->em->remove($image);
+//			}
+//		}
+//
+//		// link new image and address
+//		foreach ($iids as $iid) {
+//			$address_image = new AddressImage();
+//			$address_image->setAid($aid);
+//			$address_image->setIid($iid);
+//			$this->em->persist($address_image);
+//		}
+//
+//		$this->em->flush();
+//	}
 }

@@ -28,6 +28,7 @@ services:
     best365.manager.address:
         class: Best365Bundle\Manager\Best365AddressManager
         arguments:
+            - '@doctrine.orm.entity_manager'
             - "@elcodi.repository.address"
             - "@security.token_storage"
             - "@elcodi.wrapper.cart"

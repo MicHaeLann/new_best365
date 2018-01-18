@@ -1,0 +1,16 @@
+Best365Bundle\Entity\AddressImage:
+    type: entity
+    table: address
+    repositoryClass: Best365Bundle\Repository\AddressImageRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        aid:
+            type: integer
+        iid:
+            type: integer
+    lifecycleCallbacks: {  }
