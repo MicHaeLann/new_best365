@@ -280,6 +280,12 @@ class PurchasableManager
 		$this->em->flush();
 	}
 
+	/**
+	 * find product membership price
+	 * @param $pid
+	 * @param $mid
+	 * @return null|object
+	 */
 	private function getProductMembershipPrice($pid, $mid)
 	{
 		$record = $this->em
@@ -289,6 +295,11 @@ class PurchasableManager
 		return $record;
 	}
 
+	/**
+	 * find product price
+	 * @param $pid
+	 * @return array
+	 */
 	public function getProductPrice($pid)
 	{
 		$record = $this->em
@@ -298,7 +309,11 @@ class PurchasableManager
 		return $record;
 	}
 
-
+	/**
+	 *
+	 * @param CategoryInterface $category
+	 * @return array
+	 */
 	public function getHomepageFormula(CategoryInterface $category)
 	{
 		$formula = $this->pr->getAllEnabledFromCategories(array($category));
@@ -360,6 +375,10 @@ class PurchasableManager
 		return $ids;
 	}
 
+	/**
+	 * update formula
+	 * @param $arr
+	 */
 	public function updateFormula($arr)
 	{
 		foreach ($arr as $v) {
@@ -410,6 +429,10 @@ class PurchasableManager
 		$this->em->flush();
 	}
 
+	/**
+	 * update product by excel
+	 * @param $arr
+	 */
 	public function updateProduct($arr)
 	{
 		$this->bm->clear();
@@ -509,6 +532,10 @@ class PurchasableManager
 		$this->em->flush();
 	}
 
+	/**
+	 * get export array
+	 * @return array
+	 */
 	public function exportProduct()
 	{
 		$arr = array();
@@ -604,11 +631,20 @@ class PurchasableManager
 		return $arr;
 	}
 
+	/**
+	 * get all purchasables
+	 * @return array
+	 */
 	public function all()
 	{
 		return $this->pr->findAll();
 	}
 
+	/**
+	 * get purchasable by field
+	 * @param $field
+	 * @return array
+	 */
 	public function findByField($field)
 	{
 		$collection = $this->em
@@ -623,5 +659,23 @@ class PurchasableManager
 			->getResult();
 
 		return $collection;
+	}
+
+	/**
+	 * remove ext record
+	 * @param $pid
+	 */
+	public function deleteExt($pid)
+	{
+		$ext = $this
+			->em
+			->getRepository('Best365Bundle\Entity\PurchasableExt')
+			->findOneBy(array(
+				'purchasableId' => $pid
+			));
+		if (!empty($ext)) {
+			$this->em->remove($ext);
+			$this->em->flush();
+		}
 	}
 }

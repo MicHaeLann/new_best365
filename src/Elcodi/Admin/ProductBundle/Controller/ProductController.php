@@ -282,11 +282,13 @@ class ProductController extends AbstractAdminController
         $entity,
         $redirectPath = null
     ) {
-        return parent::deleteAction(
-            $request,
-            $entity,
-            $this->generateUrl('admin_product_list')
-        );
+    	$res = parent::deleteAction(
+			$request,
+			$entity,
+			$this->generateUrl('admin_product_list')
+		);
+		$this->get('best365.manager.purchasable')->deleteExt($entity->getId());
+        return $res;
     }
 
 	/**
