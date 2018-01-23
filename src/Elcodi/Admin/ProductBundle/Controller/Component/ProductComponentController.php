@@ -55,7 +55,7 @@ class ProductComponentController extends AbstractAdminController
      * @return array Result
      *
      * @Route(
-     *      path = "s/component/{page}/{limit}/{orderByField}/{orderByDirection}/{field}",
+     *      path = "s/component/{page}/{limit}/{orderByField}/{orderByDirection}",
      *      name = "admin_product_list_component",
      *      requirements = {
      *          "page" = "\d*",
@@ -65,8 +65,7 @@ class ProductComponentController extends AbstractAdminController
      *          "page" = "1",
      *          "limit" = "50",
      *          "orderByField" = "id",
-     *          "orderByDirection" = "DESC",
-	 *     		"field" = ""
+     *          "orderByDirection" = "DESC"
      *      },
      *      methods = {"GET"}
      * )
@@ -79,10 +78,7 @@ class ProductComponentController extends AbstractAdminController
      *      limit = "~limit~",
      *      orderBy = {
      *          {"x", "~orderByField~", "~orderByDirection~"}
-     *      },
-	 *      wheres = {
-	 *			{"x", "name", "LIKE", "%~field~%"},
-	 *	 	}
+     *      }
      * )
      */
     public function listComponentAction(
@@ -91,8 +87,7 @@ class ProductComponentController extends AbstractAdminController
         $page,
         $limit,
         $orderByField,
-        $orderByDirection,
-		$field
+        $orderByDirection
     ) {
         return [
             'paginator'        => $paginator,
@@ -101,8 +96,7 @@ class ProductComponentController extends AbstractAdminController
             'orderByField'     => $orderByField,
             'orderByDirection' => $orderByDirection,
             'totalPages'       => $paginatorAttributes->getTotalPages(),
-            'totalElements'    => $paginatorAttributes->getTotalElements(),
-			'field'			   => $field
+            'totalElements'    => $paginatorAttributes->getTotalElements()
         ];
     }
 
@@ -201,4 +195,35 @@ class ProductComponentController extends AbstractAdminController
 			'currency' => $currency
         ];
     }
+
+	/**
+	 * search element component action
+	 *
+	 * @param $field
+	 *
+	 * @return array Result
+	 *
+	 * @Route(
+	 *      path = "/search/component/{field}",
+	 *      name = "admin_product_search_component",
+	 *      methods = {"GET"}
+	 * )
+	 * @Template("AdminProductBundle:Product:searchComponent.html.twig")
+	 *
+	 */
+    public function searchComponentAction($field)
+	{
+		$product = array();
+
+		$collection = $this->get('best365.manager.purchasable')->findByField($field);
+
+		foreach ($collection as $v) {
+			$pid = $v['purchasableId'];
+			$product[] = $this->get('best365.manager.purchasable')->getProduct($pid);
+		}
+
+		return [
+			'product' => $product
+		];
+	}
 }

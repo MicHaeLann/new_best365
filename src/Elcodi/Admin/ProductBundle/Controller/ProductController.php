@@ -83,8 +83,7 @@ class ProductController extends AbstractAdminController
             'page'             => $page,
             'limit'            => $limit,
             'orderByField'     => $orderByField,
-            'orderByDirection' => $orderByDirection,
-			'field'			   => $this->get('request')->request->get('field')
+            'orderByDirection' => $orderByDirection
         ];
     }
 
@@ -374,5 +373,27 @@ class ProductController extends AbstractAdminController
 		$response->headers->set('Content-Disposition', $dispositionHeader);
 
 		return $response;
+	}
+
+	/**
+	 * Search Product
+	 *
+	 * @Route(
+	 *      path = "/search",
+	 *      name = "admin_product_search"
+	 * )
+	 *
+	 * @return array
+	 *
+	 * @Method({"POST"})
+	 *
+	 * @Template("AdminProductBundle:Product:list.html.twig")
+	 */
+	public function searchAction()
+	{
+		$field = $this->get('request')->get('field');
+		return [
+			'field' => $field,
+		];
 	}
 }

@@ -13,12 +13,12 @@
 {% endblock breadcrumb %}
 
 {% block header_actions %}
-    <form id="list-form" method="post" action="{{ url('admin_product_list') }}">
+    <form id="list-form" method="post" action="{{ url('admin_product_search') }}">
         <input name="field" type="text" style="padding: 0.5em 0.5em;border: 1px solid rgba(50, 50, 50, 0.3);background: #fff;border-radius: 2px;box-sizing: border-box" value="{{ field }}" />
-        <a class="button-primary" type="button" onclick="document.getElementById('list-form').submit();return false;">
+        <button class="button-primary" type="submit">
             <i class="icon-search"></i>
             <span>{{ 'admin.product.search'|trans }}</span>
-        </a>
+        </button>
         <a href="{{ url('admin_product_new') }}" type="button" class="button-primary" data-test="new-product">
             <i class="icon-plus"></i>
             <span>{{ 'admin.product.new'|trans }}</span>
@@ -39,13 +39,19 @@
 {% endblock header_sub_actions %}
 
 {% block content %}
-    {{
-        render(url('admin_product_list_component', {
-            page: page,
-            limit: limit,
-            orderByField: orderByField,
-            orderByDirection: orderByDirection,
-            field: field
-        }))
-    }}
+    {% if app.request.attributes.get('_route') == "admin_product_search" %}
+        {{
+            render(url('admin_product_search_component', {'field': field}))
+        }}
+    {% elseif app.request.attributes.get('_route') == "admin_product_list" %}
+        {{
+            render(url('admin_product_list_component', {
+                page: page,
+                limit: limit,
+                orderByField: orderByField,
+                orderByDirection: orderByDirection
+            }))
+        }}
+    {% endif %}
+
 {% endblock content %}
