@@ -228,7 +228,7 @@ class PurchasableManager
 	public function getProduct($id)
 	{
 		$purchasable = $this->pr->find($id);
-		if (!empty($purchasables) && $purchasable->getReducedPrice()->getAmount() == 0) {
+		if (!empty($purchasable) && $purchasable->getReducedPrice()->getAmount() == 0) {
 			$purchasable->setReducedPrice($purchasable->getPrice());
 		}
 
@@ -607,5 +607,21 @@ class PurchasableManager
 	public function all()
 	{
 		return $this->pr->findAll();
+	}
+
+	public function findByField($field)
+	{
+		$collection = $this->em
+			->getRepository('Best365Bundle\Entity\PurchasableExt')
+			->createQueryBuilder('p')
+			->select('p.purchasableId')
+			->where('p.tag LIKE :tag')
+			->orWhere('p.barcode LIKE :barcode')
+			->setParameter('tag', '%' . $field . '%')
+			->setParameter('barcode', '%' . $field . '%')
+			->getQuery()
+			->getResult();
+
+		return $collection;
 	}
 }
