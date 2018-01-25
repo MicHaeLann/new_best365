@@ -290,7 +290,7 @@ class PurchasableManager
 	{
 		$record = $this->em
 			->getRepository('Best365Bundle\Entity\PurchasablePrice')
-			->findOneBy(array('pid' => $pid, 'mid' =>$mid));
+			->findOneBy(array('pid' => $pid, 'mid' => $mid));
 
 		return $record;
 	}
@@ -332,7 +332,7 @@ class PurchasableManager
 		$purchasable = $this
 			->pr
 			->findBy(array('enabled' => 1));
-		foreach($purchasable as $product) {
+		foreach ($purchasable as $product) {
 			if (strpos(strtolower($product->getName()), strtolower($name)) !== false) {
 				$ids[] = $product->getId();
 			}
@@ -429,6 +429,113 @@ class PurchasableManager
 		$this->em->flush();
 	}
 
+	public function validateProduct($parr, $carr, $marr)
+	{
+		$valid = true;
+		foreach ($parr as $index => $v) {
+			$id = $v[0];
+			$cname = $v[1];
+			$cdes = $v[2];
+			$ename = $v[3];
+			$edes = $v[4];
+			$category = $v[5];
+			$manufacturer = $v[6];
+			$expire = $v[7];
+			$sku = $v[8];
+			$fixed = $v[9];
+			$reduced = $v[10];
+			$price = $v[11];
+			$weight = $v[16];
+			$barcode = $v[17];
+			$stock = $v[18];
+			$tag = $v[19];
+			$enabled = $v[20];
+			$hot = $v[21];
+
+			// check if empty
+			if (empty($id) || empty($cname) || empty($ename) || empty($edes) || empty($category)) {
+				$valid = false;
+				break;
+			}
+
+			// check if product not exist
+			$purchasable = $this->pr->find($id);
+
+			if (empty($purchasable)) {
+				$valid = false;
+				break;
+			}
+
+			// validate category
+			if (!in_array($category, $carr)) {
+				$valid = false;
+				break;
+			}
+
+			// validate manufacturer
+			if (!in_array($manufacturer, $marr)) {
+				$valid = false;
+				break;
+			}
+
+			// validate expire format
+			$pattern = '/(\d+).(\d+)/';
+			preg_match($pattern, $expire, $match);
+			if (!empty($expire) && count($match) == 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate fixed(0, 1 or null)
+			if ($fixed !== NULL && $fixed !== 1 && $fixed !== 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate price and reduced price(int >= 0)
+			if (!is_int($price) || $price < 0 || !is_int($reduced) || $reduced < 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate weight(int >= 0)
+			if (!is_int($weight) || $weight < 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate barcode(int >= 0)
+			if (!is_int($barcode) || $barcode < 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate stock(int >= 0)
+			if (!is_int($stock) || $stock < 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate enabled(0, 1 or null)
+			if ($enabled !== NULL && $enabled !== 1 && $enabled !== 0) {
+				$valid = false;
+				break;
+			}
+
+			// validate hot(0, 1 or null)
+			if ($hot !== NULL && $hot !== 1 && $hot !== 0) {
+				$valid = false;
+				break;
+			}
+
+		}
+
+		return array(
+			'valid' => $valid,
+			'index' => $index
+		);
+	}
+
 	/**
 	 * update product by excel
 	 * @param $arr
@@ -500,7 +607,7 @@ class PurchasableManager
 				$this->em->persist($translation);
 			}
 
-			$pattern = '/(\d+)[.\/](\d+)/';
+			$pattern = '(\d+).(\d+)';
 			preg_match($pattern, $cname, $match);
 
 			if (count($match) > 0) {

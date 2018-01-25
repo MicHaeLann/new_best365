@@ -3,24 +3,48 @@
 namespace Best365Bundle\Manager;
 
 use Doctrine\ORM\EntityManager;
+use Elcodi\Component\Product\Repository\CategoryRepository;
 use Elcodi\Store\ProductBundle\Services\StoreCategoryTree;
 use Elcodi\Component\Product\Entity\Purchasable;
 
 class Best365CategoryManager
 {
+	/**
+	 * @var EntityManager
+	 */
 	private $em;
 
+	/**
+	 * @var StoreCategoryTree
+	 */
 	private $sct;
 
+	/**
+	 * @var CategoryRepository
+	 */
+	private $cr;
+
+	/**
+	 * Best365CategoryManager constructor.
+	 * @param EntityManager $em
+	 * @param StoreCategoryTree $sct
+	 * @param CategoryRepository $cr
+	 */
 	public function __construct(
 		EntityManager $em,
-		StoreCategoryTree $sct
+		StoreCategoryTree $sct,
+		CategoryRepository $cr
 	)
 	{
 		$this->em = $em;
 		$this->sct = $sct;
+		$this->cr = $cr;
 	}
 
+	/**
+	 * get all categories listed on home page
+	 * @return array
+	 */
 	public function getHomepageCategory()
 	{
 		$categories = $this
@@ -55,5 +79,29 @@ class Best365CategoryManager
 				return $category;
 			}
 		}
+	}
+
+	/**
+	 * get all categories
+	 * @return array
+	 */
+	public function all()
+	{
+		return $this->cr->findAll();
+	}
+
+	/**
+	 * get category array(id => name)
+	 * @return array
+	 */
+	public function getCategoryArray()
+	{
+		$arr = array();
+		$categories = $this->all();
+		foreach ($categories as $v) {
+			$arr[$v->getId()] = $v->getName();
+		}
+
+		return $arr;
 	}
 }

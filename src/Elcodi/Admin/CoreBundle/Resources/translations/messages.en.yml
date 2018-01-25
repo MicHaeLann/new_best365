@@ -659,6 +659,7 @@ admin:
             no_category: 'Warning! This product has no associated category'
             no_manufacturer: 'Warning! This product has no associated manufacturer'
             price_negative: 'Warning! The price can not be negative'
+            import_error: 'Warning! Excel data error on line "%line%"'
         field:
             depth:
                 title: 'Depth (in cm)'

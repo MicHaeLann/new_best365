@@ -333,13 +333,29 @@ class ProductController extends AbstractAdminController
 			$highestRow = $sheet->getHighestRow();
 			$highestColumn = $sheet->getHighestColumn();
 			$data = $sheet->rangeToArray('A2:' . $highestColumn . $highestRow, null, true, false);
-			$this->get('best365.manager.purchasable')->updateProduct($data);
-			$this->addFlash(
-				'success',
-				$this
-					->get('translator')
-					->trans('admin.product.saved')
-			);
+
+			// get all categories and manufacturers
+			$carr = $this->get('best365.manager.category')->getCategoryArray();
+			$marr = $this->get('best365.manager.manufacturer')->getManufacturerArray();
+
+			// data validation
+			$validation = $this->get('best365.manager.purchasable')->validateProduct($data, $carr, $marr);
+			if (!$validation['valid']) {
+				$this->addFlash(
+					'error',
+					$this
+						->get('translator')
+						->trans('admin.product.error.import_error', array('%line%' => $validation['index'] + 1))
+				);
+			} else {
+				$this->get('best365.manager.purchasable')->updateProduct($data);
+				$this->addFlash(
+					'success',
+					$this
+						->get('translator')
+						->trans('admin.product.saved')
+				);
+			}
 		}
 
 		return $this->redirectToRoute('admin_product_list');

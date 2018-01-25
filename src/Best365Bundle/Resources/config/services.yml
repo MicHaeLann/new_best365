@@ -103,6 +103,7 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@elcodi_store.store_category_tree'
+            - '@elcodi.repository.category'
 
     best365.manager.bestselling:
         class: Best365Bundle\Manager\Best365BestsellingManager
@@ -118,3 +119,9 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@elcodi.repository.store'
             - '@elcodi.repository.address'
+
+    best365.manager.manufacturer:
+        class: Best365Bundle\Manager\Best365ManufacturerManager
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@elcodi.repository.manufacturer'

@@ -658,6 +658,7 @@ admin:
             no_category: '警告！当前产品没有设置分类'
             no_manufacturer: '警告！当前产品没有设置生产商'
             price_negative: '警告！价格不可为负'
+            import_error: '警告! excel第"%line%"行数据异常'
         field:
             depth:
                 title: '深度（厘米）'
