@@ -9,6 +9,7 @@ use Elcodi\Component\Currency\Services\CurrencyConverter;
 use Elcodi\Component\EntityTranslator\Repository\EntityTranslationRepository;
 use Elcodi\Component\Product\Entity\Interfaces\CategoryInterface;
 use Elcodi\Component\Product\Entity\Interfaces\ProductInterface;
+use Elcodi\Component\Product\Repository\CategoryRepository;
 use Elcodi\Component\Product\Repository\ManufacturerRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -48,6 +49,11 @@ class PurchasableManager
 	private $mr;
 
 	/**
+	 * @var CategoryRepository
+	 */
+	private $car;
+
+	/**
 	 * @var EntityTranslationRepository
 	 */
 	private $etr;
@@ -63,6 +69,7 @@ class PurchasableManager
 	 * @param CurrencyConverter $cc
 	 * @param CurrencyRepository $cr
 	 * @param ManufacturerRepository $mr
+	 * @param CategoryRepository $mr
 	 * @param EntityTranslationRepository $etr
 	 * @param Best365BestsellingManager $bm
 	 */
@@ -73,6 +80,7 @@ class PurchasableManager
 		CurrencyConverter $cc,
 		CurrencyRepository $cr,
 		ManufacturerRepository $mr,
+		CategoryRepository $car,
 		EntityTranslationRepository $etr,
 		Best365BestsellingManager $bm
 	)
@@ -83,6 +91,7 @@ class PurchasableManager
 		$this->cc = $cc;
 		$this->cr = $cr;
 		$this->mr = $mr;
+		$this->car = $car;
 		$this->etr = $etr;
 		$this->bm = $bm;
 	}
@@ -460,20 +469,19 @@ class PurchasableManager
 
 			// check if product not exist
 			$purchasable = $this->pr->find($id);
-
 			if (empty($purchasable)) {
 				$valid = false;
 				break;
 			}
 
 			// validate category
-			if (!in_array($category, $carr)) {
+			if (!empty($manufacturer) && !in_array($category, $carr)) {
 				$valid = false;
 				break;
 			}
 
 			// validate manufacturer
-			if (!in_array($manufacturer, $marr)) {
+			if (!empty($manufacturer) && !in_array($manufacturer, $marr)) {
 				$valid = false;
 				break;
 			}
@@ -487,43 +495,43 @@ class PurchasableManager
 			}
 
 			// validate fixed(0, 1 or null)
-			if ($fixed !== NULL && $fixed !== 1 && $fixed !== 0) {
+			if ($fixed !== NULL && is_numeric($fixed) && $fixed != 1 && $fixed != 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate price and reduced price(int >= 0)
-			if (!is_int($price) || $price < 0 || !is_int($reduced) || $reduced < 0) {
+			if (!is_numeric($price) || $price < 0 || !is_numeric($reduced) || $reduced < 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate weight(int >= 0)
-			if (!is_int($weight) || $weight < 0) {
+			if (!is_numeric($weight) || $weight < 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate barcode(int >= 0)
-			if (!is_int($barcode) || $barcode < 0) {
+			if (!is_numeric($barcode) || $barcode < 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate stock(int >= 0)
-			if (!is_int($stock) || $stock < 0) {
+			if (!is_numeric($stock) || $stock < 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate enabled(0, 1 or null)
-			if ($enabled !== NULL && $enabled !== 1 && $enabled !== 0) {
+			if ($enabled !== NULL && is_numeric($fixed) && $enabled != 1 && $enabled != 0) {
 				$valid = false;
 				break;
 			}
 
 			// validate hot(0, 1 or null)
-			if ($hot !== NULL && $hot !== 1 && $hot !== 0) {
+			if ($hot !== NULL && is_numeric($fixed) && $hot != 1 && $hot != 0) {
 				$valid = false;
 				break;
 			}
@@ -539,8 +547,10 @@ class PurchasableManager
 	/**
 	 * update product by excel
 	 * @param $arr
+	 * @param $carr
+	 * @param $marr
 	 */
-	public function updateProduct($arr)
+	public function updateProduct($arr, $carr, $marr)
 	{
 		$this->bm->clear();
 		foreach ($arr as $v) {
@@ -552,16 +562,16 @@ class PurchasableManager
 			$cdes = empty($v[2]) ? '' : $v[2];
 			$ename = empty($v[3]) ? 'empty' : $v[3];
 			$edes = empty($v[4]) ? '' : $v[4];
-			$category = $v[5];
-			$manufacturer = $v[6];
+			$category = array_search($v[5], $carr);
+			$manufacturer = array_search($v[6], $marr);
 			$expire = $v[7];
 			$sku = empty($v[8]) ? '' : $v[8];
 			$fixed = empty($v[9]) ? 0 : $v[9];
-			$reduced = empty($v[10]) ? 0 : $v[10];
-			$price = empty($v[11]) ? 0 : $v[11];
-			$weight = empty($v[16]) ? 0 : $v[16];
-			$barcode = empty($v[17]) ? '' : $v[17];
-			$stock = empty($v[18]) ? 0 : $v[18];
+			$reduced = empty($v[10]) ? 0 : (int)$v[10];
+			$price = empty($v[11]) ? 0 : (int)$v[11];
+			$weight = empty($v[16]) ? 0 : (int)$v[16];
+			$barcode = empty($v[17]) ? '' : (string)$v[17];
+			$stock = empty($v[18]) ? 0 : (int)$v[18];
 			$tag = empty($v[19]) ? '' : $v[19];
 			$enabled = empty($v[20]) ? 0 : $v[20];
 			$hot = empty($v[21]) ? 0 : $v[21];
@@ -573,11 +583,14 @@ class PurchasableManager
 				$purchasable->setName($ename);
 				$purchasable->setDescription($edes);
 				$purchasable->setSku($sku);
-
 				$currency = $this->cr->findOneBy(array('enabled' => true, 'iso' => 'nzd'));
 				$purchasable->setReducedPrice(\Elcodi\Component\Currency\Entity\Money::create($reduced, $currency));
 				$purchasable->setPrice(\Elcodi\Component\Currency\Entity\Money::create($price, $currency));
 				$purchasable->setWeight($weight);
+				$category = $this->car->find($category);
+				$purchasable->setPrincipalCategory($category);
+				$manufacturer = $this->mr->find($manufacturer);
+				$purchasable->setManufacturer($manufacturer);
 				$purchasable->setStock($stock);
 				$purchasable->setEnabled($enabled);
 				$this->em->persist($purchasable);
@@ -607,7 +620,7 @@ class PurchasableManager
 				$this->em->persist($translation);
 			}
 
-			$pattern = '(\d+).(\d+)';
+			$pattern = '/(\d+).(\d+)/';
 			preg_match($pattern, $cname, $match);
 
 			if (count($match) > 0) {

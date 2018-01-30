@@ -22,6 +22,7 @@ services:
             - '@elcodi.converter.currency'
             - "@elcodi.repository.currency"
             - "@elcodi.repository.manufacturer"
+            - '@elcodi.repository.category'
             - "@elcodi.repository.entity_translation"
             - "@best365.manager.bestselling"
 

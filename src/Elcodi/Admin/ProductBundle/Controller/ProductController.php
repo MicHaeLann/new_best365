@@ -348,7 +348,7 @@ class ProductController extends AbstractAdminController
 						->trans('admin.product.error.import_error', array('%line%' => $validation['index'] + 1))
 				);
 			} else {
-				$this->get('best365.manager.purchasable')->updateProduct($data);
+				$this->get('best365.manager.purchasable')->updateProduct($data, $carr, $marr);
 				$this->addFlash(
 					'success',
 					$this
